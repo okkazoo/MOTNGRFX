@@ -1,0 +1,1646 @@
+{
+ "audio": {
+  "analysis": "15_fusion/v005/local/audio/P19_analysis.json",
+  "bpm": 105.977,
+  "cut": 16.0,
+  "fade": 0.566,
+  "src": "15_fusion/v005/audio/P19.wav"
+ },
+ "brief": {
+  "mood": [
+   "building"
+  ],
+  "palette": [
+   "#140806",
+   "#ffe3b8",
+   "#f08a24",
+   "#a8321c",
+   "#ffb85c"
+  ],
+  "scene": "a glowing molten glass gather on a steel blowpipe, sparks, a furnace glowing behind, black workshop"
+ },
+ "compose": {
+  "crf": 20,
+  "crossfade": 0,
+  "default": {
+   "ops": [
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.935,
+         0.0
+        ],
+        [
+         1.175,
+         0.75
+        ],
+        [
+         2.247,
+         0.75
+        ],
+        [
+         2.487,
+         0.0
+        ],
+        [
+         3.766,
+         0.0
+        ],
+        [
+         4.006,
+         0.75
+        ],
+        [
+         5.078,
+         0.75
+        ],
+        [
+         5.318,
+         0.0
+        ],
+        [
+         6.597,
+         0.0
+        ],
+        [
+         6.837,
+         0.75
+        ],
+        [
+         7.909,
+         0.75
+        ],
+        [
+         8.149,
+         0.0
+        ],
+        [
+         9.428,
+         0.0
+        ],
+        [
+         9.668,
+         0.75
+        ],
+        [
+         10.956,
+         0.75
+        ],
+        [
+         11.196,
+         0.0
+        ],
+        [
+         12.258,
+         0.0
+        ],
+        [
+         12.498,
+         0.75
+        ],
+        [
+         15.13,
+         0.75
+        ],
+        [
+         15.37,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "P19:type_matte",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_matte",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wm"
+    },
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.935,
+         0.0
+        ],
+        [
+         1.175,
+         0.75
+        ],
+        [
+         2.247,
+         0.75
+        ],
+        [
+         2.487,
+         0.0
+        ],
+        [
+         3.766,
+         0.0
+        ],
+        [
+         4.006,
+         0.75
+        ],
+        [
+         5.078,
+         0.75
+        ],
+        [
+         5.318,
+         0.0
+        ],
+        [
+         6.597,
+         0.0
+        ],
+        [
+         6.837,
+         0.75
+        ],
+        [
+         7.909,
+         0.75
+        ],
+        [
+         8.149,
+         0.0
+        ],
+        [
+         9.428,
+         0.0
+        ],
+        [
+         9.668,
+         0.75
+        ],
+        [
+         10.956,
+         0.75
+        ],
+        [
+         11.196,
+         0.0
+        ],
+        [
+         12.258,
+         0.0
+        ],
+        [
+         12.498,
+         0.75
+        ],
+        [
+         15.13,
+         0.75
+        ],
+        [
+         15.37,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "P19:type_line",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_line",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wl"
+    },
+    {
+     "args": {
+      "guide": "$footage",
+      "matte": "$matte",
+      "size": [
+       360,
+       640
+      ]
+     },
+     "op": "upscale_matte",
+     "out": "m"
+    },
+    {
+     "args": {
+      "frame": "$footage",
+      "gain": 0.66,
+      "gamma": 1.0,
+      "lift": 0.0,
+      "sat": 0.7
+     },
+     "op": "grade",
+     "out": "foot"
+    },
+    {
+     "args": {
+      "footage": "$footage",
+      "lum_amount": 0.92,
+      "lum_target": 0.93,
+      "mode": "sample",
+      "sample_blur": 60,
+      "sat": 0.5,
+      "type_a": "$wl"
+     },
+     "op": "tint_type",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "color": [
+       1.0,
+       0.8,
+       0.55
+      ],
+      "like": "$footage"
+     },
+     "op": "fill",
+     "out": "warm"
+    },
+    {
+     "args": {
+      "a": "$tcol",
+      "b": "$warm",
+      "t": {
+       "timeline": [
+        [
+         11.246,
+         0.0
+        ],
+        [
+         13.511,
+         0.8
+        ],
+        [
+         15.775,
+         0.8
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "a": "$wl",
+      "b": "$wm",
+      "t": {
+       "timeline": [
+        [
+         10.68,
+         0.0
+        ],
+        [
+         11.246,
+         1.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "ta"
+    },
+    {
+     "args": {
+      "fps": 24,
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "min_frac": 0.8,
+      "min_vis": 0.8,
+      "ramp_s": 0.25,
+      "t": "$t",
+      "type_a": "$ta"
+     },
+     "op": "legible",
+     "out": "m"
+    },
+    {
+     "args": {
+      "footage": "$foot",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$ta",
+      "type_opacity": {
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         1.055,
+         0.15
+        ],
+        [
+         4.452,
+         0.8
+        ],
+        [
+         7.849,
+         0.88
+        ],
+        [
+         11.812,
+         0.95
+        ],
+        [
+         15.775,
+         0.95
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "color": [
+       0.85,
+       0.9,
+       1.0
+      ],
+      "img": "$image",
+      "intensity": {
+       "curve": "sub",
+       "hi": 0.12,
+       "lo": 0.03
+      },
+      "mask": "$wm",
+      "radius": 24
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "angle": 35.0,
+      "axis": "x",
+      "like": "$foot",
+      "pos": 0.5,
+      "side": "left",
+      "soft": 0.06
+     },
+     "op": "split_region",
+     "out": "_fr0f"
+    },
+    {
+     "args": {
+      "fg": "$foot",
+      "footage": "$image",
+      "front": "$_fr0f",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$wm",
+      "type_opacity": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.905,
+         0.0
+        ],
+        [
+         1.055,
+         0.96
+        ],
+        [
+         2.367,
+         0.96
+        ],
+        [
+         2.517,
+         0.0
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "angle": 35.0,
+      "axis": "x",
+      "like": "$foot",
+      "pos": 0.5,
+      "side": "left",
+      "soft": 0.06
+     },
+     "op": "split_region",
+     "out": "_fr1f"
+    },
+    {
+     "args": {
+      "fg": "$foot",
+      "footage": "$image",
+      "front": "$_fr1f",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$wm",
+      "type_opacity": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         3.736,
+         0.0
+        ],
+        [
+         3.886,
+         0.96
+        ],
+        [
+         5.198,
+         0.96
+        ],
+        [
+         5.348,
+         0.0
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$foot",
+      "gain": 0.28,
+      "sat": 0.55
+     },
+     "op": "grade",
+     "out": "_wi2d"
+    },
+    {
+     "args": {
+      "a": "$foot",
+      "b": "$_wi2d",
+      "t": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         6.567,
+         0.0
+        ],
+        [
+         6.717,
+         1.0
+        ],
+        [
+         8.029,
+         1.0
+        ],
+        [
+         8.179,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "_wi2p"
+    },
+    {
+     "args": {
+      "frame": "$foot",
+      "gain": 1.3,
+      "gamma": 1.06,
+      "sat": 1.1
+     },
+     "op": "grade",
+     "out": "_wi2b"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         6.567,
+         0.0
+        ],
+        [
+         6.717,
+         1.0
+        ],
+        [
+         8.029,
+         1.0
+        ],
+        [
+         8.179,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_wi2a"
+    },
+    {
+     "args": {
+      "matte": "$m",
+      "type_a": "$wm"
+     },
+     "op": "legible",
+     "out": "_wi2m"
+    },
+    {
+     "args": {
+      "fg": "$foot",
+      "fg_matte": "$_wi2m",
+      "footage": "$_wi2b",
+      "min_contrast": 0.22,
+      "plate_rgb": "$_wi2p",
+      "type_a": "$_wi2a"
+     },
+     "op": "knockout",
+     "out": "_wi2k"
+    },
+    {
+     "args": {
+      "a": "$image",
+      "b": "$_wi2k",
+      "t": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         6.567,
+         0.0
+        ],
+        [
+         6.717,
+         1.0
+        ],
+        [
+         8.029,
+         1.0
+        ],
+        [
+         8.179,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame_idx": "$frame_idx",
+      "jitter": 4.0,
+      "max_contours": 2,
+      "min_len": 60.0,
+      "mode": "outline",
+      "seed": 4,
+      "smooth": 3.0,
+      "src": "$m",
+      "strokes": 2,
+      "width": 2
+     },
+     "op": "contour_lines",
+     "out": "_gl3c"
+    },
+    {
+     "args": {
+      "a": "$_gl3c",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         9.398,
+         0.0
+        ],
+        [
+         9.548,
+         1.0
+        ],
+        [
+         11.076,
+         1.0
+        ],
+        [
+         11.226,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_gl3c"
+    },
+    {
+     "args": {
+      "color": "$tcol",
+      "img": "$image",
+      "intensity": 0.8,
+      "mask": "$_gl3c",
+      "radius": 18.0
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "alpha": "$_gl3c",
+      "base": "$image",
+      "fg": "$tcol"
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "b": "$m",
+      "floor": 0.12,
+      "gain": 1.6
+     },
+     "op": "mask_mul",
+     "out": "_fi4a"
+    },
+    {
+     "args": {
+      "a": "$_fi4a",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         12.228,
+         0.0
+        ],
+        [
+         12.378,
+         1.0
+        ],
+        [
+         15.25,
+         1.0
+        ],
+        [
+         15.4,
+         0.0
+        ]
+       ]
+      },
+      "scale": 0.96
+     },
+     "op": "mask_gate",
+     "out": "_fi4a"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "b": "$m",
+      "floor": 0.0,
+      "gain": 1.6
+     },
+     "op": "mask_mul",
+     "out": "_fi4u"
+    },
+    {
+     "args": {
+      "a": "$_fi4u",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         12.228,
+         0.0
+        ],
+        [
+         12.378,
+         1.0
+        ],
+        [
+         15.25,
+         1.0
+        ],
+        [
+         15.4,
+         0.0
+        ]
+       ]
+      },
+      "scale": 0.45
+     },
+     "op": "mask_gate",
+     "out": "_fi4u"
+    },
+    {
+     "args": {
+      "alpha": "$_fi4u",
+      "base": "$image",
+      "fg": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "alpha": "$_fi4a",
+      "base": "$image",
+      "fg": "$tcol"
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "gain": 1.0,
+      "gamma": 1.0,
+      "lift": 0.012,
+      "sat": 1.0
+     },
+     "op": "grade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "amount": 0.025,
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 1,
+      "size": 1.3
+     },
+     "op": "grain",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "strength": 0.3
+     },
+     "op": "vignette",
+     "out": "image"
+    }
+   ]
+  },
+  "shots": {},
+  "size": [
+   360,
+   640
+  ]
+ },
+ "format": "9:16",
+ "fps": 24,
+ "id": "P19",
+ "layout": {
+  "s1": {
+   "frames": 384,
+   "start": 0,
+   "xf": 0
+  }
+ },
+ "parent": {
+  "piece": null,
+  "why": "v005 design P19: one even orbit, type built from the sparks and edges of the footage, fills the gather silhouette (DESIGNS.md)"
+ },
+ "plan": {
+  "bars": 9,
+  "blocks": [
+   {
+    "compose": [
+     {
+      "args": {
+       "source": "trace_edges"
+      },
+      "op": "type_from_edges",
+      "when": "form"
+     }
+    ],
+    "contour": null,
+    "dominant": true,
+    "lines": [
+     1,
+     3
+    ],
+    "missing": [
+     "edge blobs of the plate as particle sources for the `particles` module (ops exist: trace_edges, type_from_edges)"
+    ],
+    "name": "type_from_sparks",
+    "params": {
+     "edge_low": 0.056,
+     "streaks": 1599
+    },
+    "role": "from_footage",
+    "shots": null,
+    "status": "partial",
+    "transitions": []
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "grow": true
+      },
+      "op": "silhouette_fill",
+      "when": "hold"
+     }
+    ],
+    "contour": {
+     "ports": [
+      "matte_outline"
+     ],
+     "use": "entry"
+    },
+    "dominant": false,
+    "lines": [
+     4
+    ],
+    "missing": [
+     "glyphs re-fitted to the live matte contour every frame (the `fill` matte treatment shows the line inside the silhouette only; it reads faint on thin type: heavy modules)"
+    ],
+    "name": "fill_silhouette_grow",
+    "params": {
+     "grow": 0.173,
+     "outline_px": 2.734
+    },
+    "role": "from_footage",
+    "shots": null,
+    "status": "partial",
+    "transitions": []
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "front": "$type_matte",
+       "matte_threshold": 0.5
+      },
+      "op": "sandwich",
+      "when": "hold"
+     }
+    ],
+    "contour": {
+     "ports": [
+      "matte_outline"
+     ],
+     "use": "via"
+    },
+    "dominant": false,
+    "lines": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "missing": [],
+    "name": "half_front_half_behind",
+    "params": {
+     "front_share": 0.452
+    },
+    "role": "any",
+    "shots": null,
+    "status": "live",
+    "transitions": []
+   },
+   {
+    "compose": [],
+    "contour": {
+     "ports": [
+      "matte_outline",
+      "depth_iso"
+     ],
+     "use": "via"
+    },
+    "dominant": false,
+    "lines": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "missing": [
+     "contour bundles as transition endpoints (tools/fusion/contour_ports.py, being built)"
+    ],
+    "name": "contour_hand_off",
+    "params": {
+     "object": "matte"
+    },
+    "role": "any",
+    "shots": null,
+    "status": "partial",
+    "transitions": [
+     "spiral_around",
+     "braid",
+     "circuit_board",
+     "fan",
+     "ripple"
+    ]
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "between": "K1|K2",
+       "cards": 4
+      },
+      "op": "multiplane_cards",
+      "when": "always"
+     }
+    ],
+    "contour": null,
+    "dominant": false,
+    "lines": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "missing": [
+     "compose op that renders the cards (mograph/render/multiplane.MultiPlane.render) in the recipe; the camera chain through the cards (camera dict + word slot) is wired in spec.build_scene"
+    ],
+    "name": "chain_through_cards",
+    "params": {
+     "cards": 4,
+     "chain": "engine_chain_1_calm"
+    },
+    "role": "any",
+    "shots": null,
+    "status": "partial",
+    "transitions": []
+   }
+  ],
+  "contour": {
+   "available": true,
+   "lines": [
+    {
+     "entry": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "matte": "front",
+     "via": {
+      "dir": "around",
+      "port": "matte_outline"
+     }
+    },
+    {
+     "entry": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "matte": "front",
+     "via": {
+      "dir": "along",
+      "port": "luma_edges"
+     }
+    },
+    {
+     "entry": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "matte": "window",
+     "via": {
+      "dir": "along",
+      "port": "depth_iso"
+     }
+    },
+    {
+     "matte": "glow"
+    },
+    {
+     "entry": {
+      "dir": "up",
+      "port": "matte_outline"
+     },
+     "matte": "fill"
+    }
+   ],
+   "subject": true
+  },
+  "deferred": [
+   "v005 round 2 (legibility): THE FIRE massive_crop -> full (E was cut), BEFORE small_line -> hung_from_top (small_line is the edge_run block's, 4 % letters; the hold needs 7 %), IT COOLS in two lines IT / COOLS and Silkscreen (Rock 3D is hollow: the cube lattice kept a few cubes; a very heavy face fills the lattice into one block), voxel_orbit depth 20, orbit_even fill 0.58 on the full holds",
+   "BEFORE: the spark blobs of the plate as sources of the particles module (block type_from_sparks, missing part): the module draws its own streaks",
+   "IT COOLS colour cools amber -> steel blue on the hold (block colour_shift_on_hold is partial: no per-hold tint timeline wired)",
+   "INTO GLASS glyphs re-fitted to the live gather silhouette: the fill matte treatment keeps the line inside the matte; the downbeat phase of this grid is a guess (conf 1.05)"
+  ],
+  "direction": {
+   "camera": "orbit_even",
+   "pace": "building",
+   "palette": "duotone_warm",
+   "shots": "single",
+   "type_role": "from_footage"
+  },
+  "energy": 0.633,
+  "flow_wake": {
+   "chains": 1,
+   "holds": [
+    [
+     1.055,
+     2.367
+    ],
+    [
+     3.886,
+     5.198
+    ],
+    [
+     6.717,
+     8.029
+    ],
+    [
+     9.548,
+     11.076
+    ],
+    [
+     12.378,
+     15.25
+    ]
+   ]
+  },
+  "layout_shapes": {
+   "words": 0
+  },
+  "layouts": [
+   "quadrant_stack/bl",
+   "full/full",
+   "hung_from_top/top",
+   "full/full",
+   "full/full"
+  ],
+  "look": "hand-assembled from lego",
+  "matte_treatments": {
+   "chains": 1,
+   "treatments": 5,
+   "words": 5
+  },
+  "notes": [],
+  "scene_notes": [
+   "contour ports BOUND: 4 ported word(s) [0, 1, 2, 4], 1 plate shot(s)"
+  ],
+  "seed": 19,
+  "shots": "single",
+  "tier": "kinetic",
+  "timing": [
+   {
+    "end": 2.876,
+    "hit": 1.055,
+    "release": 2.367,
+    "text": "SHAPE",
+    "wanted_hit": 1.06
+   },
+   {
+    "end": 5.707,
+    "hit": 3.886,
+    "release": 5.198,
+    "text": "THE FIRE",
+    "wanted_hit": 3.89
+   },
+   {
+    "end": 8.538,
+    "hit": 6.717,
+    "release": 8.029,
+    "text": "BEFORE",
+    "wanted_hit": 6.72
+   },
+   {
+    "end": 11.586,
+    "hit": 9.548,
+    "release": 11.076,
+    "text": "IT COOLS",
+    "wanted_hit": 9.55
+   },
+   {
+    "end": 15.95,
+    "hit": 12.378,
+    "release": 15.25,
+    "text": "INTO GLASS",
+    "wanted_hit": 12.38
+   }
+  ],
+  "version": 1
+ },
+ "quality": "preview",
+ "shots": [
+  {
+   "depth": true,
+   "first": "A",
+   "flow": true,
+   "frames": 385,
+   "id": "s1",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P19/P19_s1_depth_g01.mp4",
+    "matte": "15_fusion/v005/out/footage/P19/P19_s1_matte_g01.mp4",
+    "shot": "15_fusion/v005/out/footage/P19/P19_s1_g01.mp4"
+   },
+   "prompt": "the camera orbits slowly and evenly around the glowing molten glass gather in one continuous move from left to right, the blowpipe turns steadily, the gather swells and its surface folds and flows, small sparks rise, the furnace glows behind, heat shimmer, cinematic",
+   "seed": 191,
+   "size": [
+    384,
+    672
+   ],
+   "span": 384
+  }
+ ],
+ "signoff": {
+  "color": [
+   255,
+   227,
+   184
+  ],
+  "font": "Space Grotesk",
+  "off": true,
+  "px": 38,
+  "t0": 15.0,
+  "text": ""
+ },
+ "sizes": {
+  "compose": [
+   360,
+   640
+  ],
+  "control": [
+   384,
+   704
+  ],
+  "shot": [
+   384,
+   704
+  ],
+  "type": [
+   384,
+   704
+  ]
+ },
+ "slug": "gather",
+ "stills": [
+  {
+   "id": "A",
+   "media": "15_fusion/v005/out/footage/P19/P19_still_A_g01.png",
+   "model": "moss",
+   "negative": "text, letters, words, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, blurry, deformed",
+   "prompt": "macro photograph of a glowing molten glass gather on the end of a steel blowpipe, bright orange core, surface folds, sparks and heat shimmer, furnace mouth glowing deep red behind, black workshop, vertical frame, cinematic",
+   "seed": 1901,
+   "size": [
+    1088,
+    1920
+   ]
+  }
+ ],
+ "technique": "behind",
+ "type": {
+  "bar": 4,
+  "beats": [
+   0.489,
+   1.0552,
+   1.6213,
+   2.1875,
+   2.7536,
+   3.3198,
+   3.886,
+   4.4521,
+   5.0183,
+   5.5844,
+   6.1506,
+   6.7168,
+   7.2829,
+   7.8491,
+   8.4152,
+   8.9814,
+   9.5476,
+   10.1137,
+   10.6799,
+   11.246,
+   11.8122,
+   12.3784,
+   12.9445,
+   13.5107,
+   14.0768,
+   14.643,
+   15.2092,
+   15.7753,
+   16.3415,
+   16.9076,
+   17.4738,
+   18.04,
+   18.6061,
+   19.1723,
+   19.7384,
+   20.3046
+  ],
+  "bpm": 105.977,
+  "camera": {
+   "cards": 4,
+   "chain": [
+    {
+     "fill": 0.3407,
+     "module": "orbit_even",
+     "word": 0
+    },
+    {
+     "fill": 0.58,
+     "module": "orbit_even",
+     "word": 1
+    },
+    {
+     "fill": 0.6815,
+     "module": "orbit_even",
+     "word": 2
+    },
+    {
+     "comp": [
+      0.0,
+      0.0
+     ],
+     "fill": 0.58,
+     "module": "hold_drift",
+     "word": 3
+    },
+    {
+     "fill": 0.58,
+     "module": "orbit_even",
+     "word": 4
+    }
+   ],
+   "plate": "multiplane"
+  },
+  "downbeats": [
+   2.1875,
+   4.4521,
+   6.7168,
+   8.9814,
+   11.246,
+   13.5107,
+   15.7753,
+   18.04,
+   20.3046
+  ],
+  "duration": 16.0,
+  "energy": 0.633,
+  "fps": 24,
+  "line": {
+   "px": 4.0
+  },
+  "mood": "building",
+  "overlap": true,
+  "palette": {
+   "accents": [
+    [
+     240,
+     138,
+     36
+    ],
+    [
+     168,
+     50,
+     28
+    ],
+    [
+     255,
+     184,
+     92
+    ]
+   ],
+   "bg": [
+    20,
+    8,
+    6
+   ],
+   "fg": [
+    255,
+    227,
+    184
+   ]
+  },
+  "plates": [
+   {
+    "depth": "15_fusion/v005/out/footage/P19/P19_s1_depth_g01.mp4",
+    "frames": 384,
+    "matte": "15_fusion/v005/out/footage/P19/P19_s1_matte_g01.mp4",
+    "plate": "15_fusion/v005/out/footage/P19/P19_s1_g01.mp4"
+   }
+  ],
+  "seed": 19,
+  "tier": "kinetic",
+  "transition_names": [
+   "braid",
+   "circuit_board",
+   "fan",
+   "ripple",
+   "spiral_around",
+   "twist"
+  ],
+  "transitions": [
+   "twist",
+   "fan",
+   "ripple",
+   "cut"
+  ],
+  "words": [
+   {
+    "ar_min": 0.85,
+    "entry": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.5095,
+    "font": "FacadeVF.ttf",
+    "form_in": "flicker",
+    "form_out": "blobs",
+    "form_s": 1.0552,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.0955,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": 0.85,
+     "area": 0.184,
+     "box": {
+      "cx": 0.27,
+      "cy": 0.73,
+      "sh": 0.4,
+      "sw": 0.46
+     },
+     "fill": 0.3407,
+     "max_lines": null,
+     "name": "quadrant_stack",
+     "note": "justified stack scaled to the full width of one quadrant (top-right N1, bottom-right R2)",
+     "offset": [
+      -0.23,
+      0.23
+     ],
+     "plate": "N1 R2",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "bl"
+    },
+    "lines": [
+     "SHAPE"
+    ],
+    "matte": "front",
+    "module": "pipework",
+    "placement": {
+     "hf": 0.4,
+     "roll": 0.0,
+     "wf": 0.46,
+     "yaw": -14
+    },
+    "screen_offset": [
+     -0.23,
+     0.23
+    ],
+    "slot": 1,
+    "t0": 0.0,
+    "t1": 2.8764,
+    "text": "SHAPE",
+    "via": {
+     "dir": "around",
+     "port": "matte_outline"
+    }
+   },
+   {
+    "entry": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.5095,
+    "font": "Fascinate-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.5095,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.2482,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "THE",
+     "FIRE"
+    ],
+    "matte": "front",
+    "module": "lanes",
+    "placement": {
+     "yaw": 14
+    },
+    "slot": 1,
+    "t0": 3.3764,
+    "t1": 5.7072,
+    "text": "THE FIRE",
+    "via": {
+     "dir": "along",
+     "port": "luma_edges"
+    }
+   },
+   {
+    "ar_min": 0.85,
+    "entry": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.5095,
+    "font": "Doto[ROND,wght].ttf",
+    "form_in": "particles",
+    "form_out": "particles",
+    "form_s": 0.5095,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.1108,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": 0.85,
+     "area": 0.4784,
+     "box": {
+      "cx": 0.5,
+      "cy": 0.3,
+      "sh": 0.52,
+      "sw": 0.92
+     },
+     "fill": 0.6815,
+     "max_lines": null,
+     "name": "hung_from_top",
+     "note": "stack hung from the top edge, empty below",
+     "offset": [
+      0.0,
+      -0.2
+     ],
+     "plate": "N8",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "top"
+    },
+    "lines": [
+     "BEFORE"
+    ],
+    "matte": "window",
+    "module": "particles",
+    "placement": {
+     "hf": 0.52,
+     "roll": 0.0,
+     "wf": 0.92,
+     "yaw": -14
+    },
+    "screen_offset": [
+     0.0,
+     -0.2
+    ],
+    "slot": 0,
+    "t0": 6.2072,
+    "t1": 8.538,
+    "text": "BEFORE",
+    "via": {
+     "dir": "along",
+     "port": "depth_iso"
+    }
+   },
+   {
+    "exit_s": 0.5095,
+    "font": "Silkscreen-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "flicker",
+    "form_s": 0.5095,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.1349,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "IT",
+     "COOLS"
+    ],
+    "matte": "glow",
+    "module": "voxel_orbit",
+    "params": {
+     "depth": 20.0
+    },
+    "placement": {
+     "yaw": 14
+    },
+    "slot": 1,
+    "t0": 9.038,
+    "t1": 11.5857,
+    "text": "IT COOLS"
+   },
+   {
+    "entry": {
+     "dir": "up",
+     "port": "matte_outline"
+    },
+    "exit_s": 0.7,
+    "font": "Foldit[wght].ttf",
+    "form_in": "lines",
+    "form_out": "particles",
+    "form_s": 0.5095,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.2482,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "INTO",
+     "GLASS"
+    ],
+    "matte": "fill",
+    "module": "tangent_spray",
+    "placement": {
+     "yaw": -14
+    },
+    "slot": 2,
+    "t0": 11.8688,
+    "t1": 15.95,
+    "text": "INTO GLASS"
+   }
+  ]
+ },
+ "type_passes": [
+  "matte",
+  "depth",
+  "line"
+ ],
+ "version": "v005"
+}

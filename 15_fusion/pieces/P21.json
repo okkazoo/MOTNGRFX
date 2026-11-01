@@ -1,0 +1,1748 @@
+{
+ "audio": {
+  "bpm": 69,
+  "cut": 14.0,
+  "fade": 0.87,
+  "src": "15_fusion/v005/audio/P21.wav"
+ },
+ "brief": {
+  "blocks": [
+   "fly_through_3d_type",
+   "edge_run_small_type"
+  ],
+  "bpm": 72,
+  "direction": {
+   "bpm": 72,
+   "camera": "push_through",
+   "music_genre": "ambient cinematic",
+   "music_lead": "harp",
+   "pace": "flowing",
+   "palette": "dark_neon",
+   "shots": "chain",
+   "type_role": "solid_3d"
+  },
+  "mood": [
+   "warm"
+  ],
+  "motions": [
+   "Fog curls under neon signs as camera drifts low",
+   "Camera rises past rooftops as light bleeds through windows",
+   "Sunrise glows behind skyscrapers as camera pulls back"
+  ],
+  "music": "ambient, strings, harp, synth pads, serene, sunrise, gentle, cinematic",
+  "palette": [
+   "#0a0a0a",
+   "#f9f9f9",
+   "#ffd700",
+   "#ffcc00"
+  ],
+  "scene": "A quiet dawn over a sleeping metropolis, soft golden light spills through misty streets as buildings stir beneath hushed skies.",
+  "signoff": "good morning",
+  "still": "Vertical frame: lone streetlamp glowing amber against wet pavement, early morning fog drifting past brick facades, shallow depth of field, muted teal and ochre palette, 85mm lens.",
+  "technique": "behind"
+ },
+ "compose": {
+  "crf": 20,
+  "crossfade": 0,
+  "default": {
+   "ops": [
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.821,
+         0.0
+        ],
+        [
+         1.061,
+         0.75
+        ],
+        [
+         2.362,
+         0.75
+        ],
+        [
+         2.602,
+         0.0
+        ],
+        [
+         4.298,
+         0.0
+        ],
+        [
+         4.538,
+         0.75
+        ],
+        [
+         5.876,
+         0.75
+        ],
+        [
+         6.116,
+         0.0
+        ],
+        [
+         7.776,
+         0.0
+        ],
+        [
+         8.016,
+         0.75
+        ],
+        [
+         9.354,
+         0.75
+        ],
+        [
+         9.594,
+         0.0
+        ],
+        [
+         11.254,
+         0.0
+        ],
+        [
+         11.494,
+         0.75
+        ],
+        [
+         12.87,
+         0.75
+        ],
+        [
+         13.11,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "A21:type_matte",
+      "strength": 4.0,
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_matte",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wm"
+    },
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.821,
+         0.0
+        ],
+        [
+         1.061,
+         0.75
+        ],
+        [
+         2.362,
+         0.75
+        ],
+        [
+         2.602,
+         0.0
+        ],
+        [
+         4.298,
+         0.0
+        ],
+        [
+         4.538,
+         0.75
+        ],
+        [
+         5.876,
+         0.75
+        ],
+        [
+         6.116,
+         0.0
+        ],
+        [
+         7.776,
+         0.0
+        ],
+        [
+         8.016,
+         0.75
+        ],
+        [
+         9.354,
+         0.75
+        ],
+        [
+         9.594,
+         0.0
+        ],
+        [
+         11.254,
+         0.0
+        ],
+        [
+         11.494,
+         0.75
+        ],
+        [
+         12.87,
+         0.75
+        ],
+        [
+         13.11,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "A21:type_line",
+      "strength": 4.0,
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_line",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wl"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         4.268,
+         1.0
+        ],
+        [
+         4.518,
+         0.0
+        ],
+        [
+         5.896,
+         0.0
+        ],
+        [
+         6.146,
+         1.0
+        ]
+       ]
+      },
+      "scale": 1.0
+     },
+     "op": "mask_gate",
+     "out": "wm"
+    },
+    {
+     "args": {
+      "a": "$wl",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         4.268,
+         1.0
+        ],
+        [
+         4.518,
+         0.0
+        ],
+        [
+         5.896,
+         0.0
+        ],
+        [
+         6.146,
+         1.0
+        ]
+       ]
+      },
+      "scale": 1.0
+     },
+     "op": "mask_gate",
+     "out": "wl"
+    },
+    {
+     "args": {
+      "guide": "$footage",
+      "matte": "$matte",
+      "size": [
+       360,
+       640
+      ]
+     },
+     "op": "upscale_matte",
+     "out": "m"
+    },
+    {
+     "args": {
+      "fade": 0.3,
+      "img": "$footage",
+      "matte": "$m",
+      "shapes": [
+       {
+        "color": [
+         0.039,
+         0.039,
+         0.039
+        ],
+        "cx": 0.5,
+        "cy": 0.5,
+        "kind": "circle",
+        "r": 0.46,
+        "t0": 10.574,
+        "t1": 13.69
+       }
+      ],
+      "t": "$t"
+     },
+     "op": "layout_shapes",
+     "out": "plate"
+    },
+    {
+     "args": {
+      "frame": "$plate",
+      "gain": 0.66,
+      "gamma": 1.0,
+      "lift": 0.0,
+      "sat": 0.7
+     },
+     "op": "grade",
+     "out": "foot"
+    },
+    {
+     "args": {
+      "footage": "$footage",
+      "lum_amount": 0.92,
+      "lum_target": 0.93,
+      "mode": "sample",
+      "sample_blur": 60,
+      "sat": 0.5,
+      "type_a": "$wl"
+     },
+     "op": "tint_type",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "color": [
+       1.0,
+       0.8,
+       0.55
+      ],
+      "like": "$footage"
+     },
+     "op": "fill",
+     "out": "warm"
+    },
+    {
+     "args": {
+      "a": "$tcol",
+      "b": "$warm",
+      "t": {
+       "timeline": [
+        [
+         9.635,
+         0.0
+        ],
+        [
+         12.243,
+         0.8
+        ],
+        [
+         13.982,
+         0.8
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "a": "$wl",
+      "b": "$wm",
+      "t": {
+       "timeline": [
+        [
+         8.766,
+         0.0
+        ],
+        [
+         9.635,
+         1.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "ta"
+    },
+    {
+     "args": {
+      "fps": 24,
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "min_frac": 0.8,
+      "min_vis": 0.8,
+      "ramp_s": 0.25,
+      "t": "$t",
+      "type_a": "$ta"
+     },
+     "op": "legible",
+     "out": "m"
+    },
+    {
+     "args": {
+      "footage": "$foot",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$ta",
+      "type_opacity": {
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.94,
+         0.15
+        ],
+        [
+         3.549,
+         0.8
+        ],
+        [
+         7.027,
+         0.88
+        ],
+        [
+         10.504,
+         0.95
+        ],
+        [
+         13.982,
+         0.95
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "color": [
+       0.85,
+       0.9,
+       1.0
+      ],
+      "img": "$image",
+      "intensity": {
+       "curve": "sub",
+       "hi": 0.12,
+       "lo": 0.03
+      },
+      "mask": "$wm",
+      "radius": 24
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame_idx": "$frame_idx",
+      "jitter": 4.0,
+      "max_contours": 2,
+      "min_len": 60.0,
+      "mode": "outline",
+      "seed": 1,
+      "smooth": 3.0,
+      "src": "$m",
+      "strokes": 2,
+      "width": 2
+     },
+     "op": "contour_lines",
+     "out": "_gl0c"
+    },
+    {
+     "args": {
+      "a": "$_gl0c",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.791,
+         0.0
+        ],
+        [
+         0.941,
+         1.0
+        ],
+        [
+         2.482,
+         1.0
+        ],
+        [
+         2.632,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_gl0c"
+    },
+    {
+     "args": {
+      "color": "$tcol",
+      "img": "$image",
+      "intensity": 0.8,
+      "mask": "$_gl0c",
+      "radius": 18.0
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "alpha": "$_gl0c",
+      "base": "$image",
+      "fg": "$tcol"
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame_idx": "$frame_idx",
+      "jitter": 4.0,
+      "max_contours": 2,
+      "min_len": 60.0,
+      "mode": "outline",
+      "seed": 2,
+      "smooth": 3.0,
+      "src": "$m",
+      "strokes": 2,
+      "width": 2
+     },
+     "op": "contour_lines",
+     "out": "_gl1c"
+    },
+    {
+     "args": {
+      "a": "$_gl1c",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         4.268,
+         0.0
+        ],
+        [
+         4.418,
+         1.0
+        ],
+        [
+         5.996,
+         1.0
+        ],
+        [
+         6.146,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_gl1c"
+    },
+    {
+     "args": {
+      "color": "$tcol",
+      "img": "$image",
+      "intensity": 0.8,
+      "mask": "$_gl1c",
+      "radius": 18.0
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "alpha": "$_gl1c",
+      "base": "$image",
+      "fg": "$tcol"
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame_idx": "$frame_idx",
+      "jitter": 4.0,
+      "max_contours": 2,
+      "min_len": 60.0,
+      "mode": "outline",
+      "seed": 3,
+      "smooth": 3.0,
+      "src": "$m",
+      "strokes": 2,
+      "width": 2
+     },
+     "op": "contour_lines",
+     "out": "_gl2c"
+    },
+    {
+     "args": {
+      "a": "$_gl2c",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         7.746,
+         0.0
+        ],
+        [
+         7.896,
+         1.0
+        ],
+        [
+         9.474,
+         1.0
+        ],
+        [
+         9.624,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_gl2c"
+    },
+    {
+     "args": {
+      "color": "$tcol",
+      "img": "$image",
+      "intensity": 0.8,
+      "mask": "$_gl2c",
+      "radius": 18.0
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "alpha": "$_gl2c",
+      "base": "$image",
+      "fg": "$tcol"
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame_idx": "$frame_idx",
+      "jitter": 4.0,
+      "max_contours": 2,
+      "min_len": 60.0,
+      "mode": "outline",
+      "seed": 4,
+      "smooth": 3.0,
+      "src": "$m",
+      "strokes": 2,
+      "width": 2
+     },
+     "op": "contour_lines",
+     "out": "_gl3c"
+    },
+    {
+     "args": {
+      "a": "$_gl3c",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         11.224,
+         0.0
+        ],
+        [
+         11.374,
+         1.0
+        ],
+        [
+         12.99,
+         1.0
+        ],
+        [
+         13.14,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_gl3c"
+    },
+    {
+     "args": {
+      "color": "$tcol",
+      "img": "$image",
+      "intensity": 0.8,
+      "mask": "$_gl3c",
+      "radius": 18.0
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "alpha": "$_gl3c",
+      "base": "$image",
+      "fg": "$tcol"
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "cap_frac": 0.058,
+      "fade": 0.2,
+      "font": "BBHBartle-Regular.ttf",
+      "frame_idx": "$frame_idx",
+      "img": "$footage",
+      "min_px_at_640": 40,
+      "near": [
+       0.5,
+       0.42
+      ],
+      "reveal_s": 0.35,
+      "source": "luma_edges",
+      "state_key": "A21:edge_run:1",
+      "t": "$t",
+      "t0": 4.368,
+      "t1": 5.946,
+      "text": "wakes",
+      "track": 0.1
+     },
+     "op": "edge_run_type",
+     "out": "_er0"
+    },
+    {
+     "args": {
+      "img": "$_er0",
+      "sigma": 2.2
+     },
+     "op": "blur",
+     "out": "_er0h"
+    },
+    {
+     "args": {
+      "a": "$_er0h",
+      "gate": 1.0,
+      "scale": 2.4
+     },
+     "op": "mask_gate",
+     "out": "_er0h"
+    },
+    {
+     "args": {
+      "alpha": "$_er0h",
+      "base": "$image",
+      "fg": [
+       0.02,
+       0.02,
+       0.03
+      ]
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "alpha": "$_er0",
+      "base": "$image",
+      "fg": "$tcol"
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "gain": 1.0,
+      "gamma": 1.0,
+      "lift": 0.012,
+      "sat": 1.0
+     },
+     "op": "grade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "amount": 0.025,
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 1,
+      "size": 1.3
+     },
+     "op": "grain",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "strength": 0.3
+     },
+     "op": "vignette",
+     "out": "image"
+    }
+   ]
+  },
+  "shots": {},
+  "size": [
+   360,
+   640
+  ]
+ },
+ "format": "9:16",
+ "fps": 24,
+ "id": "P21",
+ "layout": {
+  "s1": {
+   "frames": 106,
+   "start": 0,
+   "xf": 0
+  },
+  "s2": {
+   "frames": 84,
+   "start": 106,
+   "xf": 0
+  },
+  "s3": {
+   "frames": 83,
+   "start": 190,
+   "xf": 0
+  },
+  "s4": {
+   "frames": 63,
+   "start": 273,
+   "xf": 0
+  }
+ },
+ "plan": {
+  "assignment": [
+   {
+    "camera": "pullback_reveal",
+    "entry": {
+     "dir": "along",
+     "port": "matte_outline"
+    },
+    "exit": {
+     "dir": "around",
+     "port": "luma_edges"
+    },
+    "family": "slab",
+    "font": "Facade",
+    "font_file": "FacadeVF.ttf",
+    "index": 0,
+    "io_in": "wipe",
+    "io_out": "flicker",
+    "layout": "hung_from_top",
+    "matte": "front",
+    "module": "solid_hollow",
+    "role": "tall",
+    "text": "the city",
+    "transition": "cut",
+    "via": {
+     "port": "luma_edges"
+    }
+   },
+   {
+    "camera": "orbit_even",
+    "entry": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit": {
+     "dir": "along",
+     "port": "matte_outline"
+    },
+    "family": "strand",
+    "font": "BBH Bartle",
+    "font_file": "BBHBartle-Regular.ttf",
+    "index": 1,
+    "io_in": "blobs",
+    "io_out": "lines",
+    "layout": "small_line",
+    "matte": "glow",
+    "module": "pipework",
+    "role": "heavy",
+    "text": "wakes",
+    "transition": "spiral_around",
+    "via": {
+     "port": "matte_outline"
+    }
+   },
+   {
+    "camera": "ease_reversal",
+    "entry": {
+     "dir": "up",
+     "port": "matte_outline"
+    },
+    "exit": {
+     "dir": "around",
+     "port": "luma_edges"
+    },
+    "family": "ring",
+    "font": "Ultra",
+    "font_file": "Ultra-Regular.ttf",
+    "index": 2,
+    "io_in": "particles",
+    "io_out": "blobs",
+    "layout": "quadrant_stack",
+    "matte": "fill",
+    "module": "fly_into",
+    "role": "heavy",
+    "text": "slowly",
+    "transition": "fan",
+    "via": {
+     "port": "luma_edges"
+    }
+   },
+   {
+    "camera": "hold_drift",
+    "entry": {
+     "dir": "around",
+     "port": "luma_edges"
+    },
+    "exit": {
+     "dir": "along",
+     "port": "matte_outline"
+    },
+    "family": "strand",
+    "font": "Jacquard 24",
+    "font_file": "Jacquard24-Regular.ttf",
+    "index": 3,
+    "io_in": "particles",
+    "io_out": "lines",
+    "layout": "type_circle",
+    "matte": "wipe",
+    "module": "circuit",
+    "role": "blackletter",
+    "text": "into gold",
+    "transition": null
+   }
+  ],
+  "bars": 4,
+  "blocks": [
+   {
+    "compose": [
+     {
+      "args": {
+       "cap_frac": 0.05,
+       "min_px_at_640": 26,
+       "source": "luma_edges",
+       "track": 0.1
+      },
+      "op": "edge_run_type",
+      "when": "hold"
+     }
+    ],
+    "contour": {
+     "ports": [
+      "matte_outline",
+      "depth_iso"
+     ],
+     "use": "entry"
+    },
+    "dominant": true,
+    "eligible_on_final_plan": true,
+    "lines": [
+     1
+    ],
+    "missing": [],
+    "name": "edge_run_small_type",
+    "params": {
+     "cap_frac": 0.058,
+     "min_px_at_640": 40
+    },
+    "role": "small_precise",
+    "shots": null,
+    "status": "live",
+    "transitions": []
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "intensity": {
+        "curve": "onset",
+        "hi": 0.6,
+        "lo": 0.1
+       },
+       "mask": "$type_matte"
+      },
+      "op": "add_glow",
+      "when": "hold"
+     }
+    ],
+    "contour": null,
+    "dominant": false,
+    "eligible_on_final_plan": true,
+    "lines": [],
+    "missing": [],
+    "name": "beat_glow",
+    "params": {
+     "hi": 0.56,
+     "radius": 15
+    },
+    "role": "any",
+    "shots": null,
+    "status": "live",
+    "transitions": []
+   }
+  ],
+  "contour": {
+   "available": true,
+   "lines": [
+    {
+     "entry": {
+      "dir": "along",
+      "port": "matte_outline"
+     },
+     "exit": {
+      "dir": "around",
+      "port": "luma_edges"
+     },
+     "matte": "glow",
+     "via": {
+      "port": "luma_edges"
+     }
+    },
+    {
+     "entry": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "exit": {
+      "dir": "along",
+      "port": "matte_outline"
+     },
+     "matte": "glow",
+     "via": {
+      "port": "matte_outline"
+     }
+    },
+    {
+     "entry": {
+      "dir": "up",
+      "port": "matte_outline"
+     },
+     "exit": {
+      "dir": "around",
+      "port": "luma_edges"
+     },
+     "matte": "glow",
+     "via": {
+      "port": "luma_edges"
+     }
+    },
+    {
+     "entry": {
+      "dir": "around",
+      "port": "luma_edges"
+     },
+     "exit": {
+      "dir": "along",
+      "port": "matte_outline"
+     },
+     "matte": "glow"
+    }
+   ],
+   "subject": true
+  },
+  "direction": {
+   "bpm": 72,
+   "camera": "push_through",
+   "music_genre": "ambient cinematic",
+   "music_lead": "harp",
+   "pace": "flowing",
+   "palette": "dark_neon",
+   "shots": "chain",
+   "type_role": "solid_3d"
+  },
+  "edge_run": {
+   "halo": "dark blurred copy of the ink (sigma 2.2 px)",
+   "lines": [
+    {
+     "cap_px_at_640": 40.0,
+     "line": 1,
+     "source": "luma_edges",
+     "text": "wakes",
+     "window": [
+      4.368,
+      5.946
+     ]
+    }
+   ],
+   "module_letters_gated": true
+  },
+  "energy": 0.2,
+  "flow_wake": {
+   "chains": 1,
+   "holds": [
+    [
+     0.941,
+     2.482
+    ],
+    [
+     4.418,
+     5.996
+    ],
+    [
+     7.896,
+     9.474
+    ],
+    [
+     11.374,
+     12.99
+    ]
+   ]
+  },
+  "layout_shapes": {
+   "chains": 1,
+   "shapes": 1,
+   "words": 1
+  },
+  "layouts": [
+   "hung_from_top/top",
+   "small_line/line",
+   "quadrant_stack/bl",
+   "type_circle/disc"
+  ],
+  "look": "auto",
+  "matte_treatments": {
+   "chains": 1,
+   "treatments": 4,
+   "words": 4
+  },
+  "notes": [
+   "block fly_through_3d_type: named by the brief, not used (hold 1.6s < 1.6s)",
+   "footage attached from make_footage_v005 (i2v chain g03, depth-threshold matte g03: Alpha-Gen found no subject on this scene); plates cover [106, 84, 83, 63] frames"
+  ],
+  "seed": 21,
+  "shots": "chain",
+  "tail": {
+   "cut": 14.0,
+   "gap": 0.31,
+   "last_end": 13.69,
+   "signoff_t0": 13.0
+  },
+  "tier": "calm",
+  "tries": 1,
+  "version": 1
+ },
+ "quality": "preview",
+ "shots": [
+  {
+   "depth": true,
+   "first": "A",
+   "flow": true,
+   "frames": 113,
+   "id": "s1",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P21/P21_s1_depth_g03.mp4",
+    "matte": "15_fusion/v005/out/footage/P21/P21_s1_matte_g03.mp4",
+    "shot": "15_fusion/v005/out/footage/P21/P21_s1_g03.mp4"
+   },
+   "prompt": "A quiet dawn over a sleeping metropolis, soft golden light spills through misty streets as buildings stir beneath hushed skies, one clear lone figure in the foreground seen, the subject stands perfectly still while the air moves around it, Fog curls under neon signs as camera drifts low, cinematic",
+   "seed": 282686562,
+   "size": [
+    384,
+    672
+   ],
+   "span": 106
+  },
+  {
+   "depth": true,
+   "first": "last:s1",
+   "flow": true,
+   "frames": 89,
+   "id": "s2",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P21/P21_s2_depth_g03.mp4",
+    "matte": "15_fusion/v005/out/footage/P21/P21_s2_matte_g03.mp4",
+    "shot": "15_fusion/v005/out/footage/P21/P21_s2_g03.mp4"
+   },
+   "prompt": "A quiet dawn over a sleeping metropolis, soft golden light spills through misty streets as buildings stir beneath hushed skies, one clear lone figure in the foreground seen, the subject stands perfectly still while the air moves around it, Camera rises past rooftops as light bleeds through windows, cinematic",
+   "seed": 2312119768,
+   "size": [
+    384,
+    672
+   ],
+   "span": 84
+  },
+  {
+   "depth": true,
+   "first": "last:s2",
+   "flow": true,
+   "frames": 89,
+   "id": "s3",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P21/P21_s3_depth_g03.mp4",
+    "matte": "15_fusion/v005/out/footage/P21/P21_s3_matte_g03.mp4",
+    "shot": "15_fusion/v005/out/footage/P21/P21_s3_g03.mp4"
+   },
+   "prompt": "A quiet dawn over a sleeping metropolis, soft golden light spills through misty streets as buildings stir beneath hushed skies, one clear lone figure in the foreground seen, the subject stands perfectly still while the air moves around it, Sunrise glows behind skyscrapers as camera pulls back, cinematic",
+   "seed": 4275508558,
+   "size": [
+    384,
+    672
+   ],
+   "span": 83
+  },
+  {
+   "depth": true,
+   "first": "last:s3",
+   "flow": true,
+   "frames": 65,
+   "id": "s4",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P21/P21_s4_depth_g03.mp4",
+    "matte": "15_fusion/v005/out/footage/P21/P21_s4_matte_g03.mp4",
+    "shot": "15_fusion/v005/out/footage/P21/P21_s4_g03.mp4"
+   },
+   "prompt": "A quiet dawn over a sleeping metropolis, soft golden light spills through misty streets as buildings stir beneath hushed skies, one clear lone figure in the foreground seen, the subject stands perfectly still while the air moves around it, everything breathes softly, the camera glides slowly sideways, cinematic",
+   "seed": 1622376685,
+   "size": [
+    384,
+    672
+   ],
+   "span": 63
+  }
+ ],
+ "signoff": {
+  "color": [
+   249,
+   249,
+   249
+  ],
+  "font": "Space Grotesk",
+  "off": true,
+  "px": 38,
+  "t0": 13.0,
+  "text": "good morning"
+ },
+ "sizes": {
+  "compose": [
+   360,
+   640
+  ],
+  "control": [
+   384,
+   704
+  ],
+  "shot": [
+   384,
+   704
+  ],
+  "type": [
+   384,
+   704
+  ]
+ },
+ "slug": "p21",
+ "stills": [
+  {
+   "id": "A",
+   "media": "15_fusion/v005/out/footage/P21/P21_still_A_g03.png",
+   "model": "moss",
+   "negative": "nsfw, worst quality, bad anatomy, jpeg artifact, text, letters, words, watermark, logo, caption, signature, blurry, deformed, oversaturated, cartoon",
+   "prompt": "Vertical frame: lone streetlamp glowing amber against wet pavement, early morning fog drifting past brick facades, shallow depth of field, muted teal and ochre palette, 85mm lens, one clear subject in the foreground",
+   "seed": 2572834279,
+   "size": [
+    1088,
+    1920
+   ]
+  }
+ ],
+ "technique": "behind",
+ "type": {
+  "bar": 4,
+  "beats": [
+   0.071,
+   0.9405,
+   1.8099,
+   2.6794,
+   3.5488,
+   4.4183,
+   5.2877,
+   6.1572,
+   7.0266,
+   7.8961,
+   8.7655,
+   9.635,
+   10.5044,
+   11.3739,
+   12.2433,
+   13.1128,
+   13.9822,
+   14.8517,
+   15.7211,
+   16.5906,
+   17.46,
+   18.3295
+  ],
+  "bpm": 69.009,
+  "camera": "auto",
+  "camera_override": {
+   "word:0": {
+    "fill": 0.6815,
+    "from_scale": 0.9,
+    "module": "pullback_reveal",
+    "word_scale": 1.2
+   },
+   "word:1": {
+    "fill": 0.6519,
+    "module": "orbit_even"
+   },
+   "word:2": {
+    "fill": 0.3407,
+    "module": "ease_reversal"
+   },
+   "word:3": {
+    "comp": [
+     0.0,
+     0.0
+    ],
+    "dolly": 0.0,
+    "drift_px": 0.8,
+    "fill": 0.4593,
+    "module": "hold_drift"
+   }
+  },
+  "downbeats": [
+   0.9405,
+   4.4183,
+   7.8961,
+   11.3739,
+   14.8517,
+   18.3295
+  ],
+  "duration": 14.0,
+  "energy": 0.2,
+  "fps": 24,
+  "line": {
+   "px": 4.0
+  },
+  "mood": "warm",
+  "palette": {
+   "accents": [
+    [
+     255,
+     215,
+     0
+    ],
+    [
+     255,
+     204,
+     0
+    ],
+    [
+     255,
+     215,
+     0
+    ]
+   ],
+   "bg": [
+    10,
+    10,
+    10
+   ],
+   "fg": [
+    249,
+    249,
+    249
+   ]
+  },
+  "plates": [
+   {
+    "depth": "15_fusion/v005/out/footage/P21/P21_s1_depth_g03.mp4",
+    "frames": 106,
+    "matte": "15_fusion/v005/out/footage/P21/P21_s1_matte_g03.mp4",
+    "plate": "15_fusion/v005/out/footage/P21/P21_s1_g03.mp4"
+   },
+   {
+    "depth": "15_fusion/v005/out/footage/P21/P21_s2_depth_g03.mp4",
+    "frames": 84,
+    "matte": "15_fusion/v005/out/footage/P21/P21_s2_matte_g03.mp4",
+    "plate": "15_fusion/v005/out/footage/P21/P21_s2_g03.mp4"
+   },
+   {
+    "depth": "15_fusion/v005/out/footage/P21/P21_s3_depth_g03.mp4",
+    "frames": 83,
+    "matte": "15_fusion/v005/out/footage/P21/P21_s3_matte_g03.mp4",
+    "plate": "15_fusion/v005/out/footage/P21/P21_s3_g03.mp4"
+   },
+   {
+    "depth": "15_fusion/v005/out/footage/P21/P21_s4_depth_g03.mp4",
+    "frames": 63,
+    "matte": "15_fusion/v005/out/footage/P21/P21_s4_matte_g03.mp4",
+    "plate": "15_fusion/v005/out/footage/P21/P21_s4_g03.mp4"
+   }
+  ],
+  "seed": 45279,
+  "tier": "calm",
+  "transition_names": [
+   "braid",
+   "circuit_board",
+   "fan",
+   "ripple",
+   "spiral_around",
+   "twist"
+  ],
+  "transitions": [
+   "cut",
+   "spiral_around",
+   "fan"
+  ],
+  "words": [
+   {
+    "ar_min": 0.85,
+    "assigned": {
+     "camera": "pullback_reveal",
+     "font": "Facade",
+     "io_in": "wipe",
+     "io_out": "flicker",
+     "layout": "hung_from_top",
+     "module": "solid_hollow",
+     "transition": "cut"
+    },
+    "axes": {
+     "wght": {
+      "ease": "smooth",
+      "keys": [
+       [
+        0.0,
+        340
+       ],
+       [
+        14.0,
+        900
+       ]
+      ]
+     }
+    },
+    "entry": {
+     "dir": "along",
+     "port": "matte_outline"
+    },
+    "exit": {
+     "dir": "around",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.7,
+    "font": "FacadeVF.ttf",
+    "form_in": "wipe",
+    "form_out": "flicker",
+    "form_s": 0.941,
+    "hit_on": "beat",
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": 0.85,
+     "area": 0.4784,
+     "box": {
+      "cx": 0.5,
+      "cy": 0.3,
+      "sh": 0.52,
+      "sw": 0.92
+     },
+     "fill": 0.6815,
+     "max_lines": null,
+     "name": "hung_from_top",
+     "note": "stack hung from the top edge, empty below",
+     "offset": [
+      0.0,
+      -0.2
+     ],
+     "plate": "N8",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "top"
+    },
+    "matte": "glow",
+    "module": "solid_hollow",
+    "placement": {
+     "hf": 0.52,
+     "roll": 0.0,
+     "wf": 0.92,
+     "yaw": -10
+    },
+    "screen_offset": [
+     0.0,
+     -0.2
+    ],
+    "t0": 0.0,
+    "t1": 3.183,
+    "text": "the city",
+    "via": {
+     "port": "luma_edges"
+    }
+   },
+   {
+    "ar_min": 0.85,
+    "assigned": {
+     "camera": "orbit_even",
+     "font": "BBH Bartle",
+     "io_in": "blobs",
+     "io_out": "lines",
+     "layout": "small_line",
+     "module": "pipework",
+     "transition": "spiral_around"
+    },
+    "entry": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit": {
+     "dir": "along",
+     "port": "matte_outline"
+    },
+    "exit_s": 0.7,
+    "font": "BBHBartle-Regular.ttf",
+    "form_in": "blobs",
+    "form_out": "lines",
+    "form_s": 0.8,
+    "hit_on": "beat",
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": 0.85,
+     "area": 0.066,
+     "box": {
+      "cx": 0.5,
+      "cy": 0.42,
+      "sh": 0.075,
+      "sw": 0.88
+     },
+     "fill": 0.6519,
+     "max_lines": 1,
+     "name": "small_line",
+     "note": "one precise small line (cap height >= 4 % of the frame height, MIN_CAP_FRAC) set where the footage's edges run",
+     "offset": [
+      0.0,
+      -0.08
+     ],
+     "plate": "v005 P20",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "line"
+    },
+    "matte": "glow",
+    "max_lines": 1,
+    "module": "pipework",
+    "placement": {
+     "hf": 0.075,
+     "roll": 0.0,
+     "wf": 0.88,
+     "yaw": 10
+    },
+    "screen_offset": [
+     0.0,
+     -0.08
+    ],
+    "t0": 3.6182,
+    "t1": 6.696,
+    "text": "wakes",
+    "via": {
+     "port": "matte_outline"
+    }
+   },
+   {
+    "ar_min": 0.85,
+    "assigned": {
+     "camera": "ease_reversal",
+     "font": "Ultra",
+     "io_in": "particles",
+     "io_out": "blobs",
+     "layout": "quadrant_stack",
+     "module": "fly_into",
+     "transition": "fan"
+    },
+    "entry": {
+     "dir": "up",
+     "port": "matte_outline"
+    },
+    "exit": {
+     "dir": "around",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.7,
+    "font": "Ultra-Regular.ttf",
+    "form_in": "particles",
+    "form_out": "blobs",
+    "form_s": 0.8,
+    "hit_on": "beat",
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": 0.85,
+     "area": 0.184,
+     "box": {
+      "cx": 0.27,
+      "cy": 0.73,
+      "sh": 0.4,
+      "sw": 0.46
+     },
+     "fill": 0.3407,
+     "max_lines": null,
+     "name": "quadrant_stack",
+     "note": "justified stack scaled to the full width of one quadrant (top-right N1, bottom-right R2)",
+     "offset": [
+      -0.23,
+      0.23
+     ],
+     "plate": "N1 R2",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "bl"
+    },
+    "matte": "glow",
+    "module": "fly_into",
+    "placement": {
+     "hf": 0.4,
+     "roll": 0.0,
+     "wf": 0.46,
+     "yaw": -10
+    },
+    "screen_offset": [
+     -0.23,
+     0.23
+    ],
+    "t0": 7.096,
+    "t1": 10.174,
+    "text": "slowly",
+    "via": {
+     "port": "luma_edges"
+    }
+   },
+   {
+    "ar_min": 0.85,
+    "assigned": {
+     "camera": "hold_drift",
+     "font": "Jacquard 24",
+     "io_in": "particles",
+     "io_out": "lines",
+     "layout": "type_circle",
+     "module": "circuit",
+     "transition": null
+    },
+    "entry": {
+     "dir": "around",
+     "port": "luma_edges"
+    },
+    "exit": {
+     "dir": "along",
+     "port": "matte_outline"
+    },
+    "exit_s": 0.7,
+    "font": "Jacquard24-Regular.ttf",
+    "form_in": "particles",
+    "form_out": "lines",
+    "form_s": 0.8,
+    "hit_on": "beat",
+    "hold_layout": {
+     "anchored": true,
+     "ar_min": 0.85,
+     "area": 0.1604,
+     "box": {
+      "cx": 0.5,
+      "cy": 0.5,
+      "sh": 0.2588,
+      "sw": 0.62
+     },
+     "fill": 0.4593,
+     "max_lines": null,
+     "name": "type_circle",
+     "note": "a flat disc with the line inside (approximation of the circle of type)",
+     "offset": [
+      0.0,
+      0.0
+     ],
+     "plate": "M5a",
+     "roll": 0.0,
+     "shapes": [
+      {
+       "color": "dark",
+       "cx": 0.5,
+       "cy": 0.5,
+       "kind": "circle",
+       "r": 0.46
+      }
+     ],
+     "variant": "disc"
+    },
+    "matte": "glow",
+    "module": "circuit",
+    "placement": {
+     "hf": 0.2588,
+     "roll": 0.0,
+     "wf": 0.62,
+     "yaw": 0.0
+    },
+    "screen_offset": [
+     0.0,
+     0.0
+    ],
+    "t0": 10.5738,
+    "t1": 13.69,
+    "text": "into gold"
+   }
+  ]
+ },
+ "type_passes": [
+  "matte",
+  "depth",
+  "line"
+ ]
+}

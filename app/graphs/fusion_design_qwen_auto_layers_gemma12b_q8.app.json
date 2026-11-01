@@ -1,0 +1,294 @@
+{
+ "title": "Fusion - Gemma 4 12B invents the piece and designs it (16 GB tier) - three-layer shots - Gemma 4 12B Q8_0",
+ "order": 26,
+ "verb": "Make it",
+ "running_verb": "Making it",
+ "cost_line": "Runs on the GPU box",
+ "note": "No request needed: Gemma 4 12B invents the words, scene, music style, look and shots mode (unique against the earlier pieces in `previous`), then the whole fusion_design_qwen pipeline makes the piece. Length and seed are the only inputs. Footage route: three layers per shot - a CLEAN plain image-to-video clip (the subject, no type), the Alpha-Gen matte cut from it, and a text-rendered background (LTX union-control video-to-video of the clean clip, only for shots with a type control guide > 0); compose puts the type between the background and the clean subject. LLM arm: Gemma 4 12B Q8_0 (Apache-2.0, llama.cpp GGUF, n_gpu_layers -1, KV q8_0) instead of design_llm_8b 4-bit; see tools/app/llm_arms.py. 16 GB tier (NOT MEASURED), Quality defaults to Final = the draft tier (576x1024 single-stage); Preview = the held stills; n_ctx 24576 on every LLM call: 16 GB: draft 576x1024 single-stage, LTX int8 + gemma int8 streamed by Dynamic VRAM (20 GB > 16), MOSS bf16 + int8-convrot encoder fully resident one at a time.",
+ "fields": [
+  {
+   "id": "previous",
+   "label": "Earlier concepts (JSON list)",
+   "kind": "textarea",
+   "node_title": "IN previous",
+   "input_name": "value",
+   "optional": true,
+   "default": "[]",
+   "rows": 3,
+   "hidden": true,
+   "hint": "Concepts of the earlier runs; the new one must differ from every one (the batch driver fills this)."
+  },
+  {
+   "id": "media",
+   "kind": "media",
+   "label": "Add media",
+   "limits": {
+    "video": 1,
+    "image": 5,
+    "audio": 1
+   },
+   "image_node": "IN image",
+   "images_node": "IN images",
+   "audio_node": "IN audio",
+   "brief_node": "IN brief",
+   "read_graph": "_media_read",
+   "own_video_route": "/mograph/own_video"
+  },
+  {
+   "id": "length",
+   "label": "Length",
+   "kind": "select",
+   "node_title": "IN length",
+   "input_name": "value",
+   "default": 12,
+   "options": [
+    {
+     "value": 8,
+     "label": "8 s"
+    },
+    {
+     "value": 12,
+     "label": "12 s"
+    },
+    {
+     "value": 16,
+     "label": "16 s"
+    },
+    {
+     "value": 24,
+     "label": "24 s"
+    }
+   ]
+  },
+  {
+   "id": "seed",
+   "label": "Seed",
+   "kind": "seed",
+   "node_title": "IN seed",
+   "input_name": "value",
+   "optional": true,
+   "placeholder": "Random seed"
+  },
+  {
+   "id": "format",
+   "label": "Format",
+   "kind": "select",
+   "node_title": "IN format",
+   "input_name": "value",
+   "default": "9:16",
+   "options": [
+    {
+     "value": "9:16",
+     "label": "Vertical 9:16"
+    },
+    {
+     "value": "16:9",
+     "label": "Horizontal 16:9"
+    }
+   ]
+  },
+  {
+   "id": "quality",
+   "label": "Quality",
+   "kind": "select",
+   "node_title": "IN quality",
+   "input_name": "value",
+   "default": "final",
+   "hint": "Preview (still): each shot's own still held instead of LTX video (type, 3D cuts, music and compose are real) - the quick look at the design; Final: the LTX render (still_preview.APP_FINAL_TIER) plus the Real-ESRGAN 1080 upscale; hidden value draft540 (what the page sends since v20) = the same LTX render WITHOUT the upscale; tools/app/upgrade_still.py renders a Preview as Final with the same stills and design.",
+   "options": [
+    {
+     "value": "still",
+     "label": "Preview"
+    },
+    {
+     "value": "final",
+     "label": "Final"
+    }
+   ]
+  }
+ ],
+ "missing": {},
+ "outputs": [
+  {
+   "node_title": "OUT still",
+   "kind": "image",
+   "label": "First frame"
+  },
+  {
+   "node_title": "OUT type",
+   "kind": "image",
+   "label": "Type passes"
+  },
+  {
+   "node_title": "OUT final",
+   "kind": "video",
+   "label": "Final video",
+   "final": true
+  },
+  {
+   "node_title": "OUT final 1080",
+   "kind": "video",
+   "label": "Final video 1080x1920 (upscaled, Final only)",
+   "optional": true
+  },
+  {
+   "node_title": "OUT concept",
+   "kind": "text",
+   "label": "Concept"
+  }
+ ],
+ "stage_labels": {
+  "IN words": "Read the words",
+  "IN image": "Load image",
+  "IN audio": "Load audio",
+  "User images (2..5)": "Load your other images",
+  "design_llm creative brief": "Write the brief",
+  "Music T2M encode": "Describe the music",
+  "Footage flow": "Read the footage motion",
+  "ACE sampler (text-to-music)": "Make the music (ACE-Step XL)",
+  "Music T2M cut": "Cut to length, find the beats",
+  "Tame highs": "Soften the highs",
+  "Music cut": "Cut your audio",
+  "Music route": "Pick the music",
+  "Master": "Master the audio",
+  "Plan the piece": "Plan the piece",
+  "Still sampler": "Generate the still",
+  "First frame": "First frame",
+  "Still sampler [place 2]": "Generate the still of place 2",
+  "Still sampler [place 3]": "Generate the still of place 3",
+  "Still sampler [place 4]": "Generate the still of place 4",
+  "Still sampler [place 5]": "Generate the still of place 5",
+  "Still sampler [place 6]": "Generate the still of place 6",
+  "Angle sampler [angle place 2]": "Edit the angle still of place 2",
+  "Angle sampler [angle place 3]": "Edit the angle still of place 3",
+  "Angle sampler [angle place 4]": "Edit the angle still of place 4",
+  "Angle sampler [angle place 5]": "Edit the angle still of place 5",
+  "Angle sampler [angle place 6]": "Edit the angle still of place 6",
+  "First frames (one per place)": "Gather the places' first frames",
+  "Type passes": "Render the 3D type",
+  "Footage gather": "Gather the layers",
+  "Compose": "Compose type into footage",
+  "Assemble": "Encode the video",
+  "OUT final": "Save video",
+  "UP Real-ESRGAN x2": "Upscale to 1080x1920 (Final)",
+  "OUT final 1080": "Save the 1080x1920 video",
+  "Design package": "Prepare the design brief",
+  "design_llm design": "Gemma 4 12B designs the type",
+  "Design parse": "Check the design",
+  "design_llm design repair": "Gemma 4 12B repairs the design",
+  "Design repair": "Final design check",
+  "Piece from design": "Load the designed piece",
+  "Type passes (design)": "Render the designed 3D type",
+  "Concept prompt": "Prepare the concept brief",
+  "design_llm concept": "Gemma 4 12B invents the piece",
+  "Concept parse": "Check the concept is unique",
+  "design_llm concept repair": "Gemma 4 12B rewrites the clash",
+  "Concept final": "Fix the request",
+  "Layer clean clips (barrier)": "Finish the clean shots",
+  "Plate prompt [s1]": "Describe the empty scene of shot 1",
+  "Plate prompt [s2]": "Describe the empty scene of shot 2",
+  "Plate prompt [s3]": "Describe the empty scene of shot 3",
+  "Plate prompt [s4]": "Describe the empty scene of shot 4",
+  "Plate prompt [s5]": "Describe the empty scene of shot 5",
+  "Plate prompt [s6]": "Describe the empty scene of shot 6",
+  "Plate reference (clean clip) [s1]": "Prepare the clean clip of shot 1 for the plate",
+  "Plate reference (clean clip) [s2]": "Prepare the clean clip of shot 2 for the plate",
+  "Plate reference (clean clip) [s3]": "Prepare the clean clip of shot 3 for the plate",
+  "Plate reference (clean clip) [s4]": "Prepare the clean clip of shot 4 for the plate",
+  "Plate reference (clean clip) [s5]": "Prepare the clean clip of shot 5 for the plate",
+  "Plate reference (clean clip) [s6]": "Prepare the clean clip of shot 6 for the plate",
+  "Decode plate clip [s1]": "Clean plate of shot 1 (subject off the background)",
+  "Decode plate clip [s2]": "Clean plate of shot 2 (subject off the background)",
+  "Decode plate clip [s3]": "Clean plate of shot 3 (subject off the background)",
+  "Decode plate clip [s4]": "Clean plate of shot 4 (subject off the background)",
+  "Decode plate clip [s5]": "Clean plate of shot 5 (subject off the background)",
+  "Decode plate clip [s6]": "Clean plate of shot 6 (subject off the background)",
+  "SamplerCustomAdvanced [plate s1]": "Remove the subject from shot 1 (clean plate)",
+  "SamplerCustomAdvanced [plate s2]": "Remove the subject from shot 2 (clean plate)",
+  "SamplerCustomAdvanced [plate s3]": "Remove the subject from shot 3 (clean plate)",
+  "SamplerCustomAdvanced [plate s4]": "Remove the subject from shot 4 (clean plate)",
+  "SamplerCustomAdvanced [plate s5]": "Remove the subject from shot 5 (clean plate)",
+  "SamplerCustomAdvanced [plate s6]": "Remove the subject from shot 6 (clean plate)",
+  "Gemma 4 12B Q8_0 concept": "Gemma 4 12B invents the piece",
+  "Gemma 4 12B Q8_0 concept repair": "Gemma 4 12B rewrites the clash",
+  "Gemma 4 12B Q8_0 design": "Gemma 4 12B designs the type",
+  "Gemma 4 12B Q8_0 design repair": "Gemma 4 12B repairs the design"
+ },
+ "server_flags": {
+  "comfyui": [
+   "--mmap-torch-files",
+   "--cache-ram",
+   "16",
+   "--reserve-vram",
+   "1.5",
+   "--use-sage-attention"
+  ],
+  "why": "16 GB: draft 576x1024 single-stage, LTX int8 + gemma int8 streamed by Dynamic VRAM (20 GB > 16), MOSS bf16 + int8-convrot encoder fully resident one at a time"
+ },
+ "required_titles": [
+  "IN image",
+  "IN images",
+  "IN audio",
+  "IN length",
+  "IN seed",
+  "IN quality",
+  "IN format",
+  "IN previous",
+  "IN brief",
+  "OUT still",
+  "OUT type",
+  "OUT final",
+  "OUT final 1080"
+ ],
+ "layers": {
+  "version": 1,
+  "clean_prefix": "l",
+  "text_prefix": "t",
+  "v2v_start": 0.975,
+  "v2v_steps": 4,
+  "two_stage": false,
+  "doc": "16_app/LAYERS.md",
+  "plate_prefix": "p",
+  "plate_lora": "ltx-2.5-22b-ic-lora-clean-plate-1.0.safetensors",
+  "plate_doc": "16_app/CLEAN_PLATE.md"
+ },
+ "llm": {
+  "label": "Gemma 4 12B Q8_0",
+  "family": "gemma",
+  "dir": "gemma-4-12b",
+  "repo": "unsloth/gemma-4-12b-it-GGUF",
+  "licence": "Apache-2.0",
+  "file": "gemma-4-12b-it-Q8_0.gguf",
+  "mmproj_file": "mmproj-F16.gguf",
+  "n_gpu_layers": -1,
+  "kv_cache": "q8_0",
+  "mmproj_on_gpu": true,
+  "n_cpu_moe": 0,
+  "handler": "auto",
+  "top_k": 64,
+  "top_p": 0.95,
+  "repeat_penalty": 1.0,
+  "n_ctx": 24576,
+  "image_max_tokens": -1
+ },
+ "llm_models": [
+  "gemma-4-12b/gemma-4-12b-it-Q8_0.gguf",
+  "gemma-4-12b/mmproj-F16.gguf"
+ ],
+ "tier": {
+  "vram_gb": 16,
+  "arm": "gemma12b_q8",
+  "measured": false,
+  "vram_est_gib": 13.8,
+  "loaders": {
+   "still_unet": {
+    "unet_name": "moss_image_sft_bf16.safetensors"
+   },
+   "still_clip": {
+    "clip_name": "qwen3.5_9b_int8_convrot.safetensors"
+   }
+  },
+  "why": "16 GB: draft 576x1024 single-stage, LTX int8 + gemma int8 streamed by Dynamic VRAM (20 GB > 16), MOSS bf16 + int8-convrot encoder fully resident one at a time",
+  "doc": "16_app/TIERS.md"
+ }
+}

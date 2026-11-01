@@ -1,0 +1,868 @@
+{
+ "id": "P03",
+ "slug": "tide-line",
+ "fps": 24,
+ "audio": {
+  "src": "15_fusion/v002/out/motion-graphic_fusion_v002_P03_s302_00001.flac",
+  "bpm": 84,
+  "analysis": "15_fusion/v002/local/audio/P03_grid_analysis.json",
+  "cut": 10.5,
+  "fade": 0.8
+ },
+ "type": {
+  "seed": 4,
+  "energy": 0.3,
+  "palette": {
+   "bg": [
+    20,
+    16,
+    12
+   ],
+   "fg": [
+    240,
+    220,
+    190
+   ],
+   "accents": [
+    [
+     255,
+     170,
+     90
+    ],
+    [
+     200,
+     120,
+     70
+    ],
+    [
+     120,
+     150,
+     170
+    ]
+   ]
+  },
+  "camera": "orbit_even",
+  "camera_params": {
+   "sweep": 50
+  },
+  "transitions": [
+   {
+    "module": "cut",
+    "dur": 0.355,
+    "flash": [
+     0
+    ]
+   },
+   {
+    "module": "cut",
+    "dur": 0.355,
+    "flash": [
+     0
+    ]
+   }
+  ],
+  "words": [
+   {
+    "text": "WHERE",
+    "font": "Rock3D-Regular.ttf",
+    "module": "lanes",
+    "t0": 0.0,
+    "t1": 2.8,
+    "form_s": 0.9,
+    "exit_s": 0.5,
+    "hit_on": "bar",
+    "form_in": [
+     "wipe",
+     {
+      "edge": false,
+      "soft": 0.3
+     }
+    ],
+    "form_out": [
+     "wipe",
+     {
+      "edge": false,
+      "soft": 0.3
+     }
+    ],
+    "placement": {
+     "bleed": 1.1
+    }
+   },
+   {
+    "text": "THE TIDE",
+    "font": "Rock3D-Regular.ttf",
+    "module": "lanes",
+    "t0": 3.5,
+    "t1": 6.4,
+    "form_s": 0.8,
+    "exit_s": 0.5,
+    "hit_on": "beat",
+    "form_in": [
+     "wipe",
+     {
+      "edge": false,
+      "soft": 0.3
+     }
+    ],
+    "form_out": [
+     "wipe",
+     {
+      "edge": false,
+      "soft": 0.3
+     }
+    ],
+    "placement": {
+     "bleed": 1.2
+    }
+   },
+   {
+    "text": "LETS GO",
+    "font": "BadeenDisplay-Regular.ttf",
+    "module": "lanes",
+    "t0": 7.1,
+    "t1": 12.0,
+    "form_s": 0.8,
+    "exit_s": 0.5,
+    "hit_on": "beat",
+    "form_in": [
+     "wipe",
+     {
+      "edge": false,
+      "soft": 0.3
+     }
+    ],
+    "form_out": [
+     "wipe",
+     {
+      "edge": false,
+      "soft": 0.3
+     }
+    ],
+    "placement": {
+     "bleed": 1.1
+    }
+   }
+  ]
+ },
+ "type_passes": [
+  "matte",
+  "depth"
+ ],
+ "stills": [
+  {
+   "id": "A",
+   "model": "moss",
+   "seed": 301,
+   "size": [
+    1088,
+    1920
+   ],
+   "prompt": "extreme low angle photograph across smooth wet glossy sand on an empty beach at sunset, soft ripples in the sand reflecting the warm orange sky, a gentle foam line of the sea in the distance, natural light, 35mm film, calm, tall vertical frame"
+  }
+ ],
+ "shots": [
+  {
+   "id": "s1",
+   "kind": "control",
+   "first": "A",
+   "frames": 121,
+   "seed": 31,
+   "size": [
+    1152,
+    2048
+   ],
+   "control": {
+    "pass": "depth"
+   },
+   "prompt": "letters carved deep into glossy wet sand on a beach at sunset, the tide washes in slowly, thin sheets of water and white foam flow around and into the carved letters and fill the grooves, photorealistic, natural warm sunset light, low camera gliding slowly across the sand, shallow depth of field"
+  },
+  {
+   "id": "s2",
+   "kind": "control",
+   "first": "last:s1",
+   "frames": 121,
+   "seed": 32,
+   "size": [
+    1152,
+    2048
+   ],
+   "control": {
+    "pass": "depth"
+   },
+   "prompt": "the words THE TIDE and then LETS GO carved deep into wet sand in clear readable capital letters, the tide retreats, water drains back out of the carved letters and slides away over glossy wet sand, foam lines, the letters smoothed and partly erased by the receding water, photorealistic, natural warm sunset light, low camera gliding slowly across the sand, shallow depth of field"
+  },
+  {
+   "id": "s3",
+   "kind": "control",
+   "first": "last:s2",
+   "frames": 41,
+   "seed": 33,
+   "size": [
+    1152,
+    2048
+   ],
+   "control": {
+    "pass": "depth"
+   },
+   "prompt": "calm glossy wet sand at sunset after the tide, the words LETS GO carved in the sand in clear readable capital letters with a little water shining in the grooves, almost still, photorealistic, natural warm sunset light, low camera gliding slowly across the sand, shallow depth of field"
+  }
+ ],
+ "compose": {
+  "size": [
+   1080,
+   1920
+  ],
+  "crossfade": 0.5,
+  "crf": 16,
+  "shots": {
+   "s1": {
+    "ops": [
+     {
+      "op": "blur",
+      "out": "image",
+      "args": {
+       "img": "$footage",
+       "sigma": 0.01
+      }
+     },
+     {
+      "op": "edges_in_type",
+      "out": "mk",
+      "args": {
+       "edges": "$type_matte",
+       "type_a": "$type_matte",
+       "gain": 6.0,
+       "spread": 8.0
+      }
+     },
+     {
+      "op": "refract",
+      "out": "image",
+      "args": {
+       "footage": "$image",
+       "type_depth_or_matte": "$type_depth",
+       "strength": 14.0,
+       "blur": 3.0,
+       "chroma": 0.0,
+       "rim": 0.7,
+       "rim_color": [
+        1.0,
+        0.8,
+        0.5
+       ],
+       "light": [
+        -0.6,
+        -0.8
+       ],
+       "mask": "$mk"
+      }
+     },
+     {
+      "op": "fill",
+      "out": "shade",
+      "args": {
+       "like": "$image",
+       "color": [
+        0.58,
+        0.48,
+        0.4
+       ]
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "dark",
+      "args": {
+       "a": "$image",
+       "b": "$shade"
+      }
+     },
+     {
+      "op": "edges_in_type",
+      "out": "ga",
+      "args": {
+       "edges": "$type_matte",
+       "type_a": "$type_matte",
+       "gain": 0.8,
+       "spread": 1.8
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$dark",
+       "alpha": "$ga"
+      }
+     },
+     {
+      "op": "grade",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "lift": 0.005,
+       "gamma": 1.0,
+       "gain": 1.03,
+       "sat": 1.0
+      }
+     },
+     {
+      "op": "grain",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "frame_idx": "$frame_idx",
+       "seed": 3,
+       "amount": 0.02,
+       "size": 1.2
+      }
+     },
+     {
+      "op": "vignette",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "strength": 0.28
+      }
+     }
+    ]
+   },
+   "s2": {
+    "ops": [
+     {
+      "op": "blur",
+      "out": "image",
+      "args": {
+       "img": "$footage",
+       "sigma": 0.01
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "fcol",
+      "args": {
+       "type_a": "$type_matte",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 18,
+       "sat": 1.0,
+       "lum_target": 0.3,
+       "lum_amount": 0.45
+      }
+     },
+     {
+      "op": "edges_in_type",
+      "out": "fa",
+      "args": {
+       "edges": "$type_matte",
+       "type_a": "$type_matte",
+       "gain": {
+        "anim": [
+         [
+          0,
+          0
+         ],
+         [
+          0.45,
+          0
+         ],
+         [
+          0.56,
+          0.9
+         ],
+         [
+          1,
+          0.9
+         ]
+        ]
+       },
+       "spread": 0.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$fcol",
+       "alpha": "$fa"
+      }
+     },
+     {
+      "op": "edges_in_type",
+      "out": "mk",
+      "args": {
+       "edges": "$type_matte",
+       "type_a": "$type_matte",
+       "gain": 6.0,
+       "spread": 8.0
+      }
+     },
+     {
+      "op": "refract",
+      "out": "image",
+      "args": {
+       "footage": "$image",
+       "type_depth_or_matte": "$type_depth",
+       "strength": 14.0,
+       "blur": 3.0,
+       "chroma": 0.0,
+       "rim": 0.7,
+       "rim_color": [
+        1.0,
+        0.8,
+        0.5
+       ],
+       "light": [
+        -0.6,
+        -0.8
+       ],
+       "mask": "$mk"
+      }
+     },
+     {
+      "op": "fill",
+      "out": "shade",
+      "args": {
+       "like": "$image",
+       "color": [
+        0.58,
+        0.48,
+        0.4
+       ]
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "dark",
+      "args": {
+       "a": "$image",
+       "b": "$shade"
+      }
+     },
+     {
+      "op": "edges_in_type",
+      "out": "ga",
+      "args": {
+       "edges": "$type_matte",
+       "type_a": "$type_matte",
+       "gain": 0.8,
+       "spread": 1.8
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$dark",
+       "alpha": "$ga"
+      }
+     },
+     {
+      "op": "trace_edges",
+      "out": "edges",
+      "args": {
+       "footage": "$footage",
+       "low": 0.03,
+       "high": 0.09,
+       "temporal_smooth": 0.5,
+       "blur": 1.4
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "lcol",
+      "args": {
+       "type_a": "$type_matte",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 25,
+       "sat": 1.5,
+       "lum_target": 0.95,
+       "lum_amount": 0.9
+      }
+     },
+     {
+      "op": "edges_in_type",
+      "out": "la",
+      "args": {
+       "edges": "$edges",
+       "type_a": "$type_matte",
+       "gain": {
+        "anim": [
+         [
+          0,
+          0
+         ],
+         [
+          0.72,
+          0
+         ],
+         [
+          1,
+          1.6
+         ]
+        ]
+       },
+       "spread": 6.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$lcol",
+       "alpha": "$la"
+      }
+     },
+     {
+      "op": "grade",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "lift": 0.005,
+       "gamma": 1.0,
+       "gain": 1.03,
+       "sat": 1.0
+      }
+     },
+     {
+      "op": "grain",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "frame_idx": "$frame_idx",
+       "seed": 3,
+       "amount": 0.02,
+       "size": 1.2
+      }
+     },
+     {
+      "op": "vignette",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "strength": 0.28
+      }
+     }
+    ]
+   },
+   "s3": {
+    "ops": [
+     {
+      "op": "blur",
+      "out": "image",
+      "args": {
+       "img": "$footage",
+       "sigma": 0.01
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "fcol",
+      "args": {
+       "type_a": "$type_matte",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 18,
+       "sat": 1.0,
+       "lum_target": 0.3,
+       "lum_amount": 0.45
+      }
+     },
+     {
+      "op": "edges_in_type",
+      "out": "fa",
+      "args": {
+       "edges": "$type_matte",
+       "type_a": "$type_matte",
+       "gain": 0.9,
+       "spread": 0.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$fcol",
+       "alpha": "$fa"
+      }
+     },
+     {
+      "op": "edges_in_type",
+      "out": "mk",
+      "args": {
+       "edges": "$type_matte",
+       "type_a": "$type_matte",
+       "gain": 6.0,
+       "spread": 8.0
+      }
+     },
+     {
+      "op": "refract",
+      "out": "image",
+      "args": {
+       "footage": "$image",
+       "type_depth_or_matte": "$type_depth",
+       "strength": 14.0,
+       "blur": 3.0,
+       "chroma": 0.0,
+       "rim": 0.7,
+       "rim_color": [
+        1.0,
+        0.8,
+        0.5
+       ],
+       "light": [
+        -0.6,
+        -0.8
+       ],
+       "mask": "$mk"
+      }
+     },
+     {
+      "op": "fill",
+      "out": "shade",
+      "args": {
+       "like": "$image",
+       "color": [
+        0.58,
+        0.48,
+        0.4
+       ]
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "dark",
+      "args": {
+       "a": "$image",
+       "b": "$shade"
+      }
+     },
+     {
+      "op": "edges_in_type",
+      "out": "ga",
+      "args": {
+       "edges": "$type_matte",
+       "type_a": "$type_matte",
+       "gain": 0.8,
+       "spread": 1.8
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$dark",
+       "alpha": "$ga"
+      }
+     },
+     {
+      "op": "trace_edges",
+      "out": "edges",
+      "args": {
+       "footage": "$footage",
+       "low": 0.03,
+       "high": 0.09,
+       "temporal_smooth": 0.5,
+       "blur": 1.4
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "lcol",
+      "args": {
+       "type_a": "$type_matte",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 25,
+       "sat": 1.5,
+       "lum_target": 0.95,
+       "lum_amount": 0.9
+      }
+     },
+     {
+      "op": "edges_in_type",
+      "out": "la",
+      "args": {
+       "edges": "$edges",
+       "type_a": "$type_matte",
+       "gain": 1.6,
+       "spread": 6.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$lcol",
+       "alpha": "$la"
+      }
+     },
+     {
+      "op": "grade",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "lift": 0.005,
+       "gamma": 1.0,
+       "gain": 1.03,
+       "sat": 1.0
+      }
+     },
+     {
+      "op": "grain",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "frame_idx": "$frame_idx",
+       "seed": 3,
+       "amount": 0.02,
+       "size": 1.2
+      }
+     },
+     {
+      "op": "vignette",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "strength": 0.28
+      }
+     }
+    ]
+   }
+  },
+  "default": {
+   "ops": [
+    {
+     "op": "blur",
+     "out": "image",
+     "args": {
+      "img": "$footage",
+      "sigma": 0.01
+     }
+    },
+    {
+     "op": "edges_in_type",
+     "out": "mk",
+     "args": {
+      "edges": "$type_matte",
+      "type_a": "$type_matte",
+      "gain": 6.0,
+      "spread": 8.0
+     }
+    },
+    {
+     "op": "refract",
+     "out": "image",
+     "args": {
+      "footage": "$image",
+      "type_depth_or_matte": "$type_depth",
+      "strength": 14.0,
+      "blur": 3.0,
+      "chroma": 0.0,
+      "rim": 0.7,
+      "rim_color": [
+       1.0,
+       0.8,
+       0.5
+      ],
+      "light": [
+       -0.6,
+       -0.8
+      ],
+      "mask": "$mk"
+     }
+    },
+    {
+     "op": "fill",
+     "out": "shade",
+     "args": {
+      "like": "$image",
+      "color": [
+       0.58,
+       0.48,
+       0.4
+      ]
+     }
+    },
+    {
+     "op": "multiply",
+     "out": "dark",
+     "args": {
+      "a": "$image",
+      "b": "$shade"
+     }
+    },
+    {
+     "op": "edges_in_type",
+     "out": "ga",
+     "args": {
+      "edges": "$type_matte",
+      "type_a": "$type_matte",
+      "gain": 0.8,
+      "spread": 1.8
+     }
+    },
+    {
+     "op": "over",
+     "out": "image",
+     "args": {
+      "base": "$image",
+      "fg": "$dark",
+      "alpha": "$ga"
+     }
+    },
+    {
+     "op": "grade",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "lift": 0.005,
+      "gamma": 1.0,
+      "gain": 1.03,
+      "sat": 1.0
+     }
+    },
+    {
+     "op": "grain",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 3,
+      "amount": 0.02,
+      "size": 1.2
+     }
+    },
+    {
+     "op": "vignette",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "strength": 0.28
+     }
+    }
+   ]
+  }
+ },
+ "signoff": {
+  "text": "tide line / 84 bpm",
+  "font": "Space Mono",
+  "t0": 9.3,
+  "px": 30,
+  "color": [
+   245,
+   232,
+   215
+  ]
+ }
+}

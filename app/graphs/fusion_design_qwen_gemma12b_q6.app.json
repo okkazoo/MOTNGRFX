@@ -1,0 +1,276 @@
+{
+ "title": "Fusion - Gemma 4 12B designs the type (RTX 3060 preview) - Gemma 4 12B Q6_K",
+ "order": 23,
+ "verb": "Make it",
+ "running_verb": "Making it",
+ "cost_line": "Runs on the GPU box",
+ "note": "One prompt in, one preview mp4 out, no review pass, no Claude: the music is made first, the footage is generated (single-stage LTX, 384x704), then Gemma 4 12B sees the footage and the music and designs the type and the compose look; the code validates, clamps and fits the timing and falls back to the rules for anything the model gets wrong. LLM arm: Gemma 4 12B Q6_K (Apache-2.0, llama.cpp GGUF, n_gpu_layers -1, KV q8_0) instead of design_llm_8b 4-bit; see tools/app/llm_arms.py.",
+ "fields": [
+  {
+   "id": "words",
+   "label": "Words",
+   "kind": "textarea",
+   "node_title": "IN words",
+   "input_name": "value",
+   "optional": false,
+   "default": "",
+   "rows": 4,
+   "placeholder": "One line per beat, e.g.\nAFTER\nHOURS\nTHE CITY KEEPS DREAMING",
+   "hint": "One line per beat of the story."
+  },
+  {
+   "id": "scene",
+   "label": "Scene prompt",
+   "kind": "textarea",
+   "node_title": "IN scene",
+   "input_name": "value",
+   "optional": true,
+   "default": "",
+   "rows": 2,
+   "placeholder": "Empty = written from your words"
+  },
+  {
+   "id": "media",
+   "kind": "media",
+   "label": "Add media",
+   "limits": {
+    "video": 1,
+    "image": 5,
+    "audio": 1
+   },
+   "image_node": "IN image",
+   "images_node": "IN images",
+   "audio_node": "IN audio",
+   "read_graph": "_media_read",
+   "own_video_route": "/mograph/own_video"
+  },
+  {
+   "id": "music",
+   "label": "Music prompt",
+   "kind": "text",
+   "node_title": "IN music",
+   "input_name": "value",
+   "optional": true,
+   "default": "",
+   "placeholder": "Optional: describe the music"
+  },
+  {
+   "id": "length",
+   "label": "Length",
+   "kind": "select",
+   "node_title": "IN length",
+   "input_name": "value",
+   "default": 12,
+   "options": [
+    {
+     "value": 8,
+     "label": "8 s"
+    },
+    {
+     "value": 12,
+     "label": "12 s"
+    },
+    {
+     "value": 16,
+     "label": "16 s"
+    },
+    {
+     "value": 24,
+     "label": "24 s"
+    }
+   ]
+  },
+  {
+   "id": "look",
+   "label": "Look",
+   "kind": "select",
+   "node_title": "IN look",
+   "input_name": "value",
+   "default": "auto",
+   "options": [
+    {
+     "value": "auto",
+     "label": "Auto"
+    },
+    {
+     "value": "strand",
+     "label": "Strand"
+    },
+    {
+     "value": "mech",
+     "label": "Mech"
+    },
+    {
+     "value": "slab",
+     "label": "Slab"
+    },
+    {
+     "value": "stack",
+     "label": "Stack"
+    },
+    {
+     "value": "ring",
+     "label": "Ring"
+    },
+    {
+     "value": "voxel",
+     "label": "Voxel"
+    },
+    {
+     "value": "particles",
+     "label": "Particles"
+    }
+   ]
+  },
+  {
+   "id": "seed",
+   "label": "Seed",
+   "kind": "seed",
+   "node_title": "IN seed",
+   "input_name": "value",
+   "optional": true,
+   "placeholder": "Random seed"
+  },
+  {
+   "id": "format",
+   "label": "Format",
+   "kind": "select",
+   "node_title": "IN format",
+   "input_name": "value",
+   "default": "9:16",
+   "options": [
+    {
+     "value": "9:16",
+     "label": "Vertical 9:16"
+    },
+    {
+     "value": "16:9",
+     "label": "Horizontal 16:9"
+    }
+   ]
+  },
+  {
+   "id": "quality",
+   "label": "Quality",
+   "kind": "select",
+   "node_title": "IN quality",
+   "input_name": "value",
+   "default": "still",
+   "hint": "Preview (still): each shot's own still held instead of LTX video (type, 3D cuts, music and compose are real) - the quick look at the design; Final: the LTX render (still_preview.APP_FINAL_TIER) plus the Real-ESRGAN 1080 upscale; hidden value draft540 (what the page sends since v20) = the same LTX render WITHOUT the upscale; tools/app/upgrade_still.py renders a Preview as Final with the same stills and design.",
+   "options": [
+    {
+     "value": "still",
+     "label": "Preview"
+    },
+    {
+     "value": "final",
+     "label": "Final"
+    }
+   ]
+  }
+ ],
+ "missing": {
+  "words": "Add words to start"
+ },
+ "outputs": [
+  {
+   "node_title": "OUT still",
+   "kind": "image",
+   "label": "First frame"
+  },
+  {
+   "node_title": "OUT type",
+   "kind": "image",
+   "label": "Type passes"
+  },
+  {
+   "node_title": "OUT final",
+   "kind": "video",
+   "label": "Final video",
+   "final": true
+  },
+  {
+   "node_title": "OUT final 1080",
+   "kind": "video",
+   "label": "Final video 1080x1920 (upscaled, Final only)",
+   "optional": true
+  }
+ ],
+ "stage_labels": {
+  "IN words": "Read the words",
+  "IN image": "Load image",
+  "IN audio": "Load audio",
+  "User images (2..5)": "Load your other images",
+  "design_llm creative brief": "Write the brief",
+  "Music T2M encode": "Describe the music",
+  "Footage flow": "Read the footage motion",
+  "ACE sampler (text-to-music)": "Make the music (ACE-Step XL)",
+  "Music T2M cut": "Cut to length, find the beats",
+  "Tame highs": "Soften the highs",
+  "Music cut": "Cut your audio",
+  "Music route": "Pick the music",
+  "Master": "Master the audio",
+  "Plan the piece": "Plan the piece",
+  "Still sampler": "Generate the still",
+  "First frame": "First frame",
+  "Still sampler [place 2]": "Generate the still of place 2",
+  "Still sampler [place 3]": "Generate the still of place 3",
+  "Still sampler [place 4]": "Generate the still of place 4",
+  "Still sampler [place 5]": "Generate the still of place 5",
+  "Still sampler [place 6]": "Generate the still of place 6",
+  "Angle sampler [angle place 2]": "Edit the angle still of place 2",
+  "Angle sampler [angle place 3]": "Edit the angle still of place 3",
+  "Angle sampler [angle place 4]": "Edit the angle still of place 4",
+  "Angle sampler [angle place 5]": "Edit the angle still of place 5",
+  "Angle sampler [angle place 6]": "Edit the angle still of place 6",
+  "First frames (one per place)": "Gather the places' first frames",
+  "Type passes": "Render the 3D type",
+  "Footage gather": "Gather footage",
+  "Compose": "Compose type into footage",
+  "Assemble": "Encode the video",
+  "OUT final": "Save video",
+  "UP Real-ESRGAN x2": "Upscale to 1080x1920 (Final)",
+  "OUT final 1080": "Save the 1080x1920 video",
+  "Design package": "Prepare the design brief",
+  "design_llm design": "Gemma 4 12B designs the type",
+  "Design parse": "Check the design",
+  "design_llm design repair": "Gemma 4 12B repairs the design",
+  "Design repair": "Final design check",
+  "Piece from design": "Load the designed piece",
+  "Type passes (design)": "Render the designed 3D type",
+  "Gemma 4 12B Q6_K design": "Gemma 4 12B designs the type",
+  "Gemma 4 12B Q6_K design repair": "Gemma 4 12B repairs the design"
+ },
+ "server_flags": {
+  "comfyui": [
+   "--mmap-torch-files",
+   "--cache-ram",
+   "16",
+   "--use-sage-attention"
+  ],
+  "why": "12 GB card: models load in turn; Gemma 4 12B runs as a GGUF and is unloaded after each call"
+ },
+ "llm": {
+  "label": "Gemma 4 12B Q6_K",
+  "family": "gemma",
+  "dir": "gemma-4-12b",
+  "repo": "unsloth/gemma-4-12b-it-GGUF",
+  "licence": "Apache-2.0",
+  "file": "gemma-4-12b-it-Q6_K.gguf",
+  "mmproj_file": "mmproj-F16.gguf",
+  "n_gpu_layers": -1,
+  "kv_cache": "q8_0",
+  "mmproj_on_gpu": true,
+  "n_cpu_moe": 0,
+  "handler": "auto",
+  "top_k": 64,
+  "top_p": 0.95,
+  "repeat_penalty": 1.0,
+  "n_ctx": 16384,
+  "image_max_tokens": -1
+ },
+ "llm_models": [
+  "gemma-4-12b/gemma-4-12b-it-Q6_K.gguf",
+  "gemma-4-12b/mmproj-F16.gguf"
+ ]
+}

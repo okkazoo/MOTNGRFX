@@ -1,0 +1,24 @@
+{
+ "id": "P10",
+ "slug": "noir-step",
+ "fps": 24,
+ "audio": {
+  "src": "15_fusion/v002/out/motion-graphic_fusion_v002_P10_s1002_00001.flac",
+  "bpm": 90,
+  "cut": 15.3,
+  "fade": 0.5
+ },
+ "stills": [
+  {
+   "id": "A",
+   "model": "moss",
+   "seed": 1007,
+   "size": [
+    1088,
+    1920
+   ],
+   "negative": "text, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, extra limbs, deformed hands, blurry subject, colour, color tint, sepia",
+   "prompt": "1940s film noir photograph, black and white, a woman in a belted trench coat and a wide-brim hat walks toward the camera along a wet city street at night, she is slightly right of centre and shown full body, a tall cast-iron street lamp stands beside her and throws a hard cone of light, heavy rain streaks glittering in the lamp light, wet pavement reflecting the lamp, deep black shadows, high contrast, 35mm film grain, vertical frame, cinematic"
+  }
+ ]
+}

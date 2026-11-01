@@ -1,0 +1,213 @@
+{
+ "bar": 4,
+ "beats": [
+  0.02,
+  0.82,
+  1.62,
+  2.42,
+  3.22,
+  4.02,
+  4.82,
+  5.62,
+  6.42,
+  7.22,
+  8.02,
+  8.82,
+  9.62,
+  10.42,
+  11.22,
+  12.02,
+  12.82,
+  13.62,
+  14.42,
+  15.22,
+  16.02,
+  16.82,
+  17.62,
+  18.42,
+  19.22,
+  20.02
+ ],
+ "bpm": 74.99999999999999,
+ "camera": "beat_orbit",
+ "camera_params": {
+  "bob": 0.0,
+  "elev": 0.0,
+  "fast_dps": 6.2,
+  "intro_deg": 0.0,
+  "read_dps": 0.0
+ },
+ "downbeats": [
+  0.02,
+  3.22,
+  6.42,
+  9.62,
+  12.82,
+  16.02,
+  19.22
+ ],
+ "duration": 16.0,
+ "energy": 0.3,
+ "fps": 24,
+ "line": {
+  "px": 3.0
+ },
+ "mood": "Nostalgic, Serene",
+ "palette": {
+  "accents": [
+   [
+    95,
+    56,
+    50
+   ],
+   [
+    189,
+    128,
+    116
+   ],
+   [
+    141,
+    99,
+    92
+   ]
+  ],
+  "bg": [
+   45,
+   20,
+   23
+  ],
+  "fg": [
+   253,
+   230,
+   225
+  ]
+ },
+ "passes": [
+  "beauty",
+  "matte",
+  "depth",
+  "line",
+  "clay",
+  "flow"
+ ],
+ "seed": 24716,
+ "size": [
+  576,
+  1024
+ ],
+ "transitions": [
+  null,
+  "cut",
+  "cut"
+ ],
+ "words": [
+  {
+   "ar_min": 0.85,
+   "exit_s": 0.81,
+   "font": "BungeeInline-Regular.ttf",
+   "form_in": "particles",
+   "form_out": "blobs",
+   "form_s": 0.8,
+   "hit_on": "beat",
+   "lines": [
+    "LA",
+    "MP"
+   ],
+   "module": "slats",
+   "placement": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "hf": 0.593,
+    "pitch": 0.0,
+    "roll": 0.0,
+    "wf": 0.9,
+    "yaw": 0.0
+   },
+   "render": "flat",
+   "t0": 0.0,
+   "t1": 2.81,
+   "text": "LAMP",
+   "transition": {
+    "beats": 2,
+    "dir": "left",
+    "kind": "pan"
+   }
+  },
+  {
+   "exit_s": 0.81,
+   "font": "Jacquard12-Regular.ttf",
+   "form_in": "blobs",
+   "form_out": "wipe",
+   "form_s": 0.45,
+   "hit_on": "bar",
+   "ltx_at": 0.4,
+   "ltx_t": 4.442,
+   "material": "blown peach glass, translucent",
+   "module": "slats",
+   "placement": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "hf": 0.44,
+    "pitch": 0.0,
+    "roll": 90.0,
+    "wf": 0.88,
+    "yaw": 0.0
+   },
+   "render": "handoff",
+   "t0": 3.21,
+   "t1": 5.87,
+   "text": "GLASS"
+  },
+  {
+   "exit_s": 0.81,
+   "font": "BungeeInline-Regular.ttf",
+   "form_in": "particles",
+   "form_out": "blobs",
+   "form_s": 0.45,
+   "hit_on": "bar",
+   "module": "slats",
+   "placement": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "hf": 0.494,
+    "pitch": 0.0,
+    "roll": -90.0,
+    "wf": 0.88,
+    "yaw": 0.0
+   },
+   "render": "flat",
+   "t0": 6.27,
+   "t1": 8.73,
+   "text": "WICK"
+  },
+  {
+   "ar_min": 0.85,
+   "exit_s": 0.81,
+   "font": "Jacquard12-Regular.ttf",
+   "form_in": "blobs",
+   "form_out": "wipe",
+   "form_s": 0.45,
+   "hit_on": "bar",
+   "lines": [
+    "G",
+    "L",
+    "O",
+    "W"
+   ],
+   "module": "slats",
+   "placement": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "hf": 0.95,
+    "pitch": 0.0,
+    "roll": 0.0,
+    "wf": 0.415,
+    "yaw": 0.0
+   },
+   "render": "flat",
+   "t0": 9.17,
+   "t1": 11.83,
+   "text": "GLOW"
+  }
+ ]
+}

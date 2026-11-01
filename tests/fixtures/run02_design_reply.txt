@@ -1,0 +1,110 @@
+{
+  "concept": "The type lives BEHIND the subject, emerging from the mist as the forest breathes, each word a seismic tremor that shakes the ancient pines.",
+  "treatment_notes": "Type sits behind the subject matte, glowing faintly with a cold steel hue, growing in sync with the music’s pulse and fading on dropouts.",
+  "type": {
+    "mood": "cold steel", "energy": 0.3,
+    "palette": {"bg": [30, 30, 30], "fg": [255, 255, 255], "accents": [[10, 10, 10], [20, 20, 20], [50, 50, 50]]},
+    "camera": "beat_orbit",
+    "camera_params": {"read_dps": 4, "intro_deg": 15, "elev": 0, "bob": 0},
+    "transitions": ["braid", "twist", "cut"],
+    "line": {"px": 3},
+    "words": [
+      {
+        "text": "SILENCE BREAKS TEETH RATTLE",
+        "font": "Bitcount[CRSV,ELSH,ELXP,slnt,wght].ttf",
+        "module": "lanes",
+        "lines": ["SILENCE", "BREAKS", "TEETH", "RATTLE"],
+        "hit": 0.4,
+        "hold_s": 1.6,
+        "form_s": 0.45,
+        "exit_s": 0.5,
+        "form_in": "flicker",
+        "form_out": "flicker",
+        "placement": {"yaw": 0, "wf": 0.8, "hf": 0.5},
+        "screen_offset": [0, 0],
+        "axes": {"ELXP": 0, "ELSH": 0, "wght": 900},
+        "matte": "behind",
+        "window_source": "next"
+      },
+      {
+        "text": "TREE ROOTS GROAN",
+        "font": "Rock3D-Regular.ttf",
+        "module": "solid_hollow",
+        "lines": ["TREE", "ROOTS", "GROAN"],
+        "hit": 3.14,
+        "hold_s": 1.6,
+        "form_s": 0.45,
+        "exit_s": 0.5,
+        "form_in": "wipe",
+        "form_out": "wipe",
+        "placement": {"yaw": 0, "wf": 0.9, "hf": 0.4},
+        "screen_offset": [0, 0],
+        "axes": {},
+        "matte": "behind",
+        "window_source": "self"
+      },
+      {
+        "text": "HEART BEAT LIES",
+        "font": "BungeeOutline-Regular.ttf",
+        "module": "gradient_fade",
+        "lines": ["HEART", "BEAT", "LIES"],
+        "hit": 5.88,
+        "hold_s": 1.6,
+        "form_s": 0.45,
+        "exit_s": 0.5,
+        "form_in": "particles",
+        "form_out": "particles",
+        "placement": {"yaw": 0, "wf": 0.7, "hf": 0.5},
+        "screen_offset": [0, 0],
+        "axes": {"ROND": 0, "wght": 100},
+        "matte": "behind",
+        "window_source": "next"
+      },
+      {
+        "text": "FALL INTO DUST NO SOUND LEFT",
+        "font": "Anybody[wdth,wght].ttf",
+        "module": "scale_clash",
+        "lines": ["FALL", "INTO", "DUST", "NO", "SOUND", "LEFT"],
+        "hit": 8.62,
+        "hold_s": 1.6,
+        "form_s": 0.45,
+        "exit_s": 0.5,
+        "form_in": "flicker",
+        "form_out": "flicker",
+        "placement": {"yaw": 0, "wf": 0.9, "hf": 0.6},
+        "screen_offset": [0, 0],
+        "axes": {"wdth": 150, "wght": 900},
+        "matte": "behind",
+        "window_source": "self"
+      }
+    ]
+  },
+  "compose": {
+    "technique": "behind",
+    "plate_gain": 0.8,
+    "plate_sat": 0,
+    "glow_lo": 0.1,
+    "glow_hi": 0.3,
+    "glow_color": [10, 10, 10],
+    "grain": 0.02,
+    "vignette": 0.3,
+    "type_opacity": 0.9,
+    "holds": [
+      {"time": 0, "freeze_s": 0.5},
+      {"time": 3.14, "freeze_s": 0.5},
+      {"time": 5.88, "freeze_s": 0.5},
+      {"time": 8.62, "freeze_s": 0.5},
+      {"time": 11.35, "freeze_s": 0.5},
+      {"time": 14.09, "freeze_s": 0.5}
+    ],
+    "cuts": [
+      {
+        "after": "s1",
+        "cut": "window_cut",
+        "word": 1,
+        "exit": "grow",
+        "freeze_s": 0.2
+      }
+    ]
+  }
+}

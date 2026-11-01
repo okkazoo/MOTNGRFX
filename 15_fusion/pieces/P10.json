@@ -1,0 +1,444 @@
+{
+ "id": "P10",
+ "slug": "noir-step",
+ "fps": 24,
+ "audio": {
+  "src": "15_fusion/v002/out/motion-graphic_fusion_v002_P10_s1002_00001.flac",
+  "bpm": 90,
+  "cut": 15.25,
+  "fade": 0.5
+ },
+ "type": {
+  "seed": 10,
+  "energy": 0.8,
+  "mood": "tense",
+  "palette": {
+   "bg": [
+    8,
+    8,
+    7
+   ],
+   "fg": [
+    225,
+    224,
+    220
+   ],
+   "accents": [
+    [
+     225,
+     224,
+     220
+    ],
+    [
+     120,
+     120,
+     118
+    ],
+    [
+     60,
+     60,
+     58
+    ]
+   ]
+  },
+  "camera": "beat_orbit",
+  "camera_params": {
+   "read_dps": 5.0,
+   "intro_deg": 30.0
+  },
+  "transitions": "auto",
+  "line": {
+   "px": 5.0
+  },
+  "words": [
+   {
+    "text": "WHO",
+    "font": "Rock3D-Regular.ttf",
+    "lines": [
+     "W",
+     "H",
+     "O"
+    ],
+    "module": "lanes",
+    "hit_on": "bar",
+    "form_in": "lines",
+    "form_out": "lines",
+    "t0": 0.0,
+    "t1": 5.3,
+    "form_s": 1.76,
+    "exit_s": 0.8,
+    "ar": 1.5,
+    "placement": {
+     "yaw": -14
+    }
+   },
+   {
+    "text": "WAS",
+    "font": "BadeenDisplay-Regular.ttf",
+    "lines": [
+     "W",
+     "A",
+     "S"
+    ],
+    "module": "lanes",
+    "hit_on": "bar",
+    "form_in": "lines",
+    "form_out": "lines",
+    "t0": 6.6,
+    "t1": 10.2,
+    "form_s": 0.35,
+    "exit_s": 0.8,
+    "placement": {
+     "yaw": 14
+    }
+   },
+   {
+    "text": "SHE",
+    "font": "BadeenDisplay-Regular.ttf",
+    "lines": [
+     "S",
+     "H",
+     "E"
+    ],
+    "module": "lanes",
+    "hit_on": "bar",
+    "form_in": "lines",
+    "form_out": "lines",
+    "t0": 11.0,
+    "t1": 15.0,
+    "form_s": 0.35,
+    "exit_s": 0.8,
+    "placement": {
+     "yaw": -14
+    }
+   }
+  ]
+ },
+ "type_passes": [
+  "matte",
+  "line"
+ ],
+ "stills": [
+  {
+   "id": "A",
+   "model": "moss",
+   "seed": 1007,
+   "size": [
+    1088,
+    1920
+   ],
+   "negative": "text, watermark, logo, caption, cartoon, illustration, 3d render, extra limbs, deformed hands, colour, color tint, sepia",
+   "prompt": "1940s film noir photograph, black and white, a woman in a belted trench coat and a wide-brim hat walks toward the camera along a wet city street at night, she is slightly right of centre and shown full body, a tall cast-iron street lamp stands beside her and throws a hard cone of light, heavy rain streaks glittering in the lamp light, wet pavement reflecting the lamp, deep black shadows, high contrast, 35mm film grain, vertical frame, cinematic"
+  }
+ ],
+ "shots": [
+  {
+   "id": "s1",
+   "kind": "i2v",
+   "first": "A",
+   "frames": 105,
+   "span": 127,
+   "seed": 11,
+   "size": [
+    1088,
+    1920
+   ],
+   "matte": true,
+   "prompt": "black and white film noir, the woman in the trench coat and hat walks steadily toward the camera along the wet pavement, her coat swaying, heavy rain falling through the hard light of the street lamp, the camera slowly backs away keeping her in frame, deep black shadows, 35mm film grain"
+  },
+  {
+   "id": "s2",
+   "kind": "i2v",
+   "first": "last:s1",
+   "frames": 105,
+   "span": 129,
+   "seed": 12,
+   "size": [
+    1088,
+    1920
+   ],
+   "matte": true,
+   "prompt": "black and white film noir, the woman keeps walking toward the camera, raises her head and looks straight into the lens, heavy rain falling in the lamp light, the camera keeps backing away slowly keeping her in frame, deep black shadows, 35mm film grain"
+  },
+  {
+   "id": "s3",
+   "kind": "i2v",
+   "first": "last:s2",
+   "frames": 105,
+   "span": 114,
+   "seed": 13,
+   "size": [
+    1088,
+    1920
+   ],
+   "matte": true,
+   "prompt": "black and white film noir, the woman slows and stops beside the street lamp, turns and looks over her shoulder, heavy rain falling, the camera slowly pushes in on her, deep black shadows, 35mm film grain"
+  }
+ ],
+ "compose": {
+  "size": [
+   1080,
+   1920
+  ],
+  "crossfade": [
+   0.0833,
+   0.0833
+  ],
+  "crf": 16,
+  "holds": [
+   [
+    1.08,
+    0.66
+   ],
+   [
+    4.8,
+    0.46
+   ],
+   [
+    6.36,
+    0.7
+   ],
+   [
+    10.1,
+    0.46
+   ],
+   [
+    14.66,
+    0.64
+   ]
+  ],
+  "holds_type": true,
+  "default": {
+   "ops": [
+    {
+     "op": "upscale_matte",
+     "out": "m",
+     "args": {
+      "matte": "$matte",
+      "size": [
+       1080,
+       1920
+      ],
+      "guide": "$footage"
+     }
+    },
+    {
+     "op": "grade",
+     "out": "foot",
+     "args": {
+      "frame": "$footage",
+      "lift": 0.0,
+      "gamma": 1.0,
+      "gain": 1.08,
+      "sat": 0.0
+     }
+    },
+    {
+     "op": "fill_holes",
+     "out": "tm",
+     "args": {
+      "mask": "$type_matte",
+      "amount": {
+       "timeline": [
+        [
+         0,
+         1.0
+        ],
+        [
+         5.3,
+         0.0
+        ]
+       ],
+       "step": true
+      }
+     }
+    },
+    {
+     "op": "knockout",
+     "out": "image",
+     "args": {
+      "plate_rgb": {
+       "timeline": [
+        [
+         0,
+         [
+          0.88,
+          0.88,
+          0.87
+         ]
+        ],
+        [
+         1.08,
+         [
+          0.03,
+          0.03,
+          0.028
+         ]
+        ],
+        [
+         4.8,
+         [
+          0.88,
+          0.88,
+          0.87
+         ]
+        ],
+        [
+         6.36,
+         [
+          0.03,
+          0.03,
+          0.028
+         ]
+        ],
+        [
+         10.1,
+         [
+          0.88,
+          0.88,
+          0.87
+         ]
+        ],
+        [
+         14.66,
+         [
+          0.03,
+          0.03,
+          0.028
+         ]
+        ]
+       ],
+       "step": true
+      },
+      "type_a": "$tm",
+      "footage": "$foot",
+      "fg_matte": "$m"
+     }
+    },
+    {
+     "op": "over",
+     "out": "image",
+     "args": {
+      "base": "$image",
+      "fg": {
+       "timeline": [
+        [
+         0,
+         [
+          0.03,
+          0.03,
+          0.028
+         ]
+        ],
+        [
+         1.08,
+         [
+          0.88,
+          0.88,
+          0.87
+         ]
+        ],
+        [
+         4.8,
+         [
+          0.03,
+          0.03,
+          0.028
+         ]
+        ],
+        [
+         6.36,
+         [
+          0.88,
+          0.88,
+          0.87
+         ]
+        ],
+        [
+         10.1,
+         [
+          0.03,
+          0.03,
+          0.028
+         ]
+        ],
+        [
+         14.66,
+         [
+          0.88,
+          0.88,
+          0.87
+         ]
+        ]
+       ],
+       "step": true
+      },
+      "alpha": "$type_line"
+     }
+    },
+    {
+     "op": "add_glow",
+     "out": "image",
+     "args": {
+      "img": "$image",
+      "mask": "$type_matte",
+      "radius": 26,
+      "intensity": {
+       "curve": "sub",
+       "lo": 0.04,
+       "hi": 0.16
+      },
+      "color": [
+       0.95,
+       0.95,
+       0.93
+      ]
+     }
+    },
+    {
+     "op": "grade",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "lift": 0.008,
+      "gamma": 1.0,
+      "gain": 1.0,
+      "sat": 1.0
+     }
+    },
+    {
+     "op": "grain",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 10,
+      "amount": 0.035,
+      "size": 1.3
+     }
+    },
+    {
+     "op": "vignette",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "strength": 0.25
+     }
+    }
+   ]
+  },
+  "shots": {}
+ },
+ "signoff": {
+  "text": "noir step  /  90 bpm",
+  "font": "Space Mono",
+  "t0": 14.66,
+  "fade": 0.2,
+  "px": 30,
+  "color": [
+   235,
+   232,
+   226
+  ]
+ }
+}

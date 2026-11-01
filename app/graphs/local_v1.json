@@ -1,0 +1,17 @@
+{
+  "1": {"class_type": "LoadImage", "inputs": {"image": "blob_gradient.png"}, "_meta": {"title": "IN image"}},
+  "2": {"class_type": "LoadAudio", "inputs": {"audio": "beat_120.wav"}, "_meta": {"title": "IN audio"}},
+  "3": {"class_type": "MographAnalyze",
+        "inputs": {"text": "Make it move\nShapes from your pictures\nCut on the beat", "duration": 10.0,
+                   "image_1": ["1", 0], "audio": ["2", 0]},
+        "_meta": {"title": "IN words"}},
+  "4": {"class_type": "MographPlanRules", "inputs": {"analysis": ["3", 0], "seed": 0}, "_meta": {"title": "Plan"}},
+  "5": {"class_type": "MographSoundtrack", "inputs": {"plan": ["4", 0], "analysis": ["3", 0]},
+        "_meta": {"title": "Soundtrack"}},
+  "6": {"class_type": "MographRender",
+        "inputs": {"plan": ["4", 0], "analysis": ["3", 0], "audio": ["5", 0], "format": "9:16", "quality": "draft"},
+        "_meta": {"title": "Render"}},
+  "7": {"class_type": "SaveVideo",
+        "inputs": {"video": ["6", 0], "filename_prefix": "video/mograph_app", "format": "auto", "codec": "auto"},
+        "_meta": {"title": "OUT final"}}
+}

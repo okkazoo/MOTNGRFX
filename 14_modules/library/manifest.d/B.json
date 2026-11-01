@@ -1,0 +1,79 @@
+[
+  {
+    "id": "depth_echo",
+    "kind": "word",
+    "title": "Depth echo",
+    "description": "The outline is drawn by arriving strands, then copies of it peel off the face one by one and fan out behind it at true depth, a stack of paper-filled outlines fading into the ground that breathes and swells in perspective. On exit the stack folds back into the face and the strands run out.",
+    "clip": "14_modules/v002/local/depth_echo_g02_draft.mp4",
+    "sheet": "14_modules/v002/local/depth_echo_sheet_g02.jpg",
+    "dircheck": "14_modules/v002/local/depth_echo_dirs_g02.jpg",
+    "version": "14_modules/v002",
+    "gen": 2
+  },
+  {
+    "id": "candy_orbit",
+    "kind": "word",
+    "title": "Candy orbit",
+    "description": "Strands draw the outline, then a striped rod of 42 filled copies grows out of the face, banded vermilion and ink, receding toward a vanishing point that orbits the word like a camera going round. On exit the rod retracts into the face while still orbiting, and the strands run out.",
+    "clip": "14_modules/v002/local/candy_orbit_g03_draft.mp4",
+    "sheet": "14_modules/v002/local/candy_orbit_sheet_g03.jpg",
+    "dircheck": "14_modules/v002/local/candy_orbit_dirs_g03.jpg",
+    "version": "14_modules/v002",
+    "gen": 3
+  },
+  {
+    "id": "xray_unfold",
+    "kind": "word",
+    "title": "X-ray unfold",
+    "description": "Strands draw the outline, then the word hinges back onto the floor about its baseline, its depth unfolds as 14 see-through contour slices and it swings upright with the slab standing behind it, the face keeping a heavier accent outline. On exit it folds back down and up again, and the strands leave.",
+    "clip": "14_modules/v002/local/xray_unfold_g02_draft.mp4",
+    "sheet": "14_modules/v002/local/xray_unfold_sheet_g02.jpg",
+    "dircheck": "14_modules/v002/local/xray_unfold_dirs_g02.jpg",
+    "version": "14_modules/v002",
+    "gen": 2
+  },
+  {
+    "id": "hinge_unfold",
+    "kind": "word",
+    "title": "Hinge unfold",
+    "description": "Strands draw the outline, then each letter in turn tips back about its own baseline onto the floor, rises as a solid block, swings upright while sinking and pushes its depth out toward the viewer, shaded as solid walls under a bone face. On exit the domino runs backward and the strands leave.",
+    "clip": "14_modules/v002/local/hinge_unfold_g02_draft.mp4",
+    "sheet": "14_modules/v002/local/hinge_unfold_sheet_g02.jpg",
+    "dircheck": "14_modules/v002/local/hinge_unfold_dirs_g02.jpg",
+    "version": "14_modules/v002",
+    "gen": 2
+  },
+  {
+    "id": "topo_tower",
+    "kind": "word",
+    "title": "Topo tower",
+    "description": "Strands draw the outline, the word tips back to lie on the floor and its contour copies stack straight up into a topographic tower of paper-filled layers, grey at the foot to ink at the top. On exit the tower sinks back layer by layer, the word stands up and the strands run out.",
+    "clip": "14_modules/v002/local/topo_tower_g04_draft.mp4",
+    "sheet": "14_modules/v002/local/topo_tower_sheet_g04.jpg",
+    "dircheck": "14_modules/v002/local/topo_tower_dirs_g04.jpg",
+    "version": "14_modules/v002",
+    "gen": 4
+  },
+  {
+    "id": "hollow_tubes",
+    "kind": "word",
+    "title": "Hollow tubes",
+    "description": "Strands draw the outline, then each letter rises toward the viewer in turn as an open-topped hollow tube: outer walls graduated amber to vermilion, and through the bone rim the shaded inside falling away to black. On exit the tubes sink back into the page and the strands run out.",
+    "clip": "14_modules/v002/local/hollow_tubes_g03_draft.mp4",
+    "sheet": "14_modules/v002/local/hollow_tubes_sheet_g03.jpg",
+    "dircheck": "14_modules/v002/local/hollow_tubes_dirs_g03.jpg",
+    "version": "14_modules/v002",
+    "gen": 3
+  },
+  {
+    "id": "depth_tunnel",
+    "kind": "word",
+    "title": "Depth tunnel",
+    "description": "Strands draw the outline on a slab, then each letter opens in turn as a shaft straight down into the page, walls shaded amber to vermilion to deep with contour bands and pulses streaming down the shafts. On exit the shafts fill back to the surface and the strands leave.",
+    "clip": "14_modules/v002/local/depth_tunnel_g02_draft.mp4",
+    "sheet": "14_modules/v002/local/depth_tunnel_sheet_g02.jpg",
+    "dircheck": "14_modules/v002/local/depth_tunnel_dirs_g02.jpg",
+    "version": "14_modules/v002",
+    "gen": 2
+  }
+]

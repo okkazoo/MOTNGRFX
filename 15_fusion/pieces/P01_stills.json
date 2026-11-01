@@ -1,0 +1,24 @@
+{
+ "id": "P01",
+ "slug": "salt-silver",
+ "fps": 24,
+ "audio": {
+  "src": "15_fusion/v002/out/motion-graphic_fusion_v002_P01_s102_00001.flac",
+  "bpm": 72,
+  "cut": 14.4,
+  "fade": 0.6
+ },
+ "stills": [
+  {
+   "id": "A",
+   "model": "moss",
+   "seed": 1101,
+   "size": [
+    1088,
+    1920
+   ],
+   "negative": "text, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, extra limbs, deformed hands, blurry subject, bright saturated colours, sunset, crowd, boat, bird",
+   "prompt": "grey dawn on a cold sea, a lone person in a long dark coat stands on black wet rocks at the right of frame seen from behind and slightly to the side, looking out over the water, thick rolling sea mist drifts across the dark water and around the rocks, a distant cliff dissolving in the mist, soft silver light, one faint warm amber glow low on the horizon, 35mm film, muted desaturated silver and slate palette, tall vertical frame, the figure fills about a third of the frame height"
+  }
+ ]
+}

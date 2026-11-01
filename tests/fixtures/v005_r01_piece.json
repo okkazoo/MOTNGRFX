@@ -1,0 +1,2130 @@
+{
+ "audio": {
+  "bpm": 90,
+  "cut": 16.0,
+  "fade": 0.67,
+  "src": "t2m"
+ },
+ "brief": {},
+ "compose": {
+  "crf": 20,
+  "crossfade": 0,
+  "cuts": [
+   {
+    "after": "s1",
+    "cut": "hard"
+   },
+   {
+    "after": "s2",
+    "cut": "hard"
+   },
+   {
+    "after": "s3",
+    "cut": "hard"
+   },
+   {
+    "after": "s4",
+    "cut": "hard"
+   },
+   {
+    "after": "s5",
+    "cut": "hard",
+    "why": "s6 continues the same place and camera drift, so a hard cut on the 13.03s chord change keeps the flow unbroken into the final hold."
+   }
+  ],
+  "default": {
+   "ops": [
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.241,
+         0.0
+        ],
+        [
+         0.481,
+         0.75
+        ],
+        [
+         1.441,
+         0.75
+        ],
+        [
+         1.681,
+         0.0
+        ],
+        [
+         4.909,
+         0.0
+        ],
+        [
+         5.149,
+         0.75
+        ],
+        [
+         6.109,
+         0.75
+        ],
+        [
+         6.349,
+         0.0
+        ],
+        [
+         7.576,
+         0.0
+        ],
+        [
+         7.816,
+         0.75
+        ],
+        [
+         8.976,
+         0.75
+        ],
+        [
+         9.216,
+         0.0
+        ],
+        [
+         10.243,
+         0.0
+        ],
+        [
+         10.483,
+         0.75
+        ],
+        [
+         11.443,
+         0.75
+        ],
+        [
+         11.683,
+         0.0
+        ],
+        [
+         12.911,
+         0.0
+        ],
+        [
+         13.151,
+         0.75
+        ],
+        [
+         14.711,
+         0.75
+        ],
+        [
+         14.951,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "A301:type_matte",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_matte",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wm"
+    },
+    {
+     "args": {
+      "frame": "$footage",
+      "gain": 0.85,
+      "sat": 0.9
+     },
+     "op": "grade",
+     "out": "graded"
+    },
+    {
+     "args": {
+      "footage": "$graded",
+      "lum_target": 0.75,
+      "mode": "sample",
+      "sat": 1.4,
+      "type_a": "$wm"
+     },
+     "op": "tint_type",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "matte": "$matte",
+      "size": [
+       360,
+       640
+      ]
+     },
+     "op": "upscale_matte",
+     "out": "m"
+    },
+    {
+     "args": {
+      "footage": "$graded",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$wm",
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "sand"
+    },
+    {
+     "args": {
+      "color": [
+       1.0,
+       0.6,
+       0.3
+      ],
+      "img": "$sand",
+      "intensity": {
+       "curve": "onset",
+       "hi": 0.25,
+       "lo": 0.05
+      },
+      "mask": "$wm",
+      "radius": 18
+     },
+     "op": "add_glow",
+     "out": "glow"
+    },
+    {
+     "args": {
+      "amount": 0.02,
+      "frame": "$glow",
+      "frame_idx": "$frame_idx"
+     },
+     "op": "grain",
+     "out": "grainy"
+    },
+    {
+     "args": {
+      "frame": "$grainy",
+      "strength": 0.3
+     },
+     "op": "vignette",
+     "out": "image"
+    }
+   ]
+  },
+  "shots": {},
+  "size": [
+   360,
+   640
+  ]
+ },
+ "design": {
+  "concept": "The type lives BEHIND the skateboarder: each word is a solid, heavy slab that sits in the wet concrete between the camera and the rider, so the subject crosses the letters and the mist parts around them.",
+  "fields": {
+   "fields_fixed": [
+    {
+     "path": "compose.cuts",
+     "why": "piece rule: cuts[0] depth_dolly:right after s1: s2 continues s1 (same place); depth_dolly:right is for a place change, hard cut used"
+    },
+    {
+     "path": "type.words[0].hold_s",
+     "why": "piece rule: all holds shortened by 0.4 s (hold_s floor 1.2 s) so the 5 words end before the music fades"
+    },
+    {
+     "path": "type.words[1].axes.wght",
+     "why": "piece rule: type.words[1].axes dropped (they belonged to Anybody[wdth,wght].ttf)"
+    },
+    {
+     "path": "type.words[1].font",
+     "why": "piece rule: type.words[1].font Anybody[wdth,wght].ttf swapped to Jacquard12-Regular.ttf (blackletter): the same face twice in a row at a similar scale (code fix)"
+    },
+    {
+     "path": "type.words[1].hold_s",
+     "why": "piece rule: all holds shortened by 0.4 s (hold_s floor 1.2 s) so the 5 words end before the music fades"
+    },
+    {
+     "path": "type.words[2].form_s",
+     "why": "piece rule: the timing solver moved the form time to land the hit"
+    },
+    {
+     "path": "type.words[2].hold_s",
+     "why": "piece rule: all holds shortened by 0.4 s (hold_s floor 1.2 s) so the 5 words end before the music fades"
+    },
+    {
+     "path": "type.words[2].render",
+     "why": "piece rule: type.words[2].render 'flat' -> 'handoff': the shot footage was generated from the plan's control pass with that owner (material 'wet concrete, rough texture, mi"
+    },
+    {
+     "path": "type.words[3].axes.wght",
+     "why": "piece rule: type.words[3].axes dropped (they belonged to Anybody[wdth,wght].ttf)"
+    },
+    {
+     "path": "type.words[3].font",
+     "why": "piece rule: type.words[3].font Anybody[wdth,wght].ttf swapped to BitcountSingle[CRSV,ELSH,ELXP,slnt,wght].ttf (pixel): the piece needs at least 3 different faces from at le"
+    },
+    {
+     "path": "type.words[3].hold_s",
+     "why": "piece rule: all holds shortened by 0.4 s (hold_s floor 1.2 s) so the 5 words end before the music fades"
+    },
+    {
+     "path": "type.words[4].axes.wght",
+     "why": "piece rule: type.words[4].axes dropped (they belonged to BigShouldersDisplay[wght].ttf)"
+    },
+    {
+     "path": "type.words[4].font",
+     "why": "'Big Shoulders Display[wght].ttf' -> 'BigShouldersDisplay[wght].ttf' (spelling)"
+    },
+    {
+     "path": "type.words[4].form_s",
+     "why": "piece rule: the timing solver moved the form time to land the hit"
+    },
+    {
+     "path": "type.words[4].hold_s",
+     "why": "piece rule: all holds shortened by 0.4 s (hold_s floor 1.2 s) so the 5 words end before the music fades"
+    },
+    {
+     "path": "type.words[4].render",
+     "why": "piece rule: type.words[4].render 'flat' -> 'handoff': the shot footage was generated from the plan's control pass with that owner (material 'thin strands of light, glowing "
+    }
+   ],
+   "fields_from_model": [
+    "compose.glow_color",
+    "compose.glow_hi",
+    "compose.glow_lo",
+    "compose.grain",
+    "compose.ops.default",
+    "compose.plate_gain",
+    "compose.plate_sat",
+    "compose.technique",
+    "compose.type_opacity",
+    "compose.vignette",
+    "type.camera",
+    "type.camera_params.bob",
+    "type.camera_params.elev",
+    "type.camera_params.fast_dps",
+    "type.camera_params.intro_deg",
+    "type.camera_params.read_dps",
+    "type.energy",
+    "type.line.px",
+    "type.mood",
+    "type.palette.accents",
+    "type.palette.bg",
+    "type.palette.fg",
+    "type.transitions[0]",
+    "type.transitions[1]",
+    "type.transitions[2]",
+    "type.transitions[3]",
+    "type.words[0].axes.wght",
+    "type.words[0].exit_s",
+    "type.words[0].font",
+    "type.words[0].form_in",
+    "type.words[0].form_out",
+    "type.words[0].form_s",
+    "type.words[0].hit",
+    "type.words[0].lines",
+    "type.words[0].module",
+    "type.words[0].placement.dx",
+    "type.words[0].placement.dy",
+    "type.words[0].placement.hf",
+    "type.words[0].placement.pitch",
+    "type.words[0].placement.roll",
+    "type.words[0].placement.wf",
+    "type.words[0].placement.yaw",
+    "type.words[0].render",
+    "type.words[1].exit_s",
+    "type.words[1].form_in",
+    "type.words[1].form_out",
+    "type.words[1].form_s",
+    "type.words[1].hit",
+    "type.words[1].lines",
+    "type.words[1].module",
+    "type.words[1].placement.dx",
+    "type.words[1].placement.dy",
+    "type.words[1].placement.hf",
+    "type.words[1].placement.pitch",
+    "type.words[1].placement.roll",
+    "type.words[1].placement.wf",
+    "type.words[1].placement.yaw",
+    "type.words[1].render",
+    "type.words[2].axes.wght",
+    "type.words[2].exit_s",
+    "type.words[2].font",
+    "type.words[2].form_in",
+    "type.words[2].form_out",
+    "type.words[2].hit",
+    "type.words[2].lines",
+    "type.words[2].module",
+    "type.words[2].placement.dx",
+    "type.words[2].placement.dy",
+    "type.words[2].placement.hf",
+    "type.words[2].placement.pitch",
+    "type.words[2].placement.roll",
+    "type.words[2].placement.wf",
+    "type.words[2].placement.yaw",
+    "type.words[3].exit_s",
+    "type.words[3].form_in",
+    "type.words[3].form_out",
+    "type.words[3].form_s",
+    "type.words[3].hit",
+    "type.words[3].lines",
+    "type.words[3].module",
+    "type.words[3].placement.dx",
+    "type.words[3].placement.dy",
+    "type.words[3].placement.hf",
+    "type.words[3].placement.pitch",
+    "type.words[3].placement.roll",
+    "type.words[3].placement.wf",
+    "type.words[3].placement.yaw",
+    "type.words[3].render",
+    "type.words[4].exit_s",
+    "type.words[4].form_in",
+    "type.words[4].form_out",
+    "type.words[4].hit",
+    "type.words[4].lines",
+    "type.words[4].module",
+    "type.words[4].placement.dx",
+    "type.words[4].placement.dy",
+    "type.words[4].placement.hf",
+    "type.words[4].placement.pitch",
+    "type.words[4].placement.roll",
+    "type.words[4].placement.wf",
+    "type.words[4].placement.yaw"
+   ],
+   "fields_from_rules": [],
+   "n": 117,
+   "pct_model": 86.3,
+   "pct_model_or_fixed": 100.0,
+   "pending": [],
+   "sections": {
+    "compose": "model",
+    "type": "model"
+   },
+   "why": {
+    "copied": 0,
+    "decisions": 8,
+    "flagged": [],
+    "missing": 0,
+    "present": 8,
+    "reasons": 1.0,
+    "repeated": 0,
+    "whys": {
+     "compose.default": "The chain darkens the plate slightly for contrast against the misty wet concrete, tints the type from the footage's sunrise orange, and sandwiches it behind the rider so the subject stays solid in front.",
+     "idea": "The footage already tracks the rider through mist and wet concrete, and the post-rock build at 90 bpm wants weight that the subject can push through, so putting the type behind the rider makes the words feel carved into the world the skater is moving through.",
+     "system": "The post-rock swells need one strong, consistent voice; thinning the weight across the five words mirrors the slow build and release of the music while the constant lanes module and behind placement keep the eye on the rider.",
+     "word[0] FIRST": "Heavy Anybody at full weight opens the piece on the first downbeat (0.36s); lanes form-in draws the outline from the wet concrete, and flat render keeps it crisp against the busy misty bowl.",
+     "word[1] LIGHT": "Hit on the 2.36s downbeat as the shot cuts to the carve; slightly thinner weight and a ripple transition answer the mist spray rising off the lip.",
+     "word[2] CARVE": "Hit on the 5.03s chord change into harmony 2; the fan transition and the word's own shot (concrete-formed letters) make the type feel part of the ramp as the rider drifts.",
+     "word[3] DRIFT": "Hit on the 7.7s chord change as the rider stops and looks back; the twist transition matches the slow push-in camera and the settling mist.",
+     "word[4] HOLD": "Hit on the 10.36s chord change into harmony 4; drops to tall condensed Big Shoulders Display so the final word is lighter and calmer, clearing before the 16s fade."
+    }
+   }
+  },
+  "salvage": {
+   "pending": [],
+   "raw": {
+    "@compose": true,
+    "@system": [],
+    "@type": true,
+    "@why": {
+     "copied": 0,
+     "decisions": 8,
+     "flagged": [],
+     "missing": 0,
+     "present": 8,
+     "reasons": 1.0,
+     "repeated": 0,
+     "whys": {
+      "compose.default": "The chain darkens the plate slightly for contrast against the misty wet concrete, tints the type from the footage's sunrise orange, and sandwiches it behind the rider so the subject stays solid in front.",
+      "idea": "The footage already tracks the rider through mist and wet concrete, and the post-rock build at 90 bpm wants weight that the subject can push through, so putting the type behind the rider makes the words feel carved into the world the skater is moving through.",
+      "system": "The post-rock swells need one strong, consistent voice; thinning the weight across the five words mirrors the slow build and release of the music while the constant lanes module and behind placement keep the eye on the rider.",
+      "word[0] FIRST": "Heavy Anybody at full weight opens the piece on the first downbeat (0.36s); lanes form-in draws the outline from the wet concrete, and flat render keeps it crisp against the busy misty bowl.",
+      "word[1] LIGHT": "Hit on the 2.36s downbeat as the shot cuts to the carve; slightly thinner weight and a ripple transition answer the mist spray rising off the lip.",
+      "word[2] CARVE": "Hit on the 5.03s chord change into harmony 2; the fan transition and the word's own shot (concrete-formed letters) make the type feel part of the ramp as the rider drifts.",
+      "word[3] DRIFT": "Hit on the 7.7s chord change as the rider stops and looks back; the twist transition matches the slow push-in camera and the settling mist.",
+      "word[4] HOLD": "Hit on the 10.36s chord change into harmony 4; drops to tall condensed Big Shoulders Display so the final word is lighter and calmer, clearing before the 16s fade."
+     }
+    },
+    "@word0": true,
+    "@word1": true,
+    "@word2": true,
+    "@word3": true,
+    "@word4": true,
+    "@words": true,
+    "compose.cuts": [
+     {
+      "after": "s1",
+      "cut": "depth_dolly:right",
+      "why": "The rider is moving laterally right in s1, so the shards slide right into the carve shot; the cut lands on the 2.36s downbeat."
+     },
+     {
+      "after": "s2",
+      "cut": "orbit:push",
+      "why": "The music builds into the 5.03s chord change, so the camera dives into the carve shot and arrives at the drift."
+     },
+     {
+      "after": "s3",
+      "cut": "depth_pivot",
+      "why": "Both shots have a clear subject and matte; the pivot on the 7.7s chord change keeps the rider crisp in front while the background transforms."
+     },
+     {
+      "after": "s4",
+      "cut": "orbit:pullback",
+      "why": "The rider stops and the music releases at 10.36s, so the camera backs out and the HOLD shot flies in past the lens."
+     },
+     {
+      "after": "s5",
+      "cut": "hard",
+      "why": "s6 continues the same place and camera drift, so a hard cut on the 13.03s chord change keeps the flow unbroken into the final hold."
+     }
+    ],
+    "compose.glow_color": [
+     1.0,
+     0.6,
+     0.3
+    ],
+    "compose.glow_hi": 0.25,
+    "compose.glow_lo": 0.05,
+    "compose.grain": 0.02,
+    "compose.holds": [],
+    "compose.ops": {
+     "default": {
+      "ops": [
+       {
+        "args": {
+         "frame": "$footage",
+         "gain": 0.85,
+         "sat": 0.9
+        },
+        "op": "grade",
+        "out": "graded"
+       },
+       {
+        "args": {
+         "footage": "$graded",
+         "lum_target": 0.75,
+         "mode": "sample",
+         "sat": 1.4,
+         "type_a": "$type_matte"
+        },
+        "op": "tint_type",
+        "out": "tcol"
+       },
+       {
+        "args": {
+         "matte": "$matte",
+         "size": [
+          360,
+          640
+         ]
+        },
+        "op": "upscale_matte",
+        "out": "m"
+       },
+       {
+        "args": {
+         "footage": "$graded",
+         "matte": "$m",
+         "matte_soft": 0.08,
+         "matte_threshold": 0.5,
+         "type_a": "$type_matte",
+         "type_rgb": "$tcol"
+        },
+        "op": "sandwich",
+        "out": "sand"
+       },
+       {
+        "args": {
+         "color": [
+          1.0,
+          0.6,
+          0.3
+         ],
+         "img": "$sand",
+         "intensity": {
+          "curve": "onset",
+          "hi": 0.25,
+          "lo": 0.05
+         },
+         "mask": "$type_matte",
+         "radius": 18
+        },
+        "op": "add_glow",
+        "out": "glow"
+       },
+       {
+        "args": {
+         "amount": 0.02,
+         "frame": "$glow",
+         "frame_idx": "$frame_idx"
+        },
+        "op": "grain",
+        "out": "grainy"
+       },
+       {
+        "args": {
+         "frame": "$grainy",
+         "strength": 0.3
+        },
+        "op": "vignette",
+        "out": "image"
+       }
+      ],
+      "why": "The chain darkens the plate slightly for contrast against the misty wet concrete, tints the type from the footage's sunrise orange, and sandwiches it behind the rider so the subject stays solid in front."
+     },
+     "shots": {}
+    },
+    "compose.plate_gain": 0.7,
+    "compose.plate_sat": 0.8,
+    "compose.technique": "behind",
+    "compose.type_opacity": 1.0,
+    "compose.vignette": 0.3,
+    "concept": "The type lives BEHIND the skateboarder: each word is a solid, heavy slab that sits in the wet concrete between the camera and the rider, so the subject crosses the letters and the mist parts around them.",
+    "system": {
+     "axis": {
+      "font": "Anybody[wdth,wght].ttf",
+      "tag": "wght",
+      "windows": [
+       [
+        900,
+        900
+       ],
+       [
+        800,
+        800
+       ],
+       [
+        700,
+        700
+       ],
+       [
+        600,
+        600
+       ],
+       [
+        500,
+        500
+       ]
+      ]
+     },
+     "pattern": [
+      "A",
+      "A",
+      "A",
+      "A",
+      "B"
+     ],
+     "progression": "FIRST is heaviest and widest, the weight thins word by word, and the final HOLD drops to a tall condensed face so the piece ends quieter than it started.",
+     "roles": {
+      "A": "Anybody[wdth,wght].ttf",
+      "B": "Big Shoulders Display[wght].ttf"
+     },
+     "rule": "One heavy face carries the piece; each word steps down one weight notch and one axis value so the type feels lighter as the music resolves, while the lanes module and behind-the-subject placement stay constant.",
+     "why": "The post-rock swells need one strong, consistent voice; thinning the weight across the five words mirrors the slow build and release of the music while the constant lanes module and behind placement keep the eye on the rider.",
+     "yaw": [
+      16,
+      -16,
+      16,
+      -16,
+      10
+     ]
+    },
+    "treatment_notes": "Every word is sandwiched between the footage and the subject (behind), large and centred so the rider crosses it; the type stays still on the hold and the mist and rider move across it.",
+    "type.camera": "beat_orbit",
+    "type.camera_params.bob": 0.5,
+    "type.camera_params.elev": 2,
+    "type.camera_params.fast_dps": 18,
+    "type.camera_params.intro_deg": 22,
+    "type.camera_params.read_dps": 4,
+    "type.energy": 0.6,
+    "type.line.px": 4,
+    "type.mood": "heavy, atmospheric",
+    "type.palette.accents": [
+     [
+      255,
+      150,
+      60
+     ],
+     [
+      90,
+      150,
+      220
+     ],
+     [
+      230,
+      220,
+      200
+     ]
+    ],
+    "type.palette.bg": [
+     12,
+     22,
+     38
+    ],
+    "type.palette.fg": [
+     245,
+     240,
+     230
+    ],
+    "type.transitions": [
+     "ripple",
+     "fan",
+     "twist",
+     "cut"
+    ],
+    "type.words[0].axes.wght": [
+     900,
+     900,
+     "beat"
+    ],
+    "type.words[0].exit_s": 0.5,
+    "type.words[0].font": "Anybody[wdth,wght].ttf",
+    "type.words[0].form_in": "lines",
+    "type.words[0].form_out": "lines",
+    "type.words[0].form_s": 0.45,
+    "type.words[0].hit": 0.361,
+    "type.words[0].hold_s": 1.6,
+    "type.words[0].lines": [
+     "FIRST"
+    ],
+    "type.words[0].module": "lanes",
+    "type.words[0].placement.dx": 0,
+    "type.words[0].placement.dy": 0,
+    "type.words[0].placement.hf": 0.32,
+    "type.words[0].placement.pitch": 0,
+    "type.words[0].placement.roll": 0,
+    "type.words[0].placement.wf": 0.95,
+    "type.words[0].placement.yaw": 16,
+    "type.words[0].render": "flat",
+    "type.words[0].text": "FIRST",
+    "type.words[1].axes.wght": [
+     800,
+     800,
+     "beat"
+    ],
+    "type.words[1].exit_s": 0.5,
+    "type.words[1].font": "Anybody[wdth,wght].ttf",
+    "type.words[1].form_in": "lines",
+    "type.words[1].form_out": "lines",
+    "type.words[1].form_s": 0.45,
+    "type.words[1].hit": 2.36149,
+    "type.words[1].hold_s": 1.6,
+    "type.words[1].lines": [
+     "LIGHT"
+    ],
+    "type.words[1].module": "lanes",
+    "type.words[1].placement.dx": 0,
+    "type.words[1].placement.dy": 0,
+    "type.words[1].placement.hf": 0.32,
+    "type.words[1].placement.pitch": 0,
+    "type.words[1].placement.roll": 0,
+    "type.words[1].placement.wf": 0.95,
+    "type.words[1].placement.yaw": -16,
+    "type.words[1].render": "flat",
+    "type.words[1].text": "LIGHT",
+    "type.words[2].axes.wght": [
+     700,
+     700,
+     "beat"
+    ],
+    "type.words[2].exit_s": 0.5,
+    "type.words[2].font": "Anybody[wdth,wght].ttf",
+    "type.words[2].form_in": "lines",
+    "type.words[2].form_out": "lines",
+    "type.words[2].form_s": 0.5,
+    "type.words[2].hit": 5.0288,
+    "type.words[2].hold_s": 1.8,
+    "type.words[2].lines": [
+     "CARVE"
+    ],
+    "type.words[2].module": "lanes",
+    "type.words[2].placement.dx": 0,
+    "type.words[2].placement.dy": 0,
+    "type.words[2].placement.hf": 0.32,
+    "type.words[2].placement.pitch": 0,
+    "type.words[2].placement.roll": 0,
+    "type.words[2].placement.wf": 0.95,
+    "type.words[2].placement.yaw": 16,
+    "type.words[2].render": "flat",
+    "type.words[2].text": "CARVE",
+    "type.words[3].axes.wght": [
+     600,
+     600,
+     "beat"
+    ],
+    "type.words[3].exit_s": 0.5,
+    "type.words[3].font": "Anybody[wdth,wght].ttf",
+    "type.words[3].form_in": "lines",
+    "type.words[3].form_out": "lines",
+    "type.words[3].form_s": 0.45,
+    "type.words[3].hit": 7.69612,
+    "type.words[3].hold_s": 1.6,
+    "type.words[3].lines": [
+     "DRIFT"
+    ],
+    "type.words[3].module": "lanes",
+    "type.words[3].placement.dx": 0,
+    "type.words[3].placement.dy": 0,
+    "type.words[3].placement.hf": 0.32,
+    "type.words[3].placement.pitch": 0,
+    "type.words[3].placement.roll": 0,
+    "type.words[3].placement.wf": 0.95,
+    "type.words[3].placement.yaw": -16,
+    "type.words[3].render": "flat",
+    "type.words[3].text": "DRIFT",
+    "type.words[4].axes.wght": [
+     700,
+     700,
+     "beat"
+    ],
+    "type.words[4].exit_s": 0.8,
+    "type.words[4].font": "Big Shoulders Display[wght].ttf",
+    "type.words[4].form_in": "lines",
+    "type.words[4].form_out": "lines",
+    "type.words[4].form_s": 0.5,
+    "type.words[4].hit": 10.3634,
+    "type.words[4].hold_s": 2.2,
+    "type.words[4].lines": [
+     "HOLD"
+    ],
+    "type.words[4].module": "lanes",
+    "type.words[4].placement.dx": 0,
+    "type.words[4].placement.dy": 0,
+    "type.words[4].placement.hf": 0.38,
+    "type.words[4].placement.pitch": 0,
+    "type.words[4].placement.roll": 0,
+    "type.words[4].placement.wf": 0.9,
+    "type.words[4].placement.yaw": 10,
+    "type.words[4].render": "flat",
+    "type.words[4].text": "HOLD"
+   }
+  },
+  "src": {
+   "compose": "model",
+   "type": "model"
+  },
+  "technique": "behind",
+  "treatment_notes": "Every word is sandwiched between the footage and the subject (behind), large and centred so the rider crosses it; the type stays still on the hold and the mist and rider move across it."
+ },
+ "format": "9:16",
+ "fps": 24,
+ "id": "A301",
+ "layout": {
+  "s1": {
+   "start": 0,
+   "frames": 57,
+   "xf": 0
+  },
+  "s2": {
+   "start": 57,
+   "frames": 64,
+   "xf": 0
+  },
+  "s3": {
+   "start": 121,
+   "frames": 64,
+   "xf": 0
+  },
+  "s4": {
+   "start": 185,
+   "frames": 64,
+   "xf": 0
+  },
+  "s5": {
+   "start": 249,
+   "frames": 64,
+   "xf": 0
+  },
+  "s6": {
+   "start": 313,
+   "frames": 71,
+   "xf": 0
+  }
+ },
+ "plan": {
+  "bars": 0,
+  "compose_ops": {
+   "chains": 1,
+   "fixes": [],
+   "n_fixes": 0,
+   "source": "model"
+  },
+  "contour": {
+   "available": true,
+   "lines": [
+    {
+     "entry": {
+      "dir": "along",
+      "port": "matte_outline"
+     },
+     "exit": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "matte": "wipe",
+     "via": {
+      "port": "luma_edges"
+     }
+    },
+    {
+     "entry": {
+      "dir": "around",
+      "port": "luma_edges"
+     },
+     "exit": {
+      "dir": "up",
+      "port": "matte_outline"
+     },
+     "matte": "window",
+     "via": {
+      "port": "matte_outline"
+     }
+    },
+    {
+     "entry": {
+      "dir": "around",
+      "port": "matte_outline"
+     },
+     "exit": {
+      "dir": "along",
+      "port": "luma_edges"
+     },
+     "matte": "fill",
+     "via": {
+      "port": "luma_edges"
+     }
+    },
+    {
+     "entry": {
+      "dir": "along",
+      "port": "luma_edges"
+     },
+     "exit": {
+      "dir": "up",
+      "port": "matte_outline"
+     },
+     "matte": "front",
+     "via": {
+      "port": "matte_outline"
+     }
+    },
+    {
+     "entry": {
+      "dir": "around",
+      "port": "matte_outline"
+     },
+     "exit": {
+      "dir": "along",
+      "port": "luma_edges"
+     },
+     "matte": "glow"
+    }
+   ],
+   "subject": true
+  },
+  "design": {
+   "fields": {
+    "fields_fixed": [
+     {
+      "path": "compose.cuts",
+      "why": "piece rule: cuts[0] depth_dolly:right after s1: s2 continues s1 (same place); depth_dolly:right is for a place change, hard cut used"
+     },
+     {
+      "path": "type.words[0].hold_s",
+      "why": "piece rule: all holds shortened by 0.4 s (hold_s floor 1.2 s) so the 5 words end before the music fades"
+     },
+     {
+      "path": "type.words[1].axes.wght",
+      "why": "piece rule: type.words[1].axes dropped (they belonged to Anybody[wdth,wght].ttf)"
+     },
+     {
+      "path": "type.words[1].font",
+      "why": "piece rule: type.words[1].font Anybody[wdth,wght].ttf swapped to Jacquard12-Regular.ttf (blackletter): the same face twice in a row at a similar scale (code fix)"
+     },
+     {
+      "path": "type.words[1].hold_s",
+      "why": "piece rule: all holds shortened by 0.4 s (hold_s floor 1.2 s) so the 5 words end before the music fades"
+     },
+     {
+      "path": "type.words[2].form_s",
+      "why": "piece rule: the timing solver moved the form time to land the hit"
+     },
+     {
+      "path": "type.words[2].hold_s",
+      "why": "piece rule: all holds shortened by 0.4 s (hold_s floor 1.2 s) so the 5 words end before the music fades"
+     },
+     {
+      "path": "type.words[2].render",
+      "why": "piece rule: type.words[2].render 'flat' -> 'handoff': the shot footage was generated from the plan's control pass with that owner (material 'wet concrete, rough texture, mi"
+     },
+     {
+      "path": "type.words[3].axes.wght",
+      "why": "piece rule: type.words[3].axes dropped (they belonged to Anybody[wdth,wght].ttf)"
+     },
+     {
+      "path": "type.words[3].font",
+      "why": "piece rule: type.words[3].font Anybody[wdth,wght].ttf swapped to BitcountSingle[CRSV,ELSH,ELXP,slnt,wght].ttf (pixel): the piece needs at least 3 different faces from at le"
+     },
+     {
+      "path": "type.words[3].hold_s",
+      "why": "piece rule: all holds shortened by 0.4 s (hold_s floor 1.2 s) so the 5 words end before the music fades"
+     },
+     {
+      "path": "type.words[4].axes.wght",
+      "why": "piece rule: type.words[4].axes dropped (they belonged to BigShouldersDisplay[wght].ttf)"
+     },
+     {
+      "path": "type.words[4].font",
+      "why": "'Big Shoulders Display[wght].ttf' -> 'BigShouldersDisplay[wght].ttf' (spelling)"
+     },
+     {
+      "path": "type.words[4].form_s",
+      "why": "piece rule: the timing solver moved the form time to land the hit"
+     },
+     {
+      "path": "type.words[4].hold_s",
+      "why": "piece rule: all holds shortened by 0.4 s (hold_s floor 1.2 s) so the 5 words end before the music fades"
+     },
+     {
+      "path": "type.words[4].render",
+      "why": "piece rule: type.words[4].render 'flat' -> 'handoff': the shot footage was generated from the plan's control pass with that owner (material 'thin strands of light, glowing "
+     }
+    ],
+    "fields_from_model": [
+     "compose.glow_color",
+     "compose.glow_hi",
+     "compose.glow_lo",
+     "compose.grain",
+     "compose.ops.default",
+     "compose.plate_gain",
+     "compose.plate_sat",
+     "compose.technique",
+     "compose.type_opacity",
+     "compose.vignette",
+     "type.camera",
+     "type.camera_params.bob",
+     "type.camera_params.elev",
+     "type.camera_params.fast_dps",
+     "type.camera_params.intro_deg",
+     "type.camera_params.read_dps",
+     "type.energy",
+     "type.line.px",
+     "type.mood",
+     "type.palette.accents",
+     "type.palette.bg",
+     "type.palette.fg",
+     "type.transitions[0]",
+     "type.transitions[1]",
+     "type.transitions[2]",
+     "type.transitions[3]",
+     "type.words[0].axes.wght",
+     "type.words[0].exit_s",
+     "type.words[0].font",
+     "type.words[0].form_in",
+     "type.words[0].form_out",
+     "type.words[0].form_s",
+     "type.words[0].hit",
+     "type.words[0].lines",
+     "type.words[0].module",
+     "type.words[0].placement.dx",
+     "type.words[0].placement.dy",
+     "type.words[0].placement.hf",
+     "type.words[0].placement.pitch",
+     "type.words[0].placement.roll",
+     "type.words[0].placement.wf",
+     "type.words[0].placement.yaw",
+     "type.words[0].render",
+     "type.words[1].exit_s",
+     "type.words[1].form_in",
+     "type.words[1].form_out",
+     "type.words[1].form_s",
+     "type.words[1].hit",
+     "type.words[1].lines",
+     "type.words[1].module",
+     "type.words[1].placement.dx",
+     "type.words[1].placement.dy",
+     "type.words[1].placement.hf",
+     "type.words[1].placement.pitch",
+     "type.words[1].placement.roll",
+     "type.words[1].placement.wf",
+     "type.words[1].placement.yaw",
+     "type.words[1].render",
+     "type.words[2].axes.wght",
+     "type.words[2].exit_s",
+     "type.words[2].font",
+     "type.words[2].form_in",
+     "type.words[2].form_out",
+     "type.words[2].hit",
+     "type.words[2].lines",
+     "type.words[2].module",
+     "type.words[2].placement.dx",
+     "type.words[2].placement.dy",
+     "type.words[2].placement.hf",
+     "type.words[2].placement.pitch",
+     "type.words[2].placement.roll",
+     "type.words[2].placement.wf",
+     "type.words[2].placement.yaw",
+     "type.words[3].exit_s",
+     "type.words[3].form_in",
+     "type.words[3].form_out",
+     "type.words[3].form_s",
+     "type.words[3].hit",
+     "type.words[3].lines",
+     "type.words[3].module",
+     "type.words[3].placement.dx",
+     "type.words[3].placement.dy",
+     "type.words[3].placement.hf",
+     "type.words[3].placement.pitch",
+     "type.words[3].placement.roll",
+     "type.words[3].placement.wf",
+     "type.words[3].placement.yaw",
+     "type.words[3].render",
+     "type.words[4].exit_s",
+     "type.words[4].form_in",
+     "type.words[4].form_out",
+     "type.words[4].hit",
+     "type.words[4].lines",
+     "type.words[4].module",
+     "type.words[4].placement.dx",
+     "type.words[4].placement.dy",
+     "type.words[4].placement.hf",
+     "type.words[4].placement.pitch",
+     "type.words[4].placement.roll",
+     "type.words[4].placement.wf",
+     "type.words[4].placement.yaw"
+    ],
+    "fields_from_rules": [],
+    "n": 117,
+    "pct_model": 86.3,
+    "pct_model_or_fixed": 100.0,
+    "pending": [],
+    "sections": {
+     "compose": "model",
+     "type": "model"
+    },
+    "why": {
+     "copied": 0,
+     "decisions": 8,
+     "flagged": [],
+     "missing": 0,
+     "present": 8,
+     "reasons": 1.0,
+     "repeated": 0,
+     "whys": {
+      "compose.default": "The chain darkens the plate slightly for contrast against the misty wet concrete, tints the type from the footage's sunrise orange, and sandwiches it behind the rider so the subject stays solid in front.",
+      "idea": "The footage already tracks the rider through mist and wet concrete, and the post-rock build at 90 bpm wants weight that the subject can push through, so putting the type behind the rider makes the words feel carved into the world the skater is moving through.",
+      "system": "The post-rock swells need one strong, consistent voice; thinning the weight across the five words mirrors the slow build and release of the music while the constant lanes module and behind placement keep the eye on the rider.",
+      "word[0] FIRST": "Heavy Anybody at full weight opens the piece on the first downbeat (0.36s); lanes form-in draws the outline from the wet concrete, and flat render keeps it crisp against the busy misty bowl.",
+      "word[1] LIGHT": "Hit on the 2.36s downbeat as the shot cuts to the carve; slightly thinner weight and a ripple transition answer the mist spray rising off the lip.",
+      "word[2] CARVE": "Hit on the 5.03s chord change into harmony 2; the fan transition and the word's own shot (concrete-formed letters) make the type feel part of the ramp as the rider drifts.",
+      "word[3] DRIFT": "Hit on the 7.7s chord change as the rider stops and looks back; the twist transition matches the slow push-in camera and the settling mist.",
+      "word[4] HOLD": "Hit on the 10.36s chord change into harmony 4; drops to tall condensed Big Shoulders Display so the final word is lighter and calmer, clearing before the 16s fade."
+     }
+    }
+   },
+   "model": "design_llm_8b",
+   "salvage": {
+    "pending": [],
+    "raw": {
+     "@compose": true,
+     "@system": [],
+     "@type": true,
+     "@why": {
+      "copied": 0,
+      "decisions": 8,
+      "flagged": [],
+      "missing": 0,
+      "present": 8,
+      "reasons": 1.0,
+      "repeated": 0,
+      "whys": {
+       "compose.default": "The chain darkens the plate slightly for contrast against the misty wet concrete, tints the type from the footage's sunrise orange, and sandwiches it behind the rider so the subject stays solid in front.",
+       "idea": "The footage already tracks the rider through mist and wet concrete, and the post-rock build at 90 bpm wants weight that the subject can push through, so putting the type behind the rider makes the words feel carved into the world the skater is moving through.",
+       "system": "The post-rock swells need one strong, consistent voice; thinning the weight across the five words mirrors the slow build and release of the music while the constant lanes module and behind placement keep the eye on the rider.",
+       "word[0] FIRST": "Heavy Anybody at full weight opens the piece on the first downbeat (0.36s); lanes form-in draws the outline from the wet concrete, and flat render keeps it crisp against the busy misty bowl.",
+       "word[1] LIGHT": "Hit on the 2.36s downbeat as the shot cuts to the carve; slightly thinner weight and a ripple transition answer the mist spray rising off the lip.",
+       "word[2] CARVE": "Hit on the 5.03s chord change into harmony 2; the fan transition and the word's own shot (concrete-formed letters) make the type feel part of the ramp as the rider drifts.",
+       "word[3] DRIFT": "Hit on the 7.7s chord change as the rider stops and looks back; the twist transition matches the slow push-in camera and the settling mist.",
+       "word[4] HOLD": "Hit on the 10.36s chord change into harmony 4; drops to tall condensed Big Shoulders Display so the final word is lighter and calmer, clearing before the 16s fade."
+      }
+     },
+     "@word0": true,
+     "@word1": true,
+     "@word2": true,
+     "@word3": true,
+     "@word4": true,
+     "@words": true,
+     "compose.cuts": [
+      {
+       "after": "s1",
+       "cut": "depth_dolly:right",
+       "why": "The rider is moving laterally right in s1, so the shards slide right into the carve shot; the cut lands on the 2.36s downbeat."
+      },
+      {
+       "after": "s2",
+       "cut": "orbit:push",
+       "why": "The music builds into the 5.03s chord change, so the camera dives into the carve shot and arrives at the drift."
+      },
+      {
+       "after": "s3",
+       "cut": "depth_pivot",
+       "why": "Both shots have a clear subject and matte; the pivot on the 7.7s chord change keeps the rider crisp in front while the background transforms."
+      },
+      {
+       "after": "s4",
+       "cut": "orbit:pullback",
+       "why": "The rider stops and the music releases at 10.36s, so the camera backs out and the HOLD shot flies in past the lens."
+      },
+      {
+       "after": "s5",
+       "cut": "hard",
+       "why": "s6 continues the same place and camera drift, so a hard cut on the 13.03s chord change keeps the flow unbroken into the final hold."
+      }
+     ],
+     "compose.glow_color": [
+      1.0,
+      0.6,
+      0.3
+     ],
+     "compose.glow_hi": 0.25,
+     "compose.glow_lo": 0.05,
+     "compose.grain": 0.02,
+     "compose.holds": [],
+     "compose.ops": {
+      "default": {
+       "ops": [
+        {
+         "args": {
+          "frame": "$footage",
+          "gain": 0.85,
+          "sat": 0.9
+         },
+         "op": "grade",
+         "out": "graded"
+        },
+        {
+         "args": {
+          "footage": "$graded",
+          "lum_target": 0.75,
+          "mode": "sample",
+          "sat": 1.4,
+          "type_a": "$type_matte"
+         },
+         "op": "tint_type",
+         "out": "tcol"
+        },
+        {
+         "args": {
+          "matte": "$matte",
+          "size": [
+           360,
+           640
+          ]
+         },
+         "op": "upscale_matte",
+         "out": "m"
+        },
+        {
+         "args": {
+          "footage": "$graded",
+          "matte": "$m",
+          "matte_soft": 0.08,
+          "matte_threshold": 0.5,
+          "type_a": "$type_matte",
+          "type_rgb": "$tcol"
+         },
+         "op": "sandwich",
+         "out": "sand"
+        },
+        {
+         "args": {
+          "color": [
+           1.0,
+           0.6,
+           0.3
+          ],
+          "img": "$sand",
+          "intensity": {
+           "curve": "onset",
+           "hi": 0.25,
+           "lo": 0.05
+          },
+          "mask": "$type_matte",
+          "radius": 18
+         },
+         "op": "add_glow",
+         "out": "glow"
+        },
+        {
+         "args": {
+          "amount": 0.02,
+          "frame": "$glow",
+          "frame_idx": "$frame_idx"
+         },
+         "op": "grain",
+         "out": "grainy"
+        },
+        {
+         "args": {
+          "frame": "$grainy",
+          "strength": 0.3
+         },
+         "op": "vignette",
+         "out": "image"
+        }
+       ],
+       "why": "The chain darkens the plate slightly for contrast against the misty wet concrete, tints the type from the footage's sunrise orange, and sandwiches it behind the rider so the subject stays solid in front."
+      },
+      "shots": {}
+     },
+     "compose.plate_gain": 0.7,
+     "compose.plate_sat": 0.8,
+     "compose.technique": "behind",
+     "compose.type_opacity": 1.0,
+     "compose.vignette": 0.3,
+     "concept": "The type lives BEHIND the skateboarder: each word is a solid, heavy slab that sits in the wet concrete between the camera and the rider, so the subject crosses the letters and the mist parts around them.",
+     "system": {
+      "axis": {
+       "font": "Anybody[wdth,wght].ttf",
+       "tag": "wght",
+       "windows": [
+        [
+         900,
+         900
+        ],
+        [
+         800,
+         800
+        ],
+        [
+         700,
+         700
+        ],
+        [
+         600,
+         600
+        ],
+        [
+         500,
+         500
+        ]
+       ]
+      },
+      "pattern": [
+       "A",
+       "A",
+       "A",
+       "A",
+       "B"
+      ],
+      "progression": "FIRST is heaviest and widest, the weight thins word by word, and the final HOLD drops to a tall condensed face so the piece ends quieter than it started.",
+      "roles": {
+       "A": "Anybody[wdth,wght].ttf",
+       "B": "Big Shoulders Display[wght].ttf"
+      },
+      "rule": "One heavy face carries the piece; each word steps down one weight notch and one axis value so the type feels lighter as the music resolves, while the lanes module and behind-the-subject placement stay constant.",
+      "why": "The post-rock swells need one strong, consistent voice; thinning the weight across the five words mirrors the slow build and release of the music while the constant lanes module and behind placement keep the eye on the rider.",
+      "yaw": [
+       16,
+       -16,
+       16,
+       -16,
+       10
+      ]
+     },
+     "treatment_notes": "Every word is sandwiched between the footage and the subject (behind), large and centred so the rider crosses it; the type stays still on the hold and the mist and rider move across it.",
+     "type.camera": "beat_orbit",
+     "type.camera_params.bob": 0.5,
+     "type.camera_params.elev": 2,
+     "type.camera_params.fast_dps": 18,
+     "type.camera_params.intro_deg": 22,
+     "type.camera_params.read_dps": 4,
+     "type.energy": 0.6,
+     "type.line.px": 4,
+     "type.mood": "heavy, atmospheric",
+     "type.palette.accents": [
+      [
+       255,
+       150,
+       60
+      ],
+      [
+       90,
+       150,
+       220
+      ],
+      [
+       230,
+       220,
+       200
+      ]
+     ],
+     "type.palette.bg": [
+      12,
+      22,
+      38
+     ],
+     "type.palette.fg": [
+      245,
+      240,
+      230
+     ],
+     "type.transitions": [
+      "ripple",
+      "fan",
+      "twist",
+      "cut"
+     ],
+     "type.words[0].axes.wght": [
+      900,
+      900,
+      "beat"
+     ],
+     "type.words[0].exit_s": 0.5,
+     "type.words[0].font": "Anybody[wdth,wght].ttf",
+     "type.words[0].form_in": "lines",
+     "type.words[0].form_out": "lines",
+     "type.words[0].form_s": 0.45,
+     "type.words[0].hit": 0.361,
+     "type.words[0].hold_s": 1.6,
+     "type.words[0].lines": [
+      "FIRST"
+     ],
+     "type.words[0].module": "lanes",
+     "type.words[0].placement.dx": 0,
+     "type.words[0].placement.dy": 0,
+     "type.words[0].placement.hf": 0.32,
+     "type.words[0].placement.pitch": 0,
+     "type.words[0].placement.roll": 0,
+     "type.words[0].placement.wf": 0.95,
+     "type.words[0].placement.yaw": 16,
+     "type.words[0].render": "flat",
+     "type.words[0].text": "FIRST",
+     "type.words[1].axes.wght": [
+      800,
+      800,
+      "beat"
+     ],
+     "type.words[1].exit_s": 0.5,
+     "type.words[1].font": "Anybody[wdth,wght].ttf",
+     "type.words[1].form_in": "lines",
+     "type.words[1].form_out": "lines",
+     "type.words[1].form_s": 0.45,
+     "type.words[1].hit": 2.36149,
+     "type.words[1].hold_s": 1.6,
+     "type.words[1].lines": [
+      "LIGHT"
+     ],
+     "type.words[1].module": "lanes",
+     "type.words[1].placement.dx": 0,
+     "type.words[1].placement.dy": 0,
+     "type.words[1].placement.hf": 0.32,
+     "type.words[1].placement.pitch": 0,
+     "type.words[1].placement.roll": 0,
+     "type.words[1].placement.wf": 0.95,
+     "type.words[1].placement.yaw": -16,
+     "type.words[1].render": "flat",
+     "type.words[1].text": "LIGHT",
+     "type.words[2].axes.wght": [
+      700,
+      700,
+      "beat"
+     ],
+     "type.words[2].exit_s": 0.5,
+     "type.words[2].font": "Anybody[wdth,wght].ttf",
+     "type.words[2].form_in": "lines",
+     "type.words[2].form_out": "lines",
+     "type.words[2].form_s": 0.5,
+     "type.words[2].hit": 5.0288,
+     "type.words[2].hold_s": 1.8,
+     "type.words[2].lines": [
+      "CARVE"
+     ],
+     "type.words[2].module": "lanes",
+     "type.words[2].placement.dx": 0,
+     "type.words[2].placement.dy": 0,
+     "type.words[2].placement.hf": 0.32,
+     "type.words[2].placement.pitch": 0,
+     "type.words[2].placement.roll": 0,
+     "type.words[2].placement.wf": 0.95,
+     "type.words[2].placement.yaw": 16,
+     "type.words[2].render": "flat",
+     "type.words[2].text": "CARVE",
+     "type.words[3].axes.wght": [
+      600,
+      600,
+      "beat"
+     ],
+     "type.words[3].exit_s": 0.5,
+     "type.words[3].font": "Anybody[wdth,wght].ttf",
+     "type.words[3].form_in": "lines",
+     "type.words[3].form_out": "lines",
+     "type.words[3].form_s": 0.45,
+     "type.words[3].hit": 7.69612,
+     "type.words[3].hold_s": 1.6,
+     "type.words[3].lines": [
+      "DRIFT"
+     ],
+     "type.words[3].module": "lanes",
+     "type.words[3].placement.dx": 0,
+     "type.words[3].placement.dy": 0,
+     "type.words[3].placement.hf": 0.32,
+     "type.words[3].placement.pitch": 0,
+     "type.words[3].placement.roll": 0,
+     "type.words[3].placement.wf": 0.95,
+     "type.words[3].placement.yaw": -16,
+     "type.words[3].render": "flat",
+     "type.words[3].text": "DRIFT",
+     "type.words[4].axes.wght": [
+      700,
+      700,
+      "beat"
+     ],
+     "type.words[4].exit_s": 0.8,
+     "type.words[4].font": "Big Shoulders Display[wght].ttf",
+     "type.words[4].form_in": "lines",
+     "type.words[4].form_out": "lines",
+     "type.words[4].form_s": 0.5,
+     "type.words[4].hit": 10.3634,
+     "type.words[4].hold_s": 2.2,
+     "type.words[4].lines": [
+      "HOLD"
+     ],
+     "type.words[4].module": "lanes",
+     "type.words[4].placement.dx": 0,
+     "type.words[4].placement.dy": 0,
+     "type.words[4].placement.hf": 0.38,
+     "type.words[4].placement.pitch": 0,
+     "type.words[4].placement.roll": 0,
+     "type.words[4].placement.wf": 0.9,
+     "type.words[4].placement.yaw": 10,
+     "type.words[4].render": "flat",
+     "type.words[4].text": "HOLD"
+    }
+   },
+   "src": {
+    "compose": "model",
+    "type": "model"
+   }
+  },
+  "energy": 0.5,
+  "flow_wake": {
+   "chains": 1,
+   "holds": [
+    [
+     0.361,
+     1.561
+    ],
+    [
+     5.029,
+     6.229
+    ],
+    [
+     7.696,
+     9.096
+    ],
+    [
+     10.363,
+     11.563
+    ],
+    [
+     13.031,
+     14.831
+    ]
+   ]
+  },
+  "footage": {
+   "idea": "A skateboarder rolls slowly across wet ramps as mist parts, with the camera tracking alongside to keep them centered while kinetic typography emerges from the concrete and fades into the fog.",
+   "shot_prompts": {
+    "model": 4,
+    "rules": 2
+   }
+  },
+  "layout_shapes": {
+   "words": 0
+  },
+  "look": "strand",
+  "matte_treatments": {
+   "words": 0
+  },
+  "notes": [
+   "brief: empty -> rules only",
+   "lockups: 4 lines split to 5 for 6 shots (one lockup per shot): FIRST LIGHT / CARVE / DRIFT / HOLD -> FIRST / LIGHT / CARVE / DRIFT / HOLD; only 5 lockups can be made of single words, the last one runs to the end",
+   "ltx letters unreadable -> flat: type.words[2] 'CARVE' (handoff -> flat, shot s3): the vision model read ['R', 'NONE', 'NONE'] (0/3 crops match, edit distance <= 0); pixel excess 0.007 (log only); the word stays flat for its whole span",
+   "ltx letters unreadable -> flat: type.words[4] 'HOLD' (handoff -> flat, shot s6): the vision model read ['NONE', 'NONE', 'NONE'] (0/3 crops match, edit distance <= 0); pixel excess 0.089 (log only); the word stays flat for its whole span"
+  ],
+  "owner": {
+   "source": "concept",
+   "ltx_check": [
+    {
+     "i": 2,
+     "text": "CARVE",
+     "render": "handoff",
+     "inside": 0.0592,
+     "outside": 0.052,
+     "excess": 0.0071,
+     "n": 12,
+     "formed": false,
+     "thr": 0.08,
+     "pixel_formed": false,
+     "read": [
+      "R",
+      "NONE",
+      "NONE"
+     ],
+     "read_matches": "0/3",
+     "shot": "s3"
+    },
+    {
+     "i": 4,
+     "text": "HOLD",
+     "render": "handoff",
+     "inside": null,
+     "outside": null,
+     "excess": null,
+     "n": 0,
+     "formed": null,
+     "thr": 0.08,
+     "shot": "s3"
+    },
+    {
+     "i": 4,
+     "text": "HOLD",
+     "render": "handoff",
+     "inside": null,
+     "outside": null,
+     "excess": null,
+     "n": 0,
+     "formed": null,
+     "thr": 0.08,
+     "shot": "s5"
+    },
+    {
+     "i": 4,
+     "text": "HOLD",
+     "render": "handoff",
+     "inside": 0.1351,
+     "outside": 0.0456,
+     "excess": 0.0895,
+     "n": 12,
+     "formed": false,
+     "thr": 0.08,
+     "pixel_formed": true,
+     "read": [
+      "NONE",
+      "NONE",
+      "NONE"
+     ],
+     "read_matches": "0/3",
+     "shot": "s6"
+    }
+   ],
+   "fallback": [
+    "ltx letters unreadable -> flat: type.words[2] 'CARVE' (handoff -> flat, shot s3): the vision model read ['R', 'NONE', 'NONE'] (0/3 crops match, edit distance <= 0); pixel excess 0.007 (log only); the word stays flat for its whole span",
+    "ltx letters unreadable -> flat: type.words[4] 'HOLD' (handoff -> flat, shot s6): the vision model read ['NONE', 'NONE', 'NONE'] (0/3 crops match, edit distance <= 0); pixel excess 0.089 (log only); the word stays flat for its whole span"
+   ]
+  },
+  "seed": 301,
+  "shots": "chain",
+  "structure": {
+   "explicit": true,
+   "first": [
+    "A",
+    "last:s1",
+    "last:s2",
+    "last:s3",
+    "last:s4",
+    "last:s5"
+   ],
+   "mode": "chain",
+   "places": 1
+  },
+  "system": {
+   "axis": {
+    "font": "Anybody[wdth,wght].ttf",
+    "tag": "wght",
+    "windows": [
+     [
+      900,
+      900
+     ],
+     [
+      800,
+      800
+     ],
+     [
+      700,
+      700
+     ],
+     [
+      600,
+      600
+     ],
+     [
+      500,
+      500
+     ]
+    ]
+   },
+   "pattern": [
+    "A",
+    "A",
+    "A",
+    "A",
+    "B"
+   ],
+   "progression": "FIRST is heaviest and widest, the weight thins word by word, and the final HOLD drops to a tall condensed face so the piece ends quieter than it started.",
+   "roles": {
+    "A": "Anybody[wdth,wght].ttf",
+    "B": "Big Shoulders Display[wght].ttf"
+   },
+   "rule": "One heavy face carries the piece; each word steps down one weight notch and one axis value so the type feels lighter as the music resolves, while the lanes module and behind-the-subject placement stay constant.",
+   "why": "The post-rock swells need one strong, consistent voice; thinning the weight across the five words mirrors the slow build and release of the music while the constant lanes module and behind placement keep the eye on the rider.",
+   "yaw": [
+    16,
+    -16,
+    16,
+    -16,
+    10
+   ]
+  },
+  "tail": {
+   "cut": 16.0,
+   "gap": 0.36,
+   "last_end": 15.64,
+   "signoff_t0": 15.0
+  },
+  "tier": "mid",
+  "tries": 1,
+  "version": 1
+ },
+ "quality": "preview",
+ "shots": [
+  {
+   "control": {
+    "guide": 0.0,
+    "pass": "depth"
+   },
+   "first": "A",
+   "flow": true,
+   "frames": 57,
+   "guide": 0.0,
+   "id": "s1",
+   "kind": "control",
+   "matte": true,
+   "prompt": "A skateboarder in a yellow jacket pushes slowly across a wet concrete bowl, mist swirling around their boots, orange sunrise light catching the edges of the ramp., camera: slow lateral tracking, cinematic",
+   "seed": 3328918735,
+   "size": [
+    384,
+    704
+   ]
+  },
+  {
+   "control": {
+    "guide": 0.0,
+    "pass": "depth"
+   },
+   "first": "last:s1",
+   "flow": true,
+   "frames": 65,
+   "guide": 0.0,
+   "id": "s2",
+   "kind": "control",
+   "matte": true,
+   "prompt": "The skateboarder carves a tight turn on the lip of the bowl, spray of mist rising from the wet concrete, long shadows stretching behind them., camera: slow lateral tracking, cinematic",
+   "seed": 1600263541,
+   "size": [
+    384,
+    704
+   ],
+   "span": 64
+  },
+  {
+   "control": {
+    "guide": 1.0,
+    "pass": "depth"
+   },
+   "first": "last:s2",
+   "flow": true,
+   "frames": 65,
+   "guide": 1.0,
+   "id": "s3",
+   "kind": "control",
+   "matte": true,
+   "prompt": "The skateboarder drifts along a flat section, leaning slightly, their shadow elongating across the damp ground, fog thickening around the edges of the frame., camera: slow lateral tracking, the word \"CARVE\" formed as wet concrete, rough texture, misty edges letters, extruded 3D lettering, cinematic",
+   "seed": 677717475,
+   "size": [
+    384,
+    704
+   ],
+   "span": 64
+  },
+  {
+   "control": {
+    "guide": 0.0,
+    "pass": "depth"
+   },
+   "first": "last:s3",
+   "flow": true,
+   "frames": 65,
+   "guide": 0.0,
+   "id": "s4",
+   "kind": "control",
+   "matte": true,
+   "prompt": "The skateboarder comes to a slow stop, looking back over their shoulder, mist settling around them, the sunrise fully breaking through the fog., camera: slow push in, cinematic",
+   "seed": 3053563968,
+   "size": [
+    384,
+    704
+   ],
+   "span": 64
+  },
+  {
+   "control": {
+    "guide": 1.0,
+    "pass": "depth"
+   },
+   "first": "last:s4",
+   "flow": true,
+   "frames": 65,
+   "guide": 1.0,
+   "id": "s5",
+   "kind": "control",
+   "matte": true,
+   "prompt": "A lone skateboarder in a bright yellow jacket pushes through a misty concrete skate park at sunrise, long shadows stretching across wet ramps, cold blue light mixing with, the subject stands perfectly still while the air moves around it, the scene keeps flowing, one continuous movement, camera drifts on, the word \"HOLD\" formed as thin strands of light, glowing edges letters, extruded 3D lettering, cinematic",
+   "seed": 3238428886,
+   "size": [
+    384,
+    704
+   ],
+   "span": 64
+  },
+  {
+   "control": {
+    "guide": 1.0,
+    "pass": "depth"
+   },
+   "first": "last:s5",
+   "flow": true,
+   "frames": 73,
+   "guide": 1.0,
+   "id": "s6",
+   "kind": "control",
+   "matte": true,
+   "prompt": "A lone skateboarder in a bright yellow jacket pushes through a misty concrete skate park at sunrise, long shadows stretching across wet ramps, cold blue light mixing with, the subject stands perfectly still while the air moves around it, things move steadily through the scene, the camera drifts slowly, the word \"HOLD\" formed as thin strands of light, glowing edges letters, extruded 3D lettering, cinematic",
+   "seed": 1477431660,
+   "size": [
+    384,
+    704
+   ],
+   "span": 71
+  }
+ ],
+ "signoff": {
+  "color": [
+   241,
+   245,
+   242
+  ],
+  "font": "Space Grotesk",
+  "off": true,
+  "px": 38,
+  "t0": 15.0,
+  "text": "first / 90 bpm"
+ },
+ "sizes": {
+  "compose": [
+   360,
+   640
+  ],
+  "control": [
+   384,
+   704
+  ],
+  "shot": [
+   384,
+   704
+  ],
+  "type": [
+   384,
+   704
+  ]
+ },
+ "slug": "first-light-carve-drift",
+ "stills": [
+  {
+   "id": "A",
+   "model": "moss",
+   "negative": "nsfw, worst quality, bad anatomy, jpeg artifact, text, letters, words, watermark, logo, caption, signature, blurry, deformed, oversaturated, cartoon",
+   "prompt": "A lone skateboarder in a bright yellow jacket pushes through a misty concrete skate park at sunrise, long shadows stretching across wet ramps, cold blue light mixing with orange horizon glow, medium distance framing, one clear lone figure in the foreground seen from behind, cinematic 35mm film still, shallow depth of field, tall vertical frame",
+   "seed": 1340630346,
+   "size": [
+    384,
+    704
+   ]
+  }
+ ],
+ "technique": "behind",
+ "type": {
+  "bar": 4,
+  "beats": [
+   0.361,
+   1.0278,
+   1.6947,
+   2.3615,
+   3.0283,
+   3.6951,
+   4.362,
+   5.0288,
+   5.6956,
+   6.3625,
+   7.0293,
+   7.6961,
+   8.3629,
+   9.0298,
+   9.6966,
+   10.3634,
+   11.0303,
+   11.6971,
+   12.3639,
+   13.0307,
+   13.6976,
+   14.3644,
+   15.0312,
+   15.6981,
+   16.3649,
+   17.0317,
+   17.6985,
+   18.3654,
+   19.0322,
+   19.699,
+   20.3659
+  ],
+  "bpm": 89.978,
+  "camera": "beat_orbit",
+  "camera_params": {
+   "bob": 0.5,
+   "elev": 2.0,
+   "fast_dps": 18.0,
+   "intro_deg": 22.0,
+   "read_dps": 4.0
+  },
+  "downbeats": [
+   2.3615,
+   5.0288,
+   7.6961,
+   10.3634,
+   13.0307,
+   15.6981,
+   18.3654
+  ],
+  "duration": 16.0,
+  "energy": 0.6,
+  "fps": 24,
+  "line": {
+   "px": 4.0
+  },
+  "mood": "heavy, atmospheric",
+  "palette": {
+   "accents": [
+    [
+     255,
+     150,
+     60
+    ],
+    [
+     90,
+     150,
+     220
+    ],
+    [
+     230,
+     220,
+     200
+    ]
+   ],
+   "bg": [
+    12,
+    22,
+    38
+   ],
+   "fg": [
+    245,
+    240,
+    230
+   ]
+  },
+  "seed": 68671,
+  "transitions": [
+   "ripple",
+   "fan",
+   "twist",
+   "cut"
+  ],
+  "words": [
+   {
+    "axes": {
+     "wght": [
+      900.0,
+      900.0,
+      "beat"
+     ]
+    },
+    "exit_s": 0.5,
+    "font": "Anybody[wdth,wght].ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.45,
+    "hit_on": "beat",
+    "lines": [
+     "FIRST"
+    ],
+    "module": "lanes",
+    "placement": {
+     "dx": 0.0,
+     "dy": 0.0,
+     "hf": 0.32,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "wf": 0.95,
+     "yaw": 16.0
+    },
+    "render": "flat",
+    "t0": 0.0,
+    "t1": 2.15,
+    "text": "FIRST"
+   },
+   {
+    "exit_s": 0.5,
+    "font": "Jacquard12-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.45,
+    "hit_on": "bar",
+    "lines": [
+     "LIGHT"
+    ],
+    "module": "lanes",
+    "placement": {
+     "dx": 0.0,
+     "dy": 0.0,
+     "hf": 0.32,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "wf": 0.95,
+     "yaw": -16.0
+    },
+    "render": "flat",
+    "t0": 2.55,
+    "t1": 4.7,
+    "text": "LIGHT"
+   },
+   {
+    "axes": {
+     "wght": [
+      700.0,
+      700.0,
+      "beat"
+     ]
+    },
+    "exit_s": 0.5,
+    "font": "Anybody[wdth,wght].ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.45,
+    "hit_on": "bar",
+    "lines": [
+     "CARVE"
+    ],
+    "module": "lanes",
+    "placement": {
+     "dx": 0.0,
+     "dy": 0.0,
+     "hf": 0.32,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "wf": 0.95,
+     "yaw": 16.0
+    },
+    "render": "flat",
+    "t0": 5.1,
+    "t1": 7.45,
+    "text": "CARVE",
+    "render_asked": "handoff",
+    "ltx_missing": true
+   },
+   {
+    "exit_s": 0.5,
+    "font": "BitcountSingle[CRSV,ELSH,ELXP,slnt,wght].ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.45,
+    "hit_on": "bar",
+    "lines": [
+     "DRIFT"
+    ],
+    "module": "lanes",
+    "placement": {
+     "dx": 0.0,
+     "dy": 0.0,
+     "hf": 0.32,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "wf": 0.95,
+     "yaw": -16.0
+    },
+    "render": "flat",
+    "t0": 7.85,
+    "t1": 10.0,
+    "text": "DRIFT"
+   },
+   {
+    "exit_s": 0.8,
+    "font": "ZenTokyoZoo-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.45,
+    "hit_on": "bar",
+    "lines": [
+     "HOLD"
+    ],
+    "module": "lanes",
+    "placement": {
+     "dx": 0.0,
+     "dy": 0.0,
+     "hf": 0.38,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "wf": 0.9,
+     "yaw": 10.0
+    },
+    "render": "flat",
+    "t0": 10.4,
+    "t1": 13.45,
+    "text": "HOLD",
+    "render_asked": "handoff",
+    "ltx_missing": true
+   }
+  ]
+ },
+ "type_passes": [
+  "matte",
+  "depth",
+  "line"
+ ]
+}

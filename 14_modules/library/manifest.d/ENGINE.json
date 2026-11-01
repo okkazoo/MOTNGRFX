@@ -1,0 +1,35 @@
+[
+  {
+    "id": "engine_chain_1_calm",
+    "kind": "chain",
+    "title": "Auto chain \u00b7 seed 3 \u00b7 calm",
+    "description": "Five words, transitions chosen by the engine (seed 3, energy 0.2, mood calm): braid (cycles=2.0, handed=1); twist (turns=1, handed=-1); braid (cycles=2.0, handed=1); twist (turns=1, handed=-1). Default follow camera.",
+    "clip": "14_modules/v005/local/engine_chain_1_calm_g02_draft.mp4",
+    "sheet": "14_modules/v005/local/engine_chain_1_calm_sheet_g02.jpg",
+    "dircheck": null,
+    "version": "14_modules/v005",
+    "gen": 2
+  },
+  {
+    "id": "engine_chain_2_techy",
+    "kind": "chain",
+    "title": "Auto chain \u00b7 seed 7 \u00b7 techy",
+    "description": "Five words, transitions chosen by the engine (seed 7, energy 0.55, mood {'tense': 0.6, 'mysterious': 0.4}): circuit_board (lanes=4); spiral_around (around=cylinder, turns=1.5, handed=-1, radius=116.0); circuit_board (lanes=4); twist (turns=2, handed=1). Default follow camera.",
+    "clip": "14_modules/v005/local/engine_chain_2_techy_g01_draft.mp4",
+    "sheet": "14_modules/v005/local/engine_chain_2_techy_sheet_g01.jpg",
+    "dircheck": null,
+    "version": "14_modules/v005",
+    "gen": 1
+  },
+  {
+    "id": "engine_chain_3_hype",
+    "kind": "chain",
+    "title": "Auto chain \u00b7 seed 11 \u00b7 hype",
+    "description": "Five words, transitions chosen by the engine (seed 11, energy 0.9, mood hype): fan (angle=62.0); cut (lines=3); circuit_board (lanes=5); spiral_around (around=cylinder, turns=1.5, handed=-1, radius=168.0). Default follow camera.",
+    "clip": "14_modules/v005/local/engine_chain_3_hype_g01_draft.mp4",
+    "sheet": "14_modules/v005/local/engine_chain_3_hype_sheet_g01.jpg",
+    "dircheck": null,
+    "version": "14_modules/v005",
+    "gen": 1
+  }
+]

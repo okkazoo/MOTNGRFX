@@ -1,0 +1,11 @@
+{
+  "1": {"class_type": "UNETLoader", "_meta": {"title": "MOSS-Image SFT int8"}, "inputs": {"unet_name": "moss_image_sft_int8_convrot.safetensors", "weight_dtype": "default"}},
+  "2": {"class_type": "CLIPLoader", "_meta": {"title": "Qwen3.5 9B text encoder"}, "inputs": {"clip_name": "qwen3.5_9b_w4a8_gptq.safetensors", "type": "moss_image", "device": "default"}},
+  "3": {"class_type": "VAELoader", "inputs": {"vae_name": "flux2-vae_small.safetensors"}},
+  "4": {"class_type": "CLIPTextEncode", "_meta": {"title": "PROMPT"}, "inputs": {"text": "a steaming bowl of ramen, top-down, dark wood table", "clip": ["2", 0]}},
+  "5": {"class_type": "CLIPTextEncode", "_meta": {"title": "NEGATIVE"}, "inputs": {"text": "nsfw, worst quality, bad anatomy, watermark, jpeg artifact", "clip": ["2", 0]}},
+  "6": {"class_type": "EmptyFlux2LatentImage", "_meta": {"title": "SIZE"}, "inputs": {"width": 832, "height": 1216, "batch_size": 1}},
+  "7": {"class_type": "KSampler", "_meta": {"title": "SAMPLER"}, "inputs": {"seed": 1, "steps": 25, "cfg": 2.5, "sampler_name": "er_sde", "scheduler": "simple", "denoise": 1.0, "model": ["1", 0], "positive": ["4", 0], "negative": ["5", 0], "latent_image": ["6", 0]}},
+  "8": {"class_type": "VAEDecode", "inputs": {"samples": ["7", 0], "vae": ["3", 0]}},
+  "9": {"class_type": "SaveImage", "inputs": {"images": ["8", 0], "filename_prefix": "moss_t2i"}}
+}

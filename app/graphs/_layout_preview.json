@@ -1,0 +1,39 @@
+{
+ "layout": {
+  "class_type": "MographLayoutPreview",
+  "inputs": {
+   "archive": "",
+   "seed": 1,
+   "effects": "",
+   "save": true
+  },
+  "_meta": {
+   "title": "Layout preview"
+  }
+ },
+ "save": {
+  "class_type": "SaveImage",
+  "inputs": {
+   "images": [
+    "layout",
+    0
+   ],
+   "filename_prefix": "layout_preview/layout"
+  },
+  "_meta": {
+   "title": "OUT layout sheet"
+  }
+ },
+ "out_system": {
+  "class_type": "PreviewAny",
+  "inputs": {
+   "source": [
+    "layout",
+    1
+   ]
+  },
+  "_meta": {
+   "title": "OUT layout system"
+  }
+ }
+}

@@ -1,0 +1,3 @@
+# Sampled-instrument music engine: mograph/banks.py, mograph/sampled.py, mograph/mastering.py, tools/music_verify.py
+# (numpy, scipy, matplotlib as in requirements.txt / requirements-mathtype.txt)
+symusic==0.5.9   # SoundFont renderer (MIT). 0.6.0: Synthesizer.render() raises "Unable to convert function return value" on Windows / numpy 2.4

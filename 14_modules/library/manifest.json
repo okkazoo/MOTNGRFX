@@ -1,0 +1,79 @@
+[
+  {
+    "id": "lanes",
+    "kind": "word",
+    "title": "Lanes",
+    "description": "Hairline lanes stream in as a tight ribbon, peel off one by one to draw the outline of the type, and the word fills solid. It leaves the same way in reverse: the fill melts to outline and every line runs out along its own lane.",
+    "clip": "14_modules/v001/local/lanes_g01_draft.mp4",
+    "sheet": "14_modules/v001/local/lanes_sheet_g01.jpg",
+    "dircheck": "14_modules/v001/local/lanes_dirs_g01.jpg",
+    "version": "14_modules/v001",
+    "gen": 1
+  },
+  {
+    "id": "pipework",
+    "kind": "word",
+    "title": "Pipework",
+    "description": "Shaded tubes arrive packed side by side like a cable harness, jog through right-angle bends and plumb themselves into the outline of the type, which stays as tube letters. On exit the tubes unplug and bend away down their lanes.",
+    "clip": "14_modules/v001/local/pipework_g01_draft.mp4",
+    "sheet": "14_modules/v001/local/pipework_sheet_g01.jpg",
+    "dircheck": "14_modules/v001/local/pipework_dirs_g01.jpg",
+    "version": "14_modules/v001",
+    "gen": 1
+  },
+  {
+    "id": "twist",
+    "kind": "transition",
+    "title": "Twist",
+    "description": "Pairs the departing strands of one word with the arriving strands of the next, gathers them into a tight cable and winds them around the cable axis in a helix before they fan back out. Tune it with turns and handed.",
+    "clip": "14_modules/v001/local/twist_g01_draft.mp4",
+    "sheet": "14_modules/v001/local/twist_sheet_g01.jpg",
+    "dircheck": null,
+    "version": "14_modules/v001",
+    "gen": 1
+  },
+  {
+    "id": "chain_flow_bends_demo",
+    "kind": "chain",
+    "title": "FLOW > BENDS (demo camera)",
+    "description": "Two modules chained: lanes forms FLOW on a tilted plane at the left, its lines are carried by a twist and plumbed into BENDS (pipework) on a differently angled plane at the upper right. Fixed demo camera.",
+    "clip": "14_modules/v001/local/chain2_demo_g02_draft.mp4",
+    "sheet": "14_modules/v001/local/chain2_demo_sheet_g02.jpg",
+    "dircheck": null,
+    "version": "14_modules/v001",
+    "gen": 2
+  },
+  {
+    "id": "chain_flow_bends_follow",
+    "kind": "chain",
+    "title": "FLOW > BENDS (follow camera)",
+    "description": "Two modules chained: lanes forms FLOW on a tilted plane at the left, its lines are carried by a twist and plumbed into BENDS (pipework) on a differently angled plane at the upper right. A FlowPath camera follows the strands and rests on each formed word.",
+    "clip": "14_modules/v001/local/chain2_follow_g02_draft.mp4",
+    "sheet": "14_modules/v001/local/chain2_follow_sheet_g02.jpg",
+    "dircheck": null,
+    "version": "14_modules/v001",
+    "gen": 2
+  },
+  {
+    "id": "chain_signal_bends_flow_demo",
+    "kind": "chain",
+    "title": "SIGNAL > BENDS > FLOW (demo camera)",
+    "description": "Three modules, two transitions, each word on its own plane: lanes SIGNAL (left, tilted) -> right-handed twist -> pipework BENDS (upper right) -> left-handed three-turn twist -> lanes FLOW (lower centre, front-facing). Fixed demo camera.",
+    "clip": "14_modules/v001/local/chain3_demo_g02_draft.mp4",
+    "sheet": "14_modules/v001/local/chain3_demo_sheet_g02.jpg",
+    "dircheck": null,
+    "version": "14_modules/v001",
+    "gen": 2
+  },
+  {
+    "id": "chain_signal_bends_flow_follow",
+    "kind": "chain",
+    "title": "SIGNAL > BENDS > FLOW (follow camera)",
+    "description": "Three modules, two transitions, each word on its own plane: lanes SIGNAL (left, tilted) -> right-handed twist -> pipework BENDS (upper right) -> left-handed three-turn twist -> lanes FLOW (lower centre, front-facing). A FlowPath camera follows the strands and rests on each formed word.",
+    "clip": "14_modules/v001/local/chain3_follow_g02_draft.mp4",
+    "sheet": "14_modules/v001/local/chain3_follow_sheet_g02.jpg",
+    "dircheck": null,
+    "version": "14_modules/v001",
+    "gen": 2
+  }
+]

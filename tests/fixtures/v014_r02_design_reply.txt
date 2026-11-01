@@ -1,0 +1,316 @@
+```json
+{
+  "concept": "The type is TIGHT and graphic: heavy face, one outline treatment, glow on the beat, freeze-frames on the dropouts, ground flip on each freeze.",
+  "idea_why": "The sharp, angular dance moves in the pool bowl require a heavy, anchoring typographic presence to match the gritty, defiant lo-fi hip hop mood.",
+  "treatment_notes": "Type sits behind the dancer, appearing as massive concrete slabs that anchor the composition while the subject moves through them.",
+  "system": {
+    "rule": "Slab-like stability using beat_bars and a recurring pattern of heavy and pixel faces, alternating in yaw and io styles.",
+    "roles": {
+      "A": "Ultra-Regular.ttf",
+      "B": "GeistPixel[ELSH].ttf",
+      "C": "BadeenDisplay-Regular.ttf"
+    },
+    "pattern": [
+      "A",
+      "B",
+      "A",
+      "C"
+    ],
+    "yaw": [
+      10.5,
+      -11.2,
+      9.8,
+      -12.1
+    ],
+    "axis": {
+      "font": "Tourney[wdth,wght].ttf",
+      "tag": "wght",
+      "windows": [
+        [
+          100,
+          300
+        ],
+        [
+          300,
+          600
+        ],
+        [
+          600,
+          900
+        ],
+        [
+          900,
+          100
+        ]
+      ]
+    },
+    "progression": "The typographic weight increases from the first word to the last, mirroring the dancer's increasing energy.",
+    "why": "The contrast between the organic dance and the rigid, pixelated/heavy slab type emphasizes the urban, concrete environment."
+  },
+  "type": {
+    "mood": "defiant, gritty",
+    "energy": 0.7,
+    "palette": {
+      "bg": [
+        18,
+        20,
+        18
+      ],
+      "fg": [
+        236,
+        240,
+        228
+      ],
+      "accents": [
+        [
+          200,
+          240,
+          40
+        ],
+        [
+          255,
+          90,
+          160
+        ],
+        [
+          70,
+          230,
+          200
+        ]
+      ]
+    },
+    "camera": "follow",
+    "transitions": [
+      "cut",
+      "twist",
+      "ripple",
+      "cut"
+    ],
+    "line": {
+      "px": 4
+    },
+    "words": [
+      {
+        "text": "BREAK",
+        "why": "Heavy Ultra face for a strong start; particles form-in matches the floating dust in the pool bowl; hit on the first downbeat.",
+        "font": "Ultra-Regular.ttf",
+        "module": "beat_bars",
+        "hit": 1.3954,
+        "hold_s": 2.0,
+        "form_s": 0.682,
+        "exit_s": 0.682,
+        "form_in": "particles",
+        "form_out": "particles",
+        "placement": {
+          "yaw": 10.5,
+          "pitch": 0,
+          "roll": 0,
+          "dx": 0,
+          "dy": -0.1,
+          "wf": 0.8,
+          "hf": 0.4
+        },
+        "render": "flat"
+      },
+      {
+        "text": "CLAIM",
+        "why": "Geist Pixel introduces a digital contrast during the sharp freeze-frame move; lines entry from the right creates lateral tension.",
+        "font": "GeistPixel[ELSH].ttf",
+        "module": "beat_bars",
+        "hit": 4.1222,
+        "hold_s": 1.8,
+        "form_s": 0.682,
+        "exit_s": 0.682,
+        "form_in": "lines",
+        "form_out": "flicker",
+        "entry": "right",
+        "placement": {
+          "yaw": -11.2,
+          "pitch": 0,
+          "roll": 0,
+          "dx": 0,
+          "dy": 0.1,
+          "wf": 0.7,
+          "hf": 0.3
+        },
+        "render": "flat"
+      },
+      {
+        "text": "STRIKE",
+        "why": "Return to Ultra for the rapid spin energy; particles exit mirrors the charcoal dust kicking up; hit on the chord change.",
+        "font": "Ultra-Regular.ttf",
+        "module": "beat_bars",
+        "hit": 7.5307,
+        "hold_s": 2.2,
+        "form_s": 0.682,
+        "exit_s": 0.682,
+        "form_in": "particles",
+        "form_out": "particles",
+        "placement": {
+          "yaw": 9.8,
+          "pitch": 5,
+          "roll": 0,
+          "dx": -0.1,
+          "dy": 0,
+          "wf": 0.85,
+          "hf": 0.4
+        },
+        "render": "handoff",
+        "ltx_at": 0.5,
+        "material": "rough cast concrete with pitted edges"
+      },
+      {
+        "text": "OWN",
+        "why": "Badeen Display for the final, definitive hold; lines entry from the left leads into the final camera glide; hit on the final chord change.",
+        "font": "BadeenDisplay-Regular.ttf",
+        "module": "beat_bars",
+        "hit": 12.9843,
+        "hold_s": 2.5,
+        "form_s": 0.682,
+        "exit_s": 1.3,
+        "form_in": "lines",
+        "form_out": "flicker",
+        "entry": "left",
+        "placement": {
+          "yaw": -12.1,
+          "pitch": -5,
+          "roll": 0,
+          "dx": 0.1,
+          "dy": 0,
+          "wf": 0.9,
+          "hf": 0.5
+        },
+        "render": "flat"
+      }
+    ]
+  },
+  "compose": {
+    "technique": "behind",
+    "plate_gain": 0.7,
+    "plate_sat": 0.8,
+    "glow_lo": 0.05,
+    "glow_hi": 0.3,
+    "glow_color": [
+      0.78,
+      0.94,
+      0.15
+    ],
+    "grain": 0.03,
+    "vignette": 0.3,
+    "type_opacity": 0.9,
+    "default": {
+      "why": "The sandwich op ensures the dancer's silhouette remains the primary focus while the slab type creates depth in the pool.",
+      "ops": [
+        {
+          "op": "upscale_matte",
+          "out": "m",
+          "args": {
+            "matte": "$matte",
+            "size": [
+              540,
+              960
+            ],
+            "guide": "$footage"
+          }
+        },
+        {
+          "op": "tint_type",
+          "out": "tcol",
+          "args": {
+            "type_a": "$type_matte",
+            "footage": "$footage",
+            "mode": "sample",
+            "sat": 1.2
+          }
+        },
+        {
+          "op": "sandwich",
+          "out": "comp",
+          "args": {
+            "footage": "$footage",
+            "type_rgb": "$tcol",
+            "type_a": "$type_matte",
+            "matte": "$m",
+            "matte_threshold": 0.5,
+            "matte_soft": 0.08
+          }
+        },
+        {
+          "op": "add_glow",
+          "out": "glowed",
+          "args": {
+            "img": "$comp",
+            "mask": "$type_matte",
+            "intensity": {
+              "curve": "onset",
+              "lo": 0.1,
+              "hi": 0.4
+            },
+            "color": [
+              0.78,
+              0.94,
+              0.15
+            ]
+          }
+        },
+        {
+          "op": "grain",
+          "out": "grainy",
+          "args": {
+            "frame": "$glowed",
+            "amount": 0.03
+          }
+        },
+        {
+          "op": "vignette",
+          "out": "image",
+          "args": {
+            "frame": "$grainy",
+            "strength": 0.3
+          }
+        }
+      ]
+    },
+    "holds": [
+      [
+        1.42,
+        0.33
+      ],
+      [
+        6.79,
+        0.5
+      ],
+      [
+        12.33,
+        0.42
+      ]
+    ],
+    "cuts": [
+      {
+        "after": "s1",
+        "cut": "depth_pivot",
+        "style": "chunks",
+        "why": "The transition into the close-up freeze move benefits from the structural shift of the depth pivot."
+      },
+      {
+        "after": "s2",
+        "cut": "orbit:push",
+        "style": "smooth",
+        "why": "Pushes the energy forward as the dancer begins the rapid spin in s3."
+      },
+      {
+        "after": "s3",
+        "cut": "orbit:fly",
+        "style": "smooth",
+        "why": "A free, kinetic transition to match the leap toward the concrete lip."
+      },
+      {
+        "after": "s4",
+        "cut": "window_other",
+        "word": 3,
+        "why": "The final transition uses the type as a portal into the calm, blue-hour stillness of the final scenes."
+      }
+    ]
+  }
+}
+```

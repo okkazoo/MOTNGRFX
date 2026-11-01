@@ -1,0 +1,13 @@
+# MOTNGRFX node pack: pip install -r requirements.txt   (inside the ComfyUI Python environment)
+# torch / torchvision / aiohttp / av come with ComfyUI's own requirements; they are listed so a bare check shows them.
+# System tool: ffmpeg + ffprobe on PATH (MP4 encode, audio mux).
+numpy
+Pillow
+opencv-python-headless
+scipy
+av>=12
+fonttools                  # glyph outlines for the 3D type (11_mathtype/engine/dimtype/ol.py, mograph/modules)
+soundfile                  # music analysis + audio cut (tools/fusion)
+contourpy                  # blob outlines (mograph/modules/io/blobs.py)
+symusic==0.5.9             # SoundFont renderer for the sampled-instrument bed; 0.6.0 breaks Synthesizer.render() with numpy 2.4
+torchvision                # RAFT optical flow for footage-following type (tools/fusion/footage_flow.py); ComfyUI already installs it

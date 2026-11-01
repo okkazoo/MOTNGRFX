@@ -1,0 +1,258 @@
+{
+ "bar": 4,
+ "beats": [
+  0.177,
+  0.843496,
+  1.509992,
+  2.176489,
+  2.842985,
+  3.509481,
+  4.175977,
+  4.842474,
+  5.50897,
+  6.175466,
+  6.841962,
+  7.508459,
+  8.174955,
+  8.841451,
+  9.507947,
+  10.174444,
+  10.84094,
+  11.507436,
+  12.173932,
+  12.840429,
+  13.506925,
+  14.173421,
+  14.839917,
+  15.506414,
+  16.17291,
+  16.839406,
+  17.505902,
+  18.172399,
+  18.838895,
+  19.505391,
+  20.171887
+ ],
+ "bpm": 90.02301213247644,
+ "camera": "beat_orbit",
+ "camera_params": {
+  "bob": 0.0,
+  "elev": 0.0,
+  "fast_dps": 11.41,
+  "intro_deg": 0.0,
+  "read_dps": 0.0
+ },
+ "downbeats": [
+  1.509992,
+  4.175977,
+  6.841962,
+  9.507947,
+  12.173932,
+  14.839917,
+  17.505902,
+  20.171887
+ ],
+ "duration": 16.0,
+ "energy": 0.7,
+ "fps": 24,
+ "line": {
+  "px": 3.0
+ },
+ "mood": "Solemn Hype",
+ "palette": {
+  "accents": [
+   [
+    74,
+    64,
+    98
+   ],
+   [
+    181,
+    128,
+    156
+   ],
+   [
+    51,
+    38,
+    43
+   ]
+  ],
+  "bg": [
+   12,
+   9,
+   15
+  ],
+  "fg": [
+   244,
+   233,
+   227
+  ]
+ },
+ "passes": [
+  "beauty",
+  "matte",
+  "depth",
+  "line",
+  "clay",
+  "flow"
+ ],
+ "seed": 79239,
+ "size": [
+  576,
+  1024
+ ],
+ "transitions": [
+  "cut",
+  "twist",
+  "ripple",
+  "fan"
+ ],
+ "words": [
+  {
+   "exit": "left",
+   "exit_s": 0.67,
+   "font": "PassionOne-Black.ttf",
+   "form_in": "wipe",
+   "form_out": "flicker",
+   "form_s": 1.51,
+   "hit_on": "bar",
+   "lines": [
+    "THE SEA"
+   ],
+   "module": "beat_bars",
+   "placement": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "hf": 0.354,
+    "pitch": 0.0,
+    "roll": -90.0,
+    "wf": 0.88,
+    "yaw": 0.0
+   },
+   "render": "flat",
+   "t0": 0.0,
+   "t1": 3.38,
+   "text": "THE SEA"
+  },
+  {
+   "ar_min": 0.85,
+   "entry": "right",
+   "exit": "left",
+   "exit_s": 0.67,
+   "font": "MajorMonoDisplay-Regular.ttf",
+   "form_in": "blobs",
+   "form_out": "blobs",
+   "form_s": 0.45,
+   "hit_on": "beat",
+   "lines": [
+    "REM",
+    "EMB",
+    "ERS"
+   ],
+   "module": "beat_bars",
+   "placement": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "hf": 0.588,
+    "pitch": 0.0,
+    "roll": 0.0,
+    "wf": 0.9,
+    "yaw": 0.0
+   },
+   "render": "flat",
+   "t0": 4.392,
+   "t1": 6.712,
+   "text": "REMEMBERS"
+  },
+  {
+   "entry": "right",
+   "exit": "left",
+   "exit_s": 0.67,
+   "font": "PassionOne-Black.ttf",
+   "form_in": "wipe",
+   "form_out": "flicker",
+   "form_s": 0.45,
+   "hit_on": "beat",
+   "lines": [
+    "EVERY",
+    "SHIP"
+   ],
+   "module": "beat_bars",
+   "placement": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "hf": 0.29,
+    "pitch": 0.0,
+    "roll": 0.0,
+    "wf": 0.9,
+    "yaw": 0.0
+   },
+   "render": "flat",
+   "t0": 7.112,
+   "t1": 9.432,
+   "text": "EVERY SHIP"
+  },
+  {
+   "ar_min": 0.85,
+   "entry": "right",
+   "exit": "left",
+   "exit_s": 0.67,
+   "font": "JacquardaBastarda9-Regular.ttf",
+   "form_in": "blobs",
+   "form_out": "blobs",
+   "form_s": 0.45,
+   "hit_on": "beat",
+   "lines": [
+    "EVE",
+    "RY",
+    "NA",
+    "ME"
+   ],
+   "module": "beat_bars",
+   "placement": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "hf": 0.95,
+    "pitch": 0.0,
+    "roll": 0.0,
+    "wf": 0.9,
+    "yaw": 0.0
+   },
+   "render": "flat",
+   "t0": 9.832,
+   "t1": 12.152,
+   "text": "EVERY NAME"
+  },
+  {
+   "ar_min": 0.85,
+   "entry": "right",
+   "exit_s": 1.33,
+   "font": "PassionOne-Black.ttf",
+   "form_in": "wipe",
+   "form_out": "flicker",
+   "form_s": 0.45,
+   "hit_on": "beat",
+   "lines": [
+    "KE",
+    "EP",
+    "THE",
+    "LIG",
+    "HT"
+   ],
+   "module": "beat_bars",
+   "placement": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "hf": 0.95,
+    "pitch": 0.0,
+    "roll": 0.0,
+    "wf": 0.844,
+    "yaw": 0.0
+   },
+   "render": "flat",
+   "t0": 12.552,
+   "t1": 15.932,
+   "text": "KEEP THE LIGHT"
+  }
+ ]
+}

@@ -1,0 +1,830 @@
+{
+ "id": "P14_w",
+ "slug": "lift",
+ "fps": 24,
+ "version": "v004",
+ "audio": {
+  "src": "15_fusion/v004/audio/t2m/P14.wav",
+  "bpm": 120.0,
+  "analysis": "15_fusion/v004/local/audio/t2m_P14_analysis.json",
+  "cut": 12.0,
+  "fade": 0.4
+ },
+ "type": {
+  "seed": 14,
+  "energy": 0.9,
+  "mood": "driving",
+  "tier": "kinetic",
+  "palette": {
+   "bg": [
+    8,
+    8,
+    10
+   ],
+   "fg": [
+    255,
+    240,
+    215
+   ],
+   "accents": [
+    [
+     255,
+     205,
+     140
+    ],
+    [
+     140,
+     190,
+     255
+    ],
+    [
+     255,
+     255,
+     255
+    ]
+   ]
+  },
+  "camera": "beat_orbit",
+  "camera_params": {
+   "read_dps": 6.0,
+   "intro_deg": 40.0,
+   "fast_dps": 60.0,
+   "elev": 5.0,
+   "bob": 1.2
+  },
+  "transitions": [
+   "twist",
+   "circuit_board",
+   "fan"
+  ],
+  "line": {
+   "px": 4.0
+  },
+  "words": [
+   {
+    "module": "lanes",
+    "form_in": "lines",
+    "form_out": "lines",
+    "text": "RISE",
+    "lines": [
+     "RISE"
+    ],
+    "font": "FacadeVF.ttf",
+    "t0": 0.0,
+    "t1": 4.996,
+    "form_s": 3.496,
+    "exit_s": 0.5,
+    "hit_on": "beat",
+    "placement": {
+     "yaw": -22
+    },
+    "axes": {
+     "wght": [
+      500,
+      900,
+      "beat"
+     ]
+    }
+   },
+   {
+    "module": "lanes",
+    "form_in": "lines",
+    "form_out": "lines",
+    "text": "UP",
+    "lines": [
+     "UP"
+    ],
+    "font": "Blackout",
+    "t0": 5.496,
+    "t1": 7.496,
+    "form_s": 0.5,
+    "exit_s": 0.5,
+    "hit_on": "beat",
+    "placement": {
+     "yaw": 22
+    },
+    "axes": {}
+   },
+   {
+    "module": "lanes",
+    "form_in": "lines",
+    "form_out": "lines",
+    "text": "INTO",
+    "lines": [
+     "INTO"
+    ],
+    "font": "FacadeVF.ttf",
+    "t0": 7.996,
+    "t1": 9.996,
+    "form_s": 0.5,
+    "exit_s": 0.5,
+    "hit_on": "beat",
+    "placement": {
+     "yaw": -22
+    },
+    "axes": {
+     "wght": [
+      500,
+      900,
+      "beat"
+     ]
+    }
+   },
+   {
+    "module": "lanes",
+    "form_in": "lines",
+    "form_out": "lines",
+    "text": "THE LIGHT",
+    "lines": [
+     "THE",
+     "LIGHT"
+    ],
+    "font": "Blackout",
+    "t0": 10.496,
+    "t1": 12.5,
+    "form_s": 0.5,
+    "exit_s": 0.5,
+    "hit_on": "beat",
+    "placement": {
+     "yaw": 20
+    },
+    "axes": {}
+   }
+  ],
+  "format_note": "PENDING landscape re-layout"
+ },
+ "type_passes": [
+  "matte",
+  "depth"
+ ],
+ "stills": [
+  {
+   "id": "A",
+   "model": "moss",
+   "seed": 1411,
+   "size": [
+    1920,
+    1088
+   ],
+   "negative": "text, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, extra limbs, deformed hands, deformed feet, blurry subject, second person",
+   "prompt": "a contemporary dancer mid-leap seen from a low three-quarter front angle, legs split in the air, arms sweeping up, one contemporary dancer in loose pale grey clothing, empty raw concrete dance studio seen wide, one shaft of hard white sunlight from a high window, dust floating in the light beam, colour photograph, cinematic 35mm, wide horizontal frame, the dancer full body on the left third of the frame, the studio walls and the light shaft filling the rest"
+  },
+  {
+   "id": "B",
+   "model": "moss",
+   "seed": 1412,
+   "size": [
+    1920,
+    1088
+   ],
+   "negative": "text, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, extra limbs, deformed hands, deformed feet, blurry subject, second person",
+   "prompt": "a contemporary dancer seen from a high side angle, rising out of a deep crouch with both arms reaching up into the light, one contemporary dancer in loose pale grey clothing, empty raw concrete dance studio seen wide, one shaft of hard white sunlight from a high window, dust floating in the light beam, colour photograph, cinematic 35mm, wide horizontal frame, the dancer full body on the right third of the frame, the studio walls and the light shaft filling the rest"
+  }
+ ],
+ "shots": [
+  {
+   "id": "s1",
+   "kind": "i2v",
+   "first": "A",
+   "frames": 137,
+   "span": 132,
+   "seed": 151,
+   "size": [
+    1920,
+    1088
+   ],
+   "matte": true,
+   "depth": false,
+   "flow": true,
+   "prompt": "the camera orbits slowly around the dancer in one continuous move from left to right, the dancer leaps, lands and spins with arms sweeping upward, dust swirls in the shaft of hard light, the concrete walls slide past behind, energetic, cinematic"
+  },
+  {
+   "id": "s2",
+   "kind": "i2v",
+   "first": "B",
+   "frames": 161,
+   "span": 156,
+   "seed": 152,
+   "size": [
+    1920,
+    1088
+   ],
+   "matte": true,
+   "depth": false,
+   "flow": false,
+   "prompt": "the camera orbits around the dancer in one continuous move from right to left, the dancer rises from the crouch and stretches up into the shaft of hard light, arms reaching high, dust glitters in the beam, energetic, cinematic",
+   "masktrack": {
+    "style": "rise",
+    "start": 8.496,
+    "denoise": 1.0,
+    "corridor": false,
+    "subject": "the dancer"
+   }
+  }
+ ],
+ "compose": {
+  "size": [
+   1920,
+   1080
+  ],
+  "crossfade": [
+   0
+  ],
+  "crf": 16,
+  "default": {
+   "ops": [
+    {
+     "op": "upscale_matte",
+     "out": "m",
+     "args": {
+      "matte": "$matte",
+      "size": [
+       1080,
+       1920
+      ],
+      "guide": "$footage"
+     }
+    },
+    {
+     "op": "flow_wake",
+     "out": "wa",
+     "args": {
+      "type_a": "$type_matte",
+      "flow": "$flow",
+      "matte": "$flow_m",
+      "strength": {
+       "curve": "onset",
+       "lo": 3.0,
+       "hi": 6.0
+      },
+      "radius": 70,
+      "decay": 0.9,
+      "trail": 10,
+      "trail_gain": 1.0,
+      "bg_drag": 0.12,
+      "max_disp": 0.2,
+      "smooth": 1.0,
+      "settle": {
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         3.376,
+         0.0
+        ],
+        [
+         3.616,
+         0.75
+        ],
+        [
+         4.376,
+         0.75
+        ],
+        [
+         4.616,
+         0.0
+        ],
+        [
+         5.876,
+         0.0
+        ],
+        [
+         6.116,
+         0.75
+        ],
+        [
+         6.876,
+         0.75
+        ],
+        [
+         7.116,
+         0.0
+        ],
+        [
+         8.376,
+         0.0
+        ],
+        [
+         8.616,
+         0.75
+        ],
+        [
+         9.376,
+         0.75
+        ],
+        [
+         9.616,
+         0.0
+        ],
+        [
+         10.876,
+         0.0
+        ],
+        [
+         11.116,
+         0.75
+        ],
+        [
+         11.88,
+         0.75
+        ],
+        [
+         12.12,
+         0.0
+        ]
+       ],
+       "ease": "smooth"
+      },
+      "frame_idx": "$frame_idx",
+      "u": "$u",
+      "state_key": "P14:s1"
+     }
+    },
+    {
+     "op": "fill",
+     "out": "blk",
+     "args": {
+      "like": "$footage",
+      "color": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     }
+    },
+    {
+     "op": "over",
+     "out": "tdep",
+     "args": {
+      "base": "$blk",
+      "fg": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "alpha": "$type_depth"
+     }
+    },
+    {
+     "op": "luminosity_key",
+     "out": "near",
+     "args": {
+      "img": "$tdep",
+      "low": 0.54,
+      "high": 0.6
+     }
+    },
+    {
+     "op": "grade",
+     "out": "foot",
+     "args": {
+      "frame": "$footage",
+      "lift": 0.0,
+      "gamma": 1.0,
+      "gain": 0.9,
+      "sat": 1.05
+     }
+    },
+    {
+     "op": "tint_type",
+     "out": "tcol",
+     "args": {
+      "type_a": "$wa",
+      "footage": "$footage",
+      "mode": "sample",
+      "sample_blur": 50,
+      "sat": 1.6,
+      "lum_target": 0.92,
+      "lum_amount": 0.85
+     }
+    },
+    {
+     "op": "sandwich",
+     "out": "image",
+     "args": {
+      "footage": "$foot",
+      "type_rgb": "$tcol",
+      "type_a": "$wa",
+      "matte": "$m",
+      "matte_threshold": 0.5,
+      "matte_soft": 0.08,
+      "front": "$near",
+      "type_opacity": 0.96
+     }
+    },
+    {
+     "op": "add_glow",
+     "out": "image",
+     "args": {
+      "img": "$image",
+      "mask": "$wa",
+      "radius": 20,
+      "intensity": {
+       "curve": "low",
+       "lo": 0.06,
+       "hi": 0.5
+      },
+      "color": [
+       1.0,
+       0.85,
+       0.6
+      ]
+     }
+    },
+    {
+     "op": "contour_lines",
+     "out": "cl",
+     "args": {
+      "src": "$m",
+      "mode": "scribble",
+      "strokes": 2,
+      "jitter": 5.0,
+      "width": 2,
+      "boil": 3,
+      "frame_idx": "$frame_idx",
+      "seed": 14,
+      "max_contours": 2,
+      "min_len": 60.0,
+      "smooth": 3.0,
+      "reveal": {
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.165,
+         1.0
+        ],
+        [
+         0.3,
+         1.0
+        ],
+        [
+         0.45,
+         0.0
+        ],
+        [
+         0.496,
+         0.0
+        ],
+        [
+         0.661,
+         1.0
+        ],
+        [
+         0.796,
+         1.0
+        ],
+        [
+         0.946,
+         0.0
+        ],
+        [
+         0.996,
+         0.0
+        ],
+        [
+         1.161,
+         1.0
+        ],
+        [
+         1.296,
+         1.0
+        ],
+        [
+         1.446,
+         0.0
+        ],
+        [
+         1.496,
+         0.0
+        ],
+        [
+         1.661,
+         1.0
+        ],
+        [
+         1.796,
+         1.0
+        ],
+        [
+         1.946,
+         0.0
+        ],
+        [
+         1.996,
+         0.0
+        ],
+        [
+         2.161,
+         1.0
+        ],
+        [
+         2.296,
+         1.0
+        ],
+        [
+         2.446,
+         0.0
+        ],
+        [
+         2.496,
+         0.0
+        ],
+        [
+         2.661,
+         1.0
+        ],
+        [
+         2.796,
+         1.0
+        ],
+        [
+         2.946,
+         0.0
+        ],
+        [
+         2.996,
+         0.0
+        ],
+        [
+         3.161,
+         1.0
+        ],
+        [
+         3.296,
+         1.0
+        ],
+        [
+         3.446,
+         0.0
+        ],
+        [
+         3.496,
+         0.0
+        ],
+        [
+         3.661,
+         1.0
+        ],
+        [
+         3.796,
+         1.0
+        ],
+        [
+         3.946,
+         0.0
+        ],
+        [
+         3.996,
+         0.0
+        ],
+        [
+         4.161,
+         1.0
+        ],
+        [
+         4.296,
+         1.0
+        ],
+        [
+         4.446,
+         0.0
+        ],
+        [
+         4.496,
+         0.0
+        ],
+        [
+         4.661,
+         1.0
+        ],
+        [
+         4.796,
+         1.0
+        ],
+        [
+         4.946,
+         0.0
+        ],
+        [
+         4.996,
+         0.0
+        ],
+        [
+         5.161,
+         1.0
+        ],
+        [
+         5.296,
+         1.0
+        ],
+        [
+         5.446,
+         0.0
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "op": "over",
+     "out": "image",
+     "args": {
+      "base": "$image",
+      "fg": [
+       1.0,
+       0.93,
+       0.8
+      ],
+      "alpha": "$cl"
+     }
+    },
+    {
+     "op": "grade",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "lift": 0.01,
+      "gamma": 1.0,
+      "gain": 1.04,
+      "sat": 1.08
+     }
+    },
+    {
+     "op": "grain",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 14,
+      "amount": 0.02,
+      "size": 1.2
+     }
+    },
+    {
+     "op": "vignette",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "strength": 0.26
+     }
+    }
+   ]
+  },
+  "shots": {
+   "s2": {
+    "ops": [
+     {
+      "op": "upscale_matte",
+      "out": "m",
+      "args": {
+       "matte": "$matte",
+       "size": [
+        1080,
+        1920
+       ],
+       "guide": "$footage"
+      }
+     },
+     {
+      "op": "fill",
+      "out": "blk",
+      "args": {
+       "like": "$footage",
+       "color": [
+        0.0,
+        0.0,
+        0.0
+       ]
+      }
+     },
+     {
+      "op": "over",
+      "out": "tdep",
+      "args": {
+       "base": "$blk",
+       "fg": [
+        1.0,
+        1.0,
+        1.0
+       ],
+       "alpha": "$type_depth"
+      }
+     },
+     {
+      "op": "luminosity_key",
+      "out": "near",
+      "args": {
+       "img": "$tdep",
+       "low": 0.54,
+       "high": 0.6
+      }
+     },
+     {
+      "op": "grade",
+      "out": "foot",
+      "args": {
+       "frame": "$footage",
+       "lift": 0.0,
+       "gamma": 0.92,
+       "gain": 0.78,
+       "sat": 1.05
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "tcol",
+      "args": {
+       "type_a": "$type_matte",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 50,
+       "sat": 1.6,
+       "lum_target": 0.92,
+       "lum_amount": 0.85
+      }
+     },
+     {
+      "op": "sandwich",
+      "out": "image",
+      "args": {
+       "footage": "$foot",
+       "type_rgb": "$tcol",
+       "type_a": "$type_matte",
+       "matte": "$m",
+       "matte_threshold": 0.5,
+       "matte_soft": 0.08,
+       "front": "$near",
+       "type_opacity": 0.96
+      }
+     },
+     {
+      "op": "add_glow",
+      "out": "image",
+      "args": {
+       "img": "$image",
+       "mask": "$type_matte",
+       "radius": 20,
+       "intensity": {
+        "curve": "low",
+        "lo": 0.06,
+        "hi": 0.5
+       },
+       "color": [
+        1.0,
+        0.85,
+        0.6
+       ]
+      }
+     },
+     {
+      "op": "grade",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "lift": 0.01,
+       "gamma": 1.0,
+       "gain": 1.04,
+       "sat": 1.08
+      }
+     },
+     {
+      "op": "grain",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "frame_idx": "$frame_idx",
+       "seed": 14,
+       "amount": 0.02,
+       "size": 1.2
+      }
+     },
+     {
+      "op": "vignette",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "strength": 0.26
+      }
+     }
+    ]
+   }
+  }
+ },
+ "signoff": {
+  "off": true
+ },
+ "parent": {
+  "piece": "P14",
+  "why": "16:9 version (Both formats rule): own wide stills + own wide orbit shots, same cut"
+ },
+ "format": "16:9"
+}

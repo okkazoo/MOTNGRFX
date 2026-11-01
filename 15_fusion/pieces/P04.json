@@ -1,0 +1,364 @@
+{
+ "id": "P04",
+ "slug": "hold-on-to-nothing",
+ "fps": 24,
+ "audio": {
+  "src": "15_fusion/v002/out/motion-graphic_fusion_v002_P04_s401_00001.flac",
+  "bpm": 100,
+  "cut": 18.42,
+  "fade": 0.9
+ },
+ "type": {
+  "seed": 6,
+  "energy": 0.45,
+  "palette": {
+   "bg": [
+    14,
+    8,
+    8
+   ],
+   "fg": [
+    245,
+    235,
+    215
+   ],
+   "accents": [
+    [
+     170,
+     20,
+     40
+    ],
+    [
+     245,
+     235,
+     215
+    ],
+    [
+     120,
+     10,
+     30
+    ]
+   ]
+  },
+  "camera": "beat_orbit",
+  "transitions": "auto",
+  "words": [
+   {
+    "text": "HOLD",
+    "font": "MajorMonoDisplay-Regular.ttf",
+    "module": "lanes",
+    "t0": 0.0,
+    "t1": 3.8,
+    "form_s": 2.27,
+    "exit_s": 0.5,
+    "hit_on": "bar",
+    "placement": {
+     "yaw": -10,
+     "bleed": 1.0
+    },
+    "case": "upper"
+   },
+   {
+    "text": "ON TO",
+    "font": "Doto[ROND,wght].ttf",
+    "module": "lanes",
+    "t0": 4.4,
+    "t1": 7.3,
+    "form_s": 1.1,
+    "exit_s": 0.5,
+    "hit_on": "beat",
+    "placement": {
+     "yaw": 12,
+     "bleed": 1.0
+    },
+    "axes": {
+     "ROND": {
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        18.4,
+        100
+       ]
+      ],
+      "ease": "linear"
+     },
+     "wght": [
+      250,
+      850,
+      "sine",
+      {
+       "period": 2.4
+      }
+     ]
+    }
+   },
+   {
+    "text": "NOTHING",
+    "font": "MajorMonoDisplay-Regular.ttf",
+    "module": "lanes",
+    "t0": 7.9,
+    "t1": 12.6,
+    "form_s": 1.7,
+    "exit_s": 0.6,
+    "hit_on": "bar",
+    "placement": {
+     "yaw": -12,
+     "bleed": 1.0
+    },
+    "case": "upper"
+   },
+   {
+    "text": "LET IT",
+    "font": "Doto[ROND,wght].ttf",
+    "module": "lanes",
+    "t0": 13.2,
+    "t1": 15.9,
+    "form_s": 1.2,
+    "exit_s": 0.5,
+    "hit_on": "bar",
+    "placement": {
+     "yaw": 10,
+     "bleed": 1.0
+    },
+    "axes": {
+     "ROND": {
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        18.4,
+        100
+       ]
+      ],
+      "ease": "linear"
+     },
+     "wght": [
+      250,
+      850,
+      "sine",
+      {
+       "period": 2.4
+      }
+     ]
+    }
+   },
+   {
+    "text": "MOVE",
+    "font": "Doto[ROND,wght].ttf",
+    "module": "lanes",
+    "t0": 16.4,
+    "t1": 19.5,
+    "form_s": 0.8,
+    "exit_s": 0.5,
+    "hit_on": "beat",
+    "placement": {
+     "yaw": -8,
+     "bleed": 1.0
+    },
+    "axes": {
+     "ROND": {
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        18.4,
+        100
+       ]
+      ],
+      "ease": "linear"
+     },
+     "wght": [
+      250,
+      850,
+      "sine",
+      {
+       "period": 2.4
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "type_passes": [
+  "matte",
+  "line"
+ ],
+ "stills": [
+  {
+   "id": "A",
+   "model": "moss",
+   "seed": 401,
+   "size": [
+    1088,
+    1920
+   ],
+   "prompt": "flowing silk ribbons in a dark photographic studio, long strands of ivory and deep red silk drifting through the air, soft diffused light, black background, elegant, shallow depth of field, tall vertical frame"
+  }
+ ],
+ "shots": [
+  {
+   "id": "s1",
+   "kind": "control",
+   "first": "A",
+   "frames": 121,
+   "seed": 41,
+   "size": [
+    1152,
+    2048
+   ],
+   "prompt": "flowing silk ribbons in a dark studio, ivory and deep red silk, soft light, long ribbons draw out slowly and trace long flowing strands, the silk drifts and unfurls",
+   "control": {
+    "pass": "line"
+   }
+  },
+  {
+   "id": "s2",
+   "kind": "control",
+   "first": "last:s1",
+   "frames": 121,
+   "seed": 42,
+   "size": [
+    1152,
+    2048
+   ],
+   "prompt": "flowing silk ribbons in a dark studio, ivory and deep red silk, soft light, the silk ribbons ripple and fold over each other, soft light sliding along the folds, camera drifts slowly",
+   "control": {
+    "pass": "line"
+   }
+  },
+  {
+   "id": "s3",
+   "kind": "control",
+   "first": "last:s2",
+   "frames": 121,
+   "seed": 43,
+   "size": [
+    1152,
+    2048
+   ],
+   "prompt": "flowing silk ribbons in a dark studio, ivory and deep red silk, soft light, the silk swells and billows with the pulse, ribbons curling and weaving in one continuous movement",
+   "control": {
+    "pass": "line"
+   }
+  },
+  {
+   "id": "s4",
+   "kind": "control",
+   "first": "last:s3",
+   "frames": 121,
+   "seed": 44,
+   "size": [
+    1152,
+    2048
+   ],
+   "prompt": "flowing silk ribbons in a dark studio, ivory and deep red silk, soft light, the ribbons flow freely and move on, silk streaming through the dark studio, one unbroken movement",
+   "control": {
+    "pass": "line"
+   }
+  }
+ ],
+ "compose": {
+  "size": [
+   1080,
+   1920
+  ],
+  "crossfade": 0.5833333333333334,
+  "crf": 16,
+  "default": {
+   "ops": [
+    {
+     "op": "tint_type",
+     "out": "tcol",
+     "args": {
+      "type_a": "$type_matte",
+      "footage": "$footage",
+      "mode": "sample",
+      "sample_blur": 35,
+      "sat": 1.3,
+      "lum_target": 0.78,
+      "lum_amount": 0.7
+     }
+    },
+    {
+     "op": "luminosity_key",
+     "out": "sk",
+     "args": {
+      "img": "$footage",
+      "low": 0.18,
+      "high": 0.55
+     }
+    },
+    {
+     "op": "sandwich",
+     "out": "image",
+     "args": {
+      "footage": "$footage",
+      "type_rgb": "$tcol",
+      "type_a": "$type_matte",
+      "matte": "$sk",
+      "type_opacity": 0.45
+     }
+    },
+    {
+     "op": "sandwich",
+     "out": "image",
+     "args": {
+      "footage": "$image",
+      "type_rgb": "$tcol",
+      "type_a": "$type_line",
+      "matte": "$sk",
+      "type_opacity": 0.9
+     }
+    },
+    {
+     "op": "grade",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "lift": 0.005,
+      "gamma": 1.0,
+      "gain": 1.05,
+      "sat": 1.0
+     }
+    },
+    {
+     "op": "grain",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 4,
+      "amount": 0.02,
+      "size": 1.2
+     }
+    },
+    {
+     "op": "vignette",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "strength": 0.3
+     }
+    }
+   ]
+  }
+ },
+ "signoff": {
+  "text": "hold on to nothing / 100 bpm",
+  "font": "Space Mono",
+  "t0": 17.2,
+  "px": 30,
+  "color": [
+   245,
+   235,
+   215
+  ]
+ }
+}

@@ -1,0 +1,112 @@
+[
+  {
+    "id": "cam_follow",
+    "kind": "camera",
+    "title": "Follow",
+    "description": "Rides the creation lines: the eye trails the strand heads along the build front (look-at lag 0.2 s), close while the type is being drawn, a little further out between words, and settles into a composed hold on each formed word before leaving with the strands again. Test chain (planar): SIGNAL, twist, BENDS, circuit board, FLOW, all roughly facing the viewer (13.8 s). Applied: whole chain: eye trails the strand heads and settles on each formed word; default camera elsewhere. Eye speed median 99 px/s (min 45, max 180 outside declared rests); heading jump max 1.8 deg/frame, view turn max 1.9 deg/frame, roll max 0.50 deg/frame; 170 declared rest frames; gates pass. Turn governor: not needed. Frames empty (<0.4% covered): none; filled (>55%): 8.0-8.4s, 8.8-9.4s; max cover 66%.",
+    "clip": "14_modules/v006/local/cam_follow_g03_draft.mp4",
+    "sheet": "14_modules/v006/local/cam_follow_sheet_g03.jpg",
+    "dircheck": null,
+    "version": "14_modules/v006",
+    "gen": 3
+  },
+  {
+    "id": "cam_orbit_even",
+    "kind": "camera",
+    "title": "Orbit even",
+    "description": "Constant-radius orbit around the word, look locked on the pivot, constant angular rate: an even swing of about 100 degrees that passes square-on to the word at the middle, the parallax of the strands against the type doing the work. The follow before it arrives at the start of the arc. Test chain (depth): tilted SIGNAL, twist, BENDS on a wall, circuit board, FLOW on the floor, wall and floor joined at a crease (14.5 s). Applied: around the wall word BENDS; default camera elsewhere. Eye speed median 233 px/s (min 36, max 709 outside declared rests); heading jump max 2.5 deg/frame, view turn max 1.8 deg/frame, roll max 1.20 deg/frame; 189 declared rest frames (ease-to-rest turn at 9.15 s, 11.97 s, 9.42 s); gates pass. Turn governor: max lag 0.44 s, slowed 2.2 s. Frames empty (<0.4% covered): 14.1-14.4s; filled (>55%): none; max cover 35%.",
+    "clip": "14_modules/v006/local/cam_orbit_even_g03_draft.mp4",
+    "sheet": "14_modules/v006/local/cam_orbit_even_sheet_g03.jpg",
+    "dircheck": null,
+    "version": "14_modules/v006",
+    "gen": 3
+  },
+  {
+    "id": "cam_spin_read_spin",
+    "kind": "camera",
+    "title": "Spin read spin",
+    "description": "Fast spin round the word so that it lands face-on as it forms, a slow drift while it is read, then a fast spin on as it deconstructs. Pivot-locked at constant radius; every next spin runs the other way. Test chain (planar): SIGNAL, twist, BENDS, circuit board, FLOW, all roughly facing the viewer (13.8 s). Applied: all three words, directions alternate (+ - +); default camera elsewhere. Eye speed median 213 px/s (min 20, max 1529 outside declared rests); heading jump max 2.4 deg/frame, view turn max 1.9 deg/frame, fast spins up to 5.1 deg/frame, roll max 0.31 deg/frame; 60 declared rest frames (ease-to-rest turn at 3.2 s, 4.56 s, 7.36 s, 10.76 s); gates pass. Turn governor: max lag 0.27 s, slowed 0.9 s. Frames empty (<0.4% covered): 7.3-7.4s, 13.7-13.7s; filled (>55%): 7.9-8.3s, 8.9-9.0s; max cover 66%.",
+    "clip": "14_modules/v006/local/cam_spin_read_spin_g04_draft.mp4",
+    "sheet": "14_modules/v006/local/cam_spin_read_spin_sheet_g04.jpg",
+    "dircheck": null,
+    "version": "14_modules/v006",
+    "gen": 4
+  },
+  {
+    "id": "cam_push_through",
+    "kind": "camera",
+    "title": "Push through",
+    "description": "Dives through a counter: the eye lines up on a letter's hole, accelerates through it so the type rushes past and grows out of frame, then pans on to the strands and the next word behind. Test chain (depth): tilted SIGNAL, twist, BENDS on a wall, circuit board, FLOW on the floor, wall and floor joined at a crease (14.5 s). Applied: through the counter of the tilted SIGNAL's A, along the strands' way, on to the hold pose of the wall word BENDS; default camera elsewhere. Eye speed median 210 px/s (min 60, max 360 outside declared rests); heading jump max 2.2 deg/frame, view turn max 2.4 deg/frame, roll max 1.20 deg/frame; 199 declared rest frames (ease-to-rest turn at 1.0 s); gates pass. Turn governor: max lag 0.08 s, slowed 0.7 s. Frames empty (<0.4% covered): 14.1-14.4s; filled (>55%): none; max cover 42%.",
+    "clip": "14_modules/v006/local/cam_push_through_g03_draft.mp4",
+    "sheet": "14_modules/v006/local/cam_push_through_sheet_g03.jpg",
+    "dircheck": null,
+    "version": "14_modules/v006",
+    "gen": 3
+  },
+  {
+    "id": "cam_tilt_to_plan",
+    "kind": "camera",
+    "title": "Tilt to plan",
+    "description": "Rises to a top-down view so the 3D layering of the strands collapses into a flat plan pattern, rides there with a slow drift, then comes back down to face-on. The image-right hint fades in near vertical so the picture never spins. Test chain (depth): tilted SIGNAL, twist, BENDS on a wall, circuit board, FLOW on the floor, wall and floor joined at a crease (14.5 s). Applied: over the circuit board from the wall word to the floor word; default camera elsewhere. Eye speed median 355 px/s (min 48, max 469 outside declared rests); heading jump max 2.4 deg/frame, view turn max 1.3 deg/frame, roll max 1.03 deg/frame; 236 declared rest frames (ease-to-rest turn at 7.02 s, 8.8 s, 12.18 s); gates pass. Turn governor: max lag 0.02 s, slowed 0.0 s. Frames empty (<0.4% covered): 14.1-14.4s; filled (>55%): none; max cover 42%.",
+    "clip": "14_modules/v006/local/cam_tilt_to_plan_g03_draft.mp4",
+    "sheet": "14_modules/v006/local/cam_tilt_to_plan_sheet_g03.jpg",
+    "dircheck": null,
+    "version": "14_modules/v006",
+    "gen": 3
+  },
+  {
+    "id": "cam_graze",
+    "kind": "camera",
+    "title": "Graze",
+    "description": "A low, close traverse along the word's surface: the eye skims along the reading direction a short way off the plane, looking ahead along it, so the letters and strands stream past with strong parallax. Test chain (planar): SIGNAL, twist, BENDS, circuit board, FLOW, all roughly facing the viewer (13.8 s). Applied: along SIGNAL while it forms (0-3.0 s); default camera elsewhere. Eye speed median 154 px/s (min 51, max 492 outside declared rests); heading jump max 2.6 deg/frame, view turn max 2.4 deg/frame, roll max 0.50 deg/frame; 159 declared rest frames (ease-to-rest turn at 3.6 s, 11.17 s); gates pass. Turn governor: max lag 0.56 s, slowed 2.4 s. Frames empty (<0.4% covered): 3.1-3.3s, 13.4-13.7s; filled (>55%): 7.9-8.4s, 8.8-9.4s; max cover 66%.",
+    "clip": "14_modules/v006/local/cam_graze_g03_draft.mp4",
+    "sheet": "14_modules/v006/local/cam_graze_sheet_g03.jpg",
+    "dircheck": null,
+    "version": "14_modules/v006",
+    "gen": 3
+  },
+  {
+    "id": "cam_ease_reversal",
+    "kind": "camera",
+    "title": "Ease reversal",
+    "description": "A run across the word that eases to rest at the end and eases out the other way: speed follows a smootherstep through zero at the turn, so there is no bump or cusp at the reversal. Test chain (planar): SIGNAL, twist, BENDS, circuit board, FLOW, all roughly facing the viewer (13.8 s). Applied: run across BENDS, rest, back (4.3-6.7 s); default camera elsewhere. Eye speed median 159 px/s (min 42, max 394 outside declared rests); heading jump max 1.8 deg/frame, view turn max 2.1 deg/frame, roll max 0.48 deg/frame; 237 declared rest frames (ease-to-rest turn at 4.4 s, 6.85 s, 11.17 s); gates pass. Turn governor: not needed. Frames empty (<0.4% covered): 13.4-13.7s; filled (>55%): 7.9-8.4s, 8.8-9.4s; max cover 66%.",
+    "clip": "14_modules/v006/local/cam_ease_reversal_g04_draft.mp4",
+    "sheet": "14_modules/v006/local/cam_ease_reversal_sheet_g04.jpg",
+    "dircheck": null,
+    "version": "14_modules/v006",
+    "gen": 4
+  },
+  {
+    "id": "cam_pullback_reveal",
+    "kind": "camera",
+    "title": "Pullback reveal",
+    "description": "One continuous pull-back from tight on the build front to a framing of the whole word (or the whole layout), easing out to rest as the reveal lands. Test chain (planar): SIGNAL, twist, BENDS, circuit board, FLOW, all roughly facing the viewer (13.8 s). Applied: FLOW finale: pulls back from tight on the strands to the whole word, landing as it stands; default camera elsewhere. Eye speed median 164 px/s (min 42, max 281 outside declared rests); heading jump max 1.8 deg/frame, view turn max 2.2 deg/frame, roll max 0.50 deg/frame; 241 declared rest frames (ease-to-rest turn at 10.3 s, 12.06 s); gates pass. Turn governor: not needed. Frames empty (<0.4% covered): 13.4-13.7s; filled (>55%): 8.0-8.4s, 8.8-9.4s; max cover 66%.",
+    "clip": "14_modules/v006/local/cam_pullback_reveal_g03_draft.mp4",
+    "sheet": "14_modules/v006/local/cam_pullback_reveal_sheet_g03.jpg",
+    "dircheck": null,
+    "version": "14_modules/v006",
+    "gen": 3
+  },
+  {
+    "id": "cam_hold_drift",
+    "kind": "camera",
+    "title": "Hold drift",
+    "description": "A composed still: the eye rests face-on at the word's fit distance with the word a tenth of a frame off centre, a slow push-in of a few percent and a sub-pixel drift. The hold never reads as a static centred shot. Test chain (planar): SIGNAL, twist, BENDS, circuit board, FLOW, all roughly facing the viewer (13.8 s). Applied: every word hold (follow through transitions); default camera elsewhere. Eye speed median 149 px/s (min 58, max 243 outside declared rests); heading jump max 1.8 deg/frame, view turn max 2.2 deg/frame, roll max 0.50 deg/frame; 244 declared rest frames (ease-to-rest turn at 11.17 s); gates pass. Turn governor: not needed. Frames empty (<0.4% covered): 13.4-13.7s; filled (>55%): 8.0-8.4s, 8.8-9.4s; max cover 66%.",
+    "clip": "14_modules/v006/local/cam_hold_drift_g03_draft.mp4",
+    "sheet": "14_modules/v006/local/cam_hold_drift_sheet_g03.jpg",
+    "dircheck": null,
+    "version": "14_modules/v006",
+    "gen": 3
+  },
+  {
+    "id": "cam_auto",
+    "kind": "camera",
+    "title": "Auto",
+    "description": "Default camera chosen by simple rules: follow through every transition, orbit_even on words that sit on a tilted plane, hold_drift (composed still) on front-facing ones. Test chain (depth): tilted SIGNAL, twist, BENDS on a wall, circuit board, FLOW on the floor, wall and floor joined at a crease (14.5 s). Applied: rule based: follow in transitions, orbit_even on tilted words, hold_drift on front-facing ones; default camera elsewhere. Eye speed median 349 px/s (min 44, max 563 outside declared rests); heading jump max 2.4 deg/frame, view turn max 2.4 deg/frame, roll max 1.20 deg/frame; 50 declared rest frames (ease-to-rest turn at 7.24 s, 8.91 s, 11.88 s, 9.27 s); gates pass. Turn governor: max lag 0.34 s, slowed 2.8 s. Frames empty (<0.4% covered): 14.2-14.4s; filled (>55%): 9.8-10.1s; max cover 60%.",
+    "clip": "14_modules/v006/local/cam_auto_g03_draft.mp4",
+    "sheet": "14_modules/v006/local/cam_auto_sheet_g03.jpg",
+    "dircheck": null,
+    "version": "14_modules/v006",
+    "gen": 3
+  }
+]

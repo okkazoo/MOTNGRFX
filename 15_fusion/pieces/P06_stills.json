@@ -1,0 +1,45 @@
+{
+ "id": "P06",
+ "slug": "song-chords",
+ "fps": 24,
+ "audio": {
+  "src": "15_fusion/v001/local/audio/P06_song_cut.wav",
+  "bpm": 160,
+  "fade": 0.5
+ },
+ "stills": [
+  {
+   "id": "A",
+   "model": "moss",
+   "seed": 1601,
+   "size": [
+    1088,
+    1920
+   ],
+   "negative": "text, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, extra limbs, deformed hands, blurry subject",
+   "prompt": "a lone runner in dark athletic clothes sprinting along a long concrete tunnel, seen from the side in mid stride at the left of frame, cold blue and cyan light from strip lights in the ceiling, wet floor reflections, deep perspective, strong rim light on the runner, cinematic 35mm photograph, tall vertical frame, the runner fills about a third of the frame height"
+  },
+  {
+   "id": "B",
+   "model": "moss",
+   "seed": 1602,
+   "size": [
+    1088,
+    1920
+   ],
+   "negative": "text, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, extra limbs, deformed hands, blurry subject",
+   "prompt": "a lone runner in dark athletic clothes sprinting down an empty city street at dawn, seen from the side in mid stride at the right of frame, low amber sunrise light flooding the street between buildings, long shadows, warm haze, rim light on the runner, cinematic 35mm photograph, tall vertical frame, the runner fills about a third of the frame height"
+  },
+  {
+   "id": "C",
+   "model": "moss",
+   "seed": 1603,
+   "size": [
+    1088,
+    1920
+   ],
+   "negative": "text, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, extra limbs, deformed hands, blurry subject",
+   "prompt": "a lone runner in dark athletic clothes running across a city rooftop at twilight, seen from the side in mid stride at the left of frame, vast open violet and purple sky with soft clouds, distant skyline, cool violet light, rim light on the runner, cinematic 35mm photograph, tall vertical frame, the runner fills about a third of the frame height"
+  }
+ ]
+}

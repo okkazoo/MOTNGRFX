@@ -1,0 +1,110 @@
+{
+ "size": [
+  576,
+  1024
+ ],
+ "fps": 24,
+ "duration": 6.0,
+ "bpm": 124,
+ "bar": 4,
+ "seed": 3,
+ "palette": {
+  "bg": [
+   14,
+   13,
+   12
+  ],
+  "fg": [
+   240,
+   232,
+   214
+  ],
+  "accents": [
+   [
+    255,
+    86,
+    44
+   ],
+   [
+    70,
+    110,
+    240
+   ],
+   [
+    242,
+    166,
+    90
+   ]
+  ]
+ },
+ "words": [
+  {
+   "text": "AFTER",
+   "module": "lanes",
+   "font": "Bitcount[CRSV,ELSH,ELXP,slnt,wght].ttf",
+   "axes": {
+    "wght": [
+     300,
+     760,
+     "beat"
+    ]
+   },
+   "form_in": "lines",
+   "form_out": "flicker",
+   "t0": 0.0,
+   "t1": 3.4,
+   "form_s": 1.9,
+   "exit_s": 0.48,
+   "hit_on": "bar"
+  },
+  {
+   "text": "HOURS",
+   "module": "lanes",
+   "font": "Codystar-Regular.ttf",
+   "placement": {
+    "bleed": 1.1,
+    "yaw": 52
+   },
+   "form_in": "flicker",
+   "form_out": "flicker",
+   "t0": 3.6,
+   "t1": 5.4,
+   "form_s": 0.3,
+   "exit_s": 0.48,
+   "hit_on": "bar"
+  },
+  {
+   "text": "GLOW",
+   "module": "lanes",
+   "font": "Doto[ROND,wght].ttf",
+   "axes": {
+    "wght": [
+     420,
+     900,
+     "beat"
+    ],
+    "ROND": 100
+   },
+   "form_in": "flicker",
+   "form_out": "lines",
+   "t0": 5.6,
+   "t1": 7.2,
+   "form_s": 0.3,
+   "exit_s": 0.6,
+   "hit_on": "bar",
+   "placement": {
+    "yaw": -52
+   }
+  }
+ ],
+ "transitions": "auto",
+ "camera": "beat_orbit",
+ "passes": [
+  "beauty",
+  "matte",
+  "depth",
+  "line",
+  "clay",
+  "flow"
+ ]
+}

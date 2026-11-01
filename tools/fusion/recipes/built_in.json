@@ -1,0 +1,82 @@
+{
+ "technique": "built_in",
+ "from": "15_fusion/pieces/P02.json (after-hours)",
+ "ref_cut": 11.75,
+ "doc": "Letters built into the scene: depth control (guide 1.0), Video Depth Anything depth of the footage, type tinted from the footage and occluded by it. '@accent0' / '@accent1' / '@fg' / '@bg' = palette colour as [r,g,b] 0..1. 'timeline' keys are piece seconds at ref_cut and are rescaled to the cut. (2026-10-30: no default add_glow behind the type; glow only as the hold-life effect glow_breathe or a designed module.)",
+ "control_pass": "depth",
+ "guide": 1.0,
+ "type_passes": [
+  "matte",
+  "depth",
+  "line",
+  "beauty"
+ ],
+ "shot": {
+  "depth": true,
+  "matte": false
+ },
+ "subject_required": false,
+ "compose": {
+  "default": {
+   "ops": [
+    {
+     "op": "tint_type",
+     "out": "tcol",
+     "args": {
+      "type_a": "$type_line",
+      "footage": "$footage",
+      "mode": "sample",
+      "sample_blur": 30,
+      "sat": 2.2,
+      "lum_target": 0.9,
+      "lum_amount": 0.85
+     }
+    },
+    {
+     "op": "depth_occlude",
+     "out": "image",
+     "args": {
+      "footage": "$footage",
+      "footage_depth": "$depth",
+      "type_rgb": "$tcol",
+      "type_a": "$type_line",
+      "plane": 0.55,
+      "softness": 0.15,
+      "type_opacity": 0.55
+     }
+    },
+    {
+     "op": "grade",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "lift": 0.01,
+      "gamma": 1.0,
+      "gain": 1.05,
+      "sat": 1.1
+     }
+    },
+    {
+     "op": "grain",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 2,
+      "amount": 0.025,
+      "size": 1.2
+     }
+    },
+    {
+     "op": "vignette",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "strength": 0.3
+     }
+    }
+   ]
+  },
+  "shots": {}
+ }
+}

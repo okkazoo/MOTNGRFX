@@ -1,0 +1,98 @@
+{
+ "technique": "traced",
+ "from": "15_fusion/pieces/P04.json (hold-on-to-nothing)",
+ "ref_cut": 18.42,
+ "doc": "Letters traced as flowing lines/ribbons: line control (guide 1.0), no depth, no Alpha-Gen; luminosity key of the footage as the matte for the sandwich.",
+ "control_pass": "line",
+ "guide": 1.0,
+ "type_passes": [
+  "matte",
+  "line"
+ ],
+ "shot": {
+  "depth": false,
+  "matte": false
+ },
+ "subject_required": false,
+ "compose": {
+  "default": {
+   "ops": [
+    {
+     "op": "tint_type",
+     "out": "tcol",
+     "args": {
+      "type_a": "$type_matte",
+      "footage": "$footage",
+      "mode": "sample",
+      "sample_blur": 35,
+      "sat": 1.3,
+      "lum_target": 0.78,
+      "lum_amount": 0.7
+     }
+    },
+    {
+     "op": "luminosity_key",
+     "out": "sk",
+     "args": {
+      "img": "$footage",
+      "low": 0.18,
+      "high": 0.55
+     }
+    },
+    {
+     "op": "sandwich",
+     "out": "image",
+     "args": {
+      "footage": "$footage",
+      "type_rgb": "$tcol",
+      "type_a": "$type_matte",
+      "matte": "$sk",
+      "type_opacity": 0.45
+     }
+    },
+    {
+     "op": "sandwich",
+     "out": "image",
+     "args": {
+      "footage": "$image",
+      "type_rgb": "$tcol",
+      "type_a": "$type_line",
+      "matte": "$sk",
+      "type_opacity": 0.9
+     }
+    },
+    {
+     "op": "grade",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "lift": 0.005,
+      "gamma": 1.0,
+      "gain": 1.05,
+      "sat": 1.0
+     }
+    },
+    {
+     "op": "grain",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 4,
+      "amount": 0.02,
+      "size": 1.2
+     }
+    },
+    {
+     "op": "vignette",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "strength": 0.3
+     }
+    }
+   ]
+  },
+  "shots": {}
+ }
+}

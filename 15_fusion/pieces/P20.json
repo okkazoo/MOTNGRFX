@@ -1,0 +1,1641 @@
+{
+ "audio": {
+  "analysis": "15_fusion/v005/local/audio/P20_analysis.json",
+  "bpm": 89.222,
+  "cut": 16.0,
+  "fade": 0.672,
+  "src": "15_fusion/v005/audio/P20.wav"
+ },
+ "brief": {
+  "mood": [
+   "flowing"
+  ],
+  "palette": [
+   "#050505",
+   "#f2f2f2",
+   "#c9ccd0",
+   "#8e9298",
+   "#e4e6e9"
+  ],
+  "scene": "a braided river delta seen from the air in black and white, silver channels, mist, the river meeting the sea"
+ },
+ "compose": {
+  "crf": 20,
+  "crossfade": 0,
+  "default": {
+   "ops": [
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         3.146,
+         0.0
+        ],
+        [
+         3.386,
+         1.0
+        ],
+        [
+         4.346,
+         1.0
+        ],
+        [
+         4.586,
+         0.0
+        ],
+        [
+         5.836,
+         0.0
+        ],
+        [
+         6.076,
+         1.0
+        ],
+        [
+         7.036,
+         1.0
+        ],
+        [
+         7.276,
+         0.0
+        ],
+        [
+         8.526,
+         0.0
+        ],
+        [
+         8.766,
+         1.0
+        ],
+        [
+         9.726,
+         1.0
+        ],
+        [
+         9.966,
+         0.0
+        ],
+        [
+         11.216,
+         0.0
+        ],
+        [
+         11.456,
+         1.0
+        ],
+        [
+         12.416,
+         1.0
+        ],
+        [
+         12.656,
+         0.0
+        ],
+        [
+         13.906,
+         0.0
+        ],
+        [
+         14.146,
+         1.0
+        ],
+        [
+         15.33,
+         1.0
+        ],
+        [
+         15.57,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "P20:type_matte",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_matte",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wm"
+    },
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         3.146,
+         0.0
+        ],
+        [
+         3.386,
+         1.0
+        ],
+        [
+         4.346,
+         1.0
+        ],
+        [
+         4.586,
+         0.0
+        ],
+        [
+         5.836,
+         0.0
+        ],
+        [
+         6.076,
+         1.0
+        ],
+        [
+         7.036,
+         1.0
+        ],
+        [
+         7.276,
+         0.0
+        ],
+        [
+         8.526,
+         0.0
+        ],
+        [
+         8.766,
+         1.0
+        ],
+        [
+         9.726,
+         1.0
+        ],
+        [
+         9.966,
+         0.0
+        ],
+        [
+         11.216,
+         0.0
+        ],
+        [
+         11.456,
+         1.0
+        ],
+        [
+         12.416,
+         1.0
+        ],
+        [
+         12.656,
+         0.0
+        ],
+        [
+         13.906,
+         0.0
+        ],
+        [
+         14.146,
+         1.0
+        ],
+        [
+         15.33,
+         1.0
+        ],
+        [
+         15.57,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "P20:type_line",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_line",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wl"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         5.806,
+         1.0
+        ],
+        [
+         6.056,
+         0.0
+        ],
+        [
+         7.056,
+         0.0
+        ],
+        [
+         7.306,
+         1.0
+        ]
+       ]
+      },
+      "scale": 1.0
+     },
+     "op": "mask_gate",
+     "out": "wm"
+    },
+    {
+     "args": {
+      "a": "$wl",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         5.806,
+         1.0
+        ],
+        [
+         6.056,
+         0.0
+        ],
+        [
+         7.056,
+         0.0
+        ],
+        [
+         7.306,
+         1.0
+        ]
+       ]
+      },
+      "scale": 1.0
+     },
+     "op": "mask_gate",
+     "out": "wl"
+    },
+    {
+     "args": {
+      "guide": "$footage",
+      "matte": "$matte",
+      "size": [
+       360,
+       640
+      ]
+     },
+     "op": "upscale_matte",
+     "out": "m"
+    },
+    {
+     "args": {
+      "footage": "$footage",
+      "lum_amount": 0.85,
+      "lum_target": 0.9,
+      "mode": "sample",
+      "sample_blur": 30,
+      "sat": 2.2,
+      "type_a": "$wl"
+     },
+     "op": "tint_type",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "footage": "$footage",
+      "footage_depth": "$depth",
+      "plane": 0.55,
+      "softness": 0.15,
+      "type_a": "$wl",
+      "type_opacity": 0.55,
+      "type_rgb": "$tcol"
+     },
+     "op": "depth_occlude",
+     "out": "image"
+    },
+    {
+     "args": {
+      "color": [
+       0.788,
+       0.8,
+       0.816
+      ],
+      "img": "$image",
+      "intensity": {
+       "curve": "sub",
+       "hi": 0.5,
+       "lo": 0.15
+      },
+      "mask": "$wm",
+      "radius": 22
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame_idx": "$frame_idx",
+      "jitter": 4.0,
+      "max_contours": 2,
+      "min_len": 60.0,
+      "mode": "outline",
+      "seed": 1,
+      "smooth": 3.0,
+      "src": "$m",
+      "strokes": 2,
+      "width": 2
+     },
+     "op": "contour_lines",
+     "out": "_gl0c"
+    },
+    {
+     "args": {
+      "a": "$_gl0c",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         5.806,
+         0.0
+        ],
+        [
+         5.956,
+         1.0
+        ],
+        [
+         7.156,
+         1.0
+        ],
+        [
+         7.306,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_gl0c"
+    },
+    {
+     "args": {
+      "color": "$tcol",
+      "img": "$image",
+      "intensity": 0.8,
+      "mask": "$_gl0c",
+      "radius": 18.0
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "alpha": "$_gl0c",
+      "base": "$image",
+      "fg": "$tcol"
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "matte": "$m",
+      "progress": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         8.446,
+         0.0
+        ],
+        [
+         8.646,
+         0.0
+        ],
+        [
+         9.346,
+         1.0
+        ],
+        [
+         9.846,
+         1.0
+        ],
+        [
+         10.046,
+         1.0
+        ]
+       ]
+      },
+      "reach": 0.8,
+      "soft": 0.05
+     },
+     "op": "matte_reach",
+     "out": "_wi1r"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "b": "$_wi1r"
+     },
+     "op": "mask_mul",
+     "out": "_wi1a"
+    },
+    {
+     "args": {
+      "frame": "$footage",
+      "gain": 1.22,
+      "gamma": 1.05,
+      "sat": 1.15
+     },
+     "op": "grade",
+     "out": "_wi1b"
+    },
+    {
+     "args": {
+      "a": "$_wi1r",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         8.496,
+         0.0
+        ],
+        [
+         8.646,
+         1.0
+        ],
+        [
+         9.846,
+         1.0
+        ],
+        [
+         9.996,
+         0.0
+        ]
+       ]
+      },
+      "scale": 0.55
+     },
+     "op": "mask_gate",
+     "out": "_wi1t"
+    },
+    {
+     "args": {
+      "a": "$image",
+      "b": "$_wi1b",
+      "t": "$_wi1t"
+     },
+     "op": "crossfade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "fg": "$footage",
+      "footage": "$image",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$_wi1a",
+      "type_opacity": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         8.496,
+         0.0
+        ],
+        [
+         8.646,
+         0.96
+        ],
+        [
+         9.846,
+         0.96
+        ],
+        [
+         9.996,
+         0.0
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "matte": "$m",
+      "progress": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         8.446,
+         0.0
+        ],
+        [
+         8.646,
+         0.0
+        ],
+        [
+         9.346,
+         1.0
+        ],
+        [
+         9.846,
+         1.0
+        ],
+        [
+         10.046,
+         1.0
+        ]
+       ]
+      },
+      "reach": 0.8,
+      "width": 0.012
+     },
+     "op": "matte_ring",
+     "out": "_wi1g"
+    },
+    {
+     "args": {
+      "a": "$_wi1g",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         8.496,
+         0.0
+        ],
+        [
+         8.646,
+         1.0
+        ],
+        [
+         9.846,
+         1.0
+        ],
+        [
+         9.996,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_wi1g"
+    },
+    {
+     "args": {
+      "color": "$tcol",
+      "img": "$image",
+      "intensity": 0.9,
+      "mask": "$_wi1g",
+      "radius": 14.0
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "cap_frac": 0.05,
+      "fade": 0.2,
+      "font": "GeistPixel[ELSH].ttf",
+      "frame_idx": "$frame_idx",
+      "img": "$footage",
+      "min_px_at_640": 30,
+      "near": [
+       0.5,
+       0.58
+      ],
+      "reveal_s": 0.35,
+      "source": "luma_edges",
+      "state_key": "P20:edge_run:1",
+      "t": "$t",
+      "t0": 5.906,
+      "t1": 7.106,
+      "text": "BENDS",
+      "track": 0.1
+     },
+     "op": "edge_run_type",
+     "out": "_er0"
+    },
+    {
+     "args": {
+      "img": "$_er0",
+      "sigma": 2.2
+     },
+     "op": "blur",
+     "out": "_er0h"
+    },
+    {
+     "args": {
+      "a": "$_er0h",
+      "gate": 1.0,
+      "scale": 2.4
+     },
+     "op": "mask_gate",
+     "out": "_er0h"
+    },
+    {
+     "args": {
+      "alpha": "$_er0h",
+      "base": "$image",
+      "fg": [
+       0.02,
+       0.02,
+       0.03
+      ]
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "alpha": "$_er0",
+      "base": "$image",
+      "fg": "$tcol"
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "gain": 1.05,
+      "gamma": 1.0,
+      "lift": 0.01,
+      "sat": 1.1
+     },
+     "op": "grade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "amount": 0.025,
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 2,
+      "size": 1.2
+     },
+     "op": "grain",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "strength": 0.3
+     },
+     "op": "vignette",
+     "out": "image"
+    }
+   ]
+  },
+  "shots": {},
+  "size": [
+   360,
+   640
+  ]
+ },
+ "format": "9:16",
+ "fps": 24,
+ "id": "P20",
+ "layout": {
+  "s1": {
+   "frames": 207,
+   "start": 0,
+   "xf": 0
+  },
+  "s2": {
+   "frames": 177,
+   "start": 207,
+   "xf": 0
+  }
+ },
+ "parent": {
+  "piece": null,
+  "why": "v005 design P20: small precise type woven along the river contours, two aerial shots, tilt_to_plan then pullback_reveal (DESIGNS.md)"
+ },
+ "plan": {
+  "bars": 8,
+  "blocks": [
+   {
+    "compose": [
+     {
+      "args": {
+       "cap_frac": 0.05,
+       "min_px_at_640": 26,
+       "source": "luma_edges",
+       "track": 0.1
+      },
+      "op": "edge_run_type",
+      "when": "hold"
+     }
+    ],
+    "contour": {
+     "ports": [
+      "matte_outline",
+      "depth_iso"
+     ],
+     "use": "entry"
+    },
+    "dominant": true,
+    "lines": [
+     1,
+     3
+    ],
+    "missing": [],
+    "name": "edge_run_small_type",
+    "params": {
+     "cap_frac": 0.055,
+     "min_px_at_640": 30
+    },
+    "role": "small_precise",
+    "shots": null,
+    "status": "live",
+    "transitions": []
+   },
+   {
+    "compose": [],
+    "contour": {
+     "ports": [
+      "matte_outline",
+      "depth_iso"
+     ],
+     "use": "via"
+    },
+    "dominant": false,
+    "lines": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "missing": [
+     "contour bundles as transition endpoints (tools/fusion/contour_ports.py, being built)"
+    ],
+    "name": "contour_hand_off",
+    "params": {
+     "object": "matte"
+    },
+    "role": "any",
+    "shots": null,
+    "status": "partial",
+    "transitions": [
+     "spiral_around",
+     "braid",
+     "circuit_board",
+     "fan",
+     "ripple"
+    ]
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "sweep_s": 1.0
+      },
+      "op": "edge_reveal",
+      "when": "form"
+     }
+    ],
+    "contour": {
+     "ports": [
+      "matte_outline"
+     ],
+     "use": "entry"
+    },
+    "dominant": false,
+    "lines": [
+     0,
+     2,
+     4
+    ],
+    "missing": [],
+    "name": "matte_edge_reveal_wipe",
+    "params": {
+     "sweep_s": 1.453
+    },
+    "role": "any",
+    "shots": null,
+    "status": "live",
+    "transitions": []
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "between": "K1|K2",
+       "cards": 4
+      },
+      "op": "multiplane_cards",
+      "when": "always"
+     }
+    ],
+    "contour": null,
+    "dominant": false,
+    "lines": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "missing": [
+     "compose op that renders the cards (mograph/render/multiplane.MultiPlane.render) in the recipe; the camera chain through the cards (camera dict + word slot) is wired in spec.build_scene"
+    ],
+    "name": "chain_through_cards",
+    "params": {
+     "cards": 4,
+     "chain": "chain_signal_braid_bends_follow"
+    },
+    "role": "any",
+    "shots": null,
+    "status": "partial",
+    "transitions": []
+   },
+   {
+    "compose": [],
+    "contour": null,
+    "dominant": false,
+    "lines": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "missing": [],
+    "name": "locked_plate_move",
+    "params": {
+     "move": "tilt_to_plan"
+    },
+    "role": "any",
+    "shots": {
+     "mode": "single",
+     "prompt": "static locked-off camera"
+    },
+    "status": "live",
+    "transitions": []
+   }
+  ],
+  "contour": {
+   "available": true,
+   "lines": [
+    {
+     "entry": {
+      "dir": "up",
+      "port": "depth_iso"
+     },
+     "via": {
+      "dir": "along",
+      "port": "luma_edges"
+     }
+    },
+    {
+     "entry": {
+      "dir": "along",
+      "port": "luma_edges"
+     },
+     "matte": "glow",
+     "via": {
+      "dir": "around",
+      "port": "matte_outline"
+     }
+    },
+    {
+     "entry": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "matte": "wipe",
+     "via": {
+      "dir": "along",
+      "port": "luma_edges"
+     }
+    },
+    {
+     "entry": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "via": {
+      "dir": "along",
+      "port": "depth_iso"
+     }
+    },
+    {
+     "exit": {
+      "dir": "up",
+      "port": "luma_edges"
+     }
+    }
+   ],
+   "subject": true
+  },
+  "deferred": [
+   "v005 round 2 (legibility): small_line is the edge_run block's layout (letters >= 4 %), so only BENDS keeps it; EVERY RIVER (EVERY / RIVER) and AND BRAIDS (AND / BRAIDS, solid_hollow depth 1.2 + grey walls: the vermilion slab walls hid the white caps; in a full layout the solid line is 590 px tall and unreadable) take hung_from_top, AND BRAIDS in Passion One (the pixel blackletter turned the slab caps into blobs), TOWARD takes full (pullback_reveal fill 0.58), THE SEA edge_L -> full (THE / SEA: spectrum draws the word at half the box, 6 % letters), TOWARD outflow tilt 0.3 / 5 rings (the ghost rows filled the frame): every other hold needs letters >= 7 % of the frame (45 px at 640), the small line gave 5.5 %, the bottom-right quadrant 4.7 %",
+   "P20 mattes are depth thresholds (MEDIA.md): on a top-down shot that is the lower third, not a subject; matte treatments act on it as is"
+  ],
+  "direction": {
+   "camera": "tilt_to_plan",
+   "pace": "flowing",
+   "palette": "silver_bw",
+   "shots": "cut",
+   "type_role": "small_precise"
+  },
+  "edge_run": {
+   "halo": "dark blurred copy of the ink (sigma 2.2 px)",
+   "lines": [
+    {
+     "cap_px_at_640": 32.0,
+     "line": 1,
+     "source": "luma_edges",
+     "text": "BENDS",
+     "window": [
+      5.906,
+      7.106
+     ]
+    }
+   ],
+   "module_letters_gated": true
+  },
+  "energy": 0.385,
+  "flow_wake": {
+   "chains": 1,
+   "holds": [
+    [
+     3.266,
+     4.466
+    ],
+    [
+     5.956,
+     7.156
+    ],
+    [
+     8.646,
+     9.846
+    ],
+    [
+     11.336,
+     12.536
+    ],
+    [
+     14.026,
+     15.45
+    ]
+   ]
+  },
+  "layout_shapes": {
+   "words": 0
+  },
+  "layouts": [
+   "hung_from_top/top",
+   "small_line/line",
+   "hung_from_top/top",
+   "full/full",
+   "full/full"
+  ],
+  "look": "hand-assembled from lego",
+  "matte_treatments": {
+   "chains": 1,
+   "treatments": 2,
+   "words": 2
+  },
+  "notes": [
+   "camera tilt_to_plan word 0: window [0.0, 2.666] (off the hold, legible_camera)"
+  ],
+  "scene_notes": [
+   "contour ports BOUND: 5 ported word(s) [0, 1, 2, 3, 4], 2 plate shot(s)"
+  ],
+  "seed": 20,
+  "shots": "cut",
+  "tier": "calm",
+  "timing": [
+   {
+    "end": 4.988,
+    "hit": 3.266,
+    "release": 4.466,
+    "text": "EVERY RIVER",
+    "wanted_hit": 3.27
+   },
+   {
+    "end": 7.631,
+    "hit": 5.956,
+    "release": 7.156,
+    "text": "BENDS",
+    "wanted_hit": 5.96
+   },
+   {
+    "end": 10.32,
+    "hit": 8.646,
+    "release": 9.846,
+    "text": "AND BRAIDS",
+    "wanted_hit": 8.65
+   },
+   {
+    "end": 13.01,
+    "hit": 11.336,
+    "release": 12.536,
+    "text": "TOWARD",
+    "wanted_hit": 11.34
+   },
+   {
+    "end": 15.95,
+    "hit": 14.026,
+    "release": 15.45,
+    "text": "THE SEA",
+    "wanted_hit": 14.03
+   }
+  ],
+  "version": 1
+ },
+ "quality": "preview",
+ "shots": [
+  {
+   "depth": true,
+   "first": "A",
+   "flow": true,
+   "frames": 209,
+   "id": "s1",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P20/P20_s1_depth_g01.mp4",
+    "matte": "15_fusion/v005/out/footage/P20/P20_s1_matte_g01.mp4",
+    "shot": "15_fusion/v005/out/footage/P20/P20_s1_g01.mp4"
+   },
+   "prompt": "the drone camera slowly tilts down in one continuous move from a low oblique view until it looks straight down on the braided river channels, water glints, mist drifts, black and white",
+   "seed": 201,
+   "size": [
+    384,
+    672
+   ],
+   "span": 207
+  },
+  {
+   "depth": true,
+   "first": "B",
+   "flow": true,
+   "frames": 185,
+   "id": "s2",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P20/P20_s2_depth_g01.mp4",
+    "matte": "15_fusion/v005/out/footage/P20/P20_s2_matte_g01.mp4",
+    "shot": "15_fusion/v005/out/footage/P20/P20_s2_g01.mp4"
+   },
+   "prompt": "the drone camera looks straight down and slowly rises and pulls back in one continuous move, revealing the whole river bend meeting the sea, waves roll in, black and white",
+   "seed": 202,
+   "size": [
+    384,
+    672
+   ],
+   "span": 177
+  }
+ ],
+ "signoff": {
+  "color": [
+   242,
+   242,
+   242
+  ],
+  "font": "Space Grotesk",
+  "off": true,
+  "px": 38,
+  "t0": 15.0,
+  "text": ""
+ },
+ "sizes": {
+  "compose": [
+   360,
+   640
+  ],
+  "control": [
+   384,
+   704
+  ],
+  "shot": [
+   384,
+   704
+  ],
+  "type": [
+   384,
+   704
+  ]
+ },
+ "slug": "delta",
+ "stills": [
+  {
+   "id": "A",
+   "media": "15_fusion/v005/out/footage/P20/P20_still_A_g01.png",
+   "model": "moss",
+   "negative": "text, letters, words, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, blurry, deformed, colour",
+   "prompt": "black and white aerial photograph at a low oblique angle over a braided river, silver channels splitting and rejoining across grey gravel flats, mist banks, soft morning light, vertical frame",
+   "seed": 2001,
+   "size": [
+    1088,
+    1920
+   ]
+  },
+  {
+   "id": "B",
+   "media": "15_fusion/v005/out/footage/P20/P20_still_B_g01.png",
+   "model": "moss",
+   "negative": "text, letters, words, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, blurry, deformed, colour",
+   "prompt": "black and white aerial photograph looking down on a wide river bend where it meets the sea, waves rolling into the river mouth, vertical frame",
+   "seed": 2002,
+   "size": [
+    1088,
+    1920
+   ]
+  }
+ ],
+ "technique": "built_in",
+ "type": {
+  "bar": 4,
+  "beats": [
+   0.576,
+   1.2485,
+   1.921,
+   2.5934,
+   3.2659,
+   3.9384,
+   4.6109,
+   5.2834,
+   5.9558,
+   6.6283,
+   7.3008,
+   7.9733,
+   8.6458,
+   9.3183,
+   9.9907,
+   10.6632,
+   11.3357,
+   12.0082,
+   12.6807,
+   13.3531,
+   14.0256,
+   14.6981,
+   15.3706,
+   16.0431,
+   16.7156,
+   17.388,
+   18.0605,
+   18.733,
+   19.4055,
+   20.078
+  ],
+  "bpm": 89.222,
+  "camera": {
+   "cards": 4,
+   "chain": [
+    {
+     "fill": 0.6815,
+     "module": "tilt_to_plan",
+     "window": [
+      0.0,
+      2.666
+     ]
+    },
+    {
+     "fill": 0.6519,
+     "module": "tilt_to_plan",
+     "word": 1
+    },
+    {
+     "fill": 0.6815,
+     "from_scale": 0.9,
+     "module": "pullback_reveal",
+     "word": 2,
+     "word_scale": 1.2
+    },
+    {
+     "fill": 0.58,
+     "from_scale": 0.9,
+     "module": "pullback_reveal",
+     "word": 3,
+     "word_scale": 1.2
+    },
+    {
+     "fill": 0.58,
+     "from_scale": 0.9,
+     "module": "pullback_reveal",
+     "word": 4,
+     "word_scale": 1.2
+    },
+    {
+     "comp": [
+      0.0,
+      0.0
+     ],
+     "fill": 0.6815,
+     "module": "hold_drift",
+     "window": [
+      2.666,
+      4.466
+     ]
+    }
+   ],
+   "plate": "multiplane"
+  },
+  "downbeats": [
+   0.576,
+   3.2659,
+   5.9558,
+   8.6458,
+   11.3357,
+   14.0256,
+   16.7156,
+   19.4055
+  ],
+  "duration": 16.0,
+  "energy": 0.385,
+  "fps": 24,
+  "line": {
+   "px": 4.0
+  },
+  "mood": "flowing",
+  "palette": {
+   "accents": [
+    [
+     201,
+     204,
+     208
+    ],
+    [
+     142,
+     146,
+     152
+    ],
+    [
+     228,
+     230,
+     233
+    ]
+   ],
+   "bg": [
+    5,
+    5,
+    5
+   ],
+   "fg": [
+    242,
+    242,
+    242
+   ]
+  },
+  "plates": [
+   {
+    "depth": "15_fusion/v005/out/footage/P20/P20_s1_depth_g01.mp4",
+    "frames": 207,
+    "matte": "15_fusion/v005/out/footage/P20/P20_s1_matte_g01.mp4",
+    "plate": "15_fusion/v005/out/footage/P20/P20_s1_g01.mp4"
+   },
+   {
+    "depth": "15_fusion/v005/out/footage/P20/P20_s2_depth_g01.mp4",
+    "frames": 177,
+    "matte": "15_fusion/v005/out/footage/P20/P20_s2_matte_g01.mp4",
+    "plate": "15_fusion/v005/out/footage/P20/P20_s2_g01.mp4"
+   }
+  ],
+  "seed": 20,
+  "tier": "calm",
+  "transition_names": [
+   "braid",
+   "circuit_board",
+   "fan",
+   "ripple",
+   "spiral_around",
+   "twist"
+  ],
+  "transitions": [
+   "circuit_board",
+   "spiral_around",
+   "braid",
+   "ripple"
+  ],
+  "words": [
+   {
+    "ar_min": 0.85,
+    "entry": {
+     "dir": "up",
+     "port": "depth_iso"
+    },
+    "exit_s": 0.5224,
+    "font": "RubikLines-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 3.2659,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.1138,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": 0.85,
+     "area": 0.4784,
+     "box": {
+      "cx": 0.5,
+      "cy": 0.3,
+      "sh": 0.52,
+      "sw": 0.92
+     },
+     "fill": 0.6815,
+     "max_lines": null,
+     "name": "hung_from_top",
+     "note": "stack hung from the top edge, empty below",
+     "offset": [
+      0.0,
+      -0.2
+     ],
+     "plate": "N8",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "top"
+    },
+    "lines": [
+     "EVERY",
+     "RIVER"
+    ],
+    "module": "topo_tower",
+    "placement": {
+     "hf": 0.52,
+     "roll": 0.0,
+     "wf": 0.92,
+     "yaw": -14
+    },
+    "screen_offset": [
+     0.0,
+     -0.2
+    ],
+    "slot": 2,
+    "t0": 0.0,
+    "t1": 4.9884,
+    "text": "EVERY RIVER",
+    "via": {
+     "dir": "along",
+     "port": "luma_edges"
+    }
+   },
+   {
+    "ar_min": 0.85,
+    "edge_run": {
+     "cap_frac": 0.05,
+     "source": "luma_edges"
+    },
+    "entry": {
+     "dir": "along",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.4747,
+    "font": "GeistPixel[ELSH].ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.5063,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.0675,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": 0.85,
+     "area": 0.066,
+     "box": {
+      "cx": 0.5,
+      "cy": 0.58,
+      "sh": 0.075,
+      "sw": 0.88
+     },
+     "fill": 0.6519,
+     "max_lines": 1,
+     "name": "small_line",
+     "note": "one precise small line (cap height >= 4 % of the frame height, MIN_CAP_FRAC) set where the footage's edges run",
+     "offset": [
+      0.0,
+      0.08
+     ],
+     "plate": "v005 P20",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "line"
+    },
+    "lines": [
+     "BENDS"
+    ],
+    "matte": "glow",
+    "max_lines": 1,
+    "module": "circuit",
+    "placement": {
+     "hf": 0.075,
+     "roll": 0.0,
+     "wf": 0.88,
+     "yaw": 14
+    },
+    "screen_offset": [
+     0.0,
+     0.08
+    ],
+    "slot": 1,
+    "t0": 5.4496,
+    "t1": 7.6305,
+    "text": "BENDS",
+    "via": {
+     "dir": "around",
+     "port": "matte_outline"
+    }
+   },
+   {
+    "ar_min": 0.85,
+    "entry": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.4747,
+    "font": "PassionOne-Black.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.5406,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.1019,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": 0.85,
+     "area": 0.4784,
+     "box": {
+      "cx": 0.5,
+      "cy": 0.3,
+      "sh": 0.52,
+      "sw": 0.92
+     },
+     "fill": 0.6815,
+     "max_lines": null,
+     "name": "hung_from_top",
+     "note": "stack hung from the top edge, empty below",
+     "offset": [
+      0.0,
+      -0.2
+     ],
+     "plate": "N8",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "top"
+    },
+    "lines": [
+     "AND",
+     "BRAIDS"
+    ],
+    "matte": "wipe",
+    "module": "solid_hollow",
+    "params": {
+     "band": [
+      70,
+      70,
+      78
+     ],
+     "depth": 1.2
+    },
+    "placement": {
+     "hf": 0.52,
+     "roll": 0.0,
+     "wf": 0.92,
+     "yaw": 6
+    },
+    "screen_offset": [
+     0.0,
+     -0.2
+    ],
+    "slot": 1,
+    "t0": 8.1052,
+    "t1": 10.3204,
+    "text": "AND BRAIDS",
+    "via": {
+     "dir": "along",
+     "port": "luma_edges"
+    }
+   },
+   {
+    "entry": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.4747,
+    "font": "Codystar-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.5406,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.0749,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "TOWARD"
+    ],
+    "module": "outflow",
+    "params": {
+     "rings": 5,
+     "tilt": 0.3
+    },
+    "placement": {
+     "yaw": 6
+    },
+    "slot": 1,
+    "t0": 10.7951,
+    "t1": 13.0104,
+    "text": "TOWARD",
+    "via": {
+     "dir": "along",
+     "port": "depth_iso"
+    }
+   },
+   {
+    "exit": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.5,
+    "font": "SpaceGrotesk-Bold.ttf",
+    "form_in": "lines",
+    "form_out": "particles",
+    "form_s": 0.5406,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.2482,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "THE",
+     "SEA"
+    ],
+    "module": "spectrum",
+    "placement": {
+     "yaw": 6
+    },
+    "slot": 1,
+    "t0": 13.485,
+    "t1": 15.95,
+    "text": "THE SEA"
+   }
+  ]
+ },
+ "type_passes": [
+  "matte",
+  "depth",
+  "line",
+  "beauty"
+ ],
+ "version": "v005"
+}

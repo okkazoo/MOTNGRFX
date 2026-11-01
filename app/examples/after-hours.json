@@ -1,0 +1,15 @@
+{
+  "id": "after-hours",
+  "title": "After hours",
+  "subtitle": "P02 words + gradient blob",
+  "inputs": {
+    "words": "AFTER\nHOURS\nTHE CITY\nKEEPS\nDREAMING",
+    "image": "blob_gradient.png",
+    "length": 12,
+    "seed": 5,
+    "quality": "draft"
+  },
+  "poster": "after-hours.mp4",
+  "inset": "blob_gradient.png",
+  "poster_image": "after-hours.jpg"
+}

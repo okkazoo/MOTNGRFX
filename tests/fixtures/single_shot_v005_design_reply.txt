@@ -1,0 +1,183 @@
+{
+  "concept": "The type is built from the potter's own world: every word forms as wind-worn sandstone slabs that sit at the scale of the working hands and crumble on the beat.",
+  "treatment_notes": "Words sit low in the frame, aligned to the potter's hands and wheel, forming as carved sandstone slabs that the engine draws flat and the footage's dust and light carry through.",
+  "type": {
+    "mood": "earthy, wistful",
+    "energy": 0.35,
+    "palette": {
+      "bg": [38, 26, 18],
+      "fg": [242, 230, 208],
+      "accents": [
+        [196, 142, 88],
+        [158, 118, 78],
+        [118, 88, 62]
+      ]
+    },
+    "camera": "hold_drift",
+    "camera_params": {
+      "read_dps": 3,
+      "intro_deg": 0,
+      "elev": 0,
+      "bob": 0
+    },
+    "transitions": [
+      "cut",
+      "ripple",
+      "cut",
+      "cut"
+    ],
+    "line": {
+      "px": 4
+    },
+    "words": [
+      {
+        "text": "HANDS",
+        "font": "PassionOne-Black.ttf",
+        "module": "gradient_fade",
+        "lines": [
+          "HANDS"
+        ],
+        "hit": 0.16,
+        "hold_s": 1.6,
+        "form_s": 0.45,
+        "exit_s": 0.5,
+        "form_in": "particles",
+        "form_out": "particles",
+        "placement": {
+          "yaw": 0,
+          "wf": 0.92,
+          "hf": 0.3
+        },
+        "screen_offset": [
+          0,
+          0.28
+        ],
+        "render": "flat"
+      },
+      {
+        "text": "REMEMBER",
+        "font": "Anybody[wdth,wght].ttf",
+        "module": "solid_hollow",
+        "lines": [
+          "RE",
+          "MEM",
+          "BER"
+        ],
+        "hit": 3.38,
+        "hold_s": 1.6,
+        "form_s": 0.45,
+        "exit_s": 0.5,
+        "form_in": "lines",
+        "form_out": "lines",
+        "placement": {
+          "yaw": 0,
+          "wf": 0.95,
+          "hf": 0.55
+        },
+        "screen_offset": [
+          0,
+          0.22
+        ],
+        "axes": {
+          "wght": 800
+        },
+        "render": "flat"
+      },
+      {
+        "text": "WHAT THE CLAY",
+        "font": "Ultra-Regular.ttf",
+        "module": "bold_thin_echo",
+        "lines": [
+          "WHAT",
+          "THE",
+          "CLAY"
+        ],
+        "hit": 6.61,
+        "hold_s": 1.8,
+        "form_s": 0.45,
+        "exit_s": 0.5,
+        "form_in": "blobs",
+        "form_out": "blobs",
+        "placement": {
+          "yaw": 0,
+          "wf": 0.95,
+          "hf": 0.6
+        },
+        "screen_offset": [
+          0,
+          0.2
+        ],
+        "render": "flat"
+      },
+      {
+        "text": "FORGETS",
+        "font": "LondrinaSketch-Regular.ttf",
+        "module": "staircase",
+        "lines": [
+          "FOR",
+          "GETS"
+        ],
+        "hit": 9.84,
+        "hold_s": 1.6,
+        "form_s": 0.45,
+        "exit_s": 0.5,
+        "form_in": "lines",
+        "form_out": "lines",
+        "placement": {
+          "yaw": 0,
+          "wf": 0.9,
+          "hf": 0.42
+        },
+        "screen_offset": [
+          0,
+          0.26
+        ],
+        "render": "flat"
+      },
+      {
+        "text": "SPIN",
+        "font": "Doto[ROND,wght].ttf",
+        "module": "beat_bars",
+        "lines": [
+          "SPIN"
+        ],
+        "hit": 13.06,
+        "hold_s": 1.6,
+        "form_s": 0.45,
+        "exit_s": 0.5,
+        "form_in": "particles",
+        "form_out": "particles",
+        "placement": {
+          "yaw": 0,
+          "wf": 0.85,
+          "hf": 0.3
+        },
+        "screen_offset": [
+          0,
+          0.28
+        ],
+        "axes": {
+          "wght": 900
+        },
+        "render": "flat"
+      }
+    ]
+  },
+  "compose": {
+    "technique": "built_in",
+    "plate_gain": 0.7,
+    "plate_sat": 0.85,
+    "glow_lo": 0.05,
+    "glow_hi": 0.22,
+    "glow_color": [
+      0.78,
+      0.58,
+      0.36
+    ],
+    "grain": 0.03,
+    "vignette": 0.3,
+    "type_opacity": 1.0,
+    "holds": [],
+    "cuts": []
+  }
+}

@@ -1,0 +1,92 @@
+{
+ "media": {
+  "class_type": "PrimitiveStringMultiline",
+  "inputs": {
+   "value": "{}"
+  },
+  "_meta": {
+   "title": "IN media"
+  }
+ },
+ "pack": {
+  "class_type": "MographMediaPack",
+  "inputs": {
+   "media": [
+    "media",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Media contact sheet + prompt"
+  }
+ },
+ "read_llm": {
+  "class_type": "MographGGUFVL",
+  "inputs": {
+   "model": "gemma-4-31b-qat/gemma-4-31B-it-qat-UD-Q4_K_XL.gguf",
+   "mmproj": "gemma-4-31b-qat/mmproj-F16.gguf",
+   "n_gpu_layers": -1,
+   "n_ctx": 12288,
+   "max_tokens": 1200,
+   "temperature": 0.3,
+   "top_p": 0.95,
+   "top_k": 64,
+   "repeat_penalty": 1.0,
+   "seed": 1,
+   "kv_cache": "q8_0",
+   "flash_attn": true,
+   "mmproj_on_gpu": true,
+   "n_cpu_moe": 0,
+   "handler": "auto",
+   "image_max_tokens": -1,
+   "strip_thinking": true,
+   "keep_model_loaded": true,
+   "verbose": false,
+   "prompt": [
+    "pack",
+    1
+   ],
+   "image": [
+    "pack",
+    0
+   ],
+   "system_prompt": "You are a careful reader of a user's media and pasted text. You answer with exactly one JSON object and nothing else. You never reword or add words the user did not write.",
+   "json_mode": true
+  },
+  "_meta": {
+   "title": "Gemma 4 31B QAT Q4_K_XL media read"
+  }
+ },
+ "parse": {
+  "class_type": "MographMediaReadParse",
+  "inputs": {
+   "reply": [
+    "read_llm",
+    0
+   ],
+   "info": [
+    "pack",
+    2
+   ],
+   "media": [
+    "media",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "READ JSON v1"
+  }
+ },
+ "out_read": {
+  "class_type": "PreviewAny",
+  "inputs": {
+   "source": [
+    "parse",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "OUT read"
+  }
+ }
+}

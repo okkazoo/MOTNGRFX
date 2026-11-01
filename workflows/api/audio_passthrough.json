@@ -1,0 +1,25 @@
+{
+ "100": {
+  "class_type": "LoadAudio",
+  "inputs": {
+   "audio": "mograph/B3_draft.wav"
+  },
+  "_meta": {
+   "title": "INPUT audio"
+  }
+ },
+ "107": {
+  "class_type": "SaveAudioAdvanced",
+  "inputs": {
+   "audio": [
+    "100",
+    0
+   ],
+   "filename_prefix": "audio/draft",
+   "format": "flac"
+  },
+  "_meta": {
+   "title": "Save Audio (flac)"
+  }
+ }
+}

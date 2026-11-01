@@ -1,0 +1,1242 @@
+{
+ "audio": {
+  "bpm": 88,
+  "cut": 16.0,
+  "fade": 0.68,
+  "src": "t2m"
+ },
+ "brief": {},
+ "compose": {
+  "crf": 20,
+  "crossfade": 0,
+  "default": {
+   "ops": [
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.967,
+         0.0
+        ],
+        [
+         1.207,
+         0.75
+        ],
+        [
+         3.917,
+         0.75
+        ],
+        [
+         4.157,
+         0.0
+        ],
+        [
+         5.759,
+         0.0
+        ],
+        [
+         5.999,
+         0.75
+        ],
+        [
+         7.339,
+         0.75
+        ],
+        [
+         7.579,
+         0.0
+        ],
+        [
+         8.496,
+         0.0
+        ],
+        [
+         8.736,
+         0.75
+        ],
+        [
+         10.007,
+         0.75
+        ],
+        [
+         10.247,
+         0.0
+        ],
+        [
+         11.234,
+         0.0
+        ],
+        [
+         11.474,
+         0.75
+        ],
+        [
+         14.87,
+         0.75
+        ],
+        [
+         15.11,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "A2:type_matte",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_matte",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wm"
+    },
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.967,
+         0.0
+        ],
+        [
+         1.207,
+         0.75
+        ],
+        [
+         3.917,
+         0.75
+        ],
+        [
+         4.157,
+         0.0
+        ],
+        [
+         5.759,
+         0.0
+        ],
+        [
+         5.999,
+         0.75
+        ],
+        [
+         7.339,
+         0.75
+        ],
+        [
+         7.579,
+         0.0
+        ],
+        [
+         8.496,
+         0.0
+        ],
+        [
+         8.736,
+         0.75
+        ],
+        [
+         10.007,
+         0.75
+        ],
+        [
+         10.247,
+         0.0
+        ],
+        [
+         11.234,
+         0.0
+        ],
+        [
+         11.474,
+         0.75
+        ],
+        [
+         14.87,
+         0.75
+        ],
+        [
+         15.11,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "A2:type_line",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_line",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wl"
+    },
+    {
+     "args": {
+      "guide": "$footage",
+      "matte": "$matte",
+      "size": [
+       360,
+       640
+      ]
+     },
+     "op": "upscale_matte",
+     "out": "m"
+    },
+    {
+     "args": {
+      "frame": "$footage",
+      "gain": 0.66,
+      "gamma": 1.0,
+      "lift": 0.0,
+      "sat": 0.7
+     },
+     "op": "grade",
+     "out": "foot"
+    },
+    {
+     "args": {
+      "footage": "$footage",
+      "lum_amount": 0.92,
+      "lum_target": 0.93,
+      "mode": "sample",
+      "sample_blur": 60,
+      "sat": 0.5,
+      "type_a": "$wl"
+     },
+     "op": "tint_type",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "color": [
+       1.0,
+       0.8,
+       0.55
+      ],
+      "like": "$footage"
+     },
+     "op": "fill",
+     "out": "warm"
+    },
+    {
+     "args": {
+      "a": "$tcol",
+      "b": "$warm",
+      "t": {
+       "timeline": [
+        [
+         10.67,
+         0.0
+        ],
+        [
+         14.092,
+         0.8
+        ],
+        [
+         16.145,
+         0.8
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "a": "$wl",
+      "b": "$wm",
+      "t": {
+       "timeline": [
+        [
+         10.67,
+         0.0
+        ],
+        [
+         11.354,
+         1.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "ta"
+    },
+    {
+     "args": {
+      "fps": 24,
+      "matte": "$m",
+      "matte_gamma": 0.75,
+      "min_frac": 0.8,
+      "min_vis": 0.8,
+      "ramp_s": 0.25,
+      "t": "$t",
+      "type_a": "$ta"
+     },
+     "op": "legible",
+     "out": "m"
+    },
+    {
+     "args": {
+      "footage": "$foot",
+      "matte": "$m",
+      "matte_gamma": 0.75,
+      "type_a": "$ta",
+      "type_opacity": {
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         1.087,
+         0.15
+        ],
+        [
+         4.51,
+         0.8
+        ],
+        [
+         7.932,
+         0.88
+        ],
+        [
+         11.354,
+         0.95
+        ],
+        [
+         16.145,
+         0.95
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "color": [
+       0.85,
+       0.9,
+       1.0
+      ],
+      "img": "$image",
+      "intensity": {
+       "curve": "sub",
+       "hi": 0.12,
+       "lo": 0.03
+      },
+      "mask": "$wm",
+      "radius": 24
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "matte": "$m",
+      "progress": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.887,
+         0.0
+        ],
+        [
+         1.087,
+         0.0
+        ],
+        [
+         1.787,
+         1.0
+        ],
+        [
+         4.037,
+         1.0
+        ],
+        [
+         4.237,
+         1.0
+        ]
+       ]
+      },
+      "reach": 0.8,
+      "soft": 0.05
+     },
+     "op": "matte_reach",
+     "out": "_wi0r"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "b": "$_wi0r"
+     },
+     "op": "mask_mul",
+     "out": "_wi0a"
+    },
+    {
+     "args": {
+      "frame": "$foot",
+      "gain": 1.22,
+      "gamma": 1.05,
+      "sat": 1.15
+     },
+     "op": "grade",
+     "out": "_wi0b"
+    },
+    {
+     "args": {
+      "a": "$_wi0r",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.937,
+         0.0
+        ],
+        [
+         1.087,
+         1.0
+        ],
+        [
+         4.037,
+         1.0
+        ],
+        [
+         4.187,
+         0.0
+        ]
+       ]
+      },
+      "scale": 0.55
+     },
+     "op": "mask_gate",
+     "out": "_wi0t"
+    },
+    {
+     "args": {
+      "a": "$image",
+      "b": "$_wi0b",
+      "t": "$_wi0t"
+     },
+     "op": "crossfade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "fg": "$foot",
+      "footage": "$image",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$_wi0a",
+      "type_opacity": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.937,
+         0.0
+        ],
+        [
+         1.087,
+         0.96
+        ],
+        [
+         4.037,
+         0.96
+        ],
+        [
+         4.187,
+         0.0
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "matte": "$m",
+      "progress": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.887,
+         0.0
+        ],
+        [
+         1.087,
+         0.0
+        ],
+        [
+         1.787,
+         1.0
+        ],
+        [
+         4.037,
+         1.0
+        ],
+        [
+         4.237,
+         1.0
+        ]
+       ]
+      },
+      "reach": 0.8,
+      "width": 0.012
+     },
+     "op": "matte_ring",
+     "out": "_wi0g"
+    },
+    {
+     "args": {
+      "a": "$_wi0g",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.937,
+         0.0
+        ],
+        [
+         1.087,
+         1.0
+        ],
+        [
+         4.037,
+         1.0
+        ],
+        [
+         4.187,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_wi0g"
+    },
+    {
+     "args": {
+      "color": "$tcol",
+      "img": "$image",
+      "intensity": 0.9,
+      "mask": "$_wi0g",
+      "radius": 14.0
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame_idx": "$frame_idx",
+      "jitter": 4.0,
+      "max_contours": 2,
+      "min_len": 60.0,
+      "mode": "outline",
+      "seed": 2,
+      "smooth": 3.0,
+      "src": "$m",
+      "strokes": 2,
+      "width": 2
+     },
+     "op": "contour_lines",
+     "out": "_gl1c"
+    },
+    {
+     "args": {
+      "a": "$_gl1c",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         5.729,
+         0.0
+        ],
+        [
+         5.879,
+         1.0
+        ],
+        [
+         7.459,
+         1.0
+        ],
+        [
+         7.609,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_gl1c"
+    },
+    {
+     "args": {
+      "color": "$tcol",
+      "img": "$image",
+      "intensity": 0.8,
+      "mask": "$_gl1c",
+      "radius": 18.0
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "alpha": "$_gl1c",
+      "base": "$image",
+      "fg": "$tcol"
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$foot",
+      "gain": 0.28,
+      "sat": 0.55
+     },
+     "op": "grade",
+     "out": "_wi2d"
+    },
+    {
+     "args": {
+      "a": "$foot",
+      "b": "$_wi2d",
+      "t": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         8.466,
+         0.0
+        ],
+        [
+         8.616,
+         1.0
+        ],
+        [
+         10.127,
+         1.0
+        ],
+        [
+         10.277,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "_wi2p"
+    },
+    {
+     "args": {
+      "frame": "$foot",
+      "gain": 1.3,
+      "gamma": 1.06,
+      "sat": 1.1
+     },
+     "op": "grade",
+     "out": "_wi2b"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         8.466,
+         0.0
+        ],
+        [
+         8.616,
+         1.0
+        ],
+        [
+         10.127,
+         1.0
+        ],
+        [
+         10.277,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_wi2a"
+    },
+    {
+     "args": {
+      "matte": "$m",
+      "type_a": "$wm"
+     },
+     "op": "legible",
+     "out": "_wi2m"
+    },
+    {
+     "args": {
+      "fg": "$foot",
+      "fg_matte": "$_wi2m",
+      "footage": "$_wi2b",
+      "min_contrast": 0.22,
+      "plate_rgb": "$_wi2p",
+      "type_a": "$_wi2a"
+     },
+     "op": "knockout",
+     "out": "_wi2k"
+    },
+    {
+     "args": {
+      "a": "$image",
+      "b": "$_wi2k",
+      "t": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         8.466,
+         0.0
+        ],
+        [
+         8.616,
+         1.0
+        ],
+        [
+         10.127,
+         1.0
+        ],
+        [
+         10.277,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "angle": 35.0,
+      "axis": "x",
+      "like": "$foot",
+      "pos": 0.5,
+      "side": "left",
+      "soft": 0.06
+     },
+     "op": "split_region",
+     "out": "_fr3f"
+    },
+    {
+     "args": {
+      "fg": "$foot",
+      "footage": "$image",
+      "front": "$_fr3f",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$wm",
+      "type_opacity": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         11.204,
+         0.0
+        ],
+        [
+         11.354,
+         0.96
+        ],
+        [
+         14.99,
+         0.96
+        ],
+        [
+         15.14,
+         0.0
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "gain": 1.0,
+      "gamma": 1.0,
+      "lift": 0.012,
+      "sat": 1.0
+     },
+     "op": "grade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "amount": 0.025,
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 1,
+      "size": 1.3
+     },
+     "op": "grain",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "strength": 0.3
+     },
+     "op": "vignette",
+     "out": "image"
+    }
+   ]
+  },
+  "shots": {},
+  "size": [
+   360,
+   640
+  ]
+ },
+ "format": "9:16",
+ "fps": 24,
+ "id": "A2",
+ "layout": {
+  "s1": {
+   "start": 0,
+   "frames": 384,
+   "xf": 0
+  }
+ },
+ "plan": {
+  "bars": 6,
+  "contour": {
+   "available": true,
+   "lines": [
+    {
+     "entry": {
+      "dir": "along",
+      "port": "matte_outline"
+     },
+     "exit": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "matte": "wipe",
+     "via": {
+      "port": "luma_edges"
+     }
+    },
+    {
+     "entry": {
+      "dir": "around",
+      "port": "luma_edges"
+     },
+     "exit": {
+      "dir": "along",
+      "port": "matte_outline"
+     },
+     "matte": "glow",
+     "via": {
+      "port": "matte_outline"
+     }
+    },
+    {
+     "entry": {
+      "dir": "up",
+      "port": "matte_outline"
+     },
+     "exit": {
+      "dir": "around",
+      "port": "luma_edges"
+     },
+     "matte": "window",
+     "via": {
+      "port": "luma_edges"
+     }
+    },
+    {
+     "entry": {
+      "dir": "around",
+      "port": "luma_edges"
+     },
+     "exit": {
+      "dir": "along",
+      "port": "matte_outline"
+     },
+     "matte": "front"
+    }
+   ],
+   "subject": true
+  },
+  "design": {
+   "error": "design step failed: IndexError: list index out of range",
+   "model": "design_llm_8b",
+   "src": {
+    "compose": "rules",
+    "type": "rules"
+   }
+  },
+  "energy": 0.481,
+  "flow_wake": {
+   "chains": 1,
+   "holds": [
+    [
+     1.087,
+     4.037
+    ],
+    [
+     5.879,
+     7.459
+    ],
+    [
+     8.616,
+     10.127
+    ],
+    [
+     11.354,
+     14.99
+    ]
+   ]
+  },
+  "layout_shapes": {
+   "words": 0
+  },
+  "look": "strand",
+  "matte_treatments": {
+   "chains": 1,
+   "treatments": 4,
+   "words": 4
+  },
+  "notes": [
+   "brief: empty -> rules only"
+  ],
+  "seed": 2,
+  "shots": "single",
+  "tail": {
+   "cut": 16.0,
+   "gap": 0.31,
+   "last_end": 15.69,
+   "signoff_t0": 15.0
+  },
+  "tier": "mid",
+  "tries": 1,
+  "version": 1
+ },
+ "quality": "preview",
+ "shots": [
+  {
+   "control": {
+    "pass": "depth"
+   },
+   "first": "A",
+   "flow": true,
+   "frames": 385,
+   "guide": 0.4,
+   "id": "s1",
+   "kind": "control",
+   "long": true,
+   "matte": true,
+   "prompt": "A lone young pine sapling stands trembling in a mist-choked forest where ancient pines loom like sentinels, soft gray light seeps through dense canopy, ground slick with dew, the subject stands perfectly still while the air moves around it, one steady continuous camera sweep from right to left, the scene keeps flowing, cinematic",
+   "seed": 513227496,
+   "size": [
+    384,
+    704
+   ],
+   "span": 384
+  }
+ ],
+ "signoff": {
+  "color": [
+   238,
+   240,
+   242
+  ],
+  "font": "Space Grotesk",
+  "off": true,
+  "px": 38,
+  "t0": 15.0,
+  "text": "silence breaks teeth rattle / 88 bpm"
+ },
+ "sizes": {
+  "compose": [
+   360,
+   640
+  ],
+  "control": [
+   384,
+   704
+  ],
+  "shot": [
+   384,
+   704
+  ],
+  "type": [
+   384,
+   704
+  ]
+ },
+ "slug": "silence-breaks-teeth-rattle",
+ "stills": [
+  {
+   "id": "A",
+   "model": "moss",
+   "negative": "nsfw, worst quality, bad anatomy, jpeg artifact, text, letters, words, watermark, logo, caption, signature, blurry, deformed, oversaturated, cartoon",
+   "prompt": "A lone young pine sapling stands trembling in a mist-choked forest where ancient pines loom like sentinels, soft gray light seeps through dense canopy, ground slick with dew and decay, camera holds steady at waist height, wind moves branches subtly, no movement from the sapling itself, one clear lone figure in the foreground seen from behind, cinematic 35mm film still, shallow depth of field, tall vertical frame",
+   "seed": 2534677357,
+   "size": [
+    384,
+    704
+   ]
+  }
+ ],
+ "technique": "behind_sheer",
+ "type": {
+  "bar": 4,
+  "beats": [
+   0.403,
+   1.0875,
+   1.7719,
+   2.4564,
+   3.1408,
+   3.8253,
+   4.5097,
+   5.1942,
+   5.8786,
+   6.5631,
+   7.2475,
+   7.932,
+   8.6164,
+   9.3009,
+   9.9853,
+   10.6698,
+   11.3542,
+   12.0387,
+   12.7231,
+   13.4076,
+   14.092,
+   14.7765,
+   15.4609,
+   16.1454,
+   16.8298,
+   17.5143,
+   18.1987,
+   18.8832,
+   19.5676,
+   20.2521
+  ],
+  "bpm": 87.661,
+  "camera": "beat_orbit",
+  "downbeats": [
+   0.403,
+   3.1408,
+   5.8786,
+   8.6164,
+   11.3542,
+   14.092,
+   16.8298,
+   19.5676
+  ],
+  "duration": 16.0,
+  "energy": 0.481,
+  "fps": 24,
+  "line": {
+   "px": 4.0
+  },
+  "mood": "calm",
+  "palette": {
+   "accents": [
+    [
+     108,
+     127,
+     168
+    ],
+    [
+     217,
+     165,
+     160
+    ],
+    [
+     108,
+     127,
+     168
+    ]
+   ],
+   "bg": [
+    27,
+    31,
+    43
+   ],
+   "fg": [
+    238,
+    240,
+    242
+   ]
+  },
+  "seed": 44023,
+  "tier": "mid",
+  "transition_names": [
+   "braid",
+   "circuit_board",
+   "fan",
+   "ripple",
+   "spiral_around",
+   "twist"
+  ],
+  "transitions": "auto",
+  "words": [
+   {
+    "entry": {
+     "dir": "along",
+     "port": "matte_outline"
+    },
+    "exit": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.7,
+    "font": "Interlope-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "flicker",
+    "form_s": 1.087,
+    "hit_on": "beat",
+    "matte": "wipe",
+    "module": "lanes",
+    "placement": {
+     "yaw": -16
+    },
+    "t0": 0.0,
+    "t1": 4.736,
+    "text": "SILENCE BREAKS TEETH RATTLE",
+    "via": {
+     "port": "luma_edges"
+    }
+   },
+   {
+    "entry": {
+     "dir": "around",
+     "port": "luma_edges"
+    },
+    "exit": {
+     "dir": "along",
+     "port": "matte_outline"
+    },
+    "exit_s": 0.472,
+    "font": "Blackout_Midnight.ttf",
+    "form_in": "flicker",
+    "form_out": "flicker",
+    "form_s": 0.8,
+    "hit_on": "beat",
+    "matte": "glow",
+    "module": "pipework",
+    "placement": {
+     "yaw": 16
+    },
+    "t0": 5.0786,
+    "t1": 7.931,
+    "text": "TREE ROOTS GROAN",
+    "via": {
+     "port": "matte_outline"
+    }
+   },
+   {
+    "entry": {
+     "dir": "up",
+     "port": "matte_outline"
+    },
+    "exit": {
+     "dir": "around",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.495,
+    "font": "Interlope-Regular.ttf",
+    "form_in": "flicker",
+    "form_out": "flicker",
+    "form_s": 0.344,
+    "hit_on": "beat",
+    "matte": "window",
+    "module": "lanes",
+    "placement": {
+     "yaw": -16
+    },
+    "t0": 8.2728,
+    "t1": 10.622,
+    "text": "HEART BEAT LIES",
+    "via": {
+     "port": "luma_edges"
+    }
+   },
+   {
+    "entry": {
+     "dir": "around",
+     "port": "luma_edges"
+    },
+    "exit": {
+     "dir": "along",
+     "port": "matte_outline"
+    },
+    "exit_s": 0.7,
+    "font": "Blackout_Midnight.ttf",
+    "form_in": "flicker",
+    "form_out": "flicker",
+    "form_s": 0.39,
+    "hit_on": "beat",
+    "matte": "front",
+    "module": "pipework",
+    "placement": {
+     "yaw": 16
+    },
+    "t0": 10.9639,
+    "t1": 15.69,
+    "text": "FALL INTO DUST NO SOUND LEFT"
+   }
+  ]
+ },
+ "type_passes": [
+  "matte",
+  "depth",
+  "line"
+ ]
+}

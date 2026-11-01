@@ -1,0 +1,118 @@
+# ---- NEVER commit: internet-gathered inspiration / references (user rule) ----
+_inspiration/
+**/_inspiration/
+_info/ref-*.md
+
+# ---- python / tool caches ----
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+node_modules/
+*.log
+*.part
+
+# ---- local test output ----
+tests/out/
+
+# ---- agent / editor state ----
+.claude/
+
+# ---- PROJECTS library (proj.py) state: not part of the node pack ----
+project.json
+idea.json
+version.json
+.active.json
+
+# ---- research versions: numbered idea folders hold renders, review media, scratch and study scripts.
+#      Everything in them is ignored except the few files the nodes need at run time (re-included below). ----
+[0-9][0-9]_*/
+review/
+out/
+local/
+
+# 11_mathtype: only the dimtype engine core that mograph/render/cam3d.py imports (ol.py)
+!11_mathtype/
+11_mathtype/*
+!11_mathtype/engine/
+11_mathtype/engine/*
+!11_mathtype/engine/dimtype/
+11_mathtype/engine/dimtype/*
+!11_mathtype/engine/dimtype/ol.py
+
+# 14_modules: the module library manifests read/written by mograph/modules/library.py (not the 40 MB web/ thumbnails)
+!14_modules/
+14_modules/*
+!14_modules/library/
+14_modules/library/*
+!14_modules/library/manifest*.json
+!14_modules/library/manifest.d/
+!14_modules/library/manifest.d/*.json
+!14_modules/library/*.py
+!14_modules/gallery/
+14_modules/gallery/*
+!14_modules/gallery/*.py
+
+# 15_fusion: piece specs, generators, briefs, approved music script (renders/audio/logs stay local)
+!15_fusion/
+15_fusion/*
+!15_fusion/*.md
+!15_fusion/pieces/
+15_fusion/pieces/*
+!15_fusion/pieces/*.json
+!15_fusion/pieces/*.py
+!15_fusion/v004/
+15_fusion/v004/*
+!15_fusion/v004/*.md
+!15_fusion/v004/make_music.py
+
+# 16_app: docs and the UI check script only (benchmarks, probes, screenshots and references stay local)
+!16_app/
+16_app/*
+!16_app/*.md
+!16_app/app_check/
+16_app/app_check/*
+!16_app/app_check/ui_check.mjs
+
+# ---- generated render output elsewhere (graphs/ is ignored only outside app/) ----
+graphs/
+!app/graphs/
+!app/graphs/*.json
+
+# ---- media: no renders, recordings or review stills in the repo, except the small app examples and test fixtures ----
+*.mp4
+*.mov
+*.webm
+*.mkv
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.m4a
+!app/examples/*.mp4
+!app/examples/*.wav
+!tests/fixtures/*.wav
+# superseded v1 example renders
+app/examples/*_v1.*
+
+# ---- model weights ----
+*.safetensors
+*.ckpt
+*.gguf
+*.pth
+*.pt
+*.sf2
+
+# ---- secrets ----
+.env
+*.pem
+
+# ---- internal working notes / agent handoffs (not documentation of the app) ----
+_info/HANDOFF*.md
+_info/handoffs/
+_info/artifacts/
+_info/picks.md
+_info/round*-brief.md
+_info/music-prompt.md

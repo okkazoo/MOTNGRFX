@@ -1,0 +1,15 @@
+{
+  "id": "wild-bloom",
+  "title": "Wild bloom",
+  "subtitle": "P05 words + texture",
+  "inputs": {
+    "words": "WILD\nBLOOM\nRUN",
+    "image": "subject_texture.png",
+    "length": 8,
+    "seed": 9,
+    "quality": "draft"
+  },
+  "poster": "wild-bloom.mp4",
+  "inset": "subject_texture.png",
+  "poster_image": "wild-bloom.jpg"
+}

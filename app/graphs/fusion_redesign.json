@@ -1,0 +1,464 @@
+{
+ "archive_in": {
+  "inputs": {
+   "value": "redesign/src/r03_out_shots"
+  },
+  "class_type": "PrimitiveString",
+  "_meta": {
+   "title": "IN archive"
+  }
+ },
+ "source_in": {
+  "inputs": {
+   "value": "redesign/src/r03_final.mp4"
+  },
+  "class_type": "PrimitiveString",
+  "_meta": {
+   "title": "IN source video"
+  }
+ },
+ "concept_in": {
+  "inputs": {
+   "value": ""
+  },
+  "class_type": "PrimitiveStringMultiline",
+  "_meta": {
+   "title": "IN concept"
+  }
+ },
+ "seed": {
+  "inputs": {
+   "value": 6
+  },
+  "class_type": "PrimitiveInt",
+  "_meta": {
+   "title": "IN seed"
+  }
+ },
+ "load": {
+  "inputs": {
+   "archive": [
+    "archive_in",
+    0
+   ],
+   "source_video": [
+    "source_in",
+    0
+   ],
+   "concept": [
+    "concept_in",
+    0
+   ]
+  },
+  "class_type": "MographArchiveLoad",
+  "_meta": {
+   "title": "Archive load"
+  }
+ },
+ "plan": {
+  "inputs": {
+   "request": [
+    "load",
+    0
+   ],
+   "music": [
+    "load",
+    1
+   ]
+  },
+  "class_type": "MographPiecePlan",
+  "_meta": {
+   "title": "Re-plan (rules fallback)"
+  }
+ },
+ "flow": {
+  "inputs": {
+   "piece": [
+    "plan",
+    0
+   ],
+   "clips": [
+    "load",
+    3
+   ],
+   "method": "auto",
+   "model": "raft_large"
+  },
+  "class_type": "MographFootageFlow",
+  "_meta": {
+   "title": "Footage flow"
+  }
+ },
+ "design_pkg": {
+  "inputs": {
+   "request": [
+    "load",
+    0
+   ],
+   "music": [
+    "load",
+    1
+   ],
+   "piece": [
+    "plan",
+    0
+   ],
+   "clips": [
+    "flow",
+    0
+   ],
+   "guide": "DESIGN_GUIDE_open_model",
+   "seed": [
+    "seed",
+    0
+   ],
+   "matte_1": [
+    "load",
+    6
+   ],
+   "matte_2": [
+    "load",
+    7
+   ],
+   "matte_3": [
+    "load",
+    8
+   ],
+   "matte_4": [
+    "load",
+    9
+   ],
+   "matte_5": [
+    "load",
+    10
+   ],
+   "matte_6": [
+    "load",
+    11
+   ]
+  },
+  "class_type": "MographDesignPackage",
+  "_meta": {
+   "title": "Design package"
+  }
+ },
+ "design_qwen": {
+  "inputs": {
+   "model_name": "design_llm_8b",
+   "quantization": "4-bit (VRAM-friendly)",
+   "attention_mode": "auto",
+   "use_torch_compile": false,
+   "device": "auto",
+   "preset_prompt": "🖼️ Detailed Description",
+   "custom_prompt": [
+    "design_pkg",
+    0
+   ],
+   "max_tokens": 4096,
+   "temperature": 0.7,
+   "top_p": 0.9,
+   "num_beams": 1,
+   "repetition_penalty": 1.05,
+   "frame_count": 16,
+   "video_frame_size": "auto",
+   "keep_model_loaded": false,
+   "seed": [
+    "seed",
+    0
+   ],
+   "image": [
+    "design_pkg",
+    3
+   ]
+  },
+  "class_type": "DesignLLM_Advanced",
+  "_meta": {
+   "title": "design_llm design"
+  }
+ },
+ "design_parse": {
+  "inputs": {
+   "reply": [
+    "design_qwen",
+    0
+   ],
+   "locked": [
+    "design_pkg",
+    2
+   ],
+   "piece": [
+    "plan",
+    0
+   ],
+   "music": [
+    "load",
+    1
+   ],
+   "prompt": [
+    "design_pkg",
+    0
+   ],
+   "model": "design_llm_8b-4bit"
+  },
+  "class_type": "MographDesignParse",
+  "_meta": {
+   "title": "Design parse"
+  }
+ },
+ "design_qwen2": {
+  "inputs": {
+   "model_name": "design_llm_8b",
+   "quantization": "4-bit (VRAM-friendly)",
+   "attention_mode": "auto",
+   "use_torch_compile": false,
+   "device": "auto",
+   "preset_prompt": "🖼️ Detailed Description",
+   "custom_prompt": [
+    "design_parse",
+    2
+   ],
+   "max_tokens": 1024,
+   "temperature": 0.7,
+   "top_p": 0.9,
+   "num_beams": 1,
+   "repetition_penalty": 1.05,
+   "frame_count": 16,
+   "video_frame_size": "auto",
+   "keep_model_loaded": false,
+   "seed": [
+    "seed",
+    0
+   ]
+  },
+  "class_type": "DesignLLM_Advanced",
+  "_meta": {
+   "title": "design_llm design repair"
+  }
+ },
+ "design_fix": {
+  "inputs": {
+   "piece_json": [
+    "design_parse",
+    0
+   ],
+   "ok": [
+    "design_parse",
+    1
+   ],
+   "repair_reply": [
+    "design_qwen2",
+    0
+   ],
+   "piece": [
+    "plan",
+    0
+   ],
+   "music": [
+    "load",
+    1
+   ],
+   "locked": [
+    "design_pkg",
+    2
+   ],
+   "model": "design_llm_8b-4bit"
+  },
+  "class_type": "MographDesignRepair",
+  "_meta": {
+   "title": "Design repair"
+  }
+ },
+ "design_piece": {
+  "inputs": {
+   "piece_json": [
+    "design_fix",
+    0
+   ],
+   "music": [
+    "load",
+    1
+   ]
+  },
+  "class_type": "MographPieceFromJSON",
+  "_meta": {
+   "title": "Piece from design"
+  }
+ },
+ "type_final": {
+  "inputs": {
+   "piece": [
+    "design_piece",
+    0
+   ],
+   "music": [
+    "load",
+    1
+   ],
+   "procs": 10
+  },
+  "class_type": "MographTypePasses",
+  "_meta": {
+   "title": "Type passes (design)"
+  }
+ },
+ "compose": {
+  "inputs": {
+   "piece": [
+    "design_piece",
+    0
+   ],
+   "type": [
+    "type_final",
+    0
+   ],
+   "clips": [
+    "flow",
+    0
+   ],
+   "backend": "auto",
+   "music": [
+    "load",
+    1
+   ],
+   "matte_1": [
+    "load",
+    6
+   ],
+   "matte_2": [
+    "load",
+    7
+   ],
+   "matte_3": [
+    "load",
+    8
+   ],
+   "matte_4": [
+    "load",
+    9
+   ],
+   "matte_5": [
+    "load",
+    10
+   ],
+   "matte_6": [
+    "load",
+    11
+   ]
+  },
+  "class_type": "MographCompose",
+  "_meta": {
+   "title": "Compose"
+  }
+ },
+ "assemble": {
+  "inputs": {
+   "composed": [
+    "compose",
+    0
+   ],
+   "piece": [
+    "design_piece",
+    0
+   ],
+   "audio": [
+    "load",
+    5
+   ],
+   "crf": 20,
+   "encoder": "auto"
+  },
+  "class_type": "MographAssemble",
+  "_meta": {
+   "title": "Assemble"
+  }
+ },
+ "out_final": {
+  "inputs": {
+   "video": [
+    "assemble",
+    0
+   ],
+   "filename_prefix": "redesign/out",
+   "format": "auto",
+   "codec": "auto"
+  },
+  "class_type": "SaveVideo",
+  "_meta": {
+   "title": "OUT final"
+  }
+ },
+ "archive": {
+  "inputs": {
+   "filename_prefix": "redesign/out",
+   "piece": [
+    "design_piece",
+    0
+   ],
+   "plan_piece": [
+    "plan",
+    0
+   ],
+   "clips": [
+    "flow",
+    0
+   ],
+   "first": [
+    "load",
+    4
+   ],
+   "video": [
+    "assemble",
+    0
+   ],
+   "light": true,
+   "composed": [
+    "compose",
+    0
+   ],
+   "sheet": [
+    "design_pkg",
+    3
+   ]
+  },
+  "class_type": "MographArchive",
+  "_meta": {
+   "title": "Archive (piece.json)"
+  }
+ },
+ "out_design_reply": {
+  "inputs": {
+   "source": [
+    "design_qwen",
+    0
+   ]
+  },
+  "class_type": "PreviewAny",
+  "_meta": {
+   "title": "OUT design reply"
+  }
+ },
+ "out_design_check": {
+  "inputs": {
+   "source": [
+    "design_parse",
+    3
+   ]
+  },
+  "class_type": "PreviewAny",
+  "_meta": {
+   "title": "OUT design check"
+  }
+ },
+ "out_design_final": {
+  "inputs": {
+   "source": [
+    "design_fix",
+    1
+   ]
+  },
+  "class_type": "PreviewAny",
+  "_meta": {
+   "title": "OUT design final check"
+  }
+ }
+}

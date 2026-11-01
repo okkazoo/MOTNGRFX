@@ -1,0 +1,16 @@
+{
+  "id": "city-on-the-beat",
+  "title": "City on the beat",
+  "subtitle": "P02 words + stripes + 120 bpm",
+  "inputs": {
+    "words": "THE CITY\nKEEPS\nDREAMING\nAFTER HOURS",
+    "image": "stripes.png",
+    "audio": "beat_120.wav",
+    "length": 8,
+    "seed": 21,
+    "quality": "draft"
+  },
+  "poster": "city-on-the-beat.mp4",
+  "inset": "stripes.png",
+  "poster_image": "city-on-the-beat.jpg"
+}

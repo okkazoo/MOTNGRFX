@@ -1,0 +1,95 @@
+{
+ "title": "Redesign - design_llm_8b 4-bit (the batch model)",
+ "order": 30,
+ "verb": "Redesign it",
+ "running_verb": "Redesigning",
+ "cost_line": "Runs on the GPU box (no music, still, video or matte generation)",
+ "note": "The design step again over a finished generation's archive: the open model sees the footage contact sheets and the music, designs the type and the compose look; the code mends invalid fields one by one (design_salvage.py); only the type and the composite are rendered again. Arm: design_llm_8b-4bit.",
+ "fields": [
+  {
+   "id": "archive",
+   "label": "Archive folder",
+   "kind": "text",
+   "node_title": "IN archive",
+   "input_name": "value",
+   "optional": false,
+   "default": "",
+   "placeholder": "redesign/src/r03_out_shots",
+   "hint": "A MographArchive folder under the ComfyUI output dir (still, sK_clip.mp4, sK_matte/, piece.json)."
+  },
+  {
+   "id": "source",
+   "label": "Source video",
+   "kind": "text",
+   "node_title": "IN source video",
+   "input_name": "value",
+   "optional": true,
+   "default": "",
+   "hint": "The generation's final mp4: its audio is the song."
+  },
+  {
+   "id": "concept",
+   "label": "Request (JSON)",
+   "kind": "textarea",
+   "node_title": "IN concept",
+   "input_name": "value",
+   "optional": true,
+   "default": "",
+   "rows": 4,
+   "hint": "words / scene / music / look / shots / length / seed of the generation; empty = rebuilt from the piece."
+  },
+  {
+   "id": "seed",
+   "label": "Design seed",
+   "kind": "seed",
+   "node_title": "IN seed",
+   "input_name": "value",
+   "optional": true,
+   "placeholder": "Seed"
+  }
+ ],
+ "missing": {
+  "archive": "Name an archive folder"
+ },
+ "outputs": [
+  {
+   "node_title": "OUT final",
+   "kind": "video",
+   "label": "Redesigned video",
+   "final": true
+  }
+ ],
+ "required_titles": [
+  "IN archive",
+  "IN source video",
+  "IN concept",
+  "IN seed",
+  "OUT final"
+ ],
+ "stage_labels": {
+  "Archive load": "Read the archive",
+  "Re-plan (rules fallback)": "Re-plan the rules' fallback",
+  "Footage flow": "Read the footage motion",
+  "Design package": "Prepare the design brief",
+  "design_llm design": "The model designs the type",
+  "Gemma 4 design": "The model designs the type",
+  "Design parse": "Check the design field by field",
+  "design_llm design repair": "The model corrects the invalid fields",
+  "Gemma 4 design repair": "The model corrects the invalid fields",
+  "Design repair": "Final design check",
+  "Piece from design": "Load the designed piece",
+  "Type passes (design)": "Render the designed 3D type",
+  "Compose": "Compose type into footage",
+  "Assemble": "Encode the video",
+  "OUT final": "Save video"
+ },
+ "server_flags": {
+  "comfyui": [
+   "--mmap-torch-files",
+   "--cache-ram",
+   "16",
+   "--use-sage-attention"
+  ],
+  "why": "12 GB card: the design model loads alone and is unloaded after each call"
+ }
+}

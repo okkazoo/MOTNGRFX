@@ -1,0 +1,108 @@
+{
+ "title": "Exact-length music test (GPU box)",
+ "order": 60,
+ "verb": "Make music",
+ "running_verb": "Making music",
+ "cost_line": "Runs on the GPU box (ACE-Step 1.5)",
+ "note": "A composed skeleton of exactly the chosen length is restyled by ACE-Step audio-to-audio. Denoise 0.3 keeps the skeleton's timing tight, 0.7 gives more ACE character. Outputs: the skeleton, ACE's raw audio, the fitted + mastered music.",
+ "fields": [
+  {
+   "id": "length",
+   "label": "Length",
+   "kind": "select",
+   "node_title": "IN length",
+   "input_name": "value",
+   "default": 12,
+   "options": [
+    {
+     "value": 8,
+     "label": "8 s"
+    },
+    {
+     "value": 12,
+     "label": "12 s"
+    },
+    {
+     "value": 16,
+     "label": "16 s"
+    },
+    {
+     "value": 24,
+     "label": "24 s"
+    }
+   ]
+  },
+  {
+   "id": "bpm",
+   "label": "Tempo hint (bpm)",
+   "kind": "number",
+   "node_title": "IN bpm",
+   "input_name": "value",
+   "optional": true,
+   "default": 0,
+   "min": 0,
+   "max": 200,
+   "hint": "0 = from the music prompt, else the mood. The tempo used is the nearest one that fits the length in whole bars."
+  },
+  {
+   "id": "music",
+   "label": "Music prompt",
+   "kind": "textarea",
+   "node_title": "IN music",
+   "input_name": "value",
+   "optional": true,
+   "default": "",
+   "rows": 3,
+   "placeholder": "e.g. deep house, warm Rhodes chords, soft kick, 122 bpm, A minor"
+  },
+  {
+   "id": "denoise",
+   "label": "Denoise (0.3 tight - 0.7 free)",
+   "kind": "number",
+   "node_title": "IN denoise",
+   "input_name": "value",
+   "optional": true,
+   "default": 0.5,
+   "min": 0.2,
+   "max": 0.9
+  },
+  {
+   "id": "seed",
+   "label": "Seed",
+   "kind": "seed",
+   "node_title": "IN seed",
+   "input_name": "value",
+   "optional": true
+  }
+ ],
+ "missing": {},
+ "outputs": [
+  {
+   "node_title": "OUT skeleton",
+   "kind": "audio",
+   "label": "Skeleton (before ACE)"
+  },
+  {
+   "node_title": "OUT restyled raw",
+   "kind": "audio",
+   "label": "ACE output (unfitted)"
+  },
+  {
+   "node_title": "OUT music",
+   "kind": "audio",
+   "label": "Fitted + mastered music",
+   "final": true
+  }
+ ],
+ "stage_labels": {
+  "IN length": "Read the request",
+  "Score skeleton": "Compose the skeleton",
+  "Music style encode (a2a)": "Music prompt",
+  "Skeleton to latent": "Encode the skeleton",
+  "ACE sampler (a2a)": "Restyle with ACE-Step",
+  "ACE decode": "Decode",
+  "Music fit": "Fit to exact length",
+  "Master": "Master the audio",
+  "OUT music": "Save audio"
+ }
+}

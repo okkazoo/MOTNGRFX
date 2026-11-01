@@ -1,0 +1,35 @@
+{
+  "about": "Which custom node pack provides which node classes of the app graphs. Read by the page (missing-node message) and by scripts/check_install.py.",
+  "core_hint": "This node is part of ComfyUI itself in recent versions: update ComfyUI to the latest release.",
+  "packs": [
+    {
+      "name": "MOTNGRFX (this pack)",
+      "patterns": ["^Mograph"],
+      "required": true,
+      "install": "This pack is not loaded. Clone it into ComfyUI/custom_nodes, install requirements.txt, restart ComfyUI and read the console for an import error.",
+      "url": ""
+    },
+    {
+      "name": "ComfyUI-LTXVideo",
+      "url": "https://github.com/Lightricks/ComfyUI-LTXVideo",
+      "classes": ["LTXICLoRALoaderModelOnly", "LTXAddVideoICLoRAGuide", "LTXVSetAudioRefTokens"],
+      "patterns": ["^LTXV(?!ConcatAVLatent|SeparateAVLatent|Conditioning|CropGuides|ImgToVideoInplace|Preprocess|LatentUpsampler|EmptyLatentAudio)", "^LTXAdd", "^LTXIC"],
+      "required": true,
+      "install": "cd ComfyUI/custom_nodes && git clone https://github.com/Lightricks/ComfyUI-LTXVideo && pip install -r ComfyUI-LTXVideo/requirements.txt"
+    },
+    {
+      "name": "ComfyUI-Video-Depth-Anything",
+      "url": "https://github.com/yuvraj108c/ComfyUI-Video-Depth-Anything",
+      "classes": ["LoadVideoDepthAnythingModel", "VideoDepthAnythingProcess", "VideoDepthAnythingOutput"],
+      "required": true,
+      "install": "cd ComfyUI/custom_nodes && git clone https://github.com/yuvraj108c/ComfyUI-Video-Depth-Anything && pip install -r ComfyUI-Video-Depth-Anything/requirements.txt"
+    },
+    {
+      "name": "ComfyUI-VideoHelperSuite",
+      "url": "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite",
+      "patterns": ["^VHS_"],
+      "required": false,
+      "install": "cd ComfyUI/custom_nodes && git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite && pip install -r ComfyUI-VideoHelperSuite/requirements.txt"
+    }
+  ]
+}

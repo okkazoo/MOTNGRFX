@@ -1,0 +1,79 @@
+[
+  {
+    "id": "io_blobs",
+    "kind": "style",
+    "title": "Blobs: form-in / form-out style",
+    "description": "The word grows out of soft blobs: round drops stream in, settle on the strokes, swell and merge into one mass that sharpens into the letters. On exit the letters swell into blobs that break apart, shrink and stream away.",
+    "clip": "14_modules/v004/local/io_blobs_g03_draft.mp4",
+    "sheet": "14_modules/v004/local/io_blobs_sheet_g03.jpg",
+    "dircheck": null,
+    "version": "14_modules/v002",
+    "gen": 3
+  },
+  {
+    "id": "io_lines",
+    "kind": "style",
+    "title": "Lines: form-in / form-out style",
+    "description": "The module's own form and exit: strands arrive along the entry direction, draw the type, and on exit run away along the exit direction. The default; hands strands to a transition unchanged.",
+    "clip": "14_modules/v004/local/io_lines_g03_draft.mp4",
+    "sheet": "14_modules/v004/local/io_lines_sheet_g03.jpg",
+    "dircheck": null,
+    "version": "14_modules/v002",
+    "gen": 3
+  },
+  {
+    "id": "io_flicker",
+    "kind": "style",
+    "title": "Flicker: form-in / form-out style",
+    "description": "The word stutters into or out of existence: glyphs and fragments blink on and off frame by frame with jitter, slices of the picture slip sideways, and frame-exact strobes punctuate it. Snaps to a beat grid on request.",
+    "clip": "14_modules/v004/local/io_flicker_g03_draft.mp4",
+    "sheet": "14_modules/v004/local/io_flicker_sheet_g03.jpg",
+    "dircheck": null,
+    "version": "14_modules/v002",
+    "gen": 3
+  },
+  {
+    "id": "io_particles",
+    "kind": "style",
+    "title": "Particles: form-in / form-out style",
+    "description": "The word assembles out of small marks: + - | and dots stream in as speed streaks, land on the outline and settle, then give way to the solid type. On exit the type dissolves into marks that run out along the exit direction.",
+    "clip": "14_modules/v004/local/io_particles_g04_draft.mp4",
+    "sheet": "14_modules/v004/local/io_particles_sheet_g04.jpg",
+    "dircheck": null,
+    "version": "14_modules/v002",
+    "gen": 4
+  },
+  {
+    "id": "io_wipe",
+    "kind": "style",
+    "title": "Wipe: form-in / form-out style",
+    "description": "A directional mask sweeps over the finished word along the entry direction to reveal it, and along the exit direction to wipe it away, with a soft or hard edge and an optional scan line.",
+    "clip": "14_modules/v004/local/io_wipe_g03_draft.mp4",
+    "sheet": "14_modules/v004/local/io_wipe_sheet_g03.jpg",
+    "dircheck": null,
+    "version": "14_modules/v002",
+    "gen": 3
+  },
+  {
+    "id": "io_chain_flicker_blobs_twist",
+    "kind": "chain",
+    "title": "Chain: flicker-in, blobs-out, twist, lanes",
+    "description": "Pipework flickers into existence, melts into blobs on the way out; the blobs are carried as capsule strands through a twist and arrive as the lanes strands of the next word (lines style). Default follow camera.",
+    "clip": "14_modules/v004/local/io_chain_flicker_blobs_twist_g03_draft.mp4",
+    "sheet": "14_modules/v004/local/io_chain_flicker_blobs_twist_sheet_g03.jpg",
+    "dircheck": null,
+    "version": "14_modules/v002",
+    "gen": 3
+  },
+  {
+    "id": "io_chain_wipe_particles_braid",
+    "kind": "chain",
+    "title": "Chain: wipe-in, particles-out, braid, depth echo with blobs-in",
+    "description": "Slats wipe in along the entry direction and dissolve into marks that run out; a braid carries the marks (as short strands) to the next word, which grows out of blobs as a depth echo. Default follow camera.",
+    "clip": "14_modules/v004/local/io_chain_wipe_particles_braid_g04_draft.mp4",
+    "sheet": "14_modules/v004/local/io_chain_wipe_particles_braid_sheet_g04.jpg",
+    "dircheck": null,
+    "version": "14_modules/v002",
+    "gen": 4
+  }
+]

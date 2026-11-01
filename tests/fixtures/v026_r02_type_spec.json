@@ -1,0 +1,247 @@
+{
+ "bar": 4,
+ "beats": [
+  0.0,
+  0.773,
+  1.5702,
+  2.3674,
+  3.1646,
+  3.9618,
+  4.759,
+  5.5562,
+  6.3534,
+  7.1506,
+  7.9478,
+  8.745,
+  9.5422,
+  10.3394,
+  11.1366,
+  11.9338,
+  12.731,
+  13.5282,
+  14.3254,
+  15.1226,
+  15.9198,
+  16.717,
+  17.5142,
+  18.3114,
+  19.1086,
+  19.9058,
+  20.703
+ ],
+ "bpm": 75.26342197691932,
+ "camera": "beat_orbit",
+ "camera_params": {
+  "bob": 0.0,
+  "elev": 0.0,
+  "fast_dps": 6.2,
+  "intro_deg": 0.0,
+  "read_dps": 0.0
+ },
+ "downbeats": [
+  0.0,
+  3.1646,
+  6.3534,
+  9.5422,
+  12.731,
+  15.9198,
+  19.1086
+ ],
+ "duration": 16.0,
+ "energy": 0.3,
+ "fps": 24,
+ "line": {
+  "px": 3.0
+ },
+ "mood": "calm, wistful",
+ "palette": {
+  "accents": [
+   [
+    113,
+    120,
+    136
+   ],
+   [
+    69,
+    71,
+    81
+   ],
+   [
+    160,
+    167,
+    180
+   ]
+  ],
+  "bg": [
+   30,
+   33,
+   42
+  ],
+  "fg": [
+   208,
+   215,
+   224
+  ]
+ },
+ "passes": [
+  "beauty",
+  "matte",
+  "depth",
+  "line",
+  "clay",
+  "flow"
+ ],
+ "seed": 6466,
+ "size": [
+  576,
+  1024
+ ],
+ "transitions": [
+  "cut",
+  "cut",
+  "cut",
+  "cut"
+ ],
+ "words": [
+  {
+   "exit_s": 0.8,
+   "font": "Anybody[wdth,wght].ttf",
+   "form_in": "blobs",
+   "form_out": "particles",
+   "form_s": 0.8,
+   "hit_on": "beat",
+   "module": "gradient_fade",
+   "placement": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "hf": 0.3,
+    "pitch": 0.0,
+    "roll": -90.0,
+    "wf": 0.88,
+    "yaw": 0.0
+   },
+   "render": "flat",
+   "t0": 0.0,
+   "t1": 3.044,
+   "text": "HANDS"
+  },
+  {
+   "ar_min": 0.85,
+   "exit_s": 0.8,
+   "font": "SpaceGrotesk-Bold.ttf",
+   "form_in": "particles",
+   "form_out": "blobs",
+   "form_s": 0.8,
+   "hit_on": "beat",
+   "lines": [
+    "RE",
+    "ME",
+    "MB",
+    "ER"
+   ],
+   "module": "gradient_fade",
+   "placement": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "hf": 0.95,
+    "pitch": 0.0,
+    "roll": 0.0,
+    "wf": 0.893,
+    "yaw": 0.0
+   },
+   "render": "flat",
+   "t0": 3.444,
+   "t1": 6.465,
+   "text": "REMEMBER"
+  },
+  {
+   "ar_min": 0.85,
+   "exit_s": 0.8,
+   "font": "Jacquard12-Regular.ttf",
+   "form_in": "blobs",
+   "form_out": "particles",
+   "form_s": 0.8,
+   "hit_on": "beat",
+   "lines": [
+    "WH",
+    "AT"
+   ],
+   "module": "gradient_fade",
+   "placement": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "hf": 0.646,
+    "pitch": 0.0,
+    "roll": 0.0,
+    "wf": 0.9,
+    "yaw": 0.0
+   },
+   "render": "flat",
+   "t0": 6.865,
+   "t1": 10.065,
+   "text": "WHAT"
+  },
+  {
+   "axes": {
+    "wdth": 50.0,
+    "wght": 900.0
+   },
+   "exit_s": 0.8,
+   "font": "Anybody[wdth,wght].ttf",
+   "form_in": "particles",
+   "form_out": "blobs",
+   "form_s": 0.45,
+   "hit_on": "beat",
+   "lines": [
+    "THE",
+    "CLAY"
+   ],
+   "module": "gradient_fade",
+   "placement": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "hf": 0.512,
+    "pitch": 0.0,
+    "roll": 0.0,
+    "wf": 0.919,
+    "yaw": 0.0
+   },
+   "render": "flat",
+   "t0": 10.465,
+   "t1": 13.176,
+   "text": "THE CLAY",
+   "window_ground": "plain",
+   "window_source": "s4"
+  },
+  {
+   "ar_min": 0.85,
+   "exit_s": 0.8,
+   "font": "Jacquard12-Regular.ttf",
+   "form_in": "blobs",
+   "form_out": "particles",
+   "form_s": 0.8,
+   "hit_on": "beat",
+   "lines": [
+    "FOR",
+    "GE",
+    "TS",
+    "TU",
+    "RN"
+   ],
+   "module": "gradient_fade",
+   "placement": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "hf": 0.95,
+    "pitch": 0.0,
+    "roll": 0.0,
+    "wf": 0.9,
+    "yaw": 0.0
+   },
+   "render": "flat",
+   "t0": 13.576,
+   "t1": 17.176,
+   "text": "FORGETS TURN"
+  }
+ ]
+}

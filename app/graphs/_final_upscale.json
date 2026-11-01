@@ -1,0 +1,99 @@
+{
+ "load": {
+  "class_type": "LoadVideo",
+  "inputs": {
+   "file": ""
+  },
+  "_meta": {
+   "title": "IN video"
+  }
+ },
+ "up_comp": {
+  "class_type": "GetVideoComponents",
+  "inputs": {
+   "video": [
+    "load",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Split video (frames, audio, fps)"
+  }
+ },
+ "up_model": {
+  "class_type": "UpscaleModelLoader",
+  "inputs": {
+   "model_name": "RealESRGAN_x2plus.pth"
+  },
+  "_meta": {
+   "title": "UP model RealESRGAN_x2plus.pth"
+  }
+ },
+ "up_run": {
+  "class_type": "ImageUpscaleWithModel",
+  "inputs": {
+   "upscale_model": [
+    "up_model",
+    0
+   ],
+   "image": [
+    "up_comp",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "UP Real-ESRGAN x2"
+  }
+ },
+ "up_fit": {
+  "class_type": "ImageScale",
+  "inputs": {
+   "image": [
+    "up_run",
+    0
+   ],
+   "upscale_method": "lanczos",
+   "width": 1080,
+   "height": 1920,
+   "crop": "disabled"
+  },
+  "_meta": {
+   "title": "UP lanczos to 1080x1920"
+  }
+ },
+ "up_vid": {
+  "class_type": "CreateVideo",
+  "inputs": {
+   "images": [
+    "up_fit",
+    0
+   ],
+   "fps": [
+    "up_comp",
+    2
+   ],
+   "audio": [
+    "up_comp",
+    1
+   ]
+  },
+  "_meta": {
+   "title": "UP video (same fps, same audio)"
+  }
+ },
+ "out_final": {
+  "class_type": "SaveVideo",
+  "inputs": {
+   "video": [
+    "up_vid",
+    0
+   ],
+   "filename_prefix": "video/motngrfx_up1080",
+   "format": "auto",
+   "codec": "auto"
+  },
+  "_meta": {
+   "title": "OUT upscaled"
+  }
+ }
+}

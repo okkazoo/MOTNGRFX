@@ -1,0 +1,1674 @@
+{
+ "audio": {
+  "analysis": "15_fusion/v005/local/audio/P16_analysis.json",
+  "bpm": 74.836,
+  "cut": 16.0,
+  "fade": 0.802,
+  "src": "15_fusion/v005/audio/P16.wav"
+ },
+ "brief": {
+  "mood": [
+   "slow"
+  ],
+  "palette": [
+   "#05090d",
+   "#d8f3f7",
+   "#58d6e6",
+   "#2a8da0",
+   "#9fe9f2"
+  ],
+  "scene": "deep dark water at night, one narrow shaft of pale light falling from far above, a column of silver bubbles rising through the beam"
+ },
+ "compose": {
+  "crf": 20,
+  "crossfade": 0,
+  "default": {
+   "ops": [
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.66,
+         0.0
+        ],
+        [
+         0.9,
+         0.75
+        ],
+        [
+         1.86,
+         0.75
+        ],
+        [
+         2.1,
+         0.0
+        ],
+        [
+         3.065,
+         0.0
+        ],
+        [
+         3.305,
+         0.75
+        ],
+        [
+         4.351,
+         0.75
+        ],
+        [
+         4.591,
+         0.0
+        ],
+        [
+         6.272,
+         0.0
+        ],
+        [
+         6.512,
+         0.75
+        ],
+        [
+         7.558,
+         0.75
+        ],
+        [
+         7.798,
+         0.0
+        ],
+        [
+         9.479,
+         0.0
+        ],
+        [
+         9.719,
+         0.75
+        ],
+        [
+         10.765,
+         0.75
+        ],
+        [
+         11.005,
+         0.0
+        ],
+        [
+         12.686,
+         0.0
+        ],
+        [
+         12.926,
+         0.75
+        ],
+        [
+         15.092,
+         0.75
+        ],
+        [
+         15.332,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "P16:type_matte",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_matte",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wm"
+    },
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.66,
+         0.0
+        ],
+        [
+         0.9,
+         0.75
+        ],
+        [
+         1.86,
+         0.75
+        ],
+        [
+         2.1,
+         0.0
+        ],
+        [
+         3.065,
+         0.0
+        ],
+        [
+         3.305,
+         0.75
+        ],
+        [
+         4.351,
+         0.75
+        ],
+        [
+         4.591,
+         0.0
+        ],
+        [
+         6.272,
+         0.0
+        ],
+        [
+         6.512,
+         0.75
+        ],
+        [
+         7.558,
+         0.75
+        ],
+        [
+         7.798,
+         0.0
+        ],
+        [
+         9.479,
+         0.0
+        ],
+        [
+         9.719,
+         0.75
+        ],
+        [
+         10.765,
+         0.75
+        ],
+        [
+         11.005,
+         0.0
+        ],
+        [
+         12.686,
+         0.0
+        ],
+        [
+         12.926,
+         0.75
+        ],
+        [
+         15.092,
+         0.75
+        ],
+        [
+         15.332,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "P16:type_line",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_line",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wl"
+    },
+    {
+     "args": {
+      "guide": "$footage",
+      "matte": "$matte",
+      "size": [
+       360,
+       640
+      ]
+     },
+     "op": "upscale_matte",
+     "out": "m"
+    },
+    {
+     "args": {
+      "frame": "$footage",
+      "gain": 0.66,
+      "gamma": 1.0,
+      "lift": 0.0,
+      "sat": 0.7
+     },
+     "op": "grade",
+     "out": "foot"
+    },
+    {
+     "args": {
+      "footage": "$footage",
+      "lum_amount": 0.92,
+      "lum_target": 0.93,
+      "mode": "sample",
+      "sample_blur": 60,
+      "sat": 0.5,
+      "type_a": "$wl"
+     },
+     "op": "tint_type",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "color": [
+       1.0,
+       0.8,
+       0.55
+      ],
+      "like": "$footage"
+     },
+     "op": "fill",
+     "out": "warm"
+    },
+    {
+     "args": {
+      "a": "$tcol",
+      "b": "$warm",
+      "t": {
+       "timeline": [
+        [
+         11.203,
+         0.0
+        ],
+        [
+         13.608,
+         0.8
+        ],
+        [
+         16.013,
+         0.8
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "a": "$wl",
+      "b": "$wm",
+      "t": {
+       "timeline": [
+        [
+         10.401,
+         0.0
+        ],
+        [
+         11.203,
+         1.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "ta"
+    },
+    {
+     "args": {
+      "fps": 24,
+      "matte": "$m",
+      "matte_gamma": 0.75,
+      "min_frac": 0.8,
+      "min_vis": 0.8,
+      "ramp_s": 0.25,
+      "t": "$t",
+      "type_a": "$ta"
+     },
+     "op": "legible",
+     "out": "m"
+    },
+    {
+     "args": {
+      "footage": "$foot",
+      "matte": "$m",
+      "matte_gamma": 0.75,
+      "type_a": "$ta",
+      "type_opacity": {
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.78,
+         0.15
+        ],
+        [
+         3.987,
+         0.8
+        ],
+        [
+         7.996,
+         0.88
+        ],
+        [
+         11.203,
+         0.95
+        ],
+        [
+         16.013,
+         0.95
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "color": [
+       0.85,
+       0.9,
+       1.0
+      ],
+      "img": "$image",
+      "intensity": {
+       "curve": "sub",
+       "hi": 0.12,
+       "lo": 0.03
+      },
+      "mask": "$wm",
+      "radius": 24
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "angle": 35.0,
+      "axis": "x",
+      "like": "$foot",
+      "pos": 0.5,
+      "side": "left",
+      "soft": 0.06
+     },
+     "op": "split_region",
+     "out": "_fr0f"
+    },
+    {
+     "args": {
+      "fg": "$foot",
+      "footage": "$image",
+      "front": "$_fr0f",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$wm",
+      "type_opacity": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         3.035,
+         0.0
+        ],
+        [
+         3.185,
+         0.96
+        ],
+        [
+         4.471,
+         0.96
+        ],
+        [
+         4.621,
+         0.0
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "matte": "$m",
+      "progress": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         6.192,
+         0.0
+        ],
+        [
+         6.392,
+         0.0
+        ],
+        [
+         7.092,
+         1.0
+        ],
+        [
+         7.678,
+         1.0
+        ],
+        [
+         7.878,
+         1.0
+        ]
+       ]
+      },
+      "reach": 0.8,
+      "soft": 0.05
+     },
+     "op": "matte_reach",
+     "out": "_wi1r"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "b": "$_wi1r"
+     },
+     "op": "mask_mul",
+     "out": "_wi1a"
+    },
+    {
+     "args": {
+      "frame": "$foot",
+      "gain": 1.22,
+      "gamma": 1.05,
+      "sat": 1.15
+     },
+     "op": "grade",
+     "out": "_wi1b"
+    },
+    {
+     "args": {
+      "a": "$_wi1r",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         6.242,
+         0.0
+        ],
+        [
+         6.392,
+         1.0
+        ],
+        [
+         7.678,
+         1.0
+        ],
+        [
+         7.828,
+         0.0
+        ]
+       ]
+      },
+      "scale": 0.55
+     },
+     "op": "mask_gate",
+     "out": "_wi1t"
+    },
+    {
+     "args": {
+      "a": "$image",
+      "b": "$_wi1b",
+      "t": "$_wi1t"
+     },
+     "op": "crossfade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "fg": "$foot",
+      "footage": "$image",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$_wi1a",
+      "type_opacity": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         6.242,
+         0.0
+        ],
+        [
+         6.392,
+         0.96
+        ],
+        [
+         7.678,
+         0.96
+        ],
+        [
+         7.828,
+         0.0
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "matte": "$m",
+      "progress": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         6.192,
+         0.0
+        ],
+        [
+         6.392,
+         0.0
+        ],
+        [
+         7.092,
+         1.0
+        ],
+        [
+         7.678,
+         1.0
+        ],
+        [
+         7.878,
+         1.0
+        ]
+       ]
+      },
+      "reach": 0.8,
+      "width": 0.012
+     },
+     "op": "matte_ring",
+     "out": "_wi1g"
+    },
+    {
+     "args": {
+      "a": "$_wi1g",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         6.242,
+         0.0
+        ],
+        [
+         6.392,
+         1.0
+        ],
+        [
+         7.678,
+         1.0
+        ],
+        [
+         7.828,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_wi1g"
+    },
+    {
+     "args": {
+      "color": "$tcol",
+      "img": "$image",
+      "intensity": 0.9,
+      "mask": "$_wi1g",
+      "radius": 14.0
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame_idx": "$frame_idx",
+      "jitter": 4.0,
+      "max_contours": 2,
+      "min_len": 60.0,
+      "mode": "outline",
+      "seed": 3,
+      "smooth": 3.0,
+      "src": "$m",
+      "strokes": 2,
+      "width": 2
+     },
+     "op": "contour_lines",
+     "out": "_gl2c"
+    },
+    {
+     "args": {
+      "a": "$_gl2c",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         9.449,
+         0.0
+        ],
+        [
+         9.599,
+         1.0
+        ],
+        [
+         10.885,
+         1.0
+        ],
+        [
+         11.035,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_gl2c"
+    },
+    {
+     "args": {
+      "color": "$tcol",
+      "img": "$image",
+      "intensity": 0.8,
+      "mask": "$_gl2c",
+      "radius": 18.0
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "alpha": "$_gl2c",
+      "base": "$image",
+      "fg": "$tcol"
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$foot",
+      "gain": 0.28,
+      "sat": 0.55
+     },
+     "op": "grade",
+     "out": "_wi3d"
+    },
+    {
+     "args": {
+      "a": "$foot",
+      "b": "$_wi3d",
+      "t": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         12.656,
+         0.0
+        ],
+        [
+         12.806,
+         1.0
+        ],
+        [
+         15.212,
+         1.0
+        ],
+        [
+         15.362,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "_wi3p"
+    },
+    {
+     "args": {
+      "frame": "$foot",
+      "gain": 1.3,
+      "gamma": 1.06,
+      "sat": 1.1
+     },
+     "op": "grade",
+     "out": "_wi3b"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         12.656,
+         0.0
+        ],
+        [
+         12.806,
+         1.0
+        ],
+        [
+         15.212,
+         1.0
+        ],
+        [
+         15.362,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_wi3a"
+    },
+    {
+     "args": {
+      "matte": "$m",
+      "type_a": "$wm"
+     },
+     "op": "legible",
+     "out": "_wi3m"
+    },
+    {
+     "args": {
+      "fg": "$foot",
+      "fg_matte": "$_wi3m",
+      "footage": "$_wi3b",
+      "min_contrast": 0.22,
+      "plate_rgb": "$_wi3p",
+      "type_a": "$_wi3a"
+     },
+     "op": "knockout",
+     "out": "_wi3k"
+    },
+    {
+     "args": {
+      "a": "$image",
+      "b": "$_wi3k",
+      "t": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         12.656,
+         0.0
+        ],
+        [
+         12.806,
+         1.0
+        ],
+        [
+         15.212,
+         1.0
+        ],
+        [
+         15.362,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "gain": 1.0,
+      "gamma": 1.0,
+      "lift": 0.012,
+      "sat": 1.0
+     },
+     "op": "grade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "amount": 0.025,
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 1,
+      "size": 1.3
+     },
+     "op": "grain",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "strength": 0.3
+     },
+     "op": "vignette",
+     "out": "image"
+    }
+   ]
+  },
+  "shots": {},
+  "size": [
+   360,
+   640
+  ]
+ },
+ "format": "9:16",
+ "fps": 24,
+ "id": "P16",
+ "layout": {
+  "s1": {
+   "frames": 384,
+   "start": 0,
+   "xf": 0
+  }
+ },
+ "parent": {
+  "piece": null,
+  "why": "v005 design P16: one locked-off shot, massive frame-filling layouts, contour hand-offs, type as the window ending (DESIGNS.md)"
+ },
+ "plan": {
+  "bars": 7,
+  "blocks": [
+   {
+    "compose": [
+     {
+      "args": {
+       "ground": "@bg",
+       "plate": "flat"
+      },
+      "op": "knockout",
+      "when": "hold"
+     }
+    ],
+    "contour": null,
+    "dominant": true,
+    "lines": [
+     4
+    ],
+    "missing": [
+     "auto-insert of knockout (+ flat ground) into the recipe chain: the template below is for the runner"
+    ],
+    "name": "window_ending",
+    "params": {
+     "ground": "flat_bg",
+     "hold_s": 3.508
+    },
+    "role": "window",
+    "shots": null,
+    "status": "partial",
+    "transitions": []
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "sweep_s": 1.0
+      },
+      "op": "edge_reveal",
+      "when": "form"
+     }
+    ],
+    "contour": {
+     "ports": [
+      "matte_outline"
+     ],
+     "use": "entry"
+    },
+    "dominant": false,
+    "lines": [
+     0,
+     2,
+     4
+    ],
+    "missing": [],
+    "name": "matte_edge_reveal_wipe",
+    "params": {
+     "sweep_s": 1.02
+    },
+    "role": "any",
+    "shots": null,
+    "status": "live",
+    "transitions": []
+   },
+   {
+    "compose": [],
+    "contour": {
+     "ports": [
+      "matte_outline",
+      "depth_iso"
+     ],
+     "use": "via"
+    },
+    "dominant": false,
+    "lines": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "missing": [
+     "contour bundles as transition endpoints (tools/fusion/contour_ports.py, being built)"
+    ],
+    "name": "contour_hand_off",
+    "params": {
+     "object": "depth_iso"
+    },
+    "role": "any",
+    "shots": null,
+    "status": "partial",
+    "transitions": [
+     "spiral_around",
+     "braid",
+     "circuit_board",
+     "fan",
+     "ripple"
+    ]
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "between": "K1|K2",
+       "cards": 4
+      },
+      "op": "multiplane_cards",
+      "when": "always"
+     }
+    ],
+    "contour": null,
+    "dominant": false,
+    "lines": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "missing": [
+     "compose op that renders the cards (mograph/render/multiplane.MultiPlane.render) in the recipe; the camera chain through the cards (camera dict + word slot) is wired in spec.build_scene"
+    ],
+    "name": "chain_through_cards",
+    "params": {
+     "cards": 5,
+     "chain": "chain_flow_bends_demo"
+    },
+    "role": "any",
+    "shots": null,
+    "status": "partial",
+    "transitions": []
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "front": "$type_matte",
+       "matte_threshold": 0.5
+      },
+      "op": "sandwich",
+      "when": "hold"
+     }
+    ],
+    "contour": {
+     "ports": [
+      "matte_outline"
+     ],
+     "use": "via"
+    },
+    "dominant": false,
+    "lines": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "missing": [],
+    "name": "half_front_half_behind",
+    "params": {
+     "front_share": 0.353
+    },
+    "role": "any",
+    "shots": null,
+    "status": "live",
+    "transitions": []
+   }
+  ],
+  "contour": {
+   "available": true,
+   "lines": [
+    {
+     "entry": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "exit": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "via": {
+      "dir": "up",
+      "port": "matte_outline"
+     }
+    },
+    {
+     "matte": "front",
+     "via": {
+      "dir": "along",
+      "port": "depth_iso"
+     }
+    },
+    {
+     "entry": {
+      "dir": "up",
+      "port": "matte_outline"
+     },
+     "matte": "wipe",
+     "via": {
+      "dir": "around",
+      "port": "matte_outline"
+     }
+    },
+    {
+     "exit": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "matte": "glow"
+    },
+    {
+     "matte": "window"
+    }
+   ],
+   "subject": true
+  },
+  "deferred": [
+   "v005 round 2 (song): the g01 / g02 song (seed 1) was silent from 14.0 s while DOWN holds to 15.25 s; song g03 = ACE XL base t2m seed 3 (same prompt, tame_highs deep, exact 16.000 s, end gate passed, music to the last second, 74.84 bpm, downbeats 0 / 3.19 / 6.39 / 9.6 / 12.81); the old one is kept as audio/P16_g02_silent_tail.wav (+ _raw, _grid)",
+   "v005 round 2 (legibility): EVERYTHING spine -> full (EVERY / THING; the spine box gave 14 px letters, the rule is >= 7 % of the frame = 45 px), DOWN massive_crop -> full (D and N were cut), every full hold = hold_drift fill 0.58 without the off-centre comp, yaw 6; SLOWS candy_orbit in Fascinate (the hairline face drowned in the rod copies), 24 copies",
+   "rise trail on the bubble column 3.2-6.4 (masktrack rise): not in the piece, it would regenerate s1 with LTX v2v and switch flow_wake off there",
+   "ONE type move: ease_reversal runs on EVERYTHING (6.4-8.4 rest) and the other holds use hold_drift in the layout framing (one lateral run across all five words is not planned by the chain)",
+   "BELOW 'cropped by the top edge' / SLOWS 'ring of letters': hung_from_top and full layouts stand in (no ring-of-letters layout)"
+  ],
+  "direction": {
+   "camera": "ease_reversal",
+   "pace": "slow",
+   "palette": "near_black_one_light",
+   "shots": "single",
+   "type_role": "massive"
+  },
+  "energy": 0.365,
+  "flow_wake": {
+   "chains": 1,
+   "holds": [
+    [
+     0.78,
+     1.98
+    ],
+    [
+     3.185,
+     4.471
+    ],
+    [
+     6.392,
+     7.678
+    ],
+    [
+     9.599,
+     10.885
+    ],
+    [
+     12.806,
+     15.212
+    ]
+   ]
+  },
+  "layout_shapes": {
+   "words": 0
+  },
+  "layouts": [
+   "hung_from_top/top",
+   "full/full",
+   "full/full",
+   "full/full",
+   "full/full"
+  ],
+  "look": "hand-assembled from lego",
+  "matte_treatments": {
+   "chains": 1,
+   "treatments": 4,
+   "words": 4
+  },
+  "notes": [],
+  "scene_notes": [
+   "contour ports BOUND: 3 ported word(s) [0, 2, 3], 1 plate shot(s)"
+  ],
+  "seed": 16,
+  "shots": "single",
+  "tier": "calm",
+  "timing": [
+   {
+    "end": 2.401,
+    "hit": 0.78,
+    "release": 1.98,
+    "text": "BELOW",
+    "wanted_hit": 0.78
+   },
+   {
+    "end": 5.171,
+    "hit": 3.185,
+    "release": 4.471,
+    "text": "THE NOISE",
+    "wanted_hit": 3.19
+   },
+   {
+    "end": 8.378,
+    "hit": 6.392,
+    "release": 7.678,
+    "text": "EVERYTHING",
+    "wanted_hit": 6.39
+   },
+   {
+    "end": 11.585,
+    "hit": 9.599,
+    "release": 10.885,
+    "text": "SLOWS",
+    "wanted_hit": 9.6
+   },
+   {
+    "end": 15.912,
+    "hit": 12.806,
+    "release": 15.212,
+    "text": "DOWN",
+    "wanted_hit": 12.81
+   }
+  ],
+  "version": 1
+ },
+ "quality": "preview",
+ "shots": [
+  {
+   "depth": true,
+   "first": "A",
+   "flow": true,
+   "frames": 385,
+   "id": "s1",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P16/P16_s1_depth_g01.mp4",
+    "matte": "15_fusion/v005/out/footage/P16/P16_s1_matte_g01.mp4",
+    "shot": "15_fusion/v005/out/footage/P16/P16_s1_g01.mp4"
+   },
+   "prompt": "static locked-off camera, deep dark water, a narrow shaft of pale light from the surface far above sways very slowly, a column of bubbles rises steadily through it, fine silt drifts sideways across the frame, calm, near black, cinematic",
+   "seed": 161,
+   "size": [
+    384,
+    672
+   ],
+   "span": 384
+  }
+ ],
+ "signoff": {
+  "color": [
+   216,
+   243,
+   247
+  ],
+  "font": "Space Grotesk",
+  "off": true,
+  "px": 38,
+  "t0": 15.0,
+  "text": ""
+ },
+ "sizes": {
+  "compose": [
+   360,
+   640
+  ],
+  "control": [
+   384,
+   704
+  ],
+  "shot": [
+   384,
+   704
+  ],
+  "type": [
+   384,
+   704
+  ]
+ },
+ "slug": "below",
+ "stills": [
+  {
+   "id": "A",
+   "media": "15_fusion/v005/out/footage/P16/P16_still_A_g01.png",
+   "model": "moss",
+   "negative": "text, letters, words, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, blurry, deformed, people, face, fish",
+   "prompt": "deep dark water at night, a single narrow shaft of pale light falls from far above, a slow column of silver bubbles rises through the beam, fine silt drifting in the light, surroundings almost black, vertical frame, high contrast, cinematic",
+   "seed": 1601,
+   "size": [
+    1088,
+    1920
+   ]
+  }
+ ],
+ "technique": "behind_sheer",
+ "type": {
+  "bar": 4,
+  "beats": [
+   0.0,
+   0.78,
+   1.5818,
+   2.3835,
+   3.1853,
+   3.987,
+   4.7888,
+   5.5905,
+   6.3923,
+   7.1941,
+   7.9958,
+   8.7976,
+   9.5993,
+   10.4011,
+   11.2028,
+   12.0046,
+   12.8064,
+   13.6081,
+   14.4099,
+   15.2116,
+   16.0134,
+   16.8151,
+   17.6169,
+   18.4187,
+   19.2204,
+   20.0222
+  ],
+  "bpm": 74.836,
+  "camera": {
+   "cards": 4,
+   "chain": [
+    {
+     "comp": [
+      0.0,
+      0.0
+     ],
+     "fill": 0.6815,
+     "module": "hold_drift",
+     "word": 0
+    },
+    {
+     "comp": [
+      0.0,
+      0.0
+     ],
+     "fill": 0.5,
+     "module": "hold_drift",
+     "word": 1
+    },
+    {
+     "module": "ease_reversal",
+     "word": 2
+    },
+    {
+     "comp": [
+      0.0,
+      0.0
+     ],
+     "fill": 0.58,
+     "module": "hold_drift",
+     "word": 3
+    },
+    {
+     "comp": [
+      0.0,
+      0.0
+     ],
+     "fill": 0.58,
+     "module": "hold_drift",
+     "word": 4
+    }
+   ],
+   "plate": "multiplane"
+  },
+  "downbeats": [
+   0.0,
+   3.1853,
+   6.3923,
+   9.5993,
+   12.8064,
+   16.0134,
+   19.2204
+  ],
+  "duration": 16.0,
+  "energy": 0.365,
+  "fps": 24,
+  "line": {
+   "px": 4.0
+  },
+  "mood": "slow",
+  "palette": {
+   "accents": [
+    [
+     88,
+     214,
+     230
+    ],
+    [
+     42,
+     141,
+     160
+    ],
+    [
+     159,
+     233,
+     242
+    ]
+   ],
+   "bg": [
+    5,
+    9,
+    13
+   ],
+   "fg": [
+    216,
+    243,
+    247
+   ]
+  },
+  "plates": [
+   {
+    "depth": "15_fusion/v005/out/footage/P16/P16_s1_depth_g01.mp4",
+    "frames": 384,
+    "matte": "15_fusion/v005/out/footage/P16/P16_s1_matte_g01.mp4",
+    "plate": "15_fusion/v005/out/footage/P16/P16_s1_g01.mp4"
+   }
+  ],
+  "seed": 16,
+  "tier": "calm",
+  "transition_names": [
+   "braid",
+   "circuit_board",
+   "fan",
+   "ripple",
+   "spiral_around",
+   "twist"
+  ],
+  "transitions": [
+   "braid",
+   "ripple",
+   "spiral_around",
+   "twist"
+  ],
+  "words": [
+   {
+    "ar_min": 0.85,
+    "entry": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.4215,
+    "font": "BigShouldersDisplay[wght].ttf",
+    "form_in": "wipe",
+    "form_out": "particles",
+    "form_s": 0.78,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.176,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": 0.85,
+     "area": 0.4784,
+     "box": {
+      "cx": 0.5,
+      "cy": 0.3,
+      "sh": 0.52,
+      "sw": 0.92
+     },
+     "fill": 0.6815,
+     "max_lines": null,
+     "name": "hung_from_top",
+     "note": "stack hung from the top edge, empty below",
+     "offset": [
+      0.0,
+      -0.2
+     ],
+     "plate": "N8",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "top"
+    },
+    "lines": [
+     "BELOW"
+    ],
+    "module": "slats",
+    "placement": {
+     "hf": 0.52,
+     "roll": 0.0,
+     "wf": 0.92,
+     "yaw": -14
+    },
+    "screen_offset": [
+     0.0,
+     -0.2
+    ],
+    "slot": 0,
+    "t0": 0.0,
+    "t1": 2.4015,
+    "text": "BELOW",
+    "via": {
+     "dir": "up",
+     "port": "matte_outline"
+    }
+   },
+   {
+    "exit_s": 0.7,
+    "font": "BungeeHairline-Regular.ttf",
+    "form_in": "blobs",
+    "form_out": "lines",
+    "form_s": 0.3766,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.1511,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "THE",
+     "NOISE"
+    ],
+    "matte": "front",
+    "module": "depth_echo",
+    "placement": {
+     "yaw": 6
+    },
+    "slot": 1,
+    "t0": 2.8087,
+    "t1": 5.1707,
+    "text": "THE NOISE",
+    "via": {
+     "dir": "along",
+     "port": "depth_iso"
+    }
+   },
+   {
+    "entry": {
+     "dir": "up",
+     "port": "matte_outline"
+    },
+    "exit_s": 0.7,
+    "font": "Ultra-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.7216,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.1879,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "EVERY",
+     "THING"
+    ],
+    "matte": "wipe",
+    "module": "bold_thin_echo",
+    "placement": {
+     "yaw": 6
+    },
+    "slot": 1,
+    "t0": 5.6707,
+    "t1": 8.3778,
+    "text": "EVERYTHING",
+    "via": {
+     "dir": "around",
+     "port": "matte_outline"
+    }
+   },
+   {
+    "exit": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.7,
+    "font": "Fascinate-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.7216,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.1742,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "SLOWS"
+    ],
+    "matte": "glow",
+    "module": "candy_orbit",
+    "params": {
+     "band": 2,
+     "copies": 24
+    },
+    "placement": {
+     "yaw": 6
+    },
+    "slot": 1,
+    "t0": 8.8778,
+    "t1": 11.5848,
+    "text": "SLOWS"
+   },
+   {
+    "exit_s": 0.7,
+    "font": "Blackout_Midnight.ttf",
+    "form_in": "lines",
+    "form_out": "flicker",
+    "form_s": 0.7216,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.2408,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "DOWN"
+    ],
+    "matte": "window",
+    "module": "depth_tunnel",
+    "placement": {
+     "yaw": 6
+    },
+    "slot": 2,
+    "t0": 12.0848,
+    "t1": 15.9116,
+    "text": "DOWN"
+   }
+  ]
+ },
+ "type_passes": [
+  "matte",
+  "depth",
+  "line"
+ ],
+ "version": "v005"
+}

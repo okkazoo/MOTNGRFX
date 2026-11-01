@@ -1,0 +1,90 @@
+[
+  {
+    "id": "voxel_orbit",
+    "kind": "word",
+    "title": "Voxel orbit",
+    "description": "Hairline strands stream in and each condenses into a cube while the whole cube cloud swings round and every cube turns on its own axis; the cloud settles face-on into the word. To leave, the cloud swings away, the cubes spin and shrink to points, and their strands run out down the exit lanes.",
+    "clip": "14_modules/v002/local/voxel_orbit_g01_draft.mp4",
+    "sheet": "14_modules/v002/local/voxel_orbit_sheet_g01.jpg",
+    "dircheck": "14_modules/v002/local/voxel_orbit_dirs_g01.jpg",
+    "version": "14_modules/v002",
+    "gen": 1
+  },
+  {
+    "id": "particles",
+    "kind": "word",
+    "title": "Particles",
+    "description": "Two thousand particles fly in paired along the entry lanes as streaks, land on their sites in the glyphs and settle into the word, which pulses on the beat; to leave they are released and stream away down the exit lanes. bpm and pulse are parameters.",
+    "clip": "14_modules/v002/local/particles_g02_draft.mp4",
+    "sheet": "14_modules/v002/local/particles_sheet_g02.jpg",
+    "dircheck": "14_modules/v002/local/particles_dirs_g02.jpg",
+    "version": "14_modules/v002",
+    "gen": 2
+  },
+  {
+    "id": "voxel_roll",
+    "kind": "word",
+    "title": "Voxel roll",
+    "description": "Hairline strands arrive along the entry lanes and each condenses into a cube just short of its slot; the cubes then roll edge over edge across a grid floor into the letters. To leave, every cube rolls out, shrinks to a point and its strand runs away down the exit lanes.",
+    "clip": "14_modules/v002/local/voxel_roll_g02_draft.mp4",
+    "sheet": "14_modules/v002/local/voxel_roll_sheet_g02.jpg",
+    "dircheck": "14_modules/v002/local/voxel_roll_dirs_g02.jpg",
+    "version": "14_modules/v002",
+    "gen": 2
+  },
+  {
+    "id": "spectrum",
+    "kind": "word",
+    "title": "Spectrum",
+    "description": "The word is a stack of outline copies, each depth its own colour from bone to cobalt. Colour-banded strands arrive along the entry lanes, back copies first, and run in along the outline's own tangents to draw it; to leave, every line runs off along its own edge vector, back band first.",
+    "clip": "14_modules/v002/local/spectrum_g01_draft.mp4",
+    "sheet": "14_modules/v002/local/spectrum_sheet_g01.jpg",
+    "dircheck": "14_modules/v002/local/spectrum_dirs_g01.jpg",
+    "version": "14_modules/v002",
+    "gen": 1
+  },
+  {
+    "id": "tangent_spray",
+    "kind": "word",
+    "title": "Tangent spray",
+    "description": "A serif word on vermilion made of stacked outline copies. Strands arrive along the entry lanes and run in along the outline's exact tangents, so every curve sprays its own lines, then draw the arcs; to leave they run off along those tangents and bend into the exit lanes.",
+    "clip": "14_modules/v002/local/tangent_spray_g01_draft.mp4",
+    "sheet": "14_modules/v002/local/tangent_spray_sheet_g01.jpg",
+    "dircheck": "14_modules/v002/local/tangent_spray_dirs_g01.jpg",
+    "version": "14_modules/v002",
+    "gen": 1
+  },
+  {
+    "id": "circuit",
+    "kind": "word",
+    "title": "Circuit",
+    "description": "PCB-style traces with 45 degree bends and a pulse on each head arrive along the entry lanes and draw the outline as amber wire; the wire grows a depth box and inverts into a solid word. To leave, the solid melts to wire and every edge runs off down the exit lanes as a trace.",
+    "clip": "14_modules/v002/local/circuit_g01_draft.mp4",
+    "sheet": "14_modules/v002/local/circuit_sheet_g01.jpg",
+    "dircheck": "14_modules/v002/local/circuit_dirs_g01.jpg",
+    "version": "14_modules/v002",
+    "gen": 1
+  },
+  {
+    "id": "outflow",
+    "kind": "word",
+    "title": "Outflow",
+    "description": "A train of outline rings streams in along the entry lanes, graduated from dim at the gate to bone at the word, flows through the letters and out as a growing echo; the word stands as the lip the rings flow through, and the train leaves down the exit lanes.",
+    "clip": "14_modules/v002/local/outflow_g01_draft.mp4",
+    "sheet": "14_modules/v002/local/outflow_sheet_g01.jpg",
+    "dircheck": "14_modules/v002/local/outflow_dirs_g01.jpg",
+    "version": "14_modules/v002",
+    "gen": 1
+  },
+  {
+    "id": "fly_into",
+    "kind": "word",
+    "title": "Fly into",
+    "description": "The letters are tunnels in a bone slab. Rings flow in along the entry axis; the ones inside the shaft are filled as cobalt walls darkening with depth with a light stripe at every ring, and the stripes keep streaming out through the opening until the tunnels close.",
+    "clip": "14_modules/v002/local/fly_into_g01_draft.mp4",
+    "sheet": "14_modules/v002/local/fly_into_sheet_g01.jpg",
+    "dircheck": "14_modules/v002/local/fly_into_dirs_g01.jpg",
+    "version": "14_modules/v002",
+    "gen": 1
+  }
+]

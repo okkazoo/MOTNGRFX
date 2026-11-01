@@ -1,0 +1,1409 @@
+{
+ "audio": {
+  "analysis": "15_fusion/v005/local/audio/P17_analysis.json",
+  "bpm": 120.03,
+  "cut": 14.0,
+  "fade": 0.5,
+  "src": "15_fusion/v005/audio/P17.wav"
+ },
+ "brief": {
+  "mood": [
+   "mid"
+  ],
+  "palette": [
+   "#1d1f21",
+   "#f6f7f8",
+   "#1f4fd8",
+   "#5a6f9e",
+   "#8fa4d8"
+  ],
+  "scene": "a white concrete spiral staircase, a long white corridor with slot windows, a bright rooftop landing"
+ },
+ "compose": {
+  "crf": 20,
+  "crossfade": 0,
+  "default": {
+   "ops": [
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         1.153,
+         0.0
+        ],
+        [
+         1.393,
+         0.75
+        ],
+        [
+         2.652,
+         0.75
+        ],
+        [
+         2.892,
+         0.0
+        ],
+        [
+         4.152,
+         0.0
+        ],
+        [
+         4.392,
+         0.75
+        ],
+        [
+         5.652,
+         0.75
+        ],
+        [
+         5.892,
+         0.0
+        ],
+        [
+         7.151,
+         0.0
+        ],
+        [
+         7.391,
+         0.75
+        ],
+        [
+         8.651,
+         0.75
+        ],
+        [
+         8.891,
+         0.0
+        ],
+        [
+         10.151,
+         0.0
+        ],
+        [
+         10.391,
+         0.75
+        ],
+        [
+         13.15,
+         0.75
+        ],
+        [
+         13.39,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "P17:type_matte",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_matte",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wm"
+    },
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         1.153,
+         0.0
+        ],
+        [
+         1.393,
+         0.75
+        ],
+        [
+         2.652,
+         0.75
+        ],
+        [
+         2.892,
+         0.0
+        ],
+        [
+         4.152,
+         0.0
+        ],
+        [
+         4.392,
+         0.75
+        ],
+        [
+         5.652,
+         0.75
+        ],
+        [
+         5.892,
+         0.0
+        ],
+        [
+         7.151,
+         0.0
+        ],
+        [
+         7.391,
+         0.75
+        ],
+        [
+         8.651,
+         0.75
+        ],
+        [
+         8.891,
+         0.0
+        ],
+        [
+         10.151,
+         0.0
+        ],
+        [
+         10.391,
+         0.75
+        ],
+        [
+         13.15,
+         0.75
+        ],
+        [
+         13.39,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "P17:type_line",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_line",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wl"
+    },
+    {
+     "args": {
+      "guide": "$footage",
+      "matte": "$matte",
+      "size": [
+       360,
+       640
+      ]
+     },
+     "op": "upscale_matte",
+     "out": "m"
+    },
+    {
+     "args": {
+      "footage": "$footage",
+      "lum_amount": 0.85,
+      "lum_target": 0.9,
+      "mode": "sample",
+      "sample_blur": 30,
+      "sat": 2.2,
+      "type_a": "$wl"
+     },
+     "op": "tint_type",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "footage": "$footage",
+      "footage_depth": "$depth",
+      "plane": 0.55,
+      "softness": 0.15,
+      "type_a": "$wl",
+      "type_opacity": 0.55,
+      "type_rgb": "$tcol"
+     },
+     "op": "depth_occlude",
+     "out": "image"
+    },
+    {
+     "args": {
+      "color": [
+       0.122,
+       0.31,
+       0.847
+      ],
+      "img": "$image",
+      "intensity": {
+       "curve": "sub",
+       "hi": 0.5,
+       "lo": 0.15
+      },
+      "mask": "$wm",
+      "radius": 22
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "angle": 35.0,
+      "axis": "x",
+      "like": "$footage",
+      "pos": 0.5,
+      "side": "left",
+      "soft": 0.06
+     },
+     "op": "split_region",
+     "out": "_fr0f"
+    },
+    {
+     "args": {
+      "fg": "$footage",
+      "footage": "$image",
+      "front": "$_fr0f",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$wm",
+      "type_opacity": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         1.123,
+         0.0
+        ],
+        [
+         1.273,
+         0.96
+        ],
+        [
+         2.772,
+         0.96
+        ],
+        [
+         2.922,
+         0.0
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "angle": 35.0,
+      "axis": "x",
+      "like": "$footage",
+      "pos": 0.5,
+      "side": "left",
+      "soft": 0.06
+     },
+     "op": "split_region",
+     "out": "_fr1f"
+    },
+    {
+     "args": {
+      "fg": "$footage",
+      "footage": "$image",
+      "front": "$_fr1f",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$wm",
+      "type_opacity": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         4.122,
+         0.0
+        ],
+        [
+         4.272,
+         0.96
+        ],
+        [
+         5.772,
+         0.96
+        ],
+        [
+         5.922,
+         0.0
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$footage",
+      "gain": 0.28,
+      "sat": 0.55
+     },
+     "op": "grade",
+     "out": "_wi2d"
+    },
+    {
+     "args": {
+      "a": "$footage",
+      "b": "$_wi2d",
+      "t": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         7.121,
+         0.0
+        ],
+        [
+         7.271,
+         1.0
+        ],
+        [
+         8.771,
+         1.0
+        ],
+        [
+         8.921,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "_wi2p"
+    },
+    {
+     "args": {
+      "frame": "$footage",
+      "gain": 1.3,
+      "gamma": 1.06,
+      "sat": 1.1
+     },
+     "op": "grade",
+     "out": "_wi2b"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         7.121,
+         0.0
+        ],
+        [
+         7.271,
+         1.0
+        ],
+        [
+         8.771,
+         1.0
+        ],
+        [
+         8.921,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_wi2a"
+    },
+    {
+     "args": {
+      "matte": "$m",
+      "type_a": "$wm"
+     },
+     "op": "legible",
+     "out": "_wi2m"
+    },
+    {
+     "args": {
+      "fg": "$footage",
+      "fg_matte": "$_wi2m",
+      "footage": "$_wi2b",
+      "min_contrast": 0.22,
+      "plate_rgb": "$_wi2p",
+      "type_a": "$_wi2a"
+     },
+     "op": "knockout",
+     "out": "_wi2k"
+    },
+    {
+     "args": {
+      "a": "$image",
+      "b": "$_wi2k",
+      "t": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         7.121,
+         0.0
+        ],
+        [
+         7.271,
+         1.0
+        ],
+        [
+         8.771,
+         1.0
+        ],
+        [
+         8.921,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame_idx": "$frame_idx",
+      "jitter": 4.0,
+      "max_contours": 2,
+      "min_len": 60.0,
+      "mode": "outline",
+      "seed": 4,
+      "smooth": 3.0,
+      "src": "$m",
+      "strokes": 2,
+      "width": 2
+     },
+     "op": "contour_lines",
+     "out": "_gl3c"
+    },
+    {
+     "args": {
+      "a": "$_gl3c",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         10.121,
+         0.0
+        ],
+        [
+         10.271,
+         1.0
+        ],
+        [
+         13.27,
+         1.0
+        ],
+        [
+         13.42,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_gl3c"
+    },
+    {
+     "args": {
+      "color": "$tcol",
+      "img": "$image",
+      "intensity": 0.8,
+      "mask": "$_gl3c",
+      "radius": 18.0
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "alpha": "$_gl3c",
+      "base": "$image",
+      "fg": "$tcol"
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "gain": 1.05,
+      "gamma": 1.0,
+      "lift": 0.01,
+      "sat": 1.1
+     },
+     "op": "grade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "amount": 0.025,
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 2,
+      "size": 1.2
+     },
+     "op": "grain",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "strength": 0.3
+     },
+     "op": "vignette",
+     "out": "image"
+    }
+   ]
+  },
+  "shots": {},
+  "size": [
+   360,
+   640
+  ]
+ },
+ "format": "9:16",
+ "fps": 24,
+ "id": "P17",
+ "layout": {
+  "s1": {
+   "frames": 151,
+   "start": 0,
+   "xf": 0
+  },
+  "s2": {
+   "frames": 95,
+   "start": 151,
+   "xf": 0
+  },
+  "s3": {
+   "frames": 90,
+   "start": 246,
+   "xf": 0
+  }
+ },
+ "parent": {
+  "piece": null,
+  "why": "v005 design P17: 3 shots, 3D type the camera flies through (push_through then follow), cuts on downbeats (DESIGNS.md)"
+ },
+ "plan": {
+  "bars": 10,
+  "blocks": [
+   {
+    "compose": [],
+    "contour": null,
+    "dominant": true,
+    "lines": [
+     1
+    ],
+    "missing": [],
+    "name": "fly_through_3d_type",
+    "params": {
+     "counter": 0,
+     "dive_s": 1.385
+    },
+    "role": "solid_3d",
+    "shots": null,
+    "status": "live",
+    "transitions": [
+     "twist",
+     "braid",
+     "fan"
+    ]
+   },
+   {
+    "compose": [],
+    "contour": {
+     "ports": [
+      "matte_outline",
+      "depth_iso"
+     ],
+     "use": "via"
+    },
+    "dominant": false,
+    "lines": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "missing": [
+     "contour bundles as transition endpoints (tools/fusion/contour_ports.py, being built)"
+    ],
+    "name": "contour_hand_off",
+    "params": {
+     "object": "edge"
+    },
+    "role": "any",
+    "shots": null,
+    "status": "partial",
+    "transitions": [
+     "spiral_around",
+     "braid",
+     "circuit_board",
+     "fan",
+     "ripple"
+    ]
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "front": "$type_matte",
+       "matte_threshold": 0.5
+      },
+      "op": "sandwich",
+      "when": "hold"
+     }
+    ],
+    "contour": {
+     "ports": [
+      "matte_outline"
+     ],
+     "use": "via"
+    },
+    "dominant": false,
+    "lines": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "missing": [],
+    "name": "half_front_half_behind",
+    "params": {
+     "front_share": 0.432
+    },
+    "role": "any",
+    "shots": null,
+    "status": "live",
+    "transitions": []
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "ground": "@bg",
+       "plate": "flat"
+      },
+      "op": "knockout",
+      "when": "hold"
+     }
+    ],
+    "contour": null,
+    "dominant": false,
+    "lines": [
+     3
+    ],
+    "missing": [
+     "auto-insert of knockout (+ flat ground) into the recipe chain: the template below is for the runner"
+    ],
+    "name": "window_ending",
+    "params": {
+     "ground": "second_plate",
+     "hold_s": 3.577
+    },
+    "role": "window",
+    "shots": null,
+    "status": "partial",
+    "transitions": []
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "between": "K1|K2",
+       "cards": 4
+      },
+      "op": "multiplane_cards",
+      "when": "always"
+     }
+    ],
+    "contour": null,
+    "dominant": false,
+    "lines": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "missing": [
+     "compose op that renders the cards (mograph/render/multiplane.MultiPlane.render) in the recipe; the camera chain through the cards (camera dict + word slot) is wired in spec.build_scene"
+    ],
+    "name": "chain_through_cards",
+    "params": {
+     "cards": 4,
+     "chain": "chain_signal_bends_flow_demo"
+    },
+    "role": "any",
+    "shots": null,
+    "status": "partial",
+    "transitions": []
+   }
+  ],
+  "contour": {
+   "available": true,
+   "lines": [
+    {
+     "entry": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "matte": "front",
+     "via": {
+      "dir": "up",
+      "port": "matte_outline"
+     }
+    },
+    {
+     "matte": "front",
+     "via": {
+      "dir": "up",
+      "port": "luma_edges"
+     }
+    },
+    {
+     "matte": "window",
+     "via": {
+      "dir": "along",
+      "port": "depth_iso"
+     }
+    },
+    {
+     "exit": {
+      "dir": "along",
+      "port": "luma_edges"
+     },
+     "matte": "glow"
+    }
+   ],
+   "subject": true
+  },
+  "deferred": [
+   "push_through: ONE dive, through the counter of the LAST word (INTO WHITE, [release - 0.5 s, end of the piece], to_next off): every word sits on the same plane, so a dive through CLIMB / THE SPIRAL ended behind the plane and U-turned through the next word (v005 g03: THE SPIRAL mirrored, then seen from inside a letter). The holds of the other words are hold_drift (default tiling), follow runs in the transition into FLOOR BY FLOOR",
+   "hard cut 6.0 mid-twist (the cable leaves the handrail of s1 and lands on the light-bar edge of s2): the twist carries the contour ports through the cut, but the cut lands on the downbeat of the shot spans, not inside the transition (block cut_mid_transition is spec only)",
+   "CLIMB construction triangle (M3b) and THE SPIRAL letters in cells (P9): full layouts stand in (graphite type on a flat shape needs a dark-on-light tint, the recipe tints bright)",
+   "FLOOR BY FLOOR window shows the stairwell of s1 (second plate knockout): the window matte treatment dims / brightens the SAME plate"
+  ],
+  "direction": {
+   "camera": "push_through",
+   "pace": "mid",
+   "palette": "high_key_one_accent",
+   "shots": "cut",
+   "type_role": "solid_3d"
+  },
+  "energy": 0.75,
+  "flow_wake": {
+   "chains": 1,
+   "holds": [
+    [
+     1.273,
+     2.772
+    ],
+    [
+     4.272,
+     5.772
+    ],
+    [
+     7.271,
+     8.771
+    ],
+    [
+     10.271,
+     13.27
+    ]
+   ]
+  },
+  "layout_shapes": {
+   "words": 0
+  },
+  "layouts": [
+   "full/full",
+   "full/full",
+   "full/full",
+   "full/full"
+  ],
+  "look": "hand-assembled from lego",
+  "matte_treatments": {
+   "chains": 1,
+   "treatments": 4,
+   "words": 4
+  },
+  "notes": [
+   "camera push_through word 3: window [12.77, 14.0] (off the hold, legible_camera)"
+  ],
+  "scene_notes": [
+   "contour ports BOUND: 2 ported word(s) [0, 3], 3 plate shot(s)"
+  ],
+  "seed": 17,
+  "shots": "cut",
+  "tier": "mid",
+  "timing": [
+   {
+    "end": 3.272,
+    "hit": 1.273,
+    "release": 2.772,
+    "text": "CLIMB",
+    "wanted_hit": 1.27
+   },
+   {
+    "end": 6.271,
+    "hit": 4.272,
+    "release": 5.772,
+    "text": "THE SPIRAL",
+    "wanted_hit": 4.27
+   },
+   {
+    "end": 9.271,
+    "hit": 7.271,
+    "release": 8.771,
+    "text": "FLOOR BY FLOOR",
+    "wanted_hit": 7.27
+   },
+   {
+    "end": 13.77,
+    "hit": 10.271,
+    "release": 13.27,
+    "text": "INTO WHITE",
+    "wanted_hit": 10.27
+   }
+  ],
+  "version": 1
+ },
+ "quality": "preview",
+ "shots": [
+  {
+   "depth": true,
+   "first": "A",
+   "flow": true,
+   "frames": 153,
+   "id": "s1",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P17/P17_s1_depth_g01.mp4",
+    "matte": "15_fusion/v005/out/footage/P17/P17_s1_matte_g01.mp4",
+    "shot": "15_fusion/v005/out/footage/P17/P17_s1_g01.mp4"
+   },
+   "prompt": "the camera slowly rises straight up the white spiral staircase in one continuous move toward the round skylight, steady, smooth, soft daylight, minimal, cinematic",
+   "seed": 171,
+   "size": [
+    384,
+    672
+   ],
+   "span": 151
+  },
+  {
+   "depth": true,
+   "first": "B",
+   "flow": true,
+   "frames": 97,
+   "id": "s2",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P17/P17_s2_depth_g01.mp4",
+    "matte": "15_fusion/v005/out/footage/P17/P17_s2_matte_g01.mp4",
+    "shot": "15_fusion/v005/out/footage/P17/P17_s2_g01.mp4"
+   },
+   "prompt": "the camera tracks smoothly forward along the white corridor in one continuous move, bars of sunlight slide past on the floor",
+   "seed": 172,
+   "size": [
+    384,
+    672
+   ],
+   "span": 95
+  },
+  {
+   "depth": true,
+   "first": "C",
+   "flow": true,
+   "frames": 97,
+   "id": "s3",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P17/P17_s3_depth_g01.mp4",
+    "matte": "15_fusion/v005/out/footage/P17/P17_s3_matte_g01.mp4",
+    "shot": "15_fusion/v005/out/footage/P17/P17_s3_g01.mp4"
+   },
+   "prompt": "static locked-off camera on the bright rooftop landing, a thin curtain of haze drifts, pale sky",
+   "seed": 173,
+   "size": [
+    384,
+    672
+   ],
+   "span": 90
+  }
+ ],
+ "signoff": {
+  "color": [
+   246,
+   247,
+   248
+  ],
+  "font": "Space Grotesk",
+  "off": true,
+  "px": 38,
+  "t0": 13.0,
+  "text": ""
+ },
+ "sizes": {
+  "compose": [
+   360,
+   640
+  ],
+  "control": [
+   384,
+   704
+  ],
+  "shot": [
+   384,
+   704
+  ],
+  "type": [
+   384,
+   704
+  ]
+ },
+ "slug": "stairwell",
+ "stills": [
+  {
+   "id": "A",
+   "media": "15_fusion/v005/out/footage/P17/P17_still_A_g01.png",
+   "model": "moss",
+   "negative": "text, letters, words, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, blurry, deformed",
+   "prompt": "looking straight up a white concrete spiral staircase toward a round skylight, bright soft daylight, clean curved handrail, high-key, minimal architecture, vertical frame",
+   "seed": 1701,
+   "size": [
+    1088,
+    1920
+   ]
+  },
+  {
+   "id": "B",
+   "media": "15_fusion/v005/out/footage/P17/P17_still_B_g01.png",
+   "model": "moss",
+   "negative": "text, letters, words, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, blurry, deformed",
+   "prompt": "long white concrete corridor with tall vertical slot windows throwing bars of sunlight across the floor, high-key, vertical frame",
+   "seed": 1702,
+   "size": [
+    1088,
+    1920
+   ]
+  },
+  {
+   "id": "C",
+   "media": "15_fusion/v005/out/footage/P17/P17_still_C_g01.png",
+   "model": "moss",
+   "negative": "text, letters, words, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, blurry, deformed",
+   "prompt": "top landing of a white stairwell opening onto an empty bright white rooftop and pale sky, minimal, vertical frame",
+   "seed": 1703,
+   "size": [
+    1088,
+    1920
+   ]
+  }
+ ],
+ "technique": "built_in",
+ "type": {
+  "bar": 4,
+  "beats": [
+   0.273,
+   0.7729,
+   1.2728,
+   1.7726,
+   2.2725,
+   2.7724,
+   3.2723,
+   3.7721,
+   4.272,
+   4.7719,
+   5.2717,
+   5.7716,
+   6.2715,
+   6.7714,
+   7.2713,
+   7.7711,
+   8.271,
+   8.7709,
+   9.2707,
+   9.7706,
+   10.2705,
+   10.7704,
+   11.2703,
+   11.7701,
+   12.27,
+   12.7699,
+   13.2698,
+   13.7696,
+   14.2695,
+   14.7694,
+   15.2692,
+   15.7691,
+   16.269,
+   16.7689,
+   17.2688,
+   17.7686,
+   18.2685
+  ],
+  "bpm": 120.03,
+  "camera": {
+   "cards": 4,
+   "chain": [
+    {
+     "comp": [
+      0.0,
+      0.0
+     ],
+     "fill": 0.58,
+     "module": "hold_drift",
+     "word": 0
+    },
+    {
+     "comp": [
+      0.0,
+      0.0
+     ],
+     "fill": 0.58,
+     "module": "hold_drift",
+     "word": 1
+    },
+    {
+     "comp": [
+      0.0,
+      0.0
+     ],
+     "fill": 0.58,
+     "module": "hold_drift",
+     "word": 2
+    },
+    {
+     "comp": [
+      0.0,
+      0.0
+     ],
+     "fill": 0.58,
+     "module": "hold_drift",
+     "window": [
+      9.771,
+      12.77
+     ]
+    },
+    {
+     "module": "follow",
+     "window": "trans:1"
+    },
+    {
+     "beyond": 0.2,
+     "module": "push_through",
+     "to_next": false,
+     "window": [
+      12.77,
+      14.0
+     ]
+    }
+   ],
+   "plate": "multiplane",
+   "subject_z": 1000.0
+  },
+  "downbeats": [
+   0.273,
+   2.2725,
+   4.272,
+   6.2715,
+   8.271,
+   10.2705,
+   12.27,
+   14.2695,
+   16.269,
+   18.2685
+  ],
+  "duration": 14.0,
+  "energy": 0.75,
+  "fps": 24,
+  "line": {
+   "px": 4.0
+  },
+  "mood": "mid",
+  "palette": {
+   "accents": [
+    [
+     31,
+     79,
+     216
+    ],
+    [
+     90,
+     111,
+     158
+    ],
+    [
+     143,
+     164,
+     216
+    ]
+   ],
+   "bg": [
+    29,
+    31,
+    33
+   ],
+   "fg": [
+    246,
+    247,
+    248
+   ]
+  },
+  "plates": [
+   {
+    "depth": "15_fusion/v005/out/footage/P17/P17_s1_depth_g01.mp4",
+    "frames": 151,
+    "matte": "15_fusion/v005/out/footage/P17/P17_s1_matte_g01.mp4",
+    "plate": "15_fusion/v005/out/footage/P17/P17_s1_g01.mp4"
+   },
+   {
+    "depth": "15_fusion/v005/out/footage/P17/P17_s2_depth_g01.mp4",
+    "frames": 95,
+    "matte": "15_fusion/v005/out/footage/P17/P17_s2_matte_g01.mp4",
+    "plate": "15_fusion/v005/out/footage/P17/P17_s2_g01.mp4"
+   },
+   {
+    "depth": "15_fusion/v005/out/footage/P17/P17_s3_depth_g01.mp4",
+    "frames": 90,
+    "matte": "15_fusion/v005/out/footage/P17/P17_s3_matte_g01.mp4",
+    "plate": "15_fusion/v005/out/footage/P17/P17_s3_g01.mp4"
+   }
+  ],
+  "seed": 17,
+  "tier": "mid",
+  "transition_names": [
+   "braid",
+   "circuit_board",
+   "fan",
+   "ripple",
+   "spiral_around",
+   "twist"
+  ],
+  "transitions": [
+   "braid",
+   "twist",
+   "fan"
+  ],
+  "words": [
+   {
+    "entry": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.4998749999999996,
+    "font": "Anybody[wdth,wght].ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 1.2728,
+    "hit_on": "beat",
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "CLIMB"
+    ],
+    "matte": "front",
+    "module": "staircase",
+    "placement": {
+     "yaw": -14
+    },
+    "slot": 1,
+    "t0": 0.0,
+    "t1": 3.1472,
+    "text": "CLIMB",
+    "via": {
+     "dir": "up",
+     "port": "matte_outline"
+    }
+   },
+   {
+    "exit_s": 0.4998749999999996,
+    "font": "NixieOne-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.4999,
+    "hit_on": "beat",
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "THE",
+     "SPIRAL"
+    ],
+    "matte": "front",
+    "module": "hinge_unfold",
+    "placement": {
+     "yaw": 14
+    },
+    "slot": 1,
+    "t0": 3.6472,
+    "t1": 6.0216,
+    "text": "THE SPIRAL",
+    "via": {
+     "dir": "up",
+     "port": "luma_edges"
+    }
+   },
+   {
+    "exit_s": 0.4998749999999996,
+    "font": "MajorMonoDisplay-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.4999,
+    "hit_on": "beat",
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "FLOOR",
+     "BY",
+     "FLOOR"
+    ],
+    "matte": "window",
+    "module": "xray_unfold",
+    "params": {
+     "depth": 0.8,
+     "slices": 9
+    },
+    "placement": {
+     "yaw": -14
+    },
+    "slot": 1,
+    "t0": 6.5216,
+    "t1": 8.8959,
+    "text": "FLOOR BY FLOOR",
+    "via": {
+     "dir": "along",
+     "port": "depth_iso"
+    }
+   },
+   {
+    "exit": {
+     "dir": "along",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.4998749999999996,
+    "font": "Blackout_Midnight.ttf",
+    "form_in": "lines",
+    "form_out": "wipe",
+    "form_s": 0.4999,
+    "hit_on": "beat",
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "INTO",
+     "WHITE"
+    ],
+    "matte": "glow",
+    "module": "fly_into",
+    "params": {
+     "rings": 12,
+     "tilt": 0.4
+    },
+    "placement": {
+     "yaw": 14
+    },
+    "slot": 1,
+    "t0": 9.3959,
+    "t1": 13.2503,
+    "text": "INTO WHITE"
+   }
+  ]
+ },
+ "type_passes": [
+  "matte",
+  "depth",
+  "line",
+  "beauty"
+ ],
+ "version": "v005"
+}

@@ -1,0 +1,48 @@
+{
+  "title": "v1 legacy (no modules)", "order": 50,
+  "verb": "Make it",
+  "running_verb": "Making it",
+  "cost_line": "Free - runs on this machine",
+  "note": "Your words become the type. An image gives it shapes; audio sets the cut. Draft renders at 360 px.",
+  "fields": [
+    {"id": "words", "label": "Words", "kind": "textarea", "node_title": "IN words", "input_name": "text",
+     "optional": false, "default": "", "rows": 4,
+     "placeholder": "One line per beat, e.g.\nAFTER\nHOURS\nTHE CITY KEEPS DREAMING",
+     "hint": "One line per beat of the story."},
+    {"id": "scene", "label": "Scene prompt", "kind": "textarea", "node_title": "IN scene", "input_name": "text",
+     "optional": true, "default": "", "rows": 2, "placeholder": "Empty = written from your words",
+     "remove_when_empty": ["IN scene"]},
+    {"id": "image", "label": "Image", "kind": "image", "node_title": "IN image", "input_name": "image",
+     "optional": true, "title": "Add an image", "hint": "PNG or JPG - its shapes and colours are used",
+     "remove_when_empty": ["IN image"]},
+    {"id": "audio", "label": "Audio", "kind": "audio", "node_title": "IN audio", "input_name": "audio",
+     "optional": true, "title": "Add audio", "hint": "WAV, MP3 or FLAC - the cut follows its beats",
+     "remove_when_empty": ["IN audio"]},
+    {"id": "music", "label": "Music prompt", "kind": "text", "node_title": "IN music", "input_name": "text",
+     "optional": true, "default": "", "placeholder": "Optional: describe the music", "remove_when_empty": ["IN music"]},
+    {"id": "length", "label": "Length", "kind": "select", "node_title": "IN words", "input_name": "duration",
+     "default": 8, "max": 15, "hint": "Capped at 15 s on this template",
+     "options": [{"value": 8, "label": "8 s"}, {"value": 12, "label": "12 s"},
+                 {"value": 16, "label": "16 s"}, {"value": 24, "label": "24 s"}]},
+    {"id": "look", "label": "Look", "kind": "select", "node_title": "IN look", "input_name": "look",
+     "default": "auto", "options": [{"value": "auto", "label": "Auto"}]},
+    {"id": "seed", "label": "Seed", "kind": "seed", "node_title": "Plan", "input_name": "seed",
+     "optional": true, "placeholder": "Random seed"},
+    {"id": "quality", "label": "Quality", "kind": "select", "node_title": "Render", "input_name": "quality",
+     "default": "draft",
+     "options": [{"value": "draft", "label": "Draft"}, {"value": "full", "label": "Final"}]}
+  ],
+  "missing": {"words": "Add words to start"},
+  "outputs": [
+    {"node_title": "OUT final", "kind": "video", "label": "Final video", "final": true}
+  ],
+  "stage_labels": {
+    "IN image": "Load image",
+    "IN audio": "Load audio",
+    "IN words": "Analyse words, image, audio",
+    "Plan": "Plan the cut",
+    "Soundtrack": "Soundtrack",
+    "Render": "Render frames + encode",
+    "OUT final": "Save video"
+  }
+}

@@ -1,0 +1,737 @@
+{
+ "id": "P12_w",
+ "slug": "night-market",
+ "fps": 24,
+ "version": "v004",
+ "audio": {
+  "src": "15_fusion/v004/audio/t2m/P12.wav",
+  "bpm": 119.97,
+  "analysis": "15_fusion/v004/local/audio/t2m_P12_analysis.json",
+  "cut": 12.0,
+  "fade": 0.4
+ },
+ "type": {
+  "seed": 12,
+  "energy": 0.6,
+  "mood": "warm",
+  "tier": "mid",
+  "palette": {
+   "bg": [
+    10,
+    8,
+    14
+   ],
+   "fg": [
+    255,
+    150,
+    50
+   ],
+   "accents": [
+    [
+     40,
+     215,
+     210
+    ],
+    [
+     255,
+     120,
+     40
+    ],
+    [
+     255,
+     200,
+     120
+    ]
+   ]
+  },
+  "camera": "beat_orbit",
+  "camera_params": {
+   "read_dps": 4.0,
+   "intro_deg": 30.0,
+   "fast_dps": 40.0,
+   "elev": 4.0,
+   "bob": 0.8
+  },
+  "transitions": [
+   "fan",
+   "spiral_around",
+   "braid"
+  ],
+  "line": {
+   "px": 4.0
+  },
+  "words": [
+   {
+    "module": "lanes",
+    "form_in": "lines",
+    "form_out": "lines",
+    "text": "LANTERN",
+    "lines": [
+     "LAN",
+     "TERN"
+    ],
+    "font": "Big Shoulders Display",
+    "t0": 0.0,
+    "t1": 4.498,
+    "form_s": 2.9976,
+    "exit_s": 0.5001,
+    "hit_on": "beat",
+    "placement": {
+     "yaw": -12,
+     "bleed": 1.1
+    },
+    "axes": {
+     "wght": [
+      800,
+      900,
+      "beat"
+     ]
+    }
+   },
+   {
+    "module": "lanes",
+    "form_in": "lines",
+    "form_out": "lines",
+    "text": "LIGHT",
+    "lines": [
+     "LIGHT"
+    ],
+    "font": "Doto[ROND,wght].ttf",
+    "t0": 5.4982,
+    "t1": 7.4988,
+    "form_s": 0.5001,
+    "exit_s": 0.5001,
+    "hit_on": "beat",
+    "placement": {
+     "yaw": 14,
+     "dy": -0.17,
+     "bleed": 0.85
+    },
+    "axes": {
+     "ROND": 100,
+     "wght": [
+      600,
+      900,
+      "beat"
+     ]
+    }
+   },
+   {
+    "module": "lanes",
+    "form_in": "lines",
+    "form_out": "lines",
+    "text": "CARRY ME",
+    "lines": [
+     "CARRY",
+     "ME"
+    ],
+    "font": "Tourney[wdth,wght].ttf",
+    "t0": 7.9989,
+    "t1": 9.9994,
+    "form_s": 0.5001,
+    "exit_s": 0.5001,
+    "hit_on": "beat",
+    "placement": {
+     "yaw": -10,
+     "bleed": 1.05
+    },
+    "axes": {
+     "wght": 900
+    }
+   },
+   {
+    "module": "lanes",
+    "form_in": "lines",
+    "form_out": "lines",
+    "text": "HOME",
+    "lines": [
+     "HOME"
+    ],
+    "font": "Erica One",
+    "t0": 10.4995,
+    "t1": 12.5001,
+    "form_s": 0.5001,
+    "exit_s": 0.5001,
+    "hit_on": "beat",
+    "placement": {
+     "yaw": 10,
+     "dy": 0.12,
+     "bleed": 0.85
+    }
+   }
+  ],
+  "format_note": "PENDING landscape re-layout"
+ },
+ "type_passes": [
+  "matte",
+  "line"
+ ],
+ "stills": [
+  {
+   "id": "A",
+   "model": "moss",
+   "seed": 1211,
+   "size": [
+    1920,
+    1088
+   ],
+   "negative": "text, letters, signage text, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, deformed faces, extra limbs",
+   "prompt": "wide cinematic view down a long night market street at street level, many rows of glowing orange paper lanterns strung across the street overhead at different heights, filling the upper half of the frame, food stalls with rising steam along both sides, crowd silhouettes walking, the vanishing point on the right third of the frame, more of the stalls and side alleys visible left and right, dark blue night sky between the lanterns, shallow depth of field, warm colour, cinematic 35mm photograph, wide horizontal frame"
+  }
+ ],
+ "shots": [
+  {
+   "id": "s1",
+   "kind": "i2v",
+   "first": "A",
+   "frames": 289,
+   "seed": 1221,
+   "size": [
+    1920,
+    1088
+   ],
+   "matte": false,
+   "flow": true,
+   "prompt": "one continuous slow forward dolly down the wide night market street, the camera glides straight ahead under the hanging paper lanterns, the lanterns sway gently and pass overhead, steam drifts up from the food stalls on both sides, crowd silhouettes stroll, warm glowing light, shallow depth of field, cinematic"
+  }
+ ],
+ "compose": {
+  "size": [
+   1920,
+   1080
+  ],
+  "crossfade": 0,
+  "crf": 16,
+  "default": {
+   "ops": [
+    {
+     "op": "translate",
+     "out": "cam_type_matte",
+     "args": {
+      "img": "$type_matte",
+      "dx": {
+       "cam": "x",
+       "gain": 1.0,
+       "ref": "$flow"
+      },
+      "dy": {
+       "cam": "y",
+       "gain": 1.0,
+       "ref": "$flow"
+      }
+     }
+    },
+    {
+     "op": "translate",
+     "out": "cam_type_line",
+     "args": {
+      "img": "$type_line",
+      "dx": {
+       "cam": "x",
+       "gain": 1.0,
+       "ref": "$flow"
+      },
+      "dy": {
+       "cam": "y",
+       "gain": 1.0,
+       "ref": "$flow"
+      }
+     }
+    },
+    {
+     "op": "flow_wake",
+     "out": "wm",
+     "args": {
+      "radius": 70,
+      "decay": 0.9,
+      "trail": 8,
+      "trail_gain": 0.8,
+      "bg_drag": 0.1,
+      "max_disp": 0.15,
+      "smooth": 1.0,
+      "type_a": "$cam_type_matte",
+      "flow": "$flow",
+      "matte": "$flow_m",
+      "strength": {
+       "curve": "onset",
+       "lo": 2.0,
+       "hi": 5.0
+      },
+      "settle": {
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         2.878,
+         0.0
+        ],
+        [
+         3.118,
+         0.75
+        ],
+        [
+         3.878,
+         0.75
+        ],
+        [
+         4.118,
+         0.0
+        ],
+        [
+         5.878,
+         0.0
+        ],
+        [
+         6.118,
+         0.75
+        ],
+        [
+         6.879,
+         0.75
+        ],
+        [
+         7.119,
+         0.0
+        ],
+        [
+         8.379,
+         0.0
+        ],
+        [
+         8.619,
+         0.75
+        ],
+        [
+         9.379,
+         0.75
+        ],
+        [
+         9.619,
+         0.0
+        ],
+        [
+         10.88,
+         0.0
+        ],
+        [
+         11.12,
+         0.75
+        ],
+        [
+         11.88,
+         0.75
+        ],
+        [
+         12.12,
+         0.0
+        ]
+       ],
+       "ease": "smooth"
+      },
+      "frame_idx": "$frame_idx",
+      "u": "$u",
+      "state_key": "P12:wm"
+     }
+    },
+    {
+     "op": "flow_wake",
+     "out": "wl",
+     "args": {
+      "radius": 70,
+      "decay": 0.9,
+      "trail": 8,
+      "trail_gain": 0.8,
+      "bg_drag": 0.1,
+      "max_disp": 0.15,
+      "smooth": 1.0,
+      "type_a": "$cam_type_line",
+      "flow": "$flow",
+      "matte": "$flow_m",
+      "strength": {
+       "curve": "onset",
+       "lo": 2.0,
+       "hi": 5.0
+      },
+      "settle": {
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         2.878,
+         0.0
+        ],
+        [
+         3.118,
+         0.75
+        ],
+        [
+         3.878,
+         0.75
+        ],
+        [
+         4.118,
+         0.0
+        ],
+        [
+         5.878,
+         0.0
+        ],
+        [
+         6.118,
+         0.75
+        ],
+        [
+         6.879,
+         0.75
+        ],
+        [
+         7.119,
+         0.0
+        ],
+        [
+         8.379,
+         0.0
+        ],
+        [
+         8.619,
+         0.75
+        ],
+        [
+         9.379,
+         0.75
+        ],
+        [
+         9.619,
+         0.0
+        ],
+        [
+         10.88,
+         0.0
+        ],
+        [
+         11.12,
+         0.75
+        ],
+        [
+         11.88,
+         0.75
+        ],
+        [
+         12.12,
+         0.0
+        ]
+       ],
+       "ease": "smooth"
+      },
+      "frame_idx": "$frame_idx",
+      "u": "$u",
+      "state_key": "P12:wl"
+     }
+    },
+    {
+     "op": "grade",
+     "out": "foot",
+     "args": {
+      "frame": "$footage",
+      "lift": 0.0,
+      "gamma": 1.05,
+      "gain": 0.92,
+      "sat": 1.08
+     }
+    },
+    {
+     "op": "blur",
+     "out": "fb",
+     "args": {
+      "img": "$footage",
+      "sigma": 2.0
+     }
+    },
+    {
+     "op": "luminosity_key",
+     "out": "lk",
+     "args": {
+      "img": "$fb",
+      "low": 0.58,
+      "high": 0.72
+     }
+    },
+    {
+     "op": "knockout",
+     "out": "kA",
+     "args": {
+      "plate_rgb": [
+       0.015,
+       0.06,
+       0.07
+      ],
+      "type_a": "$wm",
+      "footage": "$foot",
+      "fg_matte": "$lk"
+     }
+    },
+    {
+     "op": "crossfade",
+     "out": "image",
+     "args": {
+      "a": "$foot",
+      "b": "$kA",
+      "t": {
+       "timeline": [
+        [
+         0.0,
+         1.0
+        ],
+        [
+         5.4982,
+         0.0
+        ]
+       ],
+       "step": true
+      }
+     }
+    },
+    {
+     "op": "knockout",
+     "out": "kC",
+     "args": {
+      "plate_rgb": [
+       1.0,
+       0.5,
+       0.12
+      ],
+      "type_a": "$wm",
+      "footage": "$foot"
+     }
+    },
+    {
+     "op": "crossfade",
+     "out": "image",
+     "args": {
+      "a": "$image",
+      "b": "$kC",
+      "t": {
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         7.9989,
+         1.0
+        ],
+        [
+         10.4995,
+         0.0
+        ]
+       ],
+       "step": true
+      }
+     }
+    },
+    {
+     "op": "sandwich",
+     "out": "image",
+     "args": {
+      "matte_threshold": 0.5,
+      "matte_soft": 0.08,
+      "footage": "$image",
+      "type_rgb": [
+       1.0,
+       0.9,
+       0.72
+      ],
+      "type_a": "$wm",
+      "matte": "$lk",
+      "matte_gain": {
+       "timeline": [
+        [
+         0.0,
+         1.0
+        ],
+        [
+         2.9976,
+         0.0
+        ],
+        [
+         3.9979,
+         1.0
+        ],
+        [
+         5.9984,
+         0.0
+        ],
+        [
+         6.9986,
+         1.0
+        ],
+        [
+         8.499,
+         0.0
+        ],
+        [
+         9.4992,
+         1.0
+        ],
+        [
+         10.9996,
+         0.0
+        ],
+        [
+         12.0,
+         1.0
+        ]
+       ],
+       "step": true
+      },
+      "type_opacity": {
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         5.4982,
+         1.0
+        ],
+        [
+         7.4988,
+         0.0
+        ]
+       ],
+       "step": true
+      }
+     }
+    },
+    {
+     "op": "sandwich",
+     "out": "image",
+     "args": {
+      "matte_threshold": 0.5,
+      "matte_soft": 0.08,
+      "footage": "$image",
+      "type_rgb": [
+       1.0,
+       0.9,
+       0.72
+      ],
+      "type_a": "$wl",
+      "matte": "$lk",
+      "type_opacity": {
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         10.4995,
+         1.0
+        ],
+        [
+         12.5001,
+         0.0
+        ]
+       ],
+       "step": true
+      }
+     }
+    },
+    {
+     "op": "sandwich",
+     "out": "image",
+     "args": {
+      "matte_threshold": 0.5,
+      "matte_soft": 0.08,
+      "footage": "$image",
+      "type_rgb": [
+       1.0,
+       0.78,
+       0.5
+      ],
+      "type_a": "$wl",
+      "matte": "$lk",
+      "type_opacity": {
+       "timeline": [
+        [
+         0.0,
+         0.85
+        ],
+        [
+         10.4995,
+         0.0
+        ],
+        [
+         12.5001,
+         0.85
+        ]
+       ],
+       "step": true
+      }
+     }
+    },
+    {
+     "op": "add_glow",
+     "out": "image",
+     "args": {
+      "img": "$image",
+      "mask": "$wl",
+      "radius": 18,
+      "intensity": {
+       "curve": "low",
+       "lo": 0.1,
+       "hi": 0.55
+      },
+      "color": [
+       1.0,
+       0.5,
+       0.12
+      ]
+     }
+    },
+    {
+     "op": "grade",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "lift": 0.01,
+      "gamma": 1.0,
+      "gain": 1.03,
+      "sat": 1.06
+     }
+    },
+    {
+     "op": "grain",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 12,
+      "amount": 0.02,
+      "size": 1.2
+     }
+    },
+    {
+     "op": "vignette",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "strength": 0.24
+     }
+    }
+   ]
+  },
+  "shots": {}
+ },
+ "signoff": {
+  "off": true
+ },
+ "parent": {
+  "piece": "P12",
+  "why": "16:9 version (Both formats rule): own wide still + own wide dolly shot"
+ },
+ "format": "16:9"
+}

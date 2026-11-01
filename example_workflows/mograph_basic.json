@@ -1,0 +1,535 @@
+{
+  "id": "6d1f3c2a-9b7e-4c55-8a0e-2f6b1d0c4e71",
+  "revision": 0,
+  "last_node_id": 10,
+  "last_link_id": 13,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        320,
+        330
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "blob_gradient.png",
+        "image"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "LoadImage",
+      "pos": [
+        0,
+        380
+      ],
+      "size": [
+        320,
+        330
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "subject_texture.png",
+        "image"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "MographAnalyze",
+      "pos": [
+        380,
+        120
+      ],
+      "size": [
+        340,
+        300
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_1",
+          "type": "IMAGE",
+          "link": 1,
+          "shape": 7
+        },
+        {
+          "name": "image_2",
+          "type": "IMAGE",
+          "link": 2,
+          "shape": 7
+        },
+        {
+          "name": "image_3",
+          "type": "IMAGE",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "image_4",
+          "type": "IMAGE",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": null,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "analysis",
+          "type": "MOGRAPH_ANALYSIS",
+          "links": [
+            3,
+            5,
+            7,
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MographAnalyze"
+      },
+      "widgets_values": [
+        "Make it move\nShapes from your pictures\nCut on the beat",
+        0.0
+      ]
+    },
+    {
+      "id": 4,
+      "type": "MographPlanRules",
+      "pos": [
+        780,
+        60
+      ],
+      "size": [
+        300,
+        110
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "analysis",
+          "type": "MOGRAPH_ANALYSIS",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "plan",
+          "type": "MOGRAPH_PLAN",
+          "links": [
+            4,
+            6,
+            9
+          ]
+        },
+        {
+          "name": "plan_json",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MographPlanRules"
+      },
+      "widgets_values": [
+        0,
+        "fixed"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "MographSoundtrack",
+      "pos": [
+        780,
+        240
+      ],
+      "size": [
+        300,
+        70
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "plan",
+          "type": "MOGRAPH_PLAN",
+          "link": 4
+        },
+        {
+          "name": "analysis",
+          "type": "MOGRAPH_ANALYSIS",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            8,
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MographSoundtrack"
+      }
+    },
+    {
+      "id": 6,
+      "type": "MographRender",
+      "pos": [
+        1140,
+        0
+      ],
+      "size": [
+        300,
+        130
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "plan",
+          "type": "MOGRAPH_PLAN",
+          "link": 6
+        },
+        {
+          "name": "analysis",
+          "type": "MOGRAPH_ANALYSIS",
+          "link": 7
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 8,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MographRender"
+      },
+      "widgets_values": [
+        "9:16",
+        "draft"
+      ],
+      "title": "Mograph Render (9:16)"
+    },
+    {
+      "id": 7,
+      "type": "MographRender",
+      "pos": [
+        1140,
+        300
+      ],
+      "size": [
+        300,
+        130
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "plan",
+          "type": "MOGRAPH_PLAN",
+          "link": 9
+        },
+        {
+          "name": "analysis",
+          "type": "MOGRAPH_ANALYSIS",
+          "link": 10
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 11,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "links": [
+            13
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MographRender"
+      },
+      "widgets_values": [
+        "16:9",
+        "draft"
+      ],
+      "title": "Mograph Render (16:9)"
+    },
+    {
+      "id": 8,
+      "type": "SaveVideo",
+      "pos": [
+        1500,
+        0
+      ],
+      "size": [
+        360,
+        560
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 12
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveVideo"
+      },
+      "widgets_values": [
+        "video/mograph_9x16",
+        "auto",
+        "auto"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "SaveVideo",
+      "pos": [
+        1900,
+        0
+      ],
+      "size": [
+        560,
+        420
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 13
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveVideo"
+      },
+      "widgets_values": [
+        "video/mograph_16x9",
+        "auto",
+        "auto"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "MarkdownNote",
+      "pos": [
+        0,
+        760
+      ],
+      "size": [
+        720,
+        220
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "## Mograph basic\n\nText + 2 images -> analysis -> rule plan -> CPU soundtrack -> render 9:16 and 16:9.\n\n- Copy `tests/fixtures/*.png` from the ComfyUI-Mograph folder into `ComfyUI/input/` (or load your own images).\n- Optional: plug an AUDIO into **Mograph Analyze** to cut on its beats; the soundtrack then passes it through.\n- `duration` 0 = auto (audio length or 10 s, clamped to 5-15 s).\n- Switch Render `quality` to `full` for 1080x1920 / 1920x1080 (slower).\n- `plan_json` can be edited and fed to **Mograph Plan From JSON**."
+      ],
+      "title": "Note"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      3,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      1,
+      "IMAGE"
+    ],
+    [
+      3,
+      3,
+      0,
+      4,
+      0,
+      "MOGRAPH_ANALYSIS"
+    ],
+    [
+      4,
+      4,
+      0,
+      5,
+      0,
+      "MOGRAPH_PLAN"
+    ],
+    [
+      5,
+      3,
+      0,
+      5,
+      1,
+      "MOGRAPH_ANALYSIS"
+    ],
+    [
+      6,
+      4,
+      0,
+      6,
+      0,
+      "MOGRAPH_PLAN"
+    ],
+    [
+      7,
+      3,
+      0,
+      6,
+      1,
+      "MOGRAPH_ANALYSIS"
+    ],
+    [
+      8,
+      5,
+      0,
+      6,
+      2,
+      "AUDIO"
+    ],
+    [
+      9,
+      4,
+      0,
+      7,
+      0,
+      "MOGRAPH_PLAN"
+    ],
+    [
+      10,
+      3,
+      0,
+      7,
+      1,
+      "MOGRAPH_ANALYSIS"
+    ],
+    [
+      11,
+      5,
+      0,
+      7,
+      2,
+      "AUDIO"
+    ],
+    [
+      12,
+      6,
+      0,
+      8,
+      0,
+      "VIDEO"
+    ],
+    [
+      13,
+      7,
+      0,
+      9,
+      0,
+      "VIDEO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.75,
+      "offset": [
+        60,
+        80
+      ]
+    }
+  },
+  "version": 0.4
+}

@@ -1,0 +1,10 @@
+# Third-party packages imported by tools/mathtype/*.py (and the mograph modules they read:
+# mograph/analyze.py, mograph/font_registry.py). System tool: ffmpeg / ffprobe on PATH (encoding, mux).
+numpy>=2.0                 # all; the numpy backend is the reference (NumPy 2 scalar promotion rules)
+scipy>=1.11                # audiofeat, beat, chords, hum, follow, follow_plus, relay, chladni, dotfield, mograph.analyze
+Pillow>=10.0               # stills, glyph rasters (silkwind, matte_wipe, particles, follow*, relay, chladni, dotfield)
+opencv-python-headless>=4.8   # splat blur, resize, AA heads, video reads
+matplotlib>=3.7            # QC plots (silkwind --audio QC, audiofeat --png)
+pyloudnorm>=0.1.1          # optional in hum.py: if present it replaces the RMS + ffmpeg ebur128 loudness path
+tzdata                     # zoneinfo "Pacific/Auckland" for GENERATIONS.md times (gens.py) on minimal images
+torch>=2.1                 # --backend torch (xp.py); any CUDA build, e.g. the image's torch 2.7.1 cu128

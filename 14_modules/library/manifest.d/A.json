@@ -1,0 +1,79 @@
+[
+  {
+    "id": "slats",
+    "kind": "word",
+    "title": "Slats",
+    "description": "The word is built from thin bars of varying thickness that shoot in along the entry direction as speed lines, land row by row and thicken until they close up into solid type. To leave, the slats open back out of the solid, thin down and slide away along the exit direction.",
+    "clip": "14_modules/v002/local/slats_g01_draft.mp4",
+    "sheet": "14_modules/v002/local/slats_sheet_g01.jpg",
+    "dircheck": "14_modules/v002/local/slats_dirs_g01.jpg",
+    "version": "14_modules/v002",
+    "gen": 1
+  },
+  {
+    "id": "beat_bars",
+    "kind": "word",
+    "title": "Beat bars",
+    "description": "Letters shoot in as streaks, land one after another, and their solid graduated bars swing out and jump to new lengths on the beat, staccato, before settling flat into the letters. To leave, the bars jump long again as the letters accelerate away and shrink to edge lines along the exit direction.",
+    "clip": "14_modules/v002/local/beat_bars_g01_draft.mp4",
+    "sheet": "14_modules/v002/local/beat_bars_sheet_g01.jpg",
+    "dircheck": "14_modules/v002/local/beat_bars_dirs_g01.jpg",
+    "version": "14_modules/v002",
+    "gen": 1
+  },
+  {
+    "id": "solid_hollow",
+    "kind": "word",
+    "title": "Solid hollow",
+    "description": "Each letter forms as a wire prism: hairline edges arrive, the letter lands, a wire outline rises off it and the walls fill in solid while the cap goes super-bold; a hairline line sits against it as x-ray wire. It leaves the same way in reverse, hollowing out to wire and receding into hairline strands.",
+    "clip": "14_modules/v002/local/solid_hollow_g01_draft.mp4",
+    "sheet": "14_modules/v002/local/solid_hollow_sheet_g01.jpg",
+    "dircheck": "14_modules/v002/local/solid_hollow_dirs_g01.jpg",
+    "version": "14_modules/v002",
+    "gen": 1
+  },
+  {
+    "id": "gradient_fade",
+    "kind": "word",
+    "title": "Gradient fade",
+    "description": "Letters arrive as comets, then the streak behind each one opens into a smooth gradient extrusion toward a vanishing point that fades from warm grey to the ground colour, and the vanishing point sweeps across the top so the walls glide under the type. It leaves as it came: the walls pull back into streaks.",
+    "clip": "14_modules/v002/local/gradient_fade_g01_draft.mp4",
+    "sheet": "14_modules/v002/local/gradient_fade_sheet_g01.jpg",
+    "dircheck": "14_modules/v002/local/gradient_fade_dirs_g01.jpg",
+    "version": "14_modules/v002",
+    "gen": 1
+  },
+  {
+    "id": "scale_clash",
+    "kind": "word",
+    "title": "Scale clash",
+    "description": "A huge word and a tiny word share one oblique axis: letters arrive as comets, land, and their streaks swing round and grow into graduated grey-to-ground extrusions, the huge word's running off across the frame, the tiny word's a long thin wedge. It leaves by pulling the extrusions back into streaks.",
+    "clip": "14_modules/v002/local/scale_clash_g01_draft.mp4",
+    "sheet": "14_modules/v002/local/scale_clash_sheet_g01.jpg",
+    "dircheck": "14_modules/v002/local/scale_clash_dirs_g01.jpg",
+    "version": "14_modules/v002",
+    "gen": 1
+  },
+  {
+    "id": "bold_thin_echo",
+    "kind": "word",
+    "title": "Bold thin echo",
+    "description": "One cohesive word goes from very bold to hairline thin with a stack of outline echoes running off it, heavy echoes behind the bold letters and hairline ones behind the thin. It slides in trailing its echo like a streak, the echo swings round as one while the weight sweeps, and it leaves trailing the echo again.",
+    "clip": "14_modules/v002/local/bold_thin_echo_g02_draft.mp4",
+    "sheet": "14_modules/v002/local/bold_thin_echo_sheet_g02.jpg",
+    "dircheck": "14_modules/v002/local/bold_thin_echo_dirs_g01.jpg",
+    "version": "14_modules/v002",
+    "gen": 2
+  },
+  {
+    "id": "staircase",
+    "kind": "word",
+    "title": "Staircase",
+    "description": "The strands first draw a tiny copy of the word, then every edge of it runs one shared staircase of parallel lanes, stepping down and across in two alternating directions, and spreads into the outline of the vast word, which fills solid. It leaves the same way in reverse, down a staircase to a tiny copy that hairlines out along the exit direction.",
+    "clip": "14_modules/v002/local/staircase_g01_draft.mp4",
+    "sheet": "14_modules/v002/local/staircase_sheet_g01.jpg",
+    "dircheck": "14_modules/v002/local/staircase_dirs_g01.jpg",
+    "version": "14_modules/v002",
+    "gen": 1
+  }
+]

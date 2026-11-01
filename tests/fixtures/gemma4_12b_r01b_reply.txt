@@ -1,0 +1,116 @@
+{
+ "concept": "The type lives BEHIND the subject, interacting with the icy landscape.",
+ "treatment_notes": "Every word sits between the background and the subject, with the child's silhouette crossing the letters.",
+ "type": {
+  "mood": "Cold, cinematic",
+  "energy": 0.6,
+  "palette": {
+   "bg": [230, 235, 240],
+   "fg": [10, 10, 15],
+   "accents": [
+    [200, 50, 50],
+    [150, 180, 200],
+    [255, 255, 255]
+   ]
+  },
+  "camera": "hold_drift",
+  "transitions": [
+   "twist",
+   "fan"
+  ],
+  "line": {
+   "px": 3
+  },
+  "words": [
+   {
+    "text": "SLIDE DOWN ICE IS LAUGHING",
+    "font": "Badeen Display",
+    "module": "lanes",
+    "lines": [
+     "SLIDE DOWN",
+     "ICE IS",
+    "LAUGHING"
+    ],
+    "hit": 2.0205,
+    "hold_s": 3.5,
+    "form_s": 1.0,
+    "exit_s": 0.8,
+    "form_in": "lines",
+    "form_out": "wipe",
+    "placement": {
+     "yaw": 0,
+     "wf": 0.8,
+     "hf": 0.7
+    },
+    "matte": "glow"
+   },
+   {
+    "text": "WIND WHISPERS",
+    "font": "FacetVF.ttf",
+    "module": "solid_hollow",
+    "lines": [
+     "WIND",
+     "WHISPERS"
+    ],
+    "hit": 8.022,
+    "hold_s": 3.0,
+    "form_s": 0.8,
+    "exit_s": 0.7,
+    "form_in": "flicker",
+    "form_out": "wipe",
+    "placement": {
+     "yaw": 0,
+     "wf": 0.8,
+     "hf": 0.6
+    },
+    "Matte": "glow"
+   },
+   {
+    "text": "TOES HURT SPEED UP STOP AT BONE",
+    "font": "Rubik Broken Fax",
+    "module": "bold_thin_echo",
+    "lines": [
+     "TOES HURT",
+     "SPEED UP",
+     "STOP AT BONE"
+    ],
+    "hit": 14.0235,
+    "hold_s": 1.5,
+    "form_s": 0.5,
+    "exit_s": 0.4,
+    "form_in": "particles",
+    "form_out": "wipe",
+    "placement": {
+     "yaw": 0,
+     "wf": 0.9,
+     "hf": 0.8
+    },
+    "Matte": "glow"
+   }
+  ],
+  "compose": {
+   "Technique": "behind",
+   "plate_gain": 0.8,
+   "plate_sat": 0.9,
+   "glow_lo": 0.1,
+   "glow_hi": 0.4,
+   "glow_color": [200, 50, 50],
+   "grain": 0.02,
+   "vignette": 0.3,
+   "type_opacity": 0.95,
+   "cuts": [
+    {
+     "after": "s1",
+     "cut": "crossfade"
+    },
+    {
+     "after": "s2",
+     "cut": "crossfade"
+    },
+    {
+     "after": "s3",
+     "cut": "crossfade"
+    }
+   ]
+  }
+}

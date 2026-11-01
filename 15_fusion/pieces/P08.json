@@ -1,0 +1,3596 @@
+{
+ "id": "P08",
+ "slug": "long-light",
+ "fps": 24,
+ "audio": {
+  "src": "15_fusion/v002/out/motion-graphic_fusion_v002_P08_s802_00001.flac",
+  "bpm": 60,
+  "cut": 26.5,
+  "fade": 1.5
+ },
+ "type": {
+  "seed": 8,
+  "energy": 0.2,
+  "palette": {
+   "bg": [
+    10,
+    12,
+    20
+   ],
+   "fg": [
+    255,
+    238,
+    210
+   ],
+   "accents": [
+    [
+     255,
+     190,
+     120
+    ]
+   ]
+  },
+  "camera": [
+   {
+    "module": "pullback_reveal",
+    "t0": 0.0,
+    "word_scale": 1.3,
+    "from_scale": 0.55
+   },
+   {
+    "module": "hold_drift",
+    "t0": 9.2,
+    "dolly": 0.04,
+    "comp": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "module": "follow",
+    "t0": 12.3
+   },
+   {
+    "module": "pullback_reveal",
+    "t0": 15.0,
+    "word_scale": 1.3,
+    "from_scale": 0.6
+   },
+   {
+    "module": "hold_drift",
+    "t0": 17.2,
+    "dolly": 0.04,
+    "comp": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "module": "follow",
+    "t0": 20.5
+   },
+   {
+    "module": "pullback_reveal",
+    "t0": 22.9,
+    "word_scale": 1.12,
+    "from_scale": 0.65
+   },
+   {
+    "module": "hold_drift",
+    "t0": 25.2,
+    "dolly": 0.03,
+    "comp": [
+     0.0,
+     0.0
+    ]
+   }
+  ],
+  "transitions": "auto",
+  "words": [
+   {
+    "text": "ALL OF THIS",
+    "font": "MajorMonoDisplay-Regular.ttf",
+    "module": "lanes",
+    "lines": [
+     "ALL OF",
+     "THIS"
+    ],
+    "t0": 0.0,
+    "t1": 13.5,
+    "form_s": 8.0,
+    "exit_s": 1.5,
+    "hit_on": "bar",
+    "form_in": "lines",
+    "form_out": "lines",
+    "placement": {
+     "w": 470,
+     "h": 250,
+     "dy": -0.2
+    }
+   },
+   {
+    "text": "WAS ONCE",
+    "font": "MajorMonoDisplay-Regular.ttf",
+    "module": "lanes",
+    "lines": [
+     "WAS",
+     "ONCE"
+    ],
+    "t0": 0.0,
+    "t1": 6.5,
+    "form_s": 1.04,
+    "exit_s": 1.5,
+    "hit_on": "bar",
+    "form_in": "lines",
+    "form_out": "lines",
+    "placement": {
+     "w": 430,
+     "h": 330,
+     "dy": 0.02
+    }
+   },
+   {
+    "text": "LIGHT",
+    "font": "Foldit[wght].ttf",
+    "module": "lanes",
+    "t0": 0.0,
+    "t1": 5.6,
+    "form_s": 1.1,
+    "exit_s": 1.0,
+    "hit_on": "bar",
+    "form_in": "lines",
+    "form_out": "lines",
+    "lines": [
+     "LIGHT"
+    ],
+    "axes": {
+     "wght": {
+      "keys": [
+       [
+        23.5,
+        180
+       ],
+       [
+        27.5,
+        620
+       ]
+      ],
+      "ease": "smooth"
+     }
+    },
+    "placement": {
+     "w": 520,
+     "h": 320
+    }
+   }
+  ]
+ },
+ "type_passes": [
+  "matte"
+ ],
+ "stills": [
+  {
+   "id": "A",
+   "model": "moss",
+   "seed": 81,
+   "size": [
+    1088,
+    1920
+   ],
+   "prompt": "vast mountain valley at sunrise seen from a high ridge, many layered ridges receding into the distance, each ridge a different tone of blue and violet, thin mist lying in the valleys, a small bright sun just above the farthest ridge, golden rim light on the nearest ridge, epic scale, photoreal landscape photograph, tall vertical frame"
+  }
+ ],
+ "shots": [
+  {
+   "id": "s1",
+   "kind": "i2v",
+   "first": "A",
+   "frames": 121,
+   "seed": 10,
+   "size": [
+    1088,
+    1920
+   ],
+   "prompt": "very slow cinematic pull back, the camera glides backward and slightly upward over the mountain valley at sunrise, more of the layered ridges come into view, mist drifting slowly in the valleys, calm, epic scale"
+  },
+  {
+   "id": "s2",
+   "kind": "i2v",
+   "first": "last:s1",
+   "frames": 121,
+   "seed": 11,
+   "size": [
+    1088,
+    1920
+   ],
+   "prompt": "the camera keeps pulling back very slowly, the vast valley widens, layered ridges overlap, mist drifts and thickens in the valleys, the sun climbs a little, soft golden light"
+  },
+  {
+   "id": "s3",
+   "kind": "i2v",
+   "first": "last:s2",
+   "frames": 121,
+   "seed": 12,
+   "size": [
+    1088,
+    1920
+   ],
+   "prompt": "continuous slow pull back, ever wider view of the mountain range at sunrise, rows of ridges fading into haze, sunlight spreading across the ridges, mist flowing, peaceful"
+  },
+  {
+   "id": "s4",
+   "kind": "i2v",
+   "first": "last:s3",
+   "frames": 121,
+   "seed": 13,
+   "size": [
+    1088,
+    1920
+   ],
+   "prompt": "slow steady pull back revealing an enormous mountain valley, golden sunrise light grows stronger on the ridges, mist glowing, long shadows retreating"
+  },
+  {
+   "id": "s5",
+   "kind": "i2v",
+   "first": "last:s4",
+   "frames": 121,
+   "seed": 14,
+   "size": [
+    1088,
+    1920
+   ],
+   "prompt": "the camera drifts slowly backward, a vast landscape of countless ridges in warm light, bright sun above the horizon, glowing mist, majestic and still"
+  },
+  {
+   "id": "s6",
+   "kind": "i2v",
+   "first": "last:s5",
+   "frames": 121,
+   "seed": 15,
+   "size": [
+    1088,
+    1920
+   ],
+   "prompt": "the final slow pull back, the whole valley glows with golden sunrise, the sun brilliant above the farthest ridge, light rays through the mist, serene and vast"
+  }
+ ],
+ "compose": {
+  "size": [
+   1080,
+   1920
+  ],
+  "crossfade": 0.75,
+  "crf": 16,
+  "default": {
+   "ops": [
+    {
+     "op": "multiply",
+     "out": "tmA",
+     "args": {
+      "a": "$type_matte",
+      "b": {
+       "anim": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.0333,
+         0.0
+        ],
+        [
+         0.0667,
+         0.0
+        ],
+        [
+         0.1,
+         0.0
+        ],
+        [
+         0.1333,
+         0.0
+        ],
+        [
+         0.1667,
+         0.0
+        ],
+        [
+         0.2,
+         0.0
+        ],
+        [
+         0.2333,
+         0.0
+        ],
+        [
+         0.2667,
+         0.0
+        ],
+        [
+         0.3,
+         0.0
+        ],
+        [
+         0.3333,
+         0.0
+        ],
+        [
+         0.3667,
+         0.0
+        ],
+        [
+         0.4,
+         0.0
+        ],
+        [
+         0.4333,
+         0.0
+        ],
+        [
+         0.4667,
+         0.0
+        ],
+        [
+         0.5,
+         0.0
+        ],
+        [
+         0.5333,
+         0.0
+        ],
+        [
+         0.5667,
+         0.0
+        ],
+        [
+         0.6,
+         0.0
+        ],
+        [
+         0.6333,
+         0.0
+        ],
+        [
+         0.6667,
+         0.0
+        ],
+        [
+         0.7,
+         0.0
+        ],
+        [
+         0.7333,
+         0.0
+        ],
+        [
+         0.7667,
+         0.0
+        ],
+        [
+         0.8,
+         0.0
+        ],
+        [
+         0.8333,
+         0.0
+        ],
+        [
+         0.8667,
+         0.0
+        ],
+        [
+         0.9,
+         0.0
+        ],
+        [
+         0.9333,
+         0.0
+        ],
+        [
+         0.9667,
+         0.0
+        ],
+        [
+         1.0,
+         0.0
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "op": "multiply",
+     "out": "tmL",
+     "args": {
+      "a": "$type_matte",
+      "b": {
+       "anim": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.0333,
+         0.0
+        ],
+        [
+         0.0667,
+         0.0
+        ],
+        [
+         0.1,
+         0.0
+        ],
+        [
+         0.1333,
+         0.0
+        ],
+        [
+         0.1667,
+         0.0
+        ],
+        [
+         0.2,
+         0.0
+        ],
+        [
+         0.2333,
+         0.0
+        ],
+        [
+         0.2667,
+         0.0
+        ],
+        [
+         0.3,
+         0.0
+        ],
+        [
+         0.3333,
+         0.0
+        ],
+        [
+         0.3667,
+         0.0
+        ],
+        [
+         0.4,
+         0.0
+        ],
+        [
+         0.4333,
+         0.0
+        ],
+        [
+         0.4667,
+         0.0
+        ],
+        [
+         0.5,
+         0.0
+        ],
+        [
+         0.5333,
+         0.0
+        ],
+        [
+         0.5667,
+         0.0
+        ],
+        [
+         0.6,
+         0.0
+        ],
+        [
+         0.6333,
+         0.0
+        ],
+        [
+         0.6667,
+         0.0
+        ],
+        [
+         0.7,
+         0.0
+        ],
+        [
+         0.7333,
+         0.0
+        ],
+        [
+         0.7667,
+         0.0
+        ],
+        [
+         0.8,
+         0.0
+        ],
+        [
+         0.8333,
+         0.0
+        ],
+        [
+         0.8667,
+         0.0
+        ],
+        [
+         0.9,
+         0.0
+        ],
+        [
+         0.9333,
+         0.0
+        ],
+        [
+         0.9667,
+         0.0
+        ],
+        [
+         1.0,
+         0.0
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "op": "trace_edges",
+     "out": "edges",
+     "args": {
+      "footage": "$footage",
+      "low": 0.008,
+      "high": 0.03,
+      "temporal_smooth": 0.6,
+      "blur": 2.5
+     }
+    },
+    {
+     "op": "type_from_edges",
+     "out": "tfeA",
+     "args": {
+      "edges": "$edges",
+      "type_a": "$tmA",
+      "grow": 5,
+      "line_width": 1.5,
+      "density": 2.5,
+      "fill": 0.55,
+      "softness": 3
+     }
+    },
+    {
+     "op": "type_from_edges",
+     "out": "tfeL",
+     "args": {
+      "edges": "$edges",
+      "type_a": "$tmL",
+      "grow": 6,
+      "line_width": 2.5,
+      "density": 2.5,
+      "fill": 0.0,
+      "softness": 3
+     }
+    },
+    {
+     "op": "tint_type",
+     "out": "colA",
+     "args": {
+      "type_a": "$tmA",
+      "footage": "$footage",
+      "mode": "sample",
+      "sample_blur": 18,
+      "sat": 1.25,
+      "lum_target": 0.96,
+      "lum_amount": 1.0
+     }
+    },
+    {
+     "op": "tint_type",
+     "out": "colL",
+     "args": {
+      "type_a": "$tmL",
+      "footage": "$footage",
+      "mode": "sample",
+      "sample_blur": 24,
+      "sat": 1.9,
+      "lum_target": 0.97,
+      "lum_amount": 1.0
+     }
+    },
+    {
+     "op": "over",
+     "out": "image",
+     "args": {
+      "base": "$footage",
+      "fg": "$colA",
+      "alpha": "$tfeA"
+     }
+    },
+    {
+     "op": "translate",
+     "out": "lifted",
+     "args": {
+      "img": "$image",
+      "dx": 0,
+      "dy": 672
+     }
+    },
+    {
+     "op": "refract",
+     "out": "glass",
+     "args": {
+      "footage": "$lifted",
+      "type_depth_or_matte": "$tmL",
+      "strength": 16,
+      "blur": 10,
+      "chroma": 0.3,
+      "rim": 1.0,
+      "rim_color": [
+       1.0,
+       0.85,
+       0.55
+      ]
+     }
+    },
+    {
+     "op": "blur",
+     "out": "lbody",
+     "args": {
+      "img": "$tmL",
+      "sigma": 5
+     }
+    },
+    {
+     "op": "multiply",
+     "out": "lbody",
+     "args": {
+      "a": "$lbody",
+      "b": 3.0
+     }
+    },
+    {
+     "op": "over",
+     "out": "image",
+     "args": {
+      "base": "$image",
+      "fg": "$glass",
+      "alpha": "$lbody"
+     }
+    },
+    {
+     "op": "over",
+     "out": "image",
+     "args": {
+      "base": "$image",
+      "fg": "$colL",
+      "alpha": "$tfeL"
+     }
+    },
+    {
+     "op": "add_glow",
+     "out": "image",
+     "args": {
+      "img": "$image",
+      "mask": "$tfeA",
+      "radius": 16,
+      "intensity": {
+       "curve": "rms",
+       "lo": 0.04,
+       "hi": 0.25
+      },
+      "color": [
+       1.0,
+       0.8,
+       0.55
+      ]
+     }
+    },
+    {
+     "op": "add_glow",
+     "out": "image",
+     "args": {
+      "img": "$image",
+      "mask": "$tmL",
+      "radius": 30,
+      "intensity": {
+       "curve": "rms",
+       "lo": 0.1,
+       "hi": 0.4
+      },
+      "color": [
+       1.0,
+       0.75,
+       0.4
+      ]
+     }
+    },
+    {
+     "op": "grade",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "lift": 0.0,
+      "gamma": 1.0,
+      "gain": 1.02,
+      "sat": 1.05
+     }
+    },
+    {
+     "op": "grain",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 8,
+      "amount": 0.015,
+      "size": 1.2
+     }
+    },
+    {
+     "op": "vignette",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "strength": 0.2
+     }
+    }
+   ]
+  },
+  "shots": {
+   "s1": {
+    "ops": [
+     {
+      "op": "multiply",
+      "out": "tmA",
+      "args": {
+       "a": "$type_matte",
+       "b": {
+        "anim": [
+         [
+          0.0,
+          0.0
+         ],
+         [
+          0.0333,
+          0.0
+         ],
+         [
+          0.0667,
+          0.0
+         ],
+         [
+          0.1,
+          0.0
+         ],
+         [
+          0.1333,
+          0.0
+         ],
+         [
+          0.1667,
+          0.0
+         ],
+         [
+          0.2,
+          0.0
+         ],
+         [
+          0.2333,
+          0.0
+         ],
+         [
+          0.2667,
+          0.0
+         ],
+         [
+          0.3,
+          0.0
+         ],
+         [
+          0.3333,
+          0.0
+         ],
+         [
+          0.3667,
+          0.0
+         ],
+         [
+          0.4,
+          0.0
+         ],
+         [
+          0.4333,
+          0.0
+         ],
+         [
+          0.4667,
+          0.0
+         ],
+         [
+          0.5,
+          0.0
+         ],
+         [
+          0.5333,
+          0.0
+         ],
+         [
+          0.5667,
+          0.0
+         ],
+         [
+          0.6,
+          0.0
+         ],
+         [
+          0.6333,
+          0.0
+         ],
+         [
+          0.6667,
+          0.0
+         ],
+         [
+          0.7,
+          0.0
+         ],
+         [
+          0.7333,
+          0.0
+         ],
+         [
+          0.7667,
+          0.0
+         ],
+         [
+          0.8,
+          0.0
+         ],
+         [
+          0.8333,
+          0.0
+         ],
+         [
+          0.8667,
+          0.0
+         ],
+         [
+          0.9,
+          0.0
+         ],
+         [
+          0.9333,
+          0.0
+         ],
+         [
+          0.9667,
+          0.0
+         ],
+         [
+          1.0,
+          0.0
+         ]
+        ]
+       }
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "tmL",
+      "args": {
+       "a": "$type_matte",
+       "b": {
+        "anim": [
+         [
+          0.0,
+          0.0
+         ],
+         [
+          0.0333,
+          0.0
+         ],
+         [
+          0.0667,
+          0.0
+         ],
+         [
+          0.1,
+          0.0
+         ],
+         [
+          0.1333,
+          0.0
+         ],
+         [
+          0.1667,
+          0.0
+         ],
+         [
+          0.2,
+          0.0
+         ],
+         [
+          0.2333,
+          0.0
+         ],
+         [
+          0.2667,
+          0.0
+         ],
+         [
+          0.3,
+          0.0
+         ],
+         [
+          0.3333,
+          0.0
+         ],
+         [
+          0.3667,
+          0.0
+         ],
+         [
+          0.4,
+          0.0
+         ],
+         [
+          0.4333,
+          0.0
+         ],
+         [
+          0.4667,
+          0.0
+         ],
+         [
+          0.5,
+          0.0
+         ],
+         [
+          0.5333,
+          0.0
+         ],
+         [
+          0.5667,
+          0.0
+         ],
+         [
+          0.6,
+          0.0
+         ],
+         [
+          0.6333,
+          0.0
+         ],
+         [
+          0.6667,
+          0.0
+         ],
+         [
+          0.7,
+          0.0
+         ],
+         [
+          0.7333,
+          0.0
+         ],
+         [
+          0.7667,
+          0.0
+         ],
+         [
+          0.8,
+          0.0
+         ],
+         [
+          0.8333,
+          0.0
+         ],
+         [
+          0.8667,
+          0.0
+         ],
+         [
+          0.9,
+          0.0
+         ],
+         [
+          0.9333,
+          0.0
+         ],
+         [
+          0.9667,
+          0.0
+         ],
+         [
+          1.0,
+          0.0
+         ]
+        ]
+       }
+      }
+     },
+     {
+      "op": "trace_edges",
+      "out": "edges",
+      "args": {
+       "footage": "$footage",
+       "low": 0.008,
+       "high": 0.03,
+       "temporal_smooth": 0.6,
+       "blur": 2.5
+      }
+     },
+     {
+      "op": "type_from_edges",
+      "out": "tfeA",
+      "args": {
+       "edges": "$edges",
+       "type_a": "$tmA",
+       "grow": 5,
+       "line_width": 1.5,
+       "density": 2.5,
+       "fill": 0.55,
+       "softness": 3
+      }
+     },
+     {
+      "op": "type_from_edges",
+      "out": "tfeL",
+      "args": {
+       "edges": "$edges",
+       "type_a": "$tmL",
+       "grow": 6,
+       "line_width": 2.5,
+       "density": 2.5,
+       "fill": 0.0,
+       "softness": 3
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "colA",
+      "args": {
+       "type_a": "$tmA",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 18,
+       "sat": 1.25,
+       "lum_target": 0.96,
+       "lum_amount": 1.0
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "colL",
+      "args": {
+       "type_a": "$tmL",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 24,
+       "sat": 1.9,
+       "lum_target": 0.97,
+       "lum_amount": 1.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$footage",
+       "fg": "$colA",
+       "alpha": "$tfeA"
+      }
+     },
+     {
+      "op": "translate",
+      "out": "lifted",
+      "args": {
+       "img": "$image",
+       "dx": 0,
+       "dy": 672
+      }
+     },
+     {
+      "op": "refract",
+      "out": "glass",
+      "args": {
+       "footage": "$lifted",
+       "type_depth_or_matte": "$tmL",
+       "strength": 16,
+       "blur": 10,
+       "chroma": 0.3,
+       "rim": 1.0,
+       "rim_color": [
+        1.0,
+        0.85,
+        0.55
+       ]
+      }
+     },
+     {
+      "op": "blur",
+      "out": "lbody",
+      "args": {
+       "img": "$tmL",
+       "sigma": 5
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "lbody",
+      "args": {
+       "a": "$lbody",
+       "b": 3.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$glass",
+       "alpha": "$lbody"
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$colL",
+       "alpha": "$tfeL"
+      }
+     },
+     {
+      "op": "add_glow",
+      "out": "image",
+      "args": {
+       "img": "$image",
+       "mask": "$tfeA",
+       "radius": 16,
+       "intensity": {
+        "curve": "rms",
+        "lo": 0.04,
+        "hi": 0.25
+       },
+       "color": [
+        1.0,
+        0.8,
+        0.55
+       ]
+      }
+     },
+     {
+      "op": "add_glow",
+      "out": "image",
+      "args": {
+       "img": "$image",
+       "mask": "$tmL",
+       "radius": 30,
+       "intensity": {
+        "curve": "rms",
+        "lo": 0.1,
+        "hi": 0.4
+       },
+       "color": [
+        1.0,
+        0.75,
+        0.4
+       ]
+      }
+     },
+     {
+      "op": "grade",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "lift": 0.0,
+       "gamma": 1.0,
+       "gain": 1.02,
+       "sat": 1.05
+      }
+     },
+     {
+      "op": "grain",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "frame_idx": "$frame_idx",
+       "seed": 8,
+       "amount": 0.015,
+       "size": 1.2
+      }
+     },
+     {
+      "op": "vignette",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "strength": 0.2
+      }
+     }
+    ]
+   },
+   "s2": {
+    "ops": [
+     {
+      "op": "multiply",
+      "out": "tmA",
+      "args": {
+       "a": "$type_matte",
+       "b": {
+        "anim": [
+         [
+          0.0,
+          0.0
+         ],
+         [
+          0.0333,
+          0.0
+         ],
+         [
+          0.0667,
+          0.0
+         ],
+         [
+          0.1,
+          0.0
+         ],
+         [
+          0.1333,
+          0.0
+         ],
+         [
+          0.1667,
+          0.007
+         ],
+         [
+          0.2,
+          0.035
+         ],
+         [
+          0.2333,
+          0.082
+         ],
+         [
+          0.2667,
+          0.146
+         ],
+         [
+          0.3,
+          0.222
+         ],
+         [
+          0.3333,
+          0.307
+         ],
+         [
+          0.3667,
+          0.4
+         ],
+         [
+          0.4,
+          0.495
+         ],
+         [
+          0.4333,
+          0.591
+         ],
+         [
+          0.4667,
+          0.684
+         ],
+         [
+          0.5,
+          0.77
+         ],
+         [
+          0.5333,
+          0.847
+         ],
+         [
+          0.5667,
+          0.912
+         ],
+         [
+          0.6,
+          0.961
+         ],
+         [
+          0.6333,
+          0.991
+         ],
+         [
+          0.6667,
+          1.0
+         ],
+         [
+          0.7,
+          1.0
+         ],
+         [
+          0.7333,
+          1.0
+         ],
+         [
+          0.7667,
+          1.0
+         ],
+         [
+          0.8,
+          1.0
+         ],
+         [
+          0.8333,
+          1.0
+         ],
+         [
+          0.8667,
+          1.0
+         ],
+         [
+          0.9,
+          1.0
+         ],
+         [
+          0.9333,
+          1.0
+         ],
+         [
+          0.9667,
+          1.0
+         ],
+         [
+          1.0,
+          1.0
+         ]
+        ]
+       }
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "tmL",
+      "args": {
+       "a": "$type_matte",
+       "b": {
+        "anim": [
+         [
+          0.0,
+          0.0
+         ],
+         [
+          0.0333,
+          0.0
+         ],
+         [
+          0.0667,
+          0.0
+         ],
+         [
+          0.1,
+          0.0
+         ],
+         [
+          0.1333,
+          0.0
+         ],
+         [
+          0.1667,
+          0.0
+         ],
+         [
+          0.2,
+          0.0
+         ],
+         [
+          0.2333,
+          0.0
+         ],
+         [
+          0.2667,
+          0.0
+         ],
+         [
+          0.3,
+          0.0
+         ],
+         [
+          0.3333,
+          0.0
+         ],
+         [
+          0.3667,
+          0.0
+         ],
+         [
+          0.4,
+          0.0
+         ],
+         [
+          0.4333,
+          0.0
+         ],
+         [
+          0.4667,
+          0.0
+         ],
+         [
+          0.5,
+          0.0
+         ],
+         [
+          0.5333,
+          0.0
+         ],
+         [
+          0.5667,
+          0.0
+         ],
+         [
+          0.6,
+          0.0
+         ],
+         [
+          0.6333,
+          0.0
+         ],
+         [
+          0.6667,
+          0.0
+         ],
+         [
+          0.7,
+          0.0
+         ],
+         [
+          0.7333,
+          0.0
+         ],
+         [
+          0.7667,
+          0.0
+         ],
+         [
+          0.8,
+          0.0
+         ],
+         [
+          0.8333,
+          0.0
+         ],
+         [
+          0.8667,
+          0.0
+         ],
+         [
+          0.9,
+          0.0
+         ],
+         [
+          0.9333,
+          0.0
+         ],
+         [
+          0.9667,
+          0.0
+         ],
+         [
+          1.0,
+          0.0
+         ]
+        ]
+       }
+      }
+     },
+     {
+      "op": "trace_edges",
+      "out": "edges",
+      "args": {
+       "footage": "$footage",
+       "low": 0.008,
+       "high": 0.03,
+       "temporal_smooth": 0.6,
+       "blur": 2.5
+      }
+     },
+     {
+      "op": "type_from_edges",
+      "out": "tfeA",
+      "args": {
+       "edges": "$edges",
+       "type_a": "$tmA",
+       "grow": 5,
+       "line_width": 1.5,
+       "density": 2.5,
+       "fill": 0.55,
+       "softness": 3
+      }
+     },
+     {
+      "op": "type_from_edges",
+      "out": "tfeL",
+      "args": {
+       "edges": "$edges",
+       "type_a": "$tmL",
+       "grow": 6,
+       "line_width": 2.5,
+       "density": 2.5,
+       "fill": 0.0,
+       "softness": 3
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "colA",
+      "args": {
+       "type_a": "$tmA",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 18,
+       "sat": 1.25,
+       "lum_target": 0.96,
+       "lum_amount": 1.0
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "colL",
+      "args": {
+       "type_a": "$tmL",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 24,
+       "sat": 1.9,
+       "lum_target": 0.97,
+       "lum_amount": 1.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$footage",
+       "fg": "$colA",
+       "alpha": "$tfeA"
+      }
+     },
+     {
+      "op": "translate",
+      "out": "lifted",
+      "args": {
+       "img": "$image",
+       "dx": 0,
+       "dy": 672
+      }
+     },
+     {
+      "op": "refract",
+      "out": "glass",
+      "args": {
+       "footage": "$lifted",
+       "type_depth_or_matte": "$tmL",
+       "strength": 16,
+       "blur": 10,
+       "chroma": 0.3,
+       "rim": 1.0,
+       "rim_color": [
+        1.0,
+        0.85,
+        0.55
+       ]
+      }
+     },
+     {
+      "op": "blur",
+      "out": "lbody",
+      "args": {
+       "img": "$tmL",
+       "sigma": 5
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "lbody",
+      "args": {
+       "a": "$lbody",
+       "b": 3.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$glass",
+       "alpha": "$lbody"
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$colL",
+       "alpha": "$tfeL"
+      }
+     },
+     {
+      "op": "add_glow",
+      "out": "image",
+      "args": {
+       "img": "$image",
+       "mask": "$tfeA",
+       "radius": 16,
+       "intensity": {
+        "curve": "rms",
+        "lo": 0.04,
+        "hi": 0.25
+       },
+       "color": [
+        1.0,
+        0.8,
+        0.55
+       ]
+      }
+     },
+     {
+      "op": "add_glow",
+      "out": "image",
+      "args": {
+       "img": "$image",
+       "mask": "$tmL",
+       "radius": 30,
+       "intensity": {
+        "curve": "rms",
+        "lo": 0.1,
+        "hi": 0.4
+       },
+       "color": [
+        1.0,
+        0.75,
+        0.4
+       ]
+      }
+     },
+     {
+      "op": "grade",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "lift": 0.0,
+       "gamma": 1.0,
+       "gain": 1.02,
+       "sat": 1.05
+      }
+     },
+     {
+      "op": "grain",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "frame_idx": "$frame_idx",
+       "seed": 8,
+       "amount": 0.015,
+       "size": 1.2
+      }
+     },
+     {
+      "op": "vignette",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "strength": 0.2
+      }
+     }
+    ]
+   },
+   "s3": {
+    "ops": [
+     {
+      "op": "multiply",
+      "out": "tmA",
+      "args": {
+       "a": "$type_matte",
+       "b": {
+        "anim": [
+         [
+          0.0,
+          1.0
+         ],
+         [
+          0.0333,
+          1.0
+         ],
+         [
+          0.0667,
+          1.0
+         ],
+         [
+          0.1,
+          1.0
+         ],
+         [
+          0.1333,
+          1.0
+         ],
+         [
+          0.1667,
+          1.0
+         ],
+         [
+          0.2,
+          1.0
+         ],
+         [
+          0.2333,
+          1.0
+         ],
+         [
+          0.2667,
+          1.0
+         ],
+         [
+          0.3,
+          1.0
+         ],
+         [
+          0.3333,
+          1.0
+         ],
+         [
+          0.3667,
+          1.0
+         ],
+         [
+          0.4,
+          1.0
+         ],
+         [
+          0.4333,
+          1.0
+         ],
+         [
+          0.4667,
+          1.0
+         ],
+         [
+          0.5,
+          1.0
+         ],
+         [
+          0.5333,
+          1.0
+         ],
+         [
+          0.5667,
+          1.0
+         ],
+         [
+          0.6,
+          1.0
+         ],
+         [
+          0.6333,
+          1.0
+         ],
+         [
+          0.6667,
+          1.0
+         ],
+         [
+          0.7,
+          1.0
+         ],
+         [
+          0.7333,
+          1.0
+         ],
+         [
+          0.7667,
+          0.962
+         ],
+         [
+          0.8,
+          0.805
+         ],
+         [
+          0.8333,
+          0.575
+         ],
+         [
+          0.8667,
+          0.328
+         ],
+         [
+          0.9,
+          0.12
+         ],
+         [
+          0.9333,
+          0.007
+         ],
+         [
+          0.9667,
+          0.0
+         ],
+         [
+          1.0,
+          0.0
+         ]
+        ]
+       }
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "tmL",
+      "args": {
+       "a": "$type_matte",
+       "b": {
+        "anim": [
+         [
+          0.0,
+          0.0
+         ],
+         [
+          0.0333,
+          0.0
+         ],
+         [
+          0.0667,
+          0.0
+         ],
+         [
+          0.1,
+          0.0
+         ],
+         [
+          0.1333,
+          0.0
+         ],
+         [
+          0.1667,
+          0.0
+         ],
+         [
+          0.2,
+          0.0
+         ],
+         [
+          0.2333,
+          0.0
+         ],
+         [
+          0.2667,
+          0.0
+         ],
+         [
+          0.3,
+          0.0
+         ],
+         [
+          0.3333,
+          0.0
+         ],
+         [
+          0.3667,
+          0.0
+         ],
+         [
+          0.4,
+          0.0
+         ],
+         [
+          0.4333,
+          0.0
+         ],
+         [
+          0.4667,
+          0.0
+         ],
+         [
+          0.5,
+          0.0
+         ],
+         [
+          0.5333,
+          0.0
+         ],
+         [
+          0.5667,
+          0.0
+         ],
+         [
+          0.6,
+          0.0
+         ],
+         [
+          0.6333,
+          0.0
+         ],
+         [
+          0.6667,
+          0.0
+         ],
+         [
+          0.7,
+          0.0
+         ],
+         [
+          0.7333,
+          0.0
+         ],
+         [
+          0.7667,
+          0.0
+         ],
+         [
+          0.8,
+          0.0
+         ],
+         [
+          0.8333,
+          0.0
+         ],
+         [
+          0.8667,
+          0.0
+         ],
+         [
+          0.9,
+          0.0
+         ],
+         [
+          0.9333,
+          0.0
+         ],
+         [
+          0.9667,
+          0.0
+         ],
+         [
+          1.0,
+          0.0
+         ]
+        ]
+       }
+      }
+     },
+     {
+      "op": "trace_edges",
+      "out": "edges",
+      "args": {
+       "footage": "$footage",
+       "low": 0.008,
+       "high": 0.03,
+       "temporal_smooth": 0.6,
+       "blur": 2.5
+      }
+     },
+     {
+      "op": "type_from_edges",
+      "out": "tfeA",
+      "args": {
+       "edges": "$edges",
+       "type_a": "$tmA",
+       "grow": 5,
+       "line_width": 1.5,
+       "density": 2.5,
+       "fill": 0.55,
+       "softness": 3
+      }
+     },
+     {
+      "op": "type_from_edges",
+      "out": "tfeL",
+      "args": {
+       "edges": "$edges",
+       "type_a": "$tmL",
+       "grow": 6,
+       "line_width": 2.5,
+       "density": 2.5,
+       "fill": 0.0,
+       "softness": 3
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "colA",
+      "args": {
+       "type_a": "$tmA",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 18,
+       "sat": 1.25,
+       "lum_target": 0.96,
+       "lum_amount": 1.0
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "colL",
+      "args": {
+       "type_a": "$tmL",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 24,
+       "sat": 1.9,
+       "lum_target": 0.97,
+       "lum_amount": 1.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$footage",
+       "fg": "$colA",
+       "alpha": "$tfeA"
+      }
+     },
+     {
+      "op": "translate",
+      "out": "lifted",
+      "args": {
+       "img": "$image",
+       "dx": 0,
+       "dy": 672
+      }
+     },
+     {
+      "op": "refract",
+      "out": "glass",
+      "args": {
+       "footage": "$lifted",
+       "type_depth_or_matte": "$tmL",
+       "strength": 16,
+       "blur": 10,
+       "chroma": 0.3,
+       "rim": 1.0,
+       "rim_color": [
+        1.0,
+        0.85,
+        0.55
+       ]
+      }
+     },
+     {
+      "op": "blur",
+      "out": "lbody",
+      "args": {
+       "img": "$tmL",
+       "sigma": 5
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "lbody",
+      "args": {
+       "a": "$lbody",
+       "b": 3.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$glass",
+       "alpha": "$lbody"
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$colL",
+       "alpha": "$tfeL"
+      }
+     },
+     {
+      "op": "add_glow",
+      "out": "image",
+      "args": {
+       "img": "$image",
+       "mask": "$tfeA",
+       "radius": 16,
+       "intensity": {
+        "curve": "rms",
+        "lo": 0.04,
+        "hi": 0.25
+       },
+       "color": [
+        1.0,
+        0.8,
+        0.55
+       ]
+      }
+     },
+     {
+      "op": "add_glow",
+      "out": "image",
+      "args": {
+       "img": "$image",
+       "mask": "$tmL",
+       "radius": 30,
+       "intensity": {
+        "curve": "rms",
+        "lo": 0.1,
+        "hi": 0.4
+       },
+       "color": [
+        1.0,
+        0.75,
+        0.4
+       ]
+      }
+     },
+     {
+      "op": "grade",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "lift": 0.0,
+       "gamma": 1.0,
+       "gain": 1.02,
+       "sat": 1.05
+      }
+     },
+     {
+      "op": "grain",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "frame_idx": "$frame_idx",
+       "seed": 8,
+       "amount": 0.015,
+       "size": 1.2
+      }
+     },
+     {
+      "op": "vignette",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "strength": 0.2
+      }
+     }
+    ]
+   },
+   "s4": {
+    "ops": [
+     {
+      "op": "multiply",
+      "out": "tmA",
+      "args": {
+       "a": "$type_matte",
+       "b": {
+        "anim": [
+         [
+          0.0,
+          0.388
+         ],
+         [
+          0.0333,
+          0.166
+         ],
+         [
+          0.0667,
+          0.024
+         ],
+         [
+          0.1,
+          0.0
+         ],
+         [
+          0.1333,
+          0.0
+         ],
+         [
+          0.1667,
+          0.0
+         ],
+         [
+          0.2,
+          0.0
+         ],
+         [
+          0.2333,
+          0.0
+         ],
+         [
+          0.2667,
+          0.0
+         ],
+         [
+          0.3,
+          0.0
+         ],
+         [
+          0.3333,
+          0.0
+         ],
+         [
+          0.3667,
+          0.0
+         ],
+         [
+          0.4,
+          0.0
+         ],
+         [
+          0.4333,
+          0.0
+         ],
+         [
+          0.4667,
+          0.0
+         ],
+         [
+          0.5,
+          0.156
+         ],
+         [
+          0.5333,
+          0.482
+         ],
+         [
+          0.5667,
+          0.816
+         ],
+         [
+          0.6,
+          0.996
+         ],
+         [
+          0.6333,
+          1.0
+         ],
+         [
+          0.6667,
+          1.0
+         ],
+         [
+          0.7,
+          1.0
+         ],
+         [
+          0.7333,
+          1.0
+         ],
+         [
+          0.7667,
+          1.0
+         ],
+         [
+          0.8,
+          1.0
+         ],
+         [
+          0.8333,
+          1.0
+         ],
+         [
+          0.8667,
+          1.0
+         ],
+         [
+          0.9,
+          1.0
+         ],
+         [
+          0.9333,
+          1.0
+         ],
+         [
+          0.9667,
+          1.0
+         ],
+         [
+          1.0,
+          1.0
+         ]
+        ]
+       }
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "tmL",
+      "args": {
+       "a": "$type_matte",
+       "b": {
+        "anim": [
+         [
+          0.0,
+          0.0
+         ],
+         [
+          0.0333,
+          0.0
+         ],
+         [
+          0.0667,
+          0.0
+         ],
+         [
+          0.1,
+          0.0
+         ],
+         [
+          0.1333,
+          0.0
+         ],
+         [
+          0.1667,
+          0.0
+         ],
+         [
+          0.2,
+          0.0
+         ],
+         [
+          0.2333,
+          0.0
+         ],
+         [
+          0.2667,
+          0.0
+         ],
+         [
+          0.3,
+          0.0
+         ],
+         [
+          0.3333,
+          0.0
+         ],
+         [
+          0.3667,
+          0.0
+         ],
+         [
+          0.4,
+          0.0
+         ],
+         [
+          0.4333,
+          0.0
+         ],
+         [
+          0.4667,
+          0.0
+         ],
+         [
+          0.5,
+          0.0
+         ],
+         [
+          0.5333,
+          0.0
+         ],
+         [
+          0.5667,
+          0.0
+         ],
+         [
+          0.6,
+          0.0
+         ],
+         [
+          0.6333,
+          0.0
+         ],
+         [
+          0.6667,
+          0.0
+         ],
+         [
+          0.7,
+          0.0
+         ],
+         [
+          0.7333,
+          0.0
+         ],
+         [
+          0.7667,
+          0.0
+         ],
+         [
+          0.8,
+          0.0
+         ],
+         [
+          0.8333,
+          0.0
+         ],
+         [
+          0.8667,
+          0.0
+         ],
+         [
+          0.9,
+          0.0
+         ],
+         [
+          0.9333,
+          0.0
+         ],
+         [
+          0.9667,
+          0.0
+         ],
+         [
+          1.0,
+          0.0
+         ]
+        ]
+       }
+      }
+     },
+     {
+      "op": "trace_edges",
+      "out": "edges",
+      "args": {
+       "footage": "$footage",
+       "low": 0.008,
+       "high": 0.03,
+       "temporal_smooth": 0.6,
+       "blur": 2.5
+      }
+     },
+     {
+      "op": "type_from_edges",
+      "out": "tfeA",
+      "args": {
+       "edges": "$edges",
+       "type_a": "$tmA",
+       "grow": 5,
+       "line_width": 1.5,
+       "density": 2.5,
+       "fill": 0.55,
+       "softness": 3
+      }
+     },
+     {
+      "op": "type_from_edges",
+      "out": "tfeL",
+      "args": {
+       "edges": "$edges",
+       "type_a": "$tmL",
+       "grow": 6,
+       "line_width": 2.5,
+       "density": 2.5,
+       "fill": 0.0,
+       "softness": 3
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "colA",
+      "args": {
+       "type_a": "$tmA",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 18,
+       "sat": 1.25,
+       "lum_target": 0.96,
+       "lum_amount": 1.0
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "colL",
+      "args": {
+       "type_a": "$tmL",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 24,
+       "sat": 1.9,
+       "lum_target": 0.97,
+       "lum_amount": 1.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$footage",
+       "fg": "$colA",
+       "alpha": "$tfeA"
+      }
+     },
+     {
+      "op": "translate",
+      "out": "lifted",
+      "args": {
+       "img": "$image",
+       "dx": 0,
+       "dy": 672
+      }
+     },
+     {
+      "op": "refract",
+      "out": "glass",
+      "args": {
+       "footage": "$lifted",
+       "type_depth_or_matte": "$tmL",
+       "strength": 16,
+       "blur": 10,
+       "chroma": 0.3,
+       "rim": 1.0,
+       "rim_color": [
+        1.0,
+        0.85,
+        0.55
+       ]
+      }
+     },
+     {
+      "op": "blur",
+      "out": "lbody",
+      "args": {
+       "img": "$tmL",
+       "sigma": 5
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "lbody",
+      "args": {
+       "a": "$lbody",
+       "b": 3.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$glass",
+       "alpha": "$lbody"
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$colL",
+       "alpha": "$tfeL"
+      }
+     },
+     {
+      "op": "add_glow",
+      "out": "image",
+      "args": {
+       "img": "$image",
+       "mask": "$tfeA",
+       "radius": 16,
+       "intensity": {
+        "curve": "rms",
+        "lo": 0.04,
+        "hi": 0.25
+       },
+       "color": [
+        1.0,
+        0.8,
+        0.55
+       ]
+      }
+     },
+     {
+      "op": "add_glow",
+      "out": "image",
+      "args": {
+       "img": "$image",
+       "mask": "$tmL",
+       "radius": 30,
+       "intensity": {
+        "curve": "rms",
+        "lo": 0.1,
+        "hi": 0.4
+       },
+       "color": [
+        1.0,
+        0.75,
+        0.4
+       ]
+      }
+     },
+     {
+      "op": "grade",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "lift": 0.0,
+       "gamma": 1.0,
+       "gain": 1.02,
+       "sat": 1.05
+      }
+     },
+     {
+      "op": "grain",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "frame_idx": "$frame_idx",
+       "seed": 8,
+       "amount": 0.015,
+       "size": 1.2
+      }
+     },
+     {
+      "op": "vignette",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "strength": 0.2
+      }
+     }
+    ]
+   },
+   "s5": {
+    "ops": [
+     {
+      "op": "multiply",
+      "out": "tmA",
+      "args": {
+       "a": "$type_matte",
+       "b": {
+        "anim": [
+         [
+          0.0,
+          1.0
+         ],
+         [
+          0.0333,
+          1.0
+         ],
+         [
+          0.0667,
+          1.0
+         ],
+         [
+          0.1,
+          1.0
+         ],
+         [
+          0.1333,
+          1.0
+         ],
+         [
+          0.1667,
+          1.0
+         ],
+         [
+          0.2,
+          1.0
+         ],
+         [
+          0.2333,
+          1.0
+         ],
+         [
+          0.2667,
+          1.0
+         ],
+         [
+          0.3,
+          1.0
+         ],
+         [
+          0.3333,
+          1.0
+         ],
+         [
+          0.3667,
+          1.0
+         ],
+         [
+          0.4,
+          1.0
+         ],
+         [
+          0.4333,
+          1.0
+         ],
+         [
+          0.4667,
+          1.0
+         ],
+         [
+          0.5,
+          1.0
+         ],
+         [
+          0.5333,
+          1.0
+         ],
+         [
+          0.5667,
+          1.0
+         ],
+         [
+          0.6,
+          1.0
+         ],
+         [
+          0.6333,
+          0.997
+         ],
+         [
+          0.6667,
+          0.896
+         ],
+         [
+          0.7,
+          0.695
+         ],
+         [
+          0.7333,
+          0.45
+         ],
+         [
+          0.7667,
+          0.216
+         ],
+         [
+          0.8,
+          0.049
+         ],
+         [
+          0.8333,
+          0.0
+         ],
+         [
+          0.8667,
+          0.0
+         ],
+         [
+          0.9,
+          0.0
+         ],
+         [
+          0.9333,
+          0.0
+         ],
+         [
+          0.9667,
+          0.0
+         ],
+         [
+          1.0,
+          0.0
+         ]
+        ]
+       }
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "tmL",
+      "args": {
+       "a": "$type_matte",
+       "b": {
+        "anim": [
+         [
+          0.0,
+          0.0
+         ],
+         [
+          0.0333,
+          0.0
+         ],
+         [
+          0.0667,
+          0.0
+         ],
+         [
+          0.1,
+          0.0
+         ],
+         [
+          0.1333,
+          0.0
+         ],
+         [
+          0.1667,
+          0.0
+         ],
+         [
+          0.2,
+          0.0
+         ],
+         [
+          0.2333,
+          0.0
+         ],
+         [
+          0.2667,
+          0.0
+         ],
+         [
+          0.3,
+          0.0
+         ],
+         [
+          0.3333,
+          0.0
+         ],
+         [
+          0.3667,
+          0.0
+         ],
+         [
+          0.4,
+          0.0
+         ],
+         [
+          0.4333,
+          0.0
+         ],
+         [
+          0.4667,
+          0.0
+         ],
+         [
+          0.5,
+          0.0
+         ],
+         [
+          0.5333,
+          0.0
+         ],
+         [
+          0.5667,
+          0.0
+         ],
+         [
+          0.6,
+          0.0
+         ],
+         [
+          0.6333,
+          0.0
+         ],
+         [
+          0.6667,
+          0.0
+         ],
+         [
+          0.7,
+          0.0
+         ],
+         [
+          0.7333,
+          0.0
+         ],
+         [
+          0.7667,
+          0.0
+         ],
+         [
+          0.8,
+          0.0
+         ],
+         [
+          0.8333,
+          0.0
+         ],
+         [
+          0.8667,
+          0.0
+         ],
+         [
+          0.9,
+          0.0
+         ],
+         [
+          0.9333,
+          0.0
+         ],
+         [
+          0.9667,
+          0.0
+         ],
+         [
+          1.0,
+          0.0
+         ]
+        ]
+       }
+      }
+     },
+     {
+      "op": "trace_edges",
+      "out": "edges",
+      "args": {
+       "footage": "$footage",
+       "low": 0.008,
+       "high": 0.03,
+       "temporal_smooth": 0.6,
+       "blur": 2.5
+      }
+     },
+     {
+      "op": "type_from_edges",
+      "out": "tfeA",
+      "args": {
+       "edges": "$edges",
+       "type_a": "$tmA",
+       "grow": 5,
+       "line_width": 1.5,
+       "density": 2.5,
+       "fill": 0.55,
+       "softness": 3
+      }
+     },
+     {
+      "op": "type_from_edges",
+      "out": "tfeL",
+      "args": {
+       "edges": "$edges",
+       "type_a": "$tmL",
+       "grow": 6,
+       "line_width": 2.5,
+       "density": 2.5,
+       "fill": 0.0,
+       "softness": 3
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "colA",
+      "args": {
+       "type_a": "$tmA",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 18,
+       "sat": 1.25,
+       "lum_target": 0.96,
+       "lum_amount": 1.0
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "colL",
+      "args": {
+       "type_a": "$tmL",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 24,
+       "sat": 1.9,
+       "lum_target": 0.97,
+       "lum_amount": 1.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$footage",
+       "fg": "$colA",
+       "alpha": "$tfeA"
+      }
+     },
+     {
+      "op": "translate",
+      "out": "lifted",
+      "args": {
+       "img": "$image",
+       "dx": 0,
+       "dy": 672
+      }
+     },
+     {
+      "op": "refract",
+      "out": "glass",
+      "args": {
+       "footage": "$lifted",
+       "type_depth_or_matte": "$tmL",
+       "strength": 16,
+       "blur": 10,
+       "chroma": 0.3,
+       "rim": 1.0,
+       "rim_color": [
+        1.0,
+        0.85,
+        0.55
+       ]
+      }
+     },
+     {
+      "op": "blur",
+      "out": "lbody",
+      "args": {
+       "img": "$tmL",
+       "sigma": 5
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "lbody",
+      "args": {
+       "a": "$lbody",
+       "b": 3.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$glass",
+       "alpha": "$lbody"
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$colL",
+       "alpha": "$tfeL"
+      }
+     },
+     {
+      "op": "add_glow",
+      "out": "image",
+      "args": {
+       "img": "$image",
+       "mask": "$tfeA",
+       "radius": 16,
+       "intensity": {
+        "curve": "rms",
+        "lo": 0.04,
+        "hi": 0.25
+       },
+       "color": [
+        1.0,
+        0.8,
+        0.55
+       ]
+      }
+     },
+     {
+      "op": "add_glow",
+      "out": "image",
+      "args": {
+       "img": "$image",
+       "mask": "$tmL",
+       "radius": 30,
+       "intensity": {
+        "curve": "rms",
+        "lo": 0.1,
+        "hi": 0.4
+       },
+       "color": [
+        1.0,
+        0.75,
+        0.4
+       ]
+      }
+     },
+     {
+      "op": "grade",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "lift": 0.0,
+       "gamma": 1.0,
+       "gain": 1.02,
+       "sat": 1.05
+      }
+     },
+     {
+      "op": "grain",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "frame_idx": "$frame_idx",
+       "seed": 8,
+       "amount": 0.015,
+       "size": 1.2
+      }
+     },
+     {
+      "op": "vignette",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "strength": 0.2
+      }
+     }
+    ]
+   },
+   "s6": {
+    "ops": [
+     {
+      "op": "multiply",
+      "out": "tmA",
+      "args": {
+       "a": "$type_matte",
+       "b": {
+        "anim": [
+         [
+          0.0,
+          0.0
+         ],
+         [
+          0.0333,
+          0.0
+         ],
+         [
+          0.0667,
+          0.0
+         ],
+         [
+          0.1,
+          0.0
+         ],
+         [
+          0.1333,
+          0.0
+         ],
+         [
+          0.1667,
+          0.0
+         ],
+         [
+          0.2,
+          0.0
+         ],
+         [
+          0.2333,
+          0.0
+         ],
+         [
+          0.2667,
+          0.0
+         ],
+         [
+          0.3,
+          0.0
+         ],
+         [
+          0.3333,
+          0.0
+         ],
+         [
+          0.3667,
+          0.0
+         ],
+         [
+          0.4,
+          0.0
+         ],
+         [
+          0.4333,
+          0.0
+         ],
+         [
+          0.4667,
+          0.0
+         ],
+         [
+          0.5,
+          0.0
+         ],
+         [
+          0.5333,
+          0.0
+         ],
+         [
+          0.5667,
+          0.0
+         ],
+         [
+          0.6,
+          0.0
+         ],
+         [
+          0.6333,
+          0.0
+         ],
+         [
+          0.6667,
+          0.0
+         ],
+         [
+          0.7,
+          0.0
+         ],
+         [
+          0.7333,
+          0.0
+         ],
+         [
+          0.7667,
+          0.0
+         ],
+         [
+          0.8,
+          0.0
+         ],
+         [
+          0.8333,
+          0.0
+         ],
+         [
+          0.8667,
+          0.0
+         ],
+         [
+          0.9,
+          0.0
+         ],
+         [
+          0.9333,
+          0.0
+         ],
+         [
+          0.9667,
+          0.0
+         ],
+         [
+          1.0,
+          0.0
+         ]
+        ]
+       }
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "tmL",
+      "args": {
+       "a": "$type_matte",
+       "b": {
+        "anim": [
+         [
+          0.0,
+          0.0
+         ],
+         [
+          0.0333,
+          0.0
+         ],
+         [
+          0.0667,
+          0.0
+         ],
+         [
+          0.1,
+          0.0
+         ],
+         [
+          0.1333,
+          0.0
+         ],
+         [
+          0.1667,
+          0.0
+         ],
+         [
+          0.2,
+          0.0
+         ],
+         [
+          0.2333,
+          0.0
+         ],
+         [
+          0.2667,
+          0.0
+         ],
+         [
+          0.3,
+          0.056
+         ],
+         [
+          0.3333,
+          0.21
+         ],
+         [
+          0.3667,
+          0.421
+         ],
+         [
+          0.4,
+          0.646
+         ],
+         [
+          0.4333,
+          0.844
+         ],
+         [
+          0.4667,
+          0.973
+         ],
+         [
+          0.5,
+          1.0
+         ],
+         [
+          0.5333,
+          1.0
+         ],
+         [
+          0.5667,
+          1.0
+         ],
+         [
+          0.6,
+          1.0
+         ],
+         [
+          0.6333,
+          1.0
+         ],
+         [
+          0.6667,
+          1.0
+         ],
+         [
+          0.7,
+          1.0
+         ],
+         [
+          0.7333,
+          1.0
+         ],
+         [
+          0.7667,
+          1.0
+         ],
+         [
+          0.8,
+          1.0
+         ],
+         [
+          0.8333,
+          1.0
+         ],
+         [
+          0.8667,
+          1.0
+         ],
+         [
+          0.9,
+          1.0
+         ],
+         [
+          0.9333,
+          1.0
+         ],
+         [
+          0.9667,
+          1.0
+         ],
+         [
+          1.0,
+          1.0
+         ]
+        ]
+       }
+      }
+     },
+     {
+      "op": "trace_edges",
+      "out": "edges",
+      "args": {
+       "footage": "$footage",
+       "low": 0.008,
+       "high": 0.03,
+       "temporal_smooth": 0.6,
+       "blur": 2.5
+      }
+     },
+     {
+      "op": "type_from_edges",
+      "out": "tfeA",
+      "args": {
+       "edges": "$edges",
+       "type_a": "$tmA",
+       "grow": 5,
+       "line_width": 1.5,
+       "density": 2.5,
+       "fill": 0.55,
+       "softness": 3
+      }
+     },
+     {
+      "op": "type_from_edges",
+      "out": "tfeL",
+      "args": {
+       "edges": "$edges",
+       "type_a": "$tmL",
+       "grow": 6,
+       "line_width": 2.5,
+       "density": 2.5,
+       "fill": 0.0,
+       "softness": 3
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "colA",
+      "args": {
+       "type_a": "$tmA",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 18,
+       "sat": 1.25,
+       "lum_target": 0.96,
+       "lum_amount": 1.0
+      }
+     },
+     {
+      "op": "tint_type",
+      "out": "colL",
+      "args": {
+       "type_a": "$tmL",
+       "footage": "$footage",
+       "mode": "sample",
+       "sample_blur": 24,
+       "sat": 1.9,
+       "lum_target": 0.97,
+       "lum_amount": 1.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$footage",
+       "fg": "$colA",
+       "alpha": "$tfeA"
+      }
+     },
+     {
+      "op": "translate",
+      "out": "lifted",
+      "args": {
+       "img": "$image",
+       "dx": 0,
+       "dy": 672
+      }
+     },
+     {
+      "op": "refract",
+      "out": "glass",
+      "args": {
+       "footage": "$lifted",
+       "type_depth_or_matte": "$tmL",
+       "strength": 16,
+       "blur": 10,
+       "chroma": 0.3,
+       "rim": 1.0,
+       "rim_color": [
+        1.0,
+        0.85,
+        0.55
+       ]
+      }
+     },
+     {
+      "op": "blur",
+      "out": "lbody",
+      "args": {
+       "img": "$tmL",
+       "sigma": 5
+      }
+     },
+     {
+      "op": "multiply",
+      "out": "lbody",
+      "args": {
+       "a": "$lbody",
+       "b": 3.0
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$glass",
+       "alpha": "$lbody"
+      }
+     },
+     {
+      "op": "over",
+      "out": "image",
+      "args": {
+       "base": "$image",
+       "fg": "$colL",
+       "alpha": "$tfeL"
+      }
+     },
+     {
+      "op": "add_glow",
+      "out": "image",
+      "args": {
+       "img": "$image",
+       "mask": "$tfeA",
+       "radius": 16,
+       "intensity": {
+        "curve": "rms",
+        "lo": 0.04,
+        "hi": 0.25
+       },
+       "color": [
+        1.0,
+        0.8,
+        0.55
+       ]
+      }
+     },
+     {
+      "op": "add_glow",
+      "out": "image",
+      "args": {
+       "img": "$image",
+       "mask": "$tmL",
+       "radius": 30,
+       "intensity": {
+        "curve": "rms",
+        "lo": 0.1,
+        "hi": 0.4
+       },
+       "color": [
+        1.0,
+        0.75,
+        0.4
+       ]
+      }
+     },
+     {
+      "op": "grade",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "lift": 0.0,
+       "gamma": 1.0,
+       "gain": 1.02,
+       "sat": 1.05
+      }
+     },
+     {
+      "op": "grain",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "frame_idx": "$frame_idx",
+       "seed": 8,
+       "amount": 0.015,
+       "size": 1.2
+      }
+     },
+     {
+      "op": "vignette",
+      "out": "image",
+      "args": {
+       "frame": "$image",
+       "strength": 0.2
+      }
+     }
+    ]
+   }
+  }
+ },
+ "signoff": {
+  "text": "long light / 60 bpm",
+  "font": "Major Mono Display",
+  "t0": 25.4,
+  "px": 30,
+  "color": [
+   255,
+   240,
+   215
+  ]
+ }
+}

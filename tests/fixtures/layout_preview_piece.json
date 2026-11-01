@@ -1,0 +1,2097 @@
+{
+ "audio": {
+  "bpm": 90,
+  "cut": 16.0,
+  "fade": 0.67,
+  "src": "t2m"
+ },
+ "brief": {},
+ "compose": {
+  "crf": 20,
+  "crossfade": 0,
+  "cuts": [
+   {
+    "after": "s1",
+    "cut": "orbit:push",
+    "style": "smooth",
+    "why": "The music builds into the second shot's tight orbit, pushing the camera closer to the rusty hull."
+   },
+   {
+    "after": "s2",
+    "cut": "depth_pivot",
+    "style": "chunks",
+    "why": "A rhythmic pivot on the chord change at 6.04s breaks the orbit and shifts to the low-angle view."
+   },
+   {
+    "after": "s3",
+    "cut": "orbit:fly",
+    "style": "smooth",
+    "why": "A sweeping S-curve transition matches the crane-up movement of shot 4."
+   },
+   {
+    "after": "s4",
+    "cut": "orbit:pullback",
+    "why": "planned by the code: s4->s5 is a place change at 11.38 s; orbit:pullback (the other kinds are used elsewhere in the piece)"
+   }
+  ],
+  "default": {
+   "ops": [
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.591,
+         0.0
+        ],
+        [
+         0.831,
+         1.0
+        ],
+        [
+         1.791,
+         1.0
+        ],
+        [
+         2.031,
+         0.0
+        ],
+        [
+         3.257,
+         0.0
+        ],
+        [
+         3.497,
+         1.0
+        ],
+        [
+         4.457,
+         1.0
+        ],
+        [
+         4.697,
+         0.0
+        ],
+        [
+         5.95,
+         0.0
+        ],
+        [
+         6.19,
+         1.0
+        ],
+        [
+         7.35,
+         1.0
+        ],
+        [
+         7.59,
+         0.0
+        ],
+        [
+         11.283,
+         0.0
+        ],
+        [
+         11.523,
+         1.0
+        ],
+        [
+         13.683,
+         1.0
+        ],
+        [
+         13.923,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "A653:type_matte",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_matte",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wm"
+    },
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.591,
+         0.0
+        ],
+        [
+         0.831,
+         1.0
+        ],
+        [
+         1.791,
+         1.0
+        ],
+        [
+         2.031,
+         0.0
+        ],
+        [
+         3.257,
+         0.0
+        ],
+        [
+         3.497,
+         1.0
+        ],
+        [
+         4.457,
+         1.0
+        ],
+        [
+         4.697,
+         0.0
+        ],
+        [
+         5.95,
+         0.0
+        ],
+        [
+         6.19,
+         1.0
+        ],
+        [
+         7.35,
+         1.0
+        ],
+        [
+         7.59,
+         0.0
+        ],
+        [
+         11.283,
+         0.0
+        ],
+        [
+         11.523,
+         1.0
+        ],
+        [
+         13.683,
+         1.0
+        ],
+        [
+         13.923,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "A653:type_line",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_line",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wl"
+    },
+    {
+     "args": {
+      "footage": "$footage",
+      "lum_amount": 0.85,
+      "lum_target": 0.9,
+      "mode": "sample",
+      "sample_blur": 30,
+      "sat": 2.2,
+      "type_a": "$wl"
+     },
+     "op": "tint_type",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "footage": "$footage",
+      "footage_depth": "$depth",
+      "plane": 0.55,
+      "softness": 0.15,
+      "type_a": "$wl",
+      "type_opacity": 0.55,
+      "type_rgb": "$tcol"
+     },
+     "op": "depth_occlude",
+     "out": "image"
+    },
+    {
+     "args": {
+      "color": [
+       0.9,
+       0.6,
+       0.2
+      ],
+      "img": "$image",
+      "intensity": {
+       "curve": "sub",
+       "hi": 0.3,
+       "lo": 0.05
+      },
+      "mask": "$wm",
+      "radius": 22
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "gain": 1.05,
+      "gamma": 1.0,
+      "lift": 0.01,
+      "sat": 1.1
+     },
+     "op": "grade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "amount": 0.03,
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 2,
+      "size": 1.2
+     },
+     "op": "grain",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "strength": 0.3
+     },
+     "op": "vignette",
+     "out": "image"
+    }
+   ]
+  },
+  "holds": [
+   [
+    2.04,
+    0.67
+   ],
+   [
+    7.42,
+    0.62
+   ]
+  ],
+  "holds_type": true,
+  "shots": {},
+  "size": [
+   540,
+   960
+  ]
+ },
+ "design": {
+  "concept": "The type is TIGHT and graphic, using heavy slab faces and a single module to mirror the industrial weight of the tugboat.",
+  "fields": {
+   "fields_fixed": [
+    {
+     "path": "compose.cuts",
+     "why": "piece rule: cuts[3] window_other after s4: no word holds up to the cut at 11.38 s (hit >= 0.5 s before it, release within 0.35 s of it); hard cut used"
+    },
+    {
+     "path": "type.words[0].hold_s",
+     "why": "piece rule: timing fit shortened the hold"
+    },
+    {
+     "path": "type.words[1].form_s",
+     "why": "piece rule: the timing solver moved the form time to land the hit"
+    },
+    {
+     "path": "type.words[1].hit",
+     "why": "piece rule: timing fit moved the hit"
+    },
+    {
+     "path": "type.words[1].hold_s",
+     "why": "piece rule: timing fit shortened the hold"
+    },
+    {
+     "path": "type.words[2].form_s",
+     "why": "piece rule: the timing solver moved the form time to land the hit"
+    },
+    {
+     "path": "type.words[2].hit",
+     "why": "piece rule: timing fit moved the hit"
+    },
+    {
+     "path": "type.words[2].hold_s",
+     "why": "piece rule: timing fit shortened the hold"
+    },
+    {
+     "path": "type.words[3].font",
+     "why": "piece rule: type.words[3].font BBHBartle-Regular.ttf swapped to Jacquard12-Regular.ttf (blackletter): no word used a pixel / ornamental / decon / blackletter face; the key "
+    },
+    {
+     "path": "type.words[3].form_s",
+     "why": "piece rule: the timing solver moved the form time to land the hit"
+    },
+    {
+     "path": "type.words[3].hit",
+     "why": "piece rule: timing fit moved the hit"
+    },
+    {
+     "path": "type.words[3].hold_s",
+     "why": "piece rule: timing fit shortened the hold"
+    }
+   ],
+   "fields_from_model": [
+    "compose.glow_color",
+    "compose.glow_hi",
+    "compose.glow_lo",
+    "compose.grain",
+    "compose.holds[0]",
+    "compose.holds[1]",
+    "compose.plate_gain",
+    "compose.plate_sat",
+    "compose.technique",
+    "compose.type_opacity",
+    "compose.vignette",
+    "type.camera",
+    "type.camera_params.bob",
+    "type.camera_params.elev",
+    "type.camera_params.fast_dps",
+    "type.camera_params.intro_deg",
+    "type.camera_params.read_dps",
+    "type.energy",
+    "type.line.px",
+    "type.mood",
+    "type.palette.accents",
+    "type.palette.bg",
+    "type.palette.fg",
+    "type.transitions[0]",
+    "type.transitions[1]",
+    "type.transitions[2]",
+    "type.words[0].exit_s",
+    "type.words[0].font",
+    "type.words[0].form_in",
+    "type.words[0].form_out",
+    "type.words[0].form_s",
+    "type.words[0].hit",
+    "type.words[0].module",
+    "type.words[0].placement.dx",
+    "type.words[0].placement.dy",
+    "type.words[0].placement.hf",
+    "type.words[0].placement.pitch",
+    "type.words[0].placement.roll",
+    "type.words[0].placement.wf",
+    "type.words[0].placement.yaw",
+    "type.words[0].render",
+    "type.words[1].axes.wght",
+    "type.words[1].entry",
+    "type.words[1].exit_s",
+    "type.words[1].font",
+    "type.words[1].form_in",
+    "type.words[1].form_out",
+    "type.words[1].module",
+    "type.words[1].placement.dx",
+    "type.words[1].placement.dy",
+    "type.words[1].placement.hf",
+    "type.words[1].placement.pitch",
+    "type.words[1].placement.roll",
+    "type.words[1].placement.wf",
+    "type.words[1].placement.yaw",
+    "type.words[1].render",
+    "type.words[2].exit_s",
+    "type.words[2].font",
+    "type.words[2].form_in",
+    "type.words[2].form_out",
+    "type.words[2].ltx_at",
+    "type.words[2].material",
+    "type.words[2].module",
+    "type.words[2].placement.dx",
+    "type.words[2].placement.dy",
+    "type.words[2].placement.hf",
+    "type.words[2].placement.pitch",
+    "type.words[2].placement.roll",
+    "type.words[2].placement.wf",
+    "type.words[2].placement.yaw",
+    "type.words[2].render",
+    "type.words[3].entry",
+    "type.words[3].exit_s",
+    "type.words[3].form_in",
+    "type.words[3].form_out",
+    "type.words[3].module",
+    "type.words[3].placement.dx",
+    "type.words[3].placement.dy",
+    "type.words[3].placement.hf",
+    "type.words[3].placement.pitch",
+    "type.words[3].placement.roll",
+    "type.words[3].placement.wf",
+    "type.words[3].placement.yaw",
+    "type.words[3].render"
+   ],
+   "fields_from_rules": [
+    {
+     "path": "compose.ops.default",
+     "why": "default.ops[0].upscale_matte.matte: reference $matte is not a buffer this chain has made; default.ops[0].upscale_matte.matte: required and unusable -> the op is dropped; default.ops[2].sandwich.matte:"
+    }
+   ],
+   "n": 97,
+   "pct_model": 86.6,
+   "pct_model_or_fixed": 99.0,
+   "pending": [],
+   "sections": {
+    "compose": "model",
+    "type": "model"
+   },
+   "why": {
+    "copied": 0,
+    "decisions": 7,
+    "flagged": [],
+    "missing": 0,
+    "present": 7,
+    "reasons": 1.0,
+    "repeated": 0,
+    "whys": {
+     "compose.default": "A high-contrast sandwich chain ensures the type is embedded behind the tugboat's massive hull while maintaining legibility against the dark quay.",
+     "idea": "The aggressive orchestral staccato and heavy machinery footage demand a bold, uncompromising typographic presence that feels anchored to the scene.",
+     "system": "The repetition of the staircase module provides a rhythmic visual anchor that complements the staccato piano and cello.",
+     "word[0] STILL": "Heavy expressive face and particles form-in land on the first downbeat to establish the moody, static tension of the opening shot.",
+     "word[1] THE": "A plain tall face with lines entry provides a brief breath of air before the second movement, hitting the downbeat of the second shot.",
+     "word[2] TIDE": "Returning to the heavy Blackout face on the chord change at 6.04s emphasizes the shift in musical harmony and the low-angle perspective.",
+     "word[3] TURNS": "The final word uses the boldest face and hits the late downbeat, holding longest to resolve the piece as the music fades."
+    }
+   }
+  },
+  "salvage": {
+   "pending": [],
+   "raw": {
+    "@compose": true,
+    "@system": [],
+    "@type": true,
+    "@why": {
+     "copied": 0,
+     "decisions": 7,
+     "flagged": [],
+     "missing": 0,
+     "present": 7,
+     "reasons": 1.0,
+     "repeated": 0,
+     "whys": {
+      "compose.default": "A high-contrast sandwich chain ensures the type is embedded behind the tugboat's massive hull while maintaining legibility against the dark quay.",
+      "idea": "The aggressive orchestral staccato and heavy machinery footage demand a bold, uncompromising typographic presence that feels anchored to the scene.",
+      "system": "The repetition of the staircase module provides a rhythmic visual anchor that complements the staccato piano and cello.",
+      "word[0] STILL": "Heavy expressive face and particles form-in land on the first downbeat to establish the moody, static tension of the opening shot.",
+      "word[1] THE": "A plain tall face with lines entry provides a brief breath of air before the second movement, hitting the downbeat of the second shot.",
+      "word[2] TIDE": "Returning to the heavy Blackout face on the chord change at 6.04s emphasizes the shift in musical harmony and the low-angle perspective.",
+      "word[3] TURNS": "The final word uses the boldest face and hits the late downbeat, holding longest to resolve the piece as the music fades."
+     }
+    },
+    "@word0": true,
+    "@word1": true,
+    "@word2": true,
+    "@word3": true,
+    "@words": true,
+    "compose.cuts": [
+     {
+      "after": "s1",
+      "cut": "orbit:push",
+      "style": "smooth",
+      "why": "The music builds into the second shot's tight orbit, pushing the camera closer to the rusty hull."
+     },
+     {
+      "after": "s2",
+      "cut": "depth_pivot",
+      "style": "chunks",
+      "why": "A rhythmic pivot on the chord change at 6.04s breaks the orbit and shifts to the low-angle view."
+     },
+     {
+      "after": "s3",
+      "cut": "orbit:fly",
+      "style": "smooth",
+      "why": "A sweeping S-curve transition matches the crane-up movement of shot 4."
+     },
+     {
+      "after": "s4",
+      "cut": "window_other",
+      "why": "The final word 'TURNS' acts as a window into the extreme close-up of the harbour, creating a gentle but powerful resolution.",
+      "word": 3
+     }
+    ],
+    "compose.glow_color": [
+     0.9,
+     0.6,
+     0.2
+    ],
+    "compose.glow_hi": 0.3,
+    "compose.glow_lo": 0.05,
+    "compose.grain": 0.03,
+    "compose.holds": [
+     [
+      2.04,
+      0.67
+     ],
+     [
+      7.42,
+      0.62
+     ]
+    ],
+    "compose.ops": {
+     "default": {
+      "ops": [
+       {
+        "args": {
+         "guide": "$footage",
+         "matte": "$matte",
+         "size": [
+          540,
+          960
+         ]
+        },
+        "op": "upscale_matte",
+        "out": "m"
+       },
+       {
+        "args": {
+         "footage": "$footage",
+         "lum_target": 0.8,
+         "mode": "sample",
+         "type_a": "$type_matte"
+        },
+        "op": "tint_type",
+        "out": "tcol"
+       },
+       {
+        "args": {
+         "footage": "$footage",
+         "matte": "$m",
+         "matte_soft": 0.08,
+         "matte_threshold": 0.5,
+         "type_a": "$type_matte",
+         "type_rgb": "$tcol"
+        },
+        "op": "sandwich",
+        "out": "comp"
+       },
+       {
+        "args": {
+         "color": [
+          0.9,
+          0.6,
+          0.2
+         ],
+         "img": "$comp",
+         "mask": "$type_matte"
+        },
+        "op": "add_glow",
+        "out": "glowed"
+       },
+       {
+        "args": {
+         "amount": 0.03,
+         "frame": "$glowed"
+        },
+        "op": "grain",
+        "out": "grained"
+       },
+       {
+        "args": {
+         "frame": "$grained",
+         "strength": 0.3
+        },
+        "op": "vignette",
+        "out": "image"
+       }
+      ],
+      "why": "A high-contrast sandwich chain ensures the type is embedded behind the tugboat's massive hull while maintaining legibility against the dark quay."
+     }
+    },
+    "compose.plate_gain": 0.7,
+    "compose.plate_sat": 0.8,
+    "compose.technique": "built_in",
+    "compose.type_opacity": 0.9,
+    "compose.vignette": 0.3,
+    "concept": "The type is TIGHT and graphic, using heavy slab faces and a single module to mirror the industrial weight of the tugboat.",
+    "system": {
+     "axis": {
+      "font": "BigShouldersDisplay[wght].ttf",
+      "tag": "wght",
+      "windows": [
+       [
+        100,
+        300
+       ],
+       [
+        400,
+        600
+       ],
+       [
+        700,
+        900
+       ]
+      ]
+     },
+     "pattern": [
+      "A",
+      "B",
+      "A",
+      "C"
+     ],
+     "progression": "The typographic weight increases as the music builds toward the final orchestral swell.",
+     "roles": {
+      "A": "Blackout_Midnight.ttf",
+      "B": "BigShouldersDisplay[wght].ttf",
+      "C": "BBHBartle-Regular.ttf"
+     },
+     "rule": "A sequence of heavy slab faces using the staircase module, alternating between expressive and plain roles with a shifting navy-sodium palette.",
+     "why": "The repetition of the staircase module provides a rhythmic visual anchor that complements the staccato piano and cello.",
+     "yaw": [
+      7,
+      -8,
+      6,
+      -9
+     ]
+    },
+    "treatment_notes": "Type sits behind the tugboat using the subject matte, creating a sense of physical depth as the vessel orbits the words.",
+    "type.camera": "beat_orbit",
+    "type.camera_params.bob": 0.52,
+    "type.camera_params.elev": 4.9,
+    "type.camera_params.fast_dps": 18.8,
+    "type.camera_params.intro_deg": 24.6,
+    "type.camera_params.read_dps": 3.7,
+    "type.energy": 0.7,
+    "type.line.px": 4,
+    "type.mood": "somber tension",
+    "type.palette.accents": [
+     [
+      255,
+      150,
+      40
+     ],
+     [
+      255,
+      200,
+      90
+     ],
+     [
+      230,
+      110,
+      30
+     ]
+    ],
+    "type.palette.bg": [
+     8,
+     16,
+     40
+    ],
+    "type.palette.fg": [
+     250,
+     240,
+     222
+    ],
+    "type.transitions": [
+     "twist",
+     "ripple",
+     "cut"
+    ],
+    "type.words[0].exit_s": 0.71,
+    "type.words[0].font": "Blackout_Midnight.ttf",
+    "type.words[0].form_in": "particles",
+    "type.words[0].form_out": "particles",
+    "type.words[0].form_s": 0.71,
+    "type.words[0].hit": 0.71,
+    "type.words[0].hold_s": 1.8,
+    "type.words[0].module": "staircase",
+    "type.words[0].placement.dx": 0,
+    "type.words[0].placement.dy": -0.1,
+    "type.words[0].placement.hf": 0.4,
+    "type.words[0].placement.pitch": 0,
+    "type.words[0].placement.roll": 0,
+    "type.words[0].placement.wf": 0.8,
+    "type.words[0].placement.yaw": 7,
+    "type.words[0].render": "flat",
+    "type.words[0].text": "STILL",
+    "type.words[1].axes.wght": [
+     100,
+     300,
+     "beat"
+    ],
+    "type.words[1].entry": "left",
+    "type.words[1].exit_s": 0.71,
+    "type.words[1].font": "BigShouldersDisplay[wght].ttf",
+    "type.words[1].form_in": "lines",
+    "type.words[1].form_out": "flicker",
+    "type.words[1].form_s": 0.71,
+    "type.words[1].hit": 3.38,
+    "type.words[1].hold_s": 1.6,
+    "type.words[1].module": "staircase",
+    "type.words[1].placement.dx": 0,
+    "type.words[1].placement.dy": 0,
+    "type.words[1].placement.hf": 0.3,
+    "type.words[1].placement.pitch": 5,
+    "type.words[1].placement.roll": 0,
+    "type.words[1].placement.wf": 0.6,
+    "type.words[1].placement.yaw": -8,
+    "type.words[1].render": "flat",
+    "type.words[1].text": "THE",
+    "type.words[2].exit_s": 0.71,
+    "type.words[2].font": "Blackout_Midnight.ttf",
+    "type.words[2].form_in": "particles",
+    "type.words[2].form_out": "particles",
+    "type.words[2].form_s": 0.71,
+    "type.words[2].hit": 6.04,
+    "type.words[2].hold_s": 2.0,
+    "type.words[2].ltx_at": 0.6,
+    "type.words[2].material": "weathered oxidized iron, extruded, pitted surface",
+    "type.words[2].module": "staircase",
+    "type.words[2].placement.dx": 0,
+    "type.words[2].placement.dy": 0.1,
+    "type.words[2].placement.hf": 0.4,
+    "type.words[2].placement.pitch": -5,
+    "type.words[2].placement.roll": 0,
+    "type.words[2].placement.wf": 0.7,
+    "type.words[2].placement.yaw": 6,
+    "type.words[2].render": "handoff",
+    "type.words[2].text": "TIDE",
+    "type.words[3].entry": "right",
+    "type.words[3].exit_s": 1.43,
+    "type.words[3].font": "BBHBartle-Regular.ttf",
+    "type.words[3].form_in": "lines",
+    "type.words[3].form_out": "flicker",
+    "type.words[3].form_s": 0.71,
+    "type.words[3].hit": 11.38,
+    "type.words[3].hold_s": 3.0,
+    "type.words[3].module": "staircase",
+    "type.words[3].placement.dx": 0,
+    "type.words[3].placement.dy": 0,
+    "type.words[3].placement.hf": 0.45,
+    "type.words[3].placement.pitch": 0,
+    "type.words[3].placement.roll": 0,
+    "type.words[3].placement.wf": 0.85,
+    "type.words[3].placement.yaw": -9,
+    "type.words[3].render": "flat",
+    "type.words[3].text": "TURNS"
+   }
+  },
+  "src": {
+   "compose": "model",
+   "type": "model"
+  },
+  "technique": "built_in",
+  "treatment_notes": "Type sits behind the tugboat using the subject matte, creating a sense of physical depth as the vessel orbits the words."
+ },
+ "format": "9:16",
+ "fps": 24,
+ "id": "A653",
+ "layout": {
+  "s1": {
+   "start": 0,
+   "frames": 81,
+   "xf": 0
+  },
+  "s2": {
+   "start": 81,
+   "frames": 64,
+   "xf": 0
+  },
+  "s3": {
+   "start": 145,
+   "frames": 64,
+   "xf": 0
+  },
+  "s4": {
+   "start": 209,
+   "frames": 64,
+   "xf": 0
+  },
+  "s5": {
+   "start": 273,
+   "frames": 111,
+   "xf": 0
+  }
+ },
+ "plan": {
+  "bars": 0,
+  "compose_ops": {
+   "chains": 0,
+   "fixes": [
+    "default.ops[0].upscale_matte.matte: reference $matte is not a buffer this chain has made",
+    "default.ops[0].upscale_matte.matte: required and unusable -> the op is dropped",
+    "default.ops[2].sandwich.matte: reference $m is not a buffer this chain has made",
+    "default.ops[2].sandwich.matte: required and unusable -> the op is dropped",
+    "default.ops[3].add_glow.img: reference $comp is not a buffer this chain has made",
+    "default.ops[3].add_glow.img: required and unusable -> the op is dropped",
+    "default.ops[4].grain.frame: reference $comp is not a buffer this chain has made",
+    "default.ops[4].grain.frame: required and unusable -> the op is dropped",
+    "default.ops[5].vignette.frame: reference $comp is not a buffer this chain has made",
+    "default.ops[5].vignette.frame: required and unusable -> the op is dropped",
+    "default.ops: no op draws the type (sandwich / depth_occlude / knockout / over of a type pass) -> the whole chain is rejected"
+   ],
+   "n_fixes": 11,
+   "source": "rules"
+  },
+  "contour": {
+   "available": true,
+   "lines": [],
+   "subject": false
+  },
+  "design": {
+   "fields": {
+    "fields_fixed": [
+     {
+      "path": "compose.cuts",
+      "why": "piece rule: cuts[3] window_other after s4: no word holds up to the cut at 11.38 s (hit >= 0.5 s before it, release within 0.35 s of it); hard cut used"
+     },
+     {
+      "path": "type.words[0].hold_s",
+      "why": "piece rule: timing fit shortened the hold"
+     },
+     {
+      "path": "type.words[1].form_s",
+      "why": "piece rule: the timing solver moved the form time to land the hit"
+     },
+     {
+      "path": "type.words[1].hit",
+      "why": "piece rule: timing fit moved the hit"
+     },
+     {
+      "path": "type.words[1].hold_s",
+      "why": "piece rule: timing fit shortened the hold"
+     },
+     {
+      "path": "type.words[2].form_s",
+      "why": "piece rule: the timing solver moved the form time to land the hit"
+     },
+     {
+      "path": "type.words[2].hit",
+      "why": "piece rule: timing fit moved the hit"
+     },
+     {
+      "path": "type.words[2].hold_s",
+      "why": "piece rule: timing fit shortened the hold"
+     },
+     {
+      "path": "type.words[3].font",
+      "why": "piece rule: type.words[3].font BBHBartle-Regular.ttf swapped to Jacquard12-Regular.ttf (blackletter): no word used a pixel / ornamental / decon / blackletter face; the key "
+     },
+     {
+      "path": "type.words[3].form_s",
+      "why": "piece rule: the timing solver moved the form time to land the hit"
+     },
+     {
+      "path": "type.words[3].hit",
+      "why": "piece rule: timing fit moved the hit"
+     },
+     {
+      "path": "type.words[3].hold_s",
+      "why": "piece rule: timing fit shortened the hold"
+     }
+    ],
+    "fields_from_model": [
+     "compose.glow_color",
+     "compose.glow_hi",
+     "compose.glow_lo",
+     "compose.grain",
+     "compose.holds[0]",
+     "compose.holds[1]",
+     "compose.plate_gain",
+     "compose.plate_sat",
+     "compose.technique",
+     "compose.type_opacity",
+     "compose.vignette",
+     "type.camera",
+     "type.camera_params.bob",
+     "type.camera_params.elev",
+     "type.camera_params.fast_dps",
+     "type.camera_params.intro_deg",
+     "type.camera_params.read_dps",
+     "type.energy",
+     "type.line.px",
+     "type.mood",
+     "type.palette.accents",
+     "type.palette.bg",
+     "type.palette.fg",
+     "type.transitions[0]",
+     "type.transitions[1]",
+     "type.transitions[2]",
+     "type.words[0].exit_s",
+     "type.words[0].font",
+     "type.words[0].form_in",
+     "type.words[0].form_out",
+     "type.words[0].form_s",
+     "type.words[0].hit",
+     "type.words[0].module",
+     "type.words[0].placement.dx",
+     "type.words[0].placement.dy",
+     "type.words[0].placement.hf",
+     "type.words[0].placement.pitch",
+     "type.words[0].placement.roll",
+     "type.words[0].placement.wf",
+     "type.words[0].placement.yaw",
+     "type.words[0].render",
+     "type.words[1].axes.wght",
+     "type.words[1].entry",
+     "type.words[1].exit_s",
+     "type.words[1].font",
+     "type.words[1].form_in",
+     "type.words[1].form_out",
+     "type.words[1].module",
+     "type.words[1].placement.dx",
+     "type.words[1].placement.dy",
+     "type.words[1].placement.hf",
+     "type.words[1].placement.pitch",
+     "type.words[1].placement.roll",
+     "type.words[1].placement.wf",
+     "type.words[1].placement.yaw",
+     "type.words[1].render",
+     "type.words[2].exit_s",
+     "type.words[2].font",
+     "type.words[2].form_in",
+     "type.words[2].form_out",
+     "type.words[2].ltx_at",
+     "type.words[2].material",
+     "type.words[2].module",
+     "type.words[2].placement.dx",
+     "type.words[2].placement.dy",
+     "type.words[2].placement.hf",
+     "type.words[2].placement.pitch",
+     "type.words[2].placement.roll",
+     "type.words[2].placement.wf",
+     "type.words[2].placement.yaw",
+     "type.words[2].render",
+     "type.words[3].entry",
+     "type.words[3].exit_s",
+     "type.words[3].form_in",
+     "type.words[3].form_out",
+     "type.words[3].module",
+     "type.words[3].placement.dx",
+     "type.words[3].placement.dy",
+     "type.words[3].placement.hf",
+     "type.words[3].placement.pitch",
+     "type.words[3].placement.roll",
+     "type.words[3].placement.wf",
+     "type.words[3].placement.yaw",
+     "type.words[3].render"
+    ],
+    "fields_from_rules": [
+     {
+      "path": "compose.ops.default",
+      "why": "default.ops[0].upscale_matte.matte: reference $matte is not a buffer this chain has made; default.ops[0].upscale_matte.matte: required and unusable -> the op is dropped; default.ops[2].sandwich.matte:"
+     }
+    ],
+    "n": 97,
+    "pct_model": 86.6,
+    "pct_model_or_fixed": 99.0,
+    "pending": [],
+    "sections": {
+     "compose": "model",
+     "type": "model"
+    },
+    "why": {
+     "copied": 0,
+     "decisions": 7,
+     "flagged": [],
+     "missing": 0,
+     "present": 7,
+     "reasons": 1.0,
+     "repeated": 0,
+     "whys": {
+      "compose.default": "A high-contrast sandwich chain ensures the type is embedded behind the tugboat's massive hull while maintaining legibility against the dark quay.",
+      "idea": "The aggressive orchestral staccato and heavy machinery footage demand a bold, uncompromising typographic presence that feels anchored to the scene.",
+      "system": "The repetition of the staircase module provides a rhythmic visual anchor that complements the staccato piano and cello.",
+      "word[0] STILL": "Heavy expressive face and particles form-in land on the first downbeat to establish the moody, static tension of the opening shot.",
+      "word[1] THE": "A plain tall face with lines entry provides a brief breath of air before the second movement, hitting the downbeat of the second shot.",
+      "word[2] TIDE": "Returning to the heavy Blackout face on the chord change at 6.04s emphasizes the shift in musical harmony and the low-angle perspective.",
+      "word[3] TURNS": "The final word uses the boldest face and hits the late downbeat, holding longest to resolve the piece as the music fades."
+     }
+    }
+   },
+   "model": "Gemma 4 31B QAT Q4_K_XL",
+   "salvage": {
+    "pending": [],
+    "raw": {
+     "@compose": true,
+     "@system": [],
+     "@type": true,
+     "@why": {
+      "copied": 0,
+      "decisions": 7,
+      "flagged": [],
+      "missing": 0,
+      "present": 7,
+      "reasons": 1.0,
+      "repeated": 0,
+      "whys": {
+       "compose.default": "A high-contrast sandwich chain ensures the type is embedded behind the tugboat's massive hull while maintaining legibility against the dark quay.",
+       "idea": "The aggressive orchestral staccato and heavy machinery footage demand a bold, uncompromising typographic presence that feels anchored to the scene.",
+       "system": "The repetition of the staircase module provides a rhythmic visual anchor that complements the staccato piano and cello.",
+       "word[0] STILL": "Heavy expressive face and particles form-in land on the first downbeat to establish the moody, static tension of the opening shot.",
+       "word[1] THE": "A plain tall face with lines entry provides a brief breath of air before the second movement, hitting the downbeat of the second shot.",
+       "word[2] TIDE": "Returning to the heavy Blackout face on the chord change at 6.04s emphasizes the shift in musical harmony and the low-angle perspective.",
+       "word[3] TURNS": "The final word uses the boldest face and hits the late downbeat, holding longest to resolve the piece as the music fades."
+      }
+     },
+     "@word0": true,
+     "@word1": true,
+     "@word2": true,
+     "@word3": true,
+     "@words": true,
+     "compose.cuts": [
+      {
+       "after": "s1",
+       "cut": "orbit:push",
+       "style": "smooth",
+       "why": "The music builds into the second shot's tight orbit, pushing the camera closer to the rusty hull."
+      },
+      {
+       "after": "s2",
+       "cut": "depth_pivot",
+       "style": "chunks",
+       "why": "A rhythmic pivot on the chord change at 6.04s breaks the orbit and shifts to the low-angle view."
+      },
+      {
+       "after": "s3",
+       "cut": "orbit:fly",
+       "style": "smooth",
+       "why": "A sweeping S-curve transition matches the crane-up movement of shot 4."
+      },
+      {
+       "after": "s4",
+       "cut": "window_other",
+       "why": "The final word 'TURNS' acts as a window into the extreme close-up of the harbour, creating a gentle but powerful resolution.",
+       "word": 3
+      }
+     ],
+     "compose.glow_color": [
+      0.9,
+      0.6,
+      0.2
+     ],
+     "compose.glow_hi": 0.3,
+     "compose.glow_lo": 0.05,
+     "compose.grain": 0.03,
+     "compose.holds": [
+      [
+       2.04,
+       0.67
+      ],
+      [
+       7.42,
+       0.62
+      ]
+     ],
+     "compose.ops": {
+      "default": {
+       "ops": [
+        {
+         "args": {
+          "guide": "$footage",
+          "matte": "$matte",
+          "size": [
+           540,
+           960
+          ]
+         },
+         "op": "upscale_matte",
+         "out": "m"
+        },
+        {
+         "args": {
+          "footage": "$footage",
+          "lum_target": 0.8,
+          "mode": "sample",
+          "type_a": "$type_matte"
+         },
+         "op": "tint_type",
+         "out": "tcol"
+        },
+        {
+         "args": {
+          "footage": "$footage",
+          "matte": "$m",
+          "matte_soft": 0.08,
+          "matte_threshold": 0.5,
+          "type_a": "$type_matte",
+          "type_rgb": "$tcol"
+         },
+         "op": "sandwich",
+         "out": "comp"
+        },
+        {
+         "args": {
+          "color": [
+           0.9,
+           0.6,
+           0.2
+          ],
+          "img": "$comp",
+          "mask": "$type_matte"
+         },
+         "op": "add_glow",
+         "out": "glowed"
+        },
+        {
+         "args": {
+          "amount": 0.03,
+          "frame": "$glowed"
+         },
+         "op": "grain",
+         "out": "grained"
+        },
+        {
+         "args": {
+          "frame": "$grained",
+          "strength": 0.3
+         },
+         "op": "vignette",
+         "out": "image"
+        }
+       ],
+       "why": "A high-contrast sandwich chain ensures the type is embedded behind the tugboat's massive hull while maintaining legibility against the dark quay."
+      }
+     },
+     "compose.plate_gain": 0.7,
+     "compose.plate_sat": 0.8,
+     "compose.technique": "built_in",
+     "compose.type_opacity": 0.9,
+     "compose.vignette": 0.3,
+     "concept": "The type is TIGHT and graphic, using heavy slab faces and a single module to mirror the industrial weight of the tugboat.",
+     "system": {
+      "axis": {
+       "font": "BigShouldersDisplay[wght].ttf",
+       "tag": "wght",
+       "windows": [
+        [
+         100,
+         300
+        ],
+        [
+         400,
+         600
+        ],
+        [
+         700,
+         900
+        ]
+       ]
+      },
+      "pattern": [
+       "A",
+       "B",
+       "A",
+       "C"
+      ],
+      "progression": "The typographic weight increases as the music builds toward the final orchestral swell.",
+      "roles": {
+       "A": "Blackout_Midnight.ttf",
+       "B": "BigShouldersDisplay[wght].ttf",
+       "C": "BBHBartle-Regular.ttf"
+      },
+      "rule": "A sequence of heavy slab faces using the staircase module, alternating between expressive and plain roles with a shifting navy-sodium palette.",
+      "why": "The repetition of the staircase module provides a rhythmic visual anchor that complements the staccato piano and cello.",
+      "yaw": [
+       7,
+       -8,
+       6,
+       -9
+      ]
+     },
+     "treatment_notes": "Type sits behind the tugboat using the subject matte, creating a sense of physical depth as the vessel orbits the words.",
+     "type.camera": "beat_orbit",
+     "type.camera_params.bob": 0.52,
+     "type.camera_params.elev": 4.9,
+     "type.camera_params.fast_dps": 18.8,
+     "type.camera_params.intro_deg": 24.6,
+     "type.camera_params.read_dps": 3.7,
+     "type.energy": 0.7,
+     "type.line.px": 4,
+     "type.mood": "somber tension",
+     "type.palette.accents": [
+      [
+       255,
+       150,
+       40
+      ],
+      [
+       255,
+       200,
+       90
+      ],
+      [
+       230,
+       110,
+       30
+      ]
+     ],
+     "type.palette.bg": [
+      8,
+      16,
+      40
+     ],
+     "type.palette.fg": [
+      250,
+      240,
+      222
+     ],
+     "type.transitions": [
+      "twist",
+      "ripple",
+      "cut"
+     ],
+     "type.words[0].exit_s": 0.71,
+     "type.words[0].font": "Blackout_Midnight.ttf",
+     "type.words[0].form_in": "particles",
+     "type.words[0].form_out": "particles",
+     "type.words[0].form_s": 0.71,
+     "type.words[0].hit": 0.71,
+     "type.words[0].hold_s": 1.8,
+     "type.words[0].module": "staircase",
+     "type.words[0].placement.dx": 0,
+     "type.words[0].placement.dy": -0.1,
+     "type.words[0].placement.hf": 0.4,
+     "type.words[0].placement.pitch": 0,
+     "type.words[0].placement.roll": 0,
+     "type.words[0].placement.wf": 0.8,
+     "type.words[0].placement.yaw": 7,
+     "type.words[0].render": "flat",
+     "type.words[0].text": "STILL",
+     "type.words[1].axes.wght": [
+      100,
+      300,
+      "beat"
+     ],
+     "type.words[1].entry": "left",
+     "type.words[1].exit_s": 0.71,
+     "type.words[1].font": "BigShouldersDisplay[wght].ttf",
+     "type.words[1].form_in": "lines",
+     "type.words[1].form_out": "flicker",
+     "type.words[1].form_s": 0.71,
+     "type.words[1].hit": 3.38,
+     "type.words[1].hold_s": 1.6,
+     "type.words[1].module": "staircase",
+     "type.words[1].placement.dx": 0,
+     "type.words[1].placement.dy": 0,
+     "type.words[1].placement.hf": 0.3,
+     "type.words[1].placement.pitch": 5,
+     "type.words[1].placement.roll": 0,
+     "type.words[1].placement.wf": 0.6,
+     "type.words[1].placement.yaw": -8,
+     "type.words[1].render": "flat",
+     "type.words[1].text": "THE",
+     "type.words[2].exit_s": 0.71,
+     "type.words[2].font": "Blackout_Midnight.ttf",
+     "type.words[2].form_in": "particles",
+     "type.words[2].form_out": "particles",
+     "type.words[2].form_s": 0.71,
+     "type.words[2].hit": 6.04,
+     "type.words[2].hold_s": 2.0,
+     "type.words[2].ltx_at": 0.6,
+     "type.words[2].material": "weathered oxidized iron, extruded, pitted surface",
+     "type.words[2].module": "staircase",
+     "type.words[2].placement.dx": 0,
+     "type.words[2].placement.dy": 0.1,
+     "type.words[2].placement.hf": 0.4,
+     "type.words[2].placement.pitch": -5,
+     "type.words[2].placement.roll": 0,
+     "type.words[2].placement.wf": 0.7,
+     "type.words[2].placement.yaw": 6,
+     "type.words[2].render": "handoff",
+     "type.words[2].text": "TIDE",
+     "type.words[3].entry": "right",
+     "type.words[3].exit_s": 1.43,
+     "type.words[3].font": "BBHBartle-Regular.ttf",
+     "type.words[3].form_in": "lines",
+     "type.words[3].form_out": "flicker",
+     "type.words[3].form_s": 0.71,
+     "type.words[3].hit": 11.38,
+     "type.words[3].hold_s": 3.0,
+     "type.words[3].module": "staircase",
+     "type.words[3].placement.dx": 0,
+     "type.words[3].placement.dy": 0,
+     "type.words[3].placement.hf": 0.45,
+     "type.words[3].placement.pitch": 0,
+     "type.words[3].placement.roll": 0,
+     "type.words[3].placement.wf": 0.85,
+     "type.words[3].placement.yaw": -9,
+     "type.words[3].render": "flat",
+     "type.words[3].text": "TURNS"
+    }
+   },
+   "src": {
+    "compose": "model",
+    "type": "model"
+   }
+  },
+  "energy": 0.42,
+  "flow_wake": {
+   "chains": 1,
+   "holds": [
+    [
+     0.711,
+     1.911
+    ],
+    [
+     3.377,
+     4.577
+    ],
+    [
+     6.07,
+     7.47
+    ],
+    [
+     11.403,
+     13.803
+    ]
+   ]
+  },
+  "footage": {
+   "idea": "The camera orbits the tugboat in tight, aggressive arcs, with the slab typography appearing to be anchored to the quay and the vessel's hull.",
+   "shot_prompts": {
+    "model": 4,
+    "rules": 1
+   }
+  },
+  "layout_shapes": {
+   "words": 0
+  },
+  "lockup_starts": [
+   0.0,
+   3.375,
+   6.0417,
+   8.7083
+  ],
+  "look": "slab",
+  "matte_treatments": {
+   "words": 0
+  },
+  "notes": [
+   "brief: empty -> rules only",
+   "dry run 1: last word ends at 15.82s of 16.00s",
+   "windows shrunk by 1 bar(s) after the dry run",
+   "type frame check: TURNS 2% outside the safe area at 13.74 s (camera 'beat_orbit' kept: a designed move)",
+   "background s1: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+   "background s2: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+   "background s3: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+   "background s4: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+   "background s5: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+   "background s1: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+   "background s2: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+   "background s3: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+   "background s4: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+   "background s5: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background"
+  ],
+  "piece_system": {
+   "anybody_default": false,
+   "camera": {
+    "alt": "follow",
+    "bands": {
+     "bob": [
+      0.4,
+      0.6
+     ],
+     "fast_dps": [
+      8.0,
+      20.0
+     ],
+     "intro_deg": [
+      12.0,
+      25.0
+     ],
+     "read_dps": [
+      3.0,
+      4.0
+     ]
+    },
+    "params": {
+     "bob": 0.52,
+     "elev": 4.9,
+     "fast_dps": 18.8,
+     "intro_deg": 24.6,
+     "read_dps": 3.7
+    },
+    "type": "beat_orbit"
+   },
+   "expressive": [
+    "Silkscreen-Regular.ttf",
+    "Jacquard12-Regular.ttf"
+   ],
+   "fonts": [
+    "Blackout_Midnight.ttf",
+    "Ultra-Regular.ttf",
+    "BigShouldersDisplay[wght].ttf",
+    "SpaceGrotesk-Bold.ttf",
+    "BBHBartle-Regular.ttf",
+    "Silkscreen-Regular.ttf",
+    "PassionOne-Black.ttf",
+    "EricaOne-Regular.ttf",
+    "Jacquard12-Regular.ttf",
+    "Tourney[wdth,wght].ttf"
+   ],
+   "io": {
+    "entries": [
+     "in",
+     "out",
+     "left"
+    ],
+    "form_in": [
+     "particles",
+     "lines"
+    ],
+    "form_out": [
+     "particles",
+     "flicker"
+    ]
+   },
+   "look": "slab",
+   "module": "staircase",
+   "modules": [
+    "staircase"
+   ],
+   "mood": "restless",
+   "motion": {
+    "bpm": 84.0,
+    "start_sign": 1,
+    "yaw": [
+     5.0,
+     10.0
+    ]
+   },
+   "palette": {
+    "accents": [
+     [
+      255,
+      150,
+      40
+     ],
+     [
+      255,
+      200,
+      90
+     ],
+     [
+      230,
+      110,
+      30
+     ]
+    ],
+    "bg": [
+     8,
+     16,
+     40
+    ],
+    "family": "sodium_navy",
+    "fg": [
+     250,
+     240,
+     222
+    ],
+    "footage": "navy blue with sodium orange",
+    "note": "warm white ink on navy; sodium orange and gold accents"
+   },
+   "photo": "high-contrast fast film photograph, deep shadows, hard light",
+   "photo_key": "film_noir",
+   "seed": 653,
+   "shot_moves": [
+    "push in",
+    "orbit",
+    "pull back",
+    "crane up"
+   ],
+   "tone": "driven",
+   "version": 1
+  },
+  "seed": 653,
+  "shots": "chain",
+  "structure": {
+   "angle": {
+    "B": "A",
+    "D": "C",
+    "E": "C"
+   },
+   "explicit": true,
+   "first": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ],
+   "last_frame_chaining": false,
+   "mode": "chain",
+   "places": 5
+  },
+  "system": {
+   "axis": {
+    "font": "BigShouldersDisplay[wght].ttf",
+    "tag": "wght",
+    "windows": [
+     [
+      100,
+      300
+     ],
+     [
+      400,
+      600
+     ],
+     [
+      700,
+      900
+     ]
+    ]
+   },
+   "pattern": [
+    "A",
+    "B",
+    "A",
+    "C"
+   ],
+   "progression": "The typographic weight increases as the music builds toward the final orchestral swell.",
+   "roles": {
+    "A": "Blackout_Midnight.ttf",
+    "B": "BigShouldersDisplay[wght].ttf",
+    "C": "BBHBartle-Regular.ttf"
+   },
+   "rule": "A sequence of heavy slab faces using the staircase module, alternating between expressive and plain roles with a shifting navy-sodium palette.",
+   "why": "The repetition of the staircase module provides a rhythmic visual anchor that complements the staccato piano and cello.",
+   "yaw": [
+    7,
+    -8,
+    6,
+    -9
+   ]
+  },
+  "tail": {
+   "cut": 16.0,
+   "gap": 0.84,
+   "last_end": 15.16,
+   "signoff_t0": 14.71
+  },
+  "tier": "mid",
+  "tries": 2,
+  "version": 1,
+  "window_notes": [
+   "orbit:push after s1: no word pair across the cut, words keep their own sides",
+   "depth_pivot after s2: no word pair across the cut, words keep their own sides",
+   "orbit:fly after s3: no word pair across the cut, words keep their own sides",
+   "orbit:pullback after s4: no word pair across the cut, words keep their own sides"
+  ],
+  "owner": {
+   "background": [
+    {
+     "shot": "s1",
+     "kept_textbg": false,
+     "ltx_words": [],
+     "drift": null,
+     "why": "no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background"
+    },
+    {
+     "shot": "s2",
+     "kept_textbg": false,
+     "ltx_words": [],
+     "drift": null,
+     "why": "no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background"
+    },
+    {
+     "shot": "s3",
+     "kept_textbg": false,
+     "ltx_words": [],
+     "drift": null,
+     "why": "no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background"
+    },
+    {
+     "shot": "s4",
+     "kept_textbg": false,
+     "ltx_words": [],
+     "drift": null,
+     "why": "no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background"
+    },
+    {
+     "shot": "s5",
+     "kept_textbg": false,
+     "ltx_words": [],
+     "drift": null,
+     "why": "no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background"
+    },
+    {
+     "shot": "s1",
+     "kept_textbg": false,
+     "ltx_words": [],
+     "drift": null,
+     "why": "no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background"
+    },
+    {
+     "shot": "s2",
+     "kept_textbg": false,
+     "ltx_words": [],
+     "drift": null,
+     "why": "no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background"
+    },
+    {
+     "shot": "s3",
+     "kept_textbg": false,
+     "ltx_words": [],
+     "drift": null,
+     "why": "no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background"
+    },
+    {
+     "shot": "s4",
+     "kept_textbg": false,
+     "ltx_words": [],
+     "drift": null,
+     "why": "no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background"
+    },
+    {
+     "shot": "s5",
+     "kept_textbg": false,
+     "ltx_words": [],
+     "drift": null,
+     "why": "no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background"
+    }
+   ],
+   "fallback": [
+    "background s1: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+    "background s2: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+    "background s3: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+    "background s4: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+    "background s5: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+    "background s1: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+    "background s2: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+    "background s3: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+    "background s4: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background",
+    "background s5: no LTX-owned word is left in the shot (all flat): the text pass may hold a half-formed word, so the clean clip is the background"
+   ]
+  }
+ },
+ "quality": "draft",
+ "shots": [
+  {
+   "control": {
+    "pass": "depth"
+   },
+   "depth": true,
+   "first": "A",
+   "flow": true,
+   "frames": 81,
+   "guide": 1.0,
+   "id": "s1",
+   "kind": "control",
+   "prompt": "Wide establishing shot, slow push in, massive rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, The rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, bobbing slightly against the concrete quay in deep shadows.",
+   "seed": 1401102029,
+   "size": [
+    576,
+    1024
+   ]
+  },
+  {
+   "control": {
+    "pass": "depth"
+   },
+   "depth": true,
+   "first": "B",
+   "flow": true,
+   "frames": 65,
+   "guide": 1.0,
+   "id": "s2",
+   "kind": "control",
+   "prompt": "Tight close-up, camera orbits the subject, massive rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, Close-up of the rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, with sodium orange light reflecting off wet metal.",
+   "seed": 3398061943,
+   "size": [
+    576,
+    1024
+   ],
+   "span": 64
+  },
+  {
+   "control": {
+    "pass": "depth"
+   },
+   "depth": true,
+   "first": "C",
+   "flow": true,
+   "frames": 65,
+   "guide": 1.0,
+   "id": "s3",
+   "kind": "control",
+   "prompt": "Medium shot, slow pull back, massive rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, The rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, seen from a low angle against a heavy navy sky.",
+   "seed": 3180167137,
+   "size": [
+    576,
+    1024
+   ],
+   "span": 64
+  },
+  {
+   "control": {
+    "pass": "depth"
+   },
+   "depth": true,
+   "first": "D",
+   "flow": true,
+   "frames": 65,
+   "guide": 1.0,
+   "id": "s4",
+   "kind": "control",
+   "prompt": "Low-angle shot from the ground, crane up, massive rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, The rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, vibrating as a distant horn blows, water churning.",
+   "seed": 602532418,
+   "size": [
+    576,
+    1024
+   ],
+   "span": 64
+  },
+  {
+   "control": {
+    "pass": "depth"
+   },
+   "depth": true,
+   "first": "E",
+   "flow": true,
+   "frames": 113,
+   "guide": 1.0,
+   "id": "s5",
+   "kind": "control",
+   "prompt": "Extreme close-up on a detail, slow pan right, massive rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, A working harbour under storm light and heavy cloud, humid air, high-contrast fast, glowing letters built into the scene as part of the world, one steady continuous camera push forward, light slides across surfaces",
+   "seed": 1424939732,
+   "size": [
+    576,
+    1024
+   ],
+   "span": 111
+  }
+ ],
+ "signoff": {
+  "color": [
+   250,
+   240,
+   222
+  ],
+  "font": "Space Grotesk",
+  "off": true,
+  "px": 41,
+  "t0": 14.71,
+  "text": "90 bpm"
+ },
+ "sizes": {
+  "compose": [
+   540,
+   960
+  ],
+  "control": [
+   576,
+   1024
+  ],
+  "shot": [
+   576,
+   1024
+  ],
+  "type": [
+   576,
+   1024
+  ]
+ },
+ "slug": "still-the-tide-turns",
+ "stills": [
+  {
+   "id": "A",
+   "model": "moss",
+   "negative": "nsfw, worst quality, bad anatomy, jpeg artifact, text, letters, words, watermark, logo, caption, signature, signage, signs, typography, lettering, blurry, deformed, oversaturated, cartoon",
+   "prompt": "wide establishing shot from far back with the subject small in a large space, massive rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, A working harbour under storm light and heavy cloud, humid air, high-contrast fast film photograph with deep shadows and sodium orange highlights, navy blue tones, the rusty tugboat moored against a concrete quay., high-contrast fast film photograph, deep shadows, hard light, navy blue with sodium orange colour palette, tall vertical frame",
+   "seed": 3657449288,
+   "size": [
+    576,
+    1024
+   ]
+  },
+  {
+   "angle_fallback": true,
+   "angle_of": "A",
+   "framing": "close-up",
+   "id": "B",
+   "model": "moss",
+   "negative": "nsfw, worst quality, bad anatomy, jpeg artifact, text, letters, words, watermark, logo, caption, signature, signage, signs, typography, lettering, blurry, deformed, oversaturated, cartoon",
+   "prompt": "tight close-up with the subject's face and shoulders filling the frame, massive rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, A working harbour under storm light and heavy cloud, humid air, high-contrast fast film photograph with deep shadows and sodium orange highlights, navy blue tones, the rusty tugboat moored against a concrete quay., high-contrast fast film photograph, deep shadows, hard light, navy blue with sodium orange colour palette, tall vertical frame, the same subject and scene as above, a close-up, the camera close to the subject, framing the subject's head and shoulders and what they hold",
+   "seed": 4211156522,
+   "size": [
+    576,
+    1024
+   ]
+  },
+  {
+   "id": "C",
+   "model": "moss",
+   "negative": "nsfw, worst quality, bad anatomy, jpeg artifact, text, letters, words, watermark, logo, caption, signature, signage, signs, typography, lettering, blurry, deformed, oversaturated, cartoon",
+   "prompt": "medium shot at eye level with the subject framed from the waist up, massive rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, The rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, seen from against a heavy navy sky., medium shot, high-contrast fast film photograph, deep shadows, hard light, navy blue with sodium orange colour palette, tall vertical frame",
+   "seed": 1644722064,
+   "size": [
+    576,
+    1024
+   ]
+  },
+  {
+   "angle_fallback": true,
+   "angle_of": "C",
+   "framing": "low",
+   "id": "D",
+   "model": "moss",
+   "negative": "nsfw, worst quality, bad anatomy, jpeg artifact, text, letters, words, watermark, logo, caption, signature, signage, signs, typography, lettering, blurry, deformed, oversaturated, cartoon",
+   "prompt": "very low camera angle on the ground looking steeply up at the subject, massive rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, The rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, seen from against a heavy navy sky., high-contrast fast film photograph, deep shadows, hard light, navy blue with sodium orange colour palette, tall vertical frame, the same subject and scene as above, a very low angle just above the ground or water at the subject's side, looking up at the subject against the sky",
+   "seed": 353322758,
+   "size": [
+    576,
+    1024
+   ]
+  },
+  {
+   "angle_fallback": true,
+   "angle_of": "C",
+   "framing": "extreme close-up",
+   "id": "E",
+   "model": "moss",
+   "negative": "nsfw, worst quality, bad anatomy, jpeg artifact, text, letters, words, watermark, logo, caption, signature, signage, signs, typography, lettering, blurry, deformed, oversaturated, cartoon",
+   "prompt": "extreme close-up on one small detail filling the whole frame, massive rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, The rusty tugboat, peeling navy blue paint, orange oxidized iron hull, heavy weathered mooring ropes, seen from against a heavy navy sky., high-contrast fast film photograph, deep shadows, hard light, navy blue with sodium orange colour palette, tall vertical frame, the same subject and scene as above, an extreme close-up on one detail of the subject, filling the frame",
+   "seed": 2339099301,
+   "size": [
+    576,
+    1024
+   ]
+  }
+ ],
+ "technique": "built_in",
+ "type": {
+  "bar": 4,
+  "beats": [
+   0.044,
+   0.7107,
+   1.3773,
+   2.044,
+   2.7106,
+   3.3773,
+   4.044,
+   4.7106,
+   5.3773,
+   6.044,
+   6.7106,
+   7.3773,
+   8.044,
+   8.7106,
+   9.3773,
+   10.0439,
+   10.7106,
+   11.3773,
+   12.0439,
+   12.7106,
+   13.3773,
+   14.0439,
+   14.7106,
+   15.3772,
+   16.0439,
+   16.7106,
+   17.3772,
+   18.0439,
+   18.7106,
+   19.3772,
+   20.0439
+  ],
+  "bpm": 90.001,
+  "camera": "beat_orbit",
+  "camera_params": {
+   "bob": 0.52,
+   "elev": 4.9,
+   "fast_dps": 18.8,
+   "intro_deg": 24.6,
+   "read_dps": 3.7
+  },
+  "downbeats": [
+   0.7107,
+   3.3773,
+   6.044,
+   8.7106,
+   11.3773,
+   14.0439,
+   16.7106,
+   19.3772
+  ],
+  "duration": 16.0,
+  "energy": 0.7,
+  "fps": 24,
+  "line": {
+   "px": 4.0
+  },
+  "mood": "somber tension",
+  "palette": {
+   "accents": [
+    [
+     255,
+     150,
+     40
+    ],
+    [
+     255,
+     200,
+     90
+    ],
+    [
+     230,
+     110,
+     30
+    ]
+   ],
+   "bg": [
+    8,
+    16,
+    40
+   ],
+   "fg": [
+    250,
+    240,
+    222
+   ]
+  },
+  "seed": 37527,
+  "transitions": [
+   "twist",
+   "ripple",
+   "cut"
+  ],
+  "words": [
+   {
+    "exit_s": 0.71,
+    "font": "Blackout_Midnight.ttf",
+    "form_in": "particles",
+    "form_out": "particles",
+    "form_s": 0.71,
+    "hit_on": "bar",
+    "module": "staircase",
+    "placement": {
+     "dx": 0.0,
+     "dy": -0.1,
+     "hf": 0.4,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "wf": 0.8,
+     "yaw": 7.0
+    },
+    "render": "flat",
+    "t0": 0.0,
+    "t1": 2.62,
+    "text": "STILL"
+   },
+   {
+    "axes": {
+     "wght": [
+      100.0,
+      300.0,
+      "beat"
+     ]
+    },
+    "entry": "left",
+    "exit_s": 0.71,
+    "font": "BigShouldersDisplay[wght].ttf",
+    "form_in": "lines",
+    "form_out": "flicker",
+    "form_s": 0.45,
+    "hit_on": "bar",
+    "module": "staircase",
+    "placement": {
+     "dx": 0.0,
+     "dy": 0.0,
+     "hf": 0.3,
+     "pitch": 5.0,
+     "roll": 0.0,
+     "wf": 0.6,
+     "yaw": -8.0
+    },
+    "render": "flat",
+    "t0": 3.02,
+    "t1": 5.38,
+    "text": "THE"
+   },
+   {
+    "exit_s": 0.71,
+    "font": "Blackout_Midnight.ttf",
+    "form_in": "particles",
+    "form_out": "particles",
+    "form_s": 0.45,
+    "hit_on": "bar",
+    "ltx_at": 0.6,
+    "material": "weathered oxidized iron, extruded, pitted surface",
+    "module": "staircase",
+    "placement": {
+     "dx": 0.0,
+     "dy": 0.1,
+     "hf": 0.4,
+     "pitch": -5.0,
+     "roll": 0.0,
+     "wf": 0.7,
+     "yaw": 6.0
+    },
+    "render": "handoff",
+    "t0": 5.78,
+    "t1": 8.34,
+    "text": "TIDE"
+   },
+   {
+    "entry": "right",
+    "exit_s": 1.43,
+    "font": "Jacquard12-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "flicker",
+    "form_s": 0.45,
+    "hit_on": "bar",
+    "module": "staircase",
+    "placement": {
+     "dx": 0.0,
+     "dy": 0.0,
+     "hf": 0.45,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "wf": 0.85,
+     "yaw": -9.0
+    },
+    "render": "flat",
+    "t0": 10.927,
+    "t1": 15.207,
+    "text": "TURNS"
+   }
+  ]
+ },
+ "type_passes": [
+  "matte",
+  "depth",
+  "line",
+  "beauty"
+ ]
+}

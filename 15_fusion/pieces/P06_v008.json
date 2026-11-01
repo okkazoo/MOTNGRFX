@@ -1,0 +1,690 @@
+{
+ "id": "P06_v008",
+ "slug": "song-chords",
+ "fps": 24,
+ "audio": {
+  "src": "15_fusion/v001/local/audio/P06_song_cut.wav",
+  "bpm": 160,
+  "analysis": "15_fusion/v002/local/audio/P06_song_cut_grid_analysis.json",
+  "cut": 18.0,
+  "fade": 0.5
+ },
+ "type": {
+  "mood": "kinetic emotional",
+  "energy": 0.8,
+  "palette": {
+   "bg": [
+    15,
+    20,
+    40
+   ],
+   "fg": [
+    240,
+    240,
+    255
+   ],
+   "accents": [
+    [
+     100,
+     180,
+     255
+    ],
+    [
+     255,
+     180,
+     100
+    ],
+    [
+     180,
+     120,
+     255
+    ]
+   ]
+  },
+  "camera": "beat_orbit",
+  "camera_params": {
+   "read_dps": 5.0,
+   "intro_deg": 10.0,
+   "elev": 2.0,
+   "bob": 1.0
+  },
+  "transitions": [
+   "ripple",
+   "twist",
+   "fan",
+   "braid",
+   "cut"
+  ],
+  "line": {
+   "px": 4.0
+  },
+  "words": [
+   {
+    "text": "STILL",
+    "font": "Blackout_Midnight.ttf",
+    "module": "lanes",
+    "form_in": "lines",
+    "form_out": "particles",
+    "form_s": 1.25,
+    "exit_s": 0.5,
+    "placement": {
+     "yaw": 0.0,
+     "wf": 0.7,
+     "hf": 0.3
+    },
+    "screen_offset": [
+     0.0,
+     -0.1
+    ],
+    "matte": "glow",
+    "t0": 0.0,
+    "t1": 3.05,
+    "hit_on": "beat"
+   },
+   {
+    "text": "SEARCHING",
+    "font": "BigShouldersDisplay[wght].ttf",
+    "module": "lanes",
+    "lines": [
+     "SEARCH",
+     "ING"
+    ],
+    "form_in": "lines",
+    "form_out": "particles",
+    "form_s": 0.45,
+    "exit_s": 0.5,
+    "placement": {
+     "yaw": 0.0,
+     "wf": 0.6,
+     "hf": 0.4
+    },
+    "axes": {
+     "wght": 800.0
+    },
+    "t0": 3.45,
+    "t1": 5.7,
+    "hit_on": "bar"
+   },
+   {
+    "text": "A LIGHT",
+    "font": "Anybody[wdth,wght].ttf",
+    "module": "lanes",
+    "lines": [
+     "A",
+     "LIGHT"
+    ],
+    "form_in": "lines",
+    "form_out": "particles",
+    "form_s": 0.45,
+    "exit_s": 0.5,
+    "placement": {
+     "yaw": 0.0,
+     "wf": 0.7,
+     "hf": 0.4
+    },
+    "axes": {
+     "wght": 700.0,
+     "wdth": 110.0
+    },
+    "t0": 6.1,
+    "t1": 8.35,
+    "hit_on": "beat"
+   },
+   {
+    "text": "AHEAD",
+    "font": "Blackout_Midnight.ttf",
+    "module": "lanes",
+    "form_in": "lines",
+    "form_out": "particles",
+    "form_s": 0.45,
+    "exit_s": 0.5,
+    "placement": {
+     "yaw": 0.0,
+     "wf": 0.8,
+     "hf": 0.3
+    },
+    "screen_offset": [
+     0.0,
+     -0.1
+    ],
+    "t0": 8.75,
+    "t1": 11.0,
+    "hit_on": "beat"
+   },
+   {
+    "text": "KEEP",
+    "font": "BigShouldersDisplay[wght].ttf",
+    "module": "lanes",
+    "form_in": "lines",
+    "form_out": "particles",
+    "form_s": 0.45,
+    "exit_s": 0.5,
+    "placement": {
+     "yaw": 0.0,
+     "wf": 0.7,
+     "hf": 0.3
+    },
+    "axes": {
+     "wght": 900.0
+    },
+    "t0": 11.4,
+    "t1": 13.65,
+    "hit_on": "beat"
+   },
+   {
+    "text": "GOING",
+    "font": "Anybody[wdth,wght].ttf",
+    "module": "lanes",
+    "form_in": "lines",
+    "form_out": "particles",
+    "form_s": 0.45,
+    "exit_s": 0.5,
+    "placement": {
+     "yaw": 0.0,
+     "wf": 0.7,
+     "hf": 0.3
+    },
+    "axes": {
+     "wght": 800.0,
+     "wdth": 120.0
+    },
+    "t0": 14.05,
+    "t1": 16.3,
+    "hit_on": "bar"
+   }
+  ],
+  "seed": 6
+ },
+ "type_passes": [
+  "matte",
+  "line"
+ ],
+ "stills": [
+  {
+   "id": "A",
+   "model": "moss",
+   "seed": 1601,
+   "size": [
+    1088,
+    1920
+   ],
+   "negative": "text, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, extra limbs, deformed hands, blurry subject",
+   "prompt": "a lone runner in dark athletic clothes sprinting along a long concrete tunnel, seen from the side in mid stride at the left of frame, cold blue and cyan light from strip lights in the ceiling, wet floor reflections, deep perspective, strong rim light on the runner, cinematic 35mm photograph, tall vertical frame, the runner fills about a third of the frame height",
+   "media": "15_fusion/v003/out/motion-graphic_fusion_v003_P06_still_A_1_00001_.png"
+  },
+  {
+   "id": "B",
+   "model": "moss",
+   "seed": 1602,
+   "size": [
+    1088,
+    1920
+   ],
+   "negative": "text, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, extra limbs, deformed hands, blurry subject",
+   "prompt": "a lone runner in dark athletic clothes sprinting down an empty city street at dawn, seen from the side in mid stride at the right of frame, low amber sunrise light flooding the street between buildings, long shadows, warm haze, rim light on the runner, cinematic 35mm photograph, tall vertical frame, the runner fills about a third of the frame height",
+   "media": "15_fusion/v003/out/motion-graphic_fusion_v003_P06_still_B_1_00001_.png"
+  },
+  {
+   "id": "C",
+   "model": "moss",
+   "seed": 1603,
+   "size": [
+    1088,
+    1920
+   ],
+   "negative": "text, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, extra limbs, deformed hands, blurry subject",
+   "prompt": "a lone runner in dark athletic clothes running across a city rooftop at twilight, seen from the side in mid stride at the left of frame, vast open violet and purple sky with soft clouds, distant skyline, cool violet light, rim light on the runner, cinematic 35mm photograph, tall vertical frame, the runner fills about a third of the frame height",
+   "media": "15_fusion/v003/out/motion-graphic_fusion_v003_P06_still_C_1_00001_.png"
+  }
+ ],
+ "shots": [
+  {
+   "id": "s1a",
+   "kind": "i2v",
+   "first": "A",
+   "frames": 73,
+   "seed": 61,
+   "size": [
+    1088,
+    1920
+   ],
+   "matte": true,
+   "prompt": "the runner sprints forward along the concrete tunnel, the camera tracks alongside keeping the runner in the same place in the frame, cold blue strip lights streak past overhead, wet floor reflections, fast energetic motion, cinematic",
+   "flow": true,
+   "media": {
+    "shot": "15_fusion/v003/ingredients/P06/motion-graphic_fusion_v003_P06_s1a_1_00001_.mp4",
+    "matte": "15_fusion/v003/ingredients/P06/matte_s1a"
+   }
+  },
+  {
+   "id": "s1b",
+   "kind": "i2v",
+   "first": "last:s1a",
+   "frames": 73,
+   "seed": 62,
+   "size": [
+    1088,
+    1920
+   ],
+   "matte": true,
+   "prompt": "the runner keeps sprinting along the tunnel, the camera tracks alongside keeping the runner in the same place in the frame, blue light streaks rush past, water splashes from the wet floor, fast energetic motion, cinematic",
+   "flow": true,
+   "masktrack": {
+    "style": "rain",
+    "start": "auto",
+    "denoise": 1.0,
+    "corridor": false,
+    "subject": "the runner"
+   },
+   "media": {
+    "shot": "15_fusion/v003/ingredients/P06/motion-graphic_fusion_v003_P06_s1b_1_00001_.mp4",
+    "matte": "15_fusion/v003/ingredients/P06/matte_s1b"
+   }
+  },
+  {
+   "id": "s2a",
+   "kind": "i2v",
+   "first": "B",
+   "frames": 73,
+   "seed": 63,
+   "size": [
+    1088,
+    1920
+   ],
+   "matte": true,
+   "prompt": "the runner sprints down the empty street toward the rising sun, the camera tracks alongside keeping the runner in the same place in the frame, golden light flares through the haze, long shadows rush past, fast energetic motion, cinematic",
+   "flow": true,
+   "media": {
+    "shot": "15_fusion/v003/ingredients/P06/motion-graphic_fusion_v003_P06_s2a_1_00001_.mp4",
+    "matte": "15_fusion/v003/ingredients/P06/matte_s2a"
+   }
+  },
+  {
+   "id": "s2b",
+   "kind": "i2v",
+   "first": "last:s2a",
+   "frames": 73,
+   "seed": 64,
+   "size": [
+    1088,
+    1920
+   ],
+   "matte": true,
+   "prompt": "the runner keeps sprinting down the street, the camera tracks alongside keeping the runner in the same place in the frame, amber sun flares, dust glitters in the light, fast energetic motion, cinematic",
+   "flow": true,
+   "masktrack": {
+    "style": "rain",
+    "start": "auto",
+    "denoise": 1.0,
+    "corridor": false,
+    "subject": "the runner"
+   },
+   "media": {
+    "shot": "15_fusion/v003/ingredients/P06/motion-graphic_fusion_v003_P06_s2b_1_00001_.mp4",
+    "matte": "15_fusion/v003/ingredients/P06/matte_s2b"
+   }
+  },
+  {
+   "id": "s3a",
+   "kind": "i2v",
+   "first": "C",
+   "frames": 73,
+   "seed": 65,
+   "size": [
+    1088,
+    1920
+   ],
+   "matte": true,
+   "prompt": "the runner runs across the rooftop at twilight, the camera tracks alongside keeping the runner in the same place in the frame, violet clouds drift across the open sky, the city skyline slides past, fast energetic motion, cinematic",
+   "flow": true,
+   "media": {
+    "shot": "15_fusion/v003/ingredients/P06/motion-graphic_fusion_v003_P06_s3a_1_00001_.mp4",
+    "matte": "15_fusion/v003/ingredients/P06/matte_s3a"
+   }
+  },
+  {
+   "id": "s3b",
+   "kind": "i2v",
+   "first": "last:s3a",
+   "frames": 73,
+   "seed": 66,
+   "size": [
+    1088,
+    1920
+   ],
+   "matte": true,
+   "prompt": "the runner keeps running across the rooftop, the camera tracks alongside keeping the runner in the same place in the frame, violet clouds race across the sky, the skyline slides past, fast energetic motion, cinematic",
+   "flow": true,
+   "masktrack": {
+    "style": "rain",
+    "start": "auto",
+    "denoise": 1.0,
+    "corridor": false,
+    "subject": "the runner"
+   },
+   "media": {
+    "shot": "15_fusion/v003/ingredients/P06/motion-graphic_fusion_v003_P06_s3b_1_00001_.mp4",
+    "matte": "15_fusion/v003/ingredients/P06/matte_s3b"
+   }
+  }
+ ],
+ "compose": {
+  "size": [
+   1080,
+   1920
+  ],
+  "crossfade": [
+   0.0833,
+   0,
+   0.0833,
+   0,
+   0.0833
+  ],
+  "crf": 16,
+  "default": {
+   "ops": [
+    {
+     "op": "upscale_matte",
+     "out": "m",
+     "args": {
+      "matte": "$matte",
+      "size": [
+       1080,
+       1920
+      ],
+      "guide": "$footage"
+     }
+    },
+    {
+     "op": "grade",
+     "out": "foot",
+     "args": {
+      "frame": "$footage",
+      "lift": 0.0,
+      "gamma": 1.0,
+      "gain": 0.8,
+      "sat": 1.0
+     }
+    },
+    {
+     "op": "tint_type",
+     "out": "tcol",
+     "args": {
+      "type_a": "$type_line",
+      "footage": "$footage",
+      "mode": "sample",
+      "sample_blur": 60,
+      "sat": 0.5,
+      "lum_target": 0.93,
+      "lum_amount": 0.92
+     }
+    },
+    {
+     "op": "fill",
+     "out": "warm",
+     "args": {
+      "like": "$footage",
+      "color": [
+       1.0,
+       0.8,
+       0.55
+      ]
+     }
+    },
+    {
+     "op": "crossfade",
+     "out": "tcol",
+     "args": {
+      "a": "$tcol",
+      "b": "$warm",
+      "t": {
+       "timeline": [
+        [
+         12.375,
+         0.0
+        ],
+        [
+         15.5,
+         0.8
+        ],
+        [
+         18.0,
+         0.8
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "op": "crossfade",
+     "out": "ta",
+     "args": {
+      "a": "$type_line",
+      "b": "$type_matte",
+      "t": {
+       "timeline": [
+        [
+         11.75,
+         0.0
+        ],
+        [
+         12.75,
+         1.0
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "op": "legible",
+     "out": "m",
+     "args": {
+      "type_a": "$ta",
+      "matte": "$m",
+      "t": "$t",
+      "fps": 24,
+      "min_vis": 0.8,
+      "min_frac": 0.8,
+      "ramp_s": 0.25,
+      "matte_threshold": 0.5,
+      "matte_soft": 0.08
+     }
+    },
+    {
+     "op": "sandwich",
+     "out": "image",
+     "args": {
+      "footage": "$foot",
+      "type_rgb": "$tcol",
+      "type_a": "$ta",
+      "matte": "$m",
+      "type_opacity": 0.9,
+      "matte_threshold": 0.5,
+      "matte_soft": 0.08
+     }
+    },
+    {
+     "op": "add_glow",
+     "out": "image",
+     "args": {
+      "img": "$image",
+      "mask": "$type_matte",
+      "radius": 24,
+      "intensity": {
+       "curve": "sub",
+       "lo": 0.05,
+       "hi": 0.2
+      },
+      "color": [
+       1.0,
+       1.0,
+       1.0
+      ]
+     }
+    },
+    {
+     "op": "contour_lines",
+     "out": "_gl0c",
+     "args": {
+      "src": "$m",
+      "mode": "outline",
+      "width": 2,
+      "smooth": 3.0,
+      "min_len": 60.0,
+      "max_contours": 2,
+      "strokes": 2,
+      "jitter": 4.0,
+      "frame_idx": "$frame_idx",
+      "seed": 1
+     }
+    },
+    {
+     "op": "mask_gate",
+     "out": "_gl0c",
+     "args": {
+      "a": "$_gl0c",
+      "gate": {
+       "timeline": [
+        [
+         0.975,
+         0.0
+        ],
+        [
+         1.125,
+         1.0
+        ],
+        [
+         2.25,
+         1.0
+        ],
+        [
+         2.4,
+         0.0
+        ]
+       ],
+       "ease": "smooth"
+      }
+     }
+    },
+    {
+     "op": "add_glow",
+     "out": "image",
+     "args": {
+      "img": "$image",
+      "mask": "$_gl0c",
+      "radius": 18.0,
+      "intensity": 0.8,
+      "color": "$tcol"
+     }
+    },
+    {
+     "op": "over",
+     "out": "image",
+     "args": {
+      "base": "$image",
+      "fg": "$tcol",
+      "alpha": "$_gl0c"
+     }
+    },
+    {
+     "op": "grade",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "lift": 0.012,
+      "gamma": 1.0,
+      "gain": 1.0,
+      "sat": 1.0
+     }
+    },
+    {
+     "op": "grain",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 1,
+      "amount": 0.02,
+      "size": 1.3
+     }
+    },
+    {
+     "op": "vignette",
+     "out": "image",
+     "args": {
+      "frame": "$image",
+      "strength": 0.3
+     }
+    }
+   ]
+  },
+  "shots": {}
+ },
+ "signoff": {
+  "text": "song chords  /  160 bpm",
+  "font": "Space Mono",
+  "t0": 16.9,
+  "px": 30,
+  "color": [
+   235,
+   232,
+   245
+  ],
+  "off": true
+ },
+ "version": "v008",
+ "parent": {
+  "piece": "P06",
+  "version": "v003",
+  "reuse": [
+   "stills",
+   "shots",
+   "alpha",
+   "audio",
+   "masktrack"
+  ],
+  "why": "Qwen-only design (Gemma 4 31B, seed 1) from the fixed design guide; reuses P06 v003 footage"
+ },
+ "title": "Song Chords v008 — Gemma 4 31B s1",
+ "design": {
+  "model": "Gemma 4 31B",
+  "seed": 1,
+  "concept": "The type lives BEHIND the subject: every word sits between background and subject at the scale of the subject, the subject crosses it.",
+  "treatment_notes": "Type is placed using the 'behind' technique, scaled to the runner's height, allowing the subject to physically occlude the letters as they sprint.",
+  "repair_turns": 1,
+  "technique": "behind",
+  "usage": {
+   "cost": 0.005696,
+   "turns": [
+    {
+     "tin": 9105,
+     "tout": 1512,
+     "cost": 0.002000295,
+     "secs": 80.7,
+     "model": "google/gemma-4-31b-it"
+    },
+    {
+     "tin": 9078,
+     "tout": 1507,
+     "cost": 0.0019941,
+     "secs": 55.2,
+     "model": "google/gemma-4-31b-it"
+    },
+    {
+     "tin": 10933,
+     "tout": 1507,
+     "cost": 0.001701165,
+     "secs": 44.6,
+     "model": "google/gemma-4-31b-it"
+    }
+   ]
+  }
+ },
+ "plan": {
+  "matte_treatments": {
+   "words": 1,
+   "treatments": 1,
+   "chains": 1
+  }
+ }
+}

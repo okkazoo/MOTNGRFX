@@ -1,0 +1,77 @@
+MOTNGRFX
+Copyright 2026 okkazoo
+
+This project's own code is licensed under the Apache License 2.0 (see LICENSE).
+
+THIRD-PARTY NOTICES
+
+MOTNGRFX downloads, but does not redistribute, the third-party model weights listed below.
+They are fetched at setup time by the user (scripts/download_models.py, the provisioning card,
+or by hand) from their original sources. The weights are NOT part of this repository. Each
+remains under its own licence; where a download is gated you must accept the terms with your
+own account and token. Not legal advice. Full audit with sources: _info/licences.md.
+Licence texts shipped with the repo: licenses/ (index licenses/README.md) and mograph/fonts/.
+
+1. LTX models (Lightricks)
+   - LTX-2.5 22B distilled transformer (int8), video VAE, audio VAE, spatial latent upscaler;
+     IC-LoRA Alpha-Gen; IC-LoRA Clean-Plate.
+     LTX-2.x Community License Agreement (11 Aug 2026):
+     https://github.com/Lightricks/LTX-2/blob/main/LICENSE-2_x
+   - LTX-2.3 IC-LoRA Union-Control.
+     LTX-2 Community License Agreement (5 Jan 2026):
+     https://github.com/Lightricks/LTX-2/blob/main/LICENSE-2
+   - ComfyUI-LTXVideo node pack (installed separately, not vendored): LTX-2 Community License.
+   Pass-through terms (summary; the licence text governs): free for entities under US$10M annual
+   revenue (affiliates aggregated); at or above that a commercial agreement with Lightricks is
+   required; Lightricks claims no rights in outputs; an Acceptable Use Policy applies (among
+   other things: no deepfakes or impersonation without consent, no unlawful or military use, no
+   use to train competing models, no removal of safety measures or watermarks, label
+   machine-generated content that is published); models and derivatives you redistribute must
+   carry the same licence. The LTX-2.5 files and the Alpha-Gen / Clean-Plate IC-LoRAs are gated on
+   Hugging Face: accept the licence and use HF_TOKEN. Using these files means accepting those terms.
+   This project does not imply endorsement by Lightricks.
+
+2. Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+   - Gemma 4 31B instruct QAT (GGUF, unsloth/gemma-4-31B-it-qat-GGUF), the design model (Google).
+   - Gemma 4 12B text encoder with LTX projection layers (Google; delivered inside the
+     Lightricks/LTX-2.5 repo, so the LTX licence above also applies to that file).
+   - Qwen3.5-9B
+     (MOSS text encoder for the stills only; it designs nothing, Gemma is the only design model) (Alibaba Qwen).
+   - MOSS-Image SFT (OpenMOSS; repack Comfy-Org/MOSS-Image).
+   - FLUX.2 small decoder, used only as the VAE inside the MOSS-Image stills chain
+     (Black Forest Labs). Trademarks of Black Forest Labs are not used to imply endorsement.
+   - Video Depth Anything Small (ByteDance / HKU) and ComfyUI-Video-Depth-Anything.
+     The Base and Large models are CC BY-NC 4.0 and are not used.
+   - SageAttention (THU-ML), optional launch flag.
+
+3. MIT License
+   - ACE-Step 1.5 (ACE Studio / StepFun), music: https://github.com/ace-step/ACE-Step-1.5
+     Generated music: AI-generated; check originality before commercial release.
+   - Whisper large-v3 (OpenAI, MIT) run through faster-whisper (SYSTRAN, MIT): lyric timing for the
+     own-video script route only (tools/app/own_video*.py). Installed separately, not in the default graph.
+
+4. SIL Open Font License 1.1
+   - Fonts in mograph/fonts/, each family with its own licence file beside it
+     (OFL-<Family>.txt, one per family; copyright lines are inside each file). Ultra is
+     licensed under the Apache License 2.0 (mograph/fonts/LICENSE-Ultra.txt). Keep these
+     files with any copy of the fonts. Only the fonts in mograph/fonts/liked.json are used.
+
+5. Code and tools
+   - Real-ESRGAN (xinntao) RealESRGAN_x2plus / RealESRGAN_x4plus weights: BSD-3-Clause, used for the
+     final 1080x1920 upscale (https://github.com/xinntao/Real-ESRGAN, copyright notice in its LICENSE).
+   - torchvision RAFT: code BSD-3-Clause; pretrained weights are downloaded by torchvision
+     at run time (their training-data terms were not verified).
+   - llama.cpp / llama-cpp-python (MIT), installed separately, runs the GGUF design models.
+   - ComfyUI (GPL-3.0) is the host and is not vendored.
+   - SoundFont banks (optional, downloaded at run time, never committed): licenses/banks/README.md.
+     Salamander Grand Piano V3 (Alexander Holm) is CC BY 3.0 and needs credit if used.
+
+6. No declared licence
+   - MOSS-Image edit LoRA (chinoll/Moss-Image-Edit, saved as moss_image_edit_chinoll.safetensors),
+     used for same-subject new-angle stills. The weights declare no licence (the author's GitHub
+     repo is GPLv3 for code only). It is downloaded from the author's public repository, not
+     redistributed here, and is not covered by any grant in this NOTICE. It is not part of the
+     licence-cleared model set.
+
+Generated media is AI-generated. Do not use these models to impersonate real people or to
+produce unlicensed IP or unlawful content; see each model's acceptable-use policy.

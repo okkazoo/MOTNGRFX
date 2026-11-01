@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MOTNGRFX</title>
+<link rel="icon" href="/mograph/static/assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/mograph/static/app.css">
+</head>
+<body>
+<header id="topbar">
+  <img class="logo" src="/mograph/static/assets/logo.svg" alt="" width="18" height="18">
+  <span class="sep"></span>
+  <button id="btn-home" class="icon-btn" title="Back to examples" aria-label="Back to examples"></button>
+  <span class="app-name">MOTNGRFX</span><span id="build" class="pill" title="dev build badge (remove when shipping)"></span>
+  <span id="conn" class="conn" hidden></span>
+  <span class="spacer"></span>
+  <label class="dev" title="Workflow template (dev)" style="display:none"><!-- user 2026-10-30: not needed in the app; the box runs one tier (motngrfx_default) -->
+    <span>template</span>
+    <select id="dev-graph"></select>
+  </label>
+  <button id="btn-timings" class="ghost-btn" title="Per-node durations of the last run" hidden><!-- user v20: dev tool, not in the app (timings are still recorded) -->Timings</button>
+  <button id="btn-download" class="yellow-btn" disabled></button>
+</header>
+
+<aside id="panel">
+  <div id="fields"></div>
+  <footer id="panel-foot">
+    <button id="btn-run" class="primary" disabled>Make it</button>
+    <button id="btn-stop" class="link-btn" hidden>Cancel</button>
+    <button id="btn-setup" class="ghost-btn" type="button" hidden title="Back to the words, shots and fonts. Your media, story, word picks and chosen fonts stay as they are; what a stopped run already made is reused.">Back to setup</button>
+    <div id="cost-line"></div>
+    <div id="preflight" hidden></div>
+    <div id="note"></div>
+  </footer>
+</aside>
+
+<main id="canvas">
+  <div id="stage"></div>
+</main>
+
+<div id="zoom">
+  <button id="zoom-out" class="icon-btn" aria-label="Zoom out"></button>
+  <span id="zoom-val">100%</span>
+  <button id="zoom-in" class="icon-btn" aria-label="Zoom in"></button>
+</div>
+
+<aside id="drawer" hidden>
+  <div class="drawer-head">
+    <strong>Timings</strong><span id="drawer-total"></span>
+    <span class="spacer"></span>
+    <button id="btn-copy-timings" class="link-btn">Copy JSON</button>
+    <button id="btn-close-drawer" class="icon-btn" aria-label="Close"></button>
+  </div>
+  <div id="drawer-body"></div>
+</aside>
+
+<div id="toast" hidden></div>
+
+<script src="/mograph/static/bind.js"></script>
+<script src="/mograph/static/buildview.js"></script>
+<script src="/mograph/static/app.js"></script>
+</body>
+</html>

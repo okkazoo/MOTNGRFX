@@ -1,0 +1,305 @@
+{
+ "length": {
+  "class_type": "PrimitiveFloat",
+  "inputs": {
+   "value": 12.0
+  },
+  "_meta": {
+   "title": "IN length"
+  }
+ },
+ "bpm": {
+  "class_type": "PrimitiveInt",
+  "inputs": {
+   "value": 0
+  },
+  "_meta": {
+   "title": "IN bpm"
+  }
+ },
+ "music": {
+  "class_type": "PrimitiveStringMultiline",
+  "inputs": {
+   "value": ""
+  },
+  "_meta": {
+   "title": "IN music"
+  }
+ },
+ "denoise": {
+  "class_type": "PrimitiveFloat",
+  "inputs": {
+   "value": 0.5
+  },
+  "_meta": {
+   "title": "IN denoise"
+  }
+ },
+ "seed": {
+  "class_type": "PrimitiveInt",
+  "inputs": {
+   "value": 1
+  },
+  "_meta": {
+   "title": "IN seed"
+  }
+ },
+ "ace_unet": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "acestep_v1.5_turbo.safetensors",
+   "weight_dtype": "default"
+  },
+  "_meta": {
+   "title": "ACE-Step UNET"
+  }
+ },
+ "ace_shift": {
+  "class_type": "ModelSamplingAuraFlow",
+  "inputs": {
+   "model": [
+    "ace_unet",
+    0
+   ],
+   "shift": 3
+  },
+  "_meta": {
+   "title": "ACE sampling shift"
+  }
+ },
+ "ace_clip": {
+  "class_type": "DualCLIPLoader",
+  "inputs": {
+   "clip_name1": "qwen_0.6b_ace15.safetensors",
+   "clip_name2": "qwen_1.7b_ace15.safetensors",
+   "type": "ace",
+   "device": "default"
+  },
+  "_meta": {
+   "title": "ACE text encoders"
+  }
+ },
+ "ace_vae": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "ace_1.5_vae.safetensors"
+  },
+  "_meta": {
+   "title": "ACE VAE"
+  }
+ },
+ "skel": {
+  "class_type": "MographScoreSkeleton",
+  "inputs": {
+   "length_s": [
+    "length",
+    0
+   ],
+   "music_prompt": [
+    "music",
+    0
+   ],
+   "bpm": [
+    "bpm",
+    0
+   ],
+   "mood": "auto",
+   "energy": -1.0,
+   "key": "",
+   "meter": 4,
+   "seed": [
+    "seed",
+    0
+   ],
+   "hits": "",
+   "sections": ""
+  },
+  "_meta": {
+   "title": "Score skeleton"
+  }
+ },
+ "ace_enc": {
+  "class_type": "MographMusicStyleEncode",
+  "inputs": {
+   "clip": [
+    "ace_clip",
+    0
+   ],
+   "music": [
+    "skel",
+    1
+   ],
+   "tags": [
+    "music",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Music style encode (a2a)"
+  }
+ },
+ "ace_zero": {
+  "class_type": "ConditioningZeroOut",
+  "inputs": {
+   "conditioning": [
+    "ace_enc",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "ACE negative"
+  }
+ },
+ "ace_venc": {
+  "class_type": "VAEEncodeAudio",
+  "inputs": {
+   "audio": [
+    "skel",
+    0
+   ],
+   "vae": [
+    "ace_vae",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Skeleton to latent"
+  }
+ },
+ "ace_ks": {
+  "class_type": "KSampler",
+  "inputs": {
+   "model": [
+    "ace_shift",
+    0
+   ],
+   "positive": [
+    "ace_enc",
+    0
+   ],
+   "negative": [
+    "ace_zero",
+    0
+   ],
+   "latent_image": [
+    "ace_venc",
+    0
+   ],
+   "seed": [
+    "seed",
+    0
+   ],
+   "steps": 8,
+   "cfg": 1.0,
+   "sampler_name": "euler",
+   "scheduler": "simple",
+   "denoise": [
+    "denoise",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "ACE sampler (a2a)"
+  }
+ },
+ "ace_dec": {
+  "class_type": "VAEDecodeAudio",
+  "inputs": {
+   "samples": [
+    "ace_ks",
+    0
+   ],
+   "vae": [
+    "ace_vae",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "ACE decode"
+  }
+ },
+ "ace_fit": {
+  "class_type": "MographMusicFit",
+  "inputs": {
+   "audio": [
+    "ace_dec",
+    0
+   ],
+   "music": [
+    "skel",
+    1
+   ],
+   "skeleton": [
+    "skel",
+    0
+   ],
+   "xfade_ms": 80,
+   "tail_fade_ms": 30,
+   "match_loudness": false
+  },
+  "_meta": {
+   "title": "Music fit"
+  }
+ },
+ "master": {
+  "class_type": "MographMaster",
+  "inputs": {
+   "audio": [
+    "ace_fit",
+    0
+   ],
+   "music": [
+    "ace_fit",
+    1
+   ],
+   "preset": "club",
+   "target_lufs": -14.0,
+   "width": 1.25
+  },
+  "_meta": {
+   "title": "Master"
+  }
+ },
+ "out_skeleton": {
+  "class_type": "SaveAudioAdvanced",
+  "inputs": {
+   "audio": [
+    "skel",
+    0
+   ],
+   "filename_prefix": "projects/COMPETITIONS/motion-graphic/music_exact/mograph_music_exact_skeleton",
+   "format": "flac"
+  },
+  "_meta": {
+   "title": "OUT skeleton"
+  }
+ },
+ "out_raw": {
+  "class_type": "SaveAudioAdvanced",
+  "inputs": {
+   "audio": [
+    "ace_dec",
+    0
+   ],
+   "filename_prefix": "projects/COMPETITIONS/motion-graphic/music_exact/mograph_music_exact_raw",
+   "format": "flac"
+  },
+  "_meta": {
+   "title": "OUT restyled raw"
+  }
+ },
+ "out_final": {
+  "class_type": "SaveAudioAdvanced",
+  "inputs": {
+   "audio": [
+    "master",
+    0
+   ],
+   "filename_prefix": "projects/COMPETITIONS/motion-graphic/music_exact/mograph_music_exact",
+   "format": "flac"
+  },
+  "_meta": {
+   "title": "OUT music"
+  }
+ }
+}

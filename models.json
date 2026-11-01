@@ -1,0 +1,323 @@
+{
+  "version": 1,
+  "models": [
+    {
+      "id": "moss_image_sft_int8_convrot",
+      "group": "image",
+      "dest": "models/diffusion_models/moss_image_sft_int8_convrot.safetensors",
+      "origin_url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/main/diffusion_models/moss_image_sft_int8_convrot.safetensors",
+      "r2_key": "models/diffusion_models/moss_image_sft_int8_convrot.safetensors",
+      "size_bytes": 5413698958,
+      "gated": false,
+      "license": "apache-2.0",
+      "tiers": [
+        12,
+        16,
+        24,
+        32
+      ],
+      "required_by": "MOSS-Image stills (UNETLoader, core, ComfyUI >= 0.42.0)",
+      "notes": "Template image_moss_image_t2i_bboxes names this file but its embedded URL points at moss_image_base_int8_convrot (template bug); this entry uses the SFT URL."
+    },
+    {
+      "id": "moss_image_sft_bf16",
+      "group": "image",
+      "dest": "models/diffusion_models/moss_image_sft_bf16.safetensors",
+      "origin_url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/main/diffusion_models/moss_image_sft_bf16.safetensors",
+      "r2_key": "models/diffusion_models/moss_image_sft_bf16.safetensors",
+      "size_bytes": 10164655808,
+      "gated": false,
+      "license": "apache-2.0",
+      "tiers": [
+        16,
+        24,
+        32
+      ],
+      "required_by": "MOSS-Image stills, 16 / 24 / 32 GB tiers (swap in UNETLoader; the tier graphs fusion_design_qwen_auto_layers_<arm> set it, tools/app/llm_arms.py TIERS)",
+      "notes": "bf16 SFT; 16 / 24 GB tiers added 2026-10-28 (16_app/TIERS.md, not run yet)."
+    },
+    {
+      "id": "qwen3.5_9b_w4a8_gptq",
+      "group": "image",
+      "dest": "models/text_encoders/qwen3.5_9b_w4a8_gptq.safetensors",
+      "origin_url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/main/text_encoders/qwen3.5_9b_w4a8_gptq.safetensors",
+      "r2_key": "models/text_encoders/qwen3.5_9b_w4a8_gptq.safetensors",
+      "size_bytes": 7343591088,
+      "gated": false,
+      "license": "apache-2.0",
+      "tiers": [
+        12,
+        16,
+        24,
+        32
+      ],
+      "required_by": "MOSS-Image text encoder (CLIPLoader type=moss_image)",
+      "notes": ""
+    },
+    {
+      "id": "qwen3.5_9b_int8_convrot",
+      "group": "image",
+      "dest": "models/text_encoders/qwen3.5_9b_int8_convrot.safetensors",
+      "origin_url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/main/text_encoders/qwen3.5_9b_int8_convrot.safetensors",
+      "r2_key": "models/text_encoders/qwen3.5_9b_int8_convrot.safetensors",
+      "size_bytes": 9748121532,
+      "gated": false,
+      "license": "apache-2.0",
+      "tiers": [
+        16
+      ],
+      "required_by": "MOSS-Image text encoder (CLIPLoader type=moss_image), tier graphs (stills chain: still_clip)",
+      "notes": "16 GB tier text encoder (9.08 GiB, replaces w4a8 gptq 6.84); added 2026-10-28, not run in the app stills chain yet."
+    },
+    {
+      "id": "qwen3.5_9b_bf16",
+      "group": "image",
+      "dest": "models/text_encoders/qwen3.5_9b_bf16.safetensors",
+      "origin_url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/main/text_encoders/qwen3.5_9b_bf16.safetensors",
+      "r2_key": "models/text_encoders/qwen3.5_9b_bf16.safetensors",
+      "size_bytes": 19306312328,
+      "gated": false,
+      "license": "apache-2.0",
+      "tiers": [
+        24,
+        32
+      ],
+      "required_by": "MOSS-Image text encoder (CLIPLoader type=moss_image), tier graphs (stills chain: still_clip)",
+      "notes": "24 / 32 GB tier text encoder (17.98 GiB); added 2026-10-28, not run in the app stills chain yet."
+    },
+    {
+      "id": "flux2-vae_small",
+      "group": "image",
+      "dest": "models/vae/flux2-vae_small.safetensors",
+      "origin_url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/main/vae/flux2-vae_small.safetensors",
+      "r2_key": "models/vae/flux2-vae_small.safetensors",
+      "size_bytes": 249521340,
+      "gated": false,
+      "license": "apache-2.0",
+      "tiers": [
+        12,
+        16,
+        24,
+        32
+      ],
+      "required_by": "MOSS-Image VAE (VAELoader)",
+      "notes": "VAE shipped by MOSS-Image; not a FLUX diffusion model."
+    },
+    {
+      "id": "ltx-2.5-distilled-q4_k_m-gguf",
+      "group": "video",
+      "dest": "models/diffusion_models/LTX-2.5-Distilled-Q4_K_M.gguf",
+      "origin_url": "https://huggingface.co/chfm/LTX-2.5-Distilled-GGUF/resolve/main/LTX-2.5-Distilled-Q4_K_M.gguf",
+      "r2_key": "models/diffusion_models/LTX-2.5-Distilled-Q4_K_M.gguf",
+      "size_bytes": 15687639488,
+      "gated": false,
+      "license": "ltx-2.x-community-license-agreement (free under $10M annual revenue)",
+      "tiers": [
+        16
+      ],
+      "required_by": "LTX 2.5 video, 16 GB tier (UnetLoaderGGUF, city96/ComfyUI-GGUF)",
+      "notes": "Community GGUF of the distilled transformer (chfm; byte-identical mirror at Abiray/LTX-2.5-Distilled-GGUF). Repo ships ComfyUI workflows using UnetLoaderGGUF (city96/ComfyUI-GGUF). Smaller alternative: unsloth/LTX-2.5-GGUF distilled/ltx-2.5-22b-distilled-Q4_K_M.gguf (13.58 GB)."
+    },
+    {
+      "id": "ltx-2.5-22b-distilled-int8-convrot",
+      "group": "video",
+      "dest": "models/diffusion_models/ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors",
+      "origin_url": "https://huggingface.co/Lightricks/LTX-2.5/resolve/main/diffusion_models/ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors",
+      "r2_key": "models/diffusion_models/ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors",
+      "size_bytes": 21504034224,
+      "gated": true,
+      "license": "ltx-2.x-community-license-agreement (free under $10M annual revenue)",
+      "tiers": [
+        24,
+        32
+      ],
+      "required_by": "LTX 2.5 video, 24/32 GB tier (UNETLoader, official templates video_ltx2_5_t2v / video_ltx2_5_i2v)",
+      "notes": "No official fp8 LTX 2.5 transformer exists; the official ComfyUI 8-bit build is int8 convrot (ComfyUI only). Gated repo (Lightricks/LTX-2.5): accept the license on HF and wait for approval, then set HF_TOKEN for origin downloads; the R2 mirror is public."
+    },
+    {
+      "id": "gemma4-12b-with-proj-ltx-2.5-int8-convrot",
+      "group": "video",
+      "dest": "models/text_encoders/gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors",
+      "origin_url": "https://huggingface.co/Lightricks/LTX-2.5/resolve/main/text_encoders/gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors",
+      "r2_key": "models/text_encoders/gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors",
+      "size_bytes": 15372969374,
+      "gated": true,
+      "license": "ltx-2.x-community-license-agreement (free under $10M annual revenue)",
+      "tiers": [
+        16,
+        24,
+        32
+      ],
+      "required_by": "LTX 2.5 text encoder (CLIPLoader type=ltxv)",
+      "notes": "Gemma 4 12B + projection, int8 convrot; streams via Dynamic VRAM. Gated repo (Lightricks/LTX-2.5): accept the license on HF and wait for approval, then set HF_TOKEN for origin downloads; the R2 mirror is public."
+    },
+    {
+      "id": "ltx-2.5-video-vae-bf16",
+      "group": "video",
+      "dest": "models/vae/ltx-2.5-video-vae-bf16.safetensors",
+      "origin_url": "https://huggingface.co/Lightricks/LTX-2.5/resolve/main/vae/ltx-2.5-video-vae-bf16.safetensors",
+      "r2_key": "models/vae/ltx-2.5-video-vae-bf16.safetensors",
+      "size_bytes": 1472223346,
+      "gated": true,
+      "license": "ltx-2.x-community-license-agreement (free under $10M annual revenue)",
+      "tiers": [
+        16,
+        24,
+        32
+      ],
+      "required_by": "LTX 2.5 video VAE (VAELoader)",
+      "notes": "Gated repo (Lightricks/LTX-2.5): accept the license on HF and wait for approval, then set HF_TOKEN for origin downloads; the R2 mirror is public."
+    },
+    {
+      "id": "ltx-2.5-audio-vae-bf16",
+      "group": "video",
+      "dest": "models/vae/ltx-2.5-audio-vae-bf16.safetensors",
+      "origin_url": "https://huggingface.co/Lightricks/LTX-2.5/resolve/main/vae/ltx-2.5-audio-vae-bf16.safetensors",
+      "r2_key": "models/vae/ltx-2.5-audio-vae-bf16.safetensors",
+      "size_bytes": 364866540,
+      "gated": true,
+      "license": "ltx-2.x-community-license-agreement (free under $10M annual revenue)",
+      "tiers": [
+        16,
+        24,
+        32
+      ],
+      "required_by": "LTX 2.5 audio VAE + vocoder (VAELoader)",
+      "notes": "Gated repo (Lightricks/LTX-2.5): accept the license on HF and wait for approval, then set HF_TOKEN for origin downloads; the R2 mirror is public. Same-size ungated copy: unsloth/LTX-2.5-GGUF vae/ltx-2.5-audio-vae-bf16.safetensors."
+    },
+    {
+      "id": "ltx-2.5-latent-spatial-upscaler-x2",
+      "group": "video",
+      "dest": "models/latent_upscale_models/ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors",
+      "origin_url": "https://huggingface.co/Lightricks/LTX-2.5/resolve/main/latent_upscale_models/ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors",
+      "r2_key": "models/latent_upscale_models/ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors",
+      "size_bytes": 995778752,
+      "gated": true,
+      "license": "ltx-2.x-community-license-agreement (free under $10M annual revenue)",
+      "tiers": [
+        16,
+        24,
+        32
+      ],
+      "required_by": "LTX 2.5 two-stage spatial upscale (LatentUpscaleModelLoader; in the standard t2v/i2v templates)",
+      "notes": "Gated repo (Lightricks/LTX-2.5): accept the license on HF and wait for approval, then set HF_TOKEN for origin downloads; the R2 mirror is public. Same-size ungated copy: unsloth/LTX-2.5-GGUF latent_upscale_models/."
+    },
+    {
+      "id": "gemma4_e2b_it_int8_convrot",
+      "group": "video",
+      "dest": "models/text_encoders/gemma4_e2b_it_int8_convrot.safetensors",
+      "origin_url": "https://huggingface.co/Comfy-Org/gemma-4/resolve/main/text_encoders/gemma4_e2b_it_int8_convrot.safetensors",
+      "r2_key": "models/text_encoders/gemma4_e2b_it_int8_convrot.safetensors",
+      "size_bytes": 5199997904,
+      "gated": false,
+      "license": "apache-2.0",
+      "tiers": [],
+      "required_by": "LTX 2.5 optional prompt enhancer (TextGenerateLTX2Prompt); off by default in the official templates",
+      "notes": "OPTIONAL, in no tier: our planner writes the video prompts. Listed so the template reference resolves if prompt_enhance is switched on."
+    },
+    {
+      "id": "acestep_v1.5_turbo",
+      "group": "audio",
+      "dest": "models/diffusion_models/acestep_v1.5_turbo.safetensors",
+      "origin_url": "https://huggingface.co/Comfy-Org/ace_step_1.5_ComfyUI_files/resolve/main/split_files/diffusion_models/acestep_v1.5_turbo.safetensors",
+      "r2_key": "models/diffusion_models/acestep_v1.5_turbo.safetensors",
+      "size_bytes": 4787825604,
+      "gated": false,
+      "license": "apache-2.0",
+      "tiers": [
+        12,
+        16,
+        24,
+        32
+      ],
+      "required_by": "ACE-Step 1.5 music (template audio_ace_step_1_5_split): UNETLoader",
+      "notes": ""
+    },
+    {
+      "id": "qwen_0.6b_ace15",
+      "group": "audio",
+      "dest": "models/text_encoders/qwen_0.6b_ace15.safetensors",
+      "origin_url": "https://huggingface.co/Comfy-Org/ace_step_1.5_ComfyUI_files/resolve/main/split_files/text_encoders/qwen_0.6b_ace15.safetensors",
+      "r2_key": "models/text_encoders/qwen_0.6b_ace15.safetensors",
+      "size_bytes": 1191588248,
+      "gated": false,
+      "license": "apache-2.0",
+      "tiers": [
+        12,
+        16,
+        24,
+        32
+      ],
+      "required_by": "ACE-Step 1.5 music (template audio_ace_step_1_5_split): DualCLIPLoader text encoder",
+      "notes": ""
+    },
+    {
+      "id": "qwen_1.7b_ace15",
+      "group": "audio",
+      "dest": "models/text_encoders/qwen_1.7b_ace15.safetensors",
+      "origin_url": "https://huggingface.co/Comfy-Org/ace_step_1.5_ComfyUI_files/resolve/main/split_files/text_encoders/qwen_1.7b_ace15.safetensors",
+      "r2_key": "models/text_encoders/qwen_1.7b_ace15.safetensors",
+      "size_bytes": 3708523360,
+      "gated": false,
+      "license": "apache-2.0",
+      "tiers": [
+        12,
+        16,
+        24,
+        32
+      ],
+      "required_by": "ACE-Step 1.5 music (template audio_ace_step_1_5_split): DualCLIPLoader 1.7B LM",
+      "notes": "Template audio_ace_step_1_5_split_4b swaps this for qwen_4b_ace15 (8.38 GB)."
+    },
+    {
+      "id": "acestep_v1.5_xl_base_bf16",
+      "group": "audio",
+      "dest": "models/diffusion_models/acestep_v1.5_xl_base_bf16.safetensors",
+      "origin_url": "https://huggingface.co/Comfy-Org/ace_step_1.5_ComfyUI_files/resolve/main/split_files/diffusion_models/acestep_v1.5_xl_base_bf16.safetensors",
+      "r2_key": "models/diffusion_models/acestep_v1.5_xl_base_bf16.safetensors",
+      "size_bytes": 9974719930,
+      "gated": false,
+      "license": "apache-2.0",
+      "tiers": [
+        24,
+        32
+      ],
+      "required_by": "App music route (BUILT.md Music): UNETLoader, ACE-Step 1.5 XL base text-to-music (no LM, 50 steps)",
+      "notes": "Approved music model. The turbo model is NOT used (user: thin / circus sound)."
+    },
+    {
+      "id": "qwen_4b_ace15",
+      "group": "audio",
+      "dest": "models/text_encoders/qwen_4b_ace15.safetensors",
+      "origin_url": "https://huggingface.co/Comfy-Org/ace_step_1.5_ComfyUI_files/resolve/main/split_files/text_encoders/qwen_4b_ace15.safetensors",
+      "r2_key": "models/text_encoders/qwen_4b_ace15.safetensors",
+      "size_bytes": 8379154232,
+      "gated": false,
+      "license": "apache-2.0",
+      "tiers": [
+        24,
+        32
+      ],
+      "required_by": "App music route: DualCLIPLoader text encoder of the XL base model",
+      "notes": ""
+    },
+    {
+      "id": "ace_1.5_vae",
+      "group": "audio",
+      "dest": "models/vae/ace_1.5_vae.safetensors",
+      "origin_url": "https://huggingface.co/Comfy-Org/ace_step_1.5_ComfyUI_files/resolve/main/split_files/vae/ace_1.5_vae.safetensors",
+      "r2_key": "models/vae/ace_1.5_vae.safetensors",
+      "size_bytes": 337431732,
+      "gated": false,
+      "license": "apache-2.0",
+      "tiers": [
+        12,
+        16,
+        24,
+        32
+      ],
+      "required_by": "ACE-Step 1.5 music (template audio_ace_step_1_5_split): VAELoader",
+      "notes": ""
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+[
+  {"id": "sample_chain_journey", "kind": "chain", "title": "Sample chain: module journey",
+   "description": "FAKE sample entry for testing the page (an existing 13_camera render standing in for a chain of linked modules with the camera on top).",
+   "clip": "13_camera/v004/local/module_journey_g02_draft.mp4",
+   "sheet": "13_camera/v004/local/module_journey_sheet_g02.jpg", "dircheck": null, "version": "v001", "gen": "g01"},
+  {"id": "sample_word_strips", "kind": "word", "title": "Sample word module: strips",
+   "description": "FAKE sample entry (existing strips render standing in for a word module clip). Contact sheet and direction check are existing stills.",
+   "clip": "13_camera/v004/local/strips_g07_draft.mp4",
+   "sheet": "13_camera/v004/local/strips_sheet_g07.jpg", "dircheck": "13_camera/v004/local/strips_strip_g07_a.jpg", "version": "v001", "gen": "g01"},
+  {"id": "sample_word_layout", "kind": "word", "title": "Sample word module: no direction check",
+   "description": "FAKE sample entry with dircheck null, to test a card that has only a contact sheet.",
+   "clip": "13_camera/v004/local/layout_tour_g04_draft.mp4",
+   "sheet": "13_camera/v004/local/layout_tour_sheet_g04.jpg", "dircheck": null, "version": "v001", "gen": "g01"}
+]

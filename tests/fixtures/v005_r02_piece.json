@@ -1,0 +1,2399 @@
+{
+ "audio": {
+  "bpm": 90,
+  "cut": 16.0,
+  "fade": 0.67,
+  "src": "t2m"
+ },
+ "brief": {},
+ "compose": {
+  "crf": 20,
+  "crossfade": 0,
+  "cuts": [
+   {
+    "after": "s1",
+    "cut": "crossfade",
+    "why": "s1 into s2 is a continuation of the same lake, so a soft crossfade on the 4s chord change keeps the drift feeling continuous."
+   },
+   {
+    "after": "s2",
+    "cut": "crossfade",
+    "why": "s2 into s3 continues the same place as the kayak turns, so a soft crossfade on the 6.67s chord change matches the gentle groove."
+   },
+   {
+    "after": "s3",
+    "cut": "crossfade",
+    "why": "s3 into s4 is the same lake as the kayak glides away, so a soft crossfade on the 9.34s downbeat keeps the motion smooth."
+   },
+   {
+    "after": "s4",
+    "cut": "crossfade",
+    "why": "s4 into s5 continues the sunrise lake, so a soft crossfade on the 12s downbeat leads gently into the final BREATHE hold."
+   }
+  ],
+  "default": {
+   "ops": [
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         1.217,
+         0.0
+        ],
+        [
+         1.457,
+         0.75
+        ],
+        [
+         2.817,
+         0.75
+        ],
+        [
+         3.057,
+         0.0
+        ],
+        [
+         6.551,
+         0.0
+        ],
+        [
+         6.791,
+         0.75
+        ],
+        [
+         7.951,
+         0.75
+        ],
+        [
+         8.191,
+         0.0
+        ],
+        [
+         9.217,
+         0.0
+        ],
+        [
+         9.457,
+         0.75
+        ],
+        [
+         10.617,
+         0.75
+        ],
+        [
+         10.857,
+         0.0
+        ],
+        [
+         12.05,
+         0.0
+        ],
+        [
+         12.29,
+         0.75
+        ],
+        [
+         15.05,
+         0.75
+        ],
+        [
+         15.29,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "A302:type_matte",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_matte",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wm"
+    },
+    {
+     "args": {
+      "guide": "$footage",
+      "matte": "$matte",
+      "size": [
+       360,
+       640
+      ]
+     },
+     "op": "upscale_matte",
+     "out": "m"
+    },
+    {
+     "args": {
+      "footage": "$footage",
+      "lum_target": 0.78,
+      "mode": "sample",
+      "sat": 1.4,
+      "type_a": "$wm"
+     },
+     "op": "tint_type",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "img": "$wm",
+      "sigma": 14
+     },
+     "op": "blur",
+     "out": "halo"
+    },
+    {
+     "args": {
+      "color": [
+       0.05,
+       0.06,
+       0.08
+      ],
+      "like": "$footage"
+     },
+     "op": "fill",
+     "out": "dark"
+    },
+    {
+     "args": {
+      "footage": "$footage",
+      "matte": "$m",
+      "matte_gain": 1.0,
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$wm",
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "sand"
+    },
+    {
+     "args": {
+      "color": {
+       "step": true,
+       "timeline": [
+        [
+         0.0,
+         [
+          0.47,
+          0.67,
+          0.82
+         ]
+        ],
+        [
+         4.0,
+         [
+          0.9,
+          0.67,
+          0.35
+         ]
+        ],
+        [
+         6.67,
+         [
+          0.96,
+          0.82,
+          0.47
+         ]
+        ]
+       ]
+      },
+      "img": "$sand",
+      "intensity": {
+       "curve": "onset",
+       "hi": 0.25,
+       "lo": 0.05
+      },
+      "mask": "$wm",
+      "radius": 22
+     },
+     "op": "add_glow",
+     "out": "glow"
+    },
+    {
+     "args": {
+      "amount": 0.02,
+      "frame": "$glow",
+      "frame_idx": "$frame_idx"
+     },
+     "op": "grain",
+     "out": "grain"
+    },
+    {
+     "args": {
+      "frame": "$grain",
+      "radius": 0.5,
+      "softness": 0.6,
+      "strength": 0.25
+     },
+     "op": "vignette",
+     "out": "image"
+    }
+   ]
+  },
+  "holds": [
+   [
+    14.88,
+    0.4
+   ]
+  ],
+  "holds_type": true,
+  "shots": {
+   "s2": {
+    "ops": [
+     {
+      "args": {
+       "bg_drag": 0.12,
+       "decay": 0.9,
+       "flow": "$flow",
+       "frame_idx": "$frame_idx",
+       "matte": "$flow_m",
+       "max_disp": 0.2,
+       "radius": 70,
+       "settle": {
+        "ease": "smooth",
+        "timeline": [
+         [
+          0.0,
+          0.0
+         ],
+         [
+          1.217,
+          0.0
+         ],
+         [
+          1.457,
+          0.75
+         ],
+         [
+          2.817,
+          0.75
+         ],
+         [
+          3.057,
+          0.0
+         ],
+         [
+          6.551,
+          0.0
+         ],
+         [
+          6.791,
+          0.75
+         ],
+         [
+          7.951,
+          0.75
+         ],
+         [
+          8.191,
+          0.0
+         ],
+         [
+          9.217,
+          0.0
+         ],
+         [
+          9.457,
+          0.75
+         ],
+         [
+          10.617,
+          0.75
+         ],
+         [
+          10.857,
+          0.0
+         ],
+         [
+          12.05,
+          0.0
+         ],
+         [
+          12.29,
+          0.75
+         ],
+         [
+          15.05,
+          0.75
+         ],
+         [
+          15.29,
+          0.0
+         ]
+        ]
+       },
+       "smooth": 1.0,
+       "state_key": "A302:type_matte",
+       "strength": {
+        "curve": "onset",
+        "hi": 6.0,
+        "lo": 3.0
+       },
+       "trail": 10,
+       "trail_gain": 1.0,
+       "type_a": "$type_matte",
+       "u": "$u"
+      },
+      "op": "flow_wake",
+      "out": "wm"
+     },
+     {
+      "args": {
+       "guide": "$footage",
+       "matte": "$matte",
+       "size": [
+        360,
+        640
+       ]
+      },
+      "op": "upscale_matte",
+      "out": "m"
+     },
+     {
+      "args": {
+       "footage": "$footage",
+       "lum_target": 0.75,
+       "mode": "complement",
+       "sat": 1.5,
+       "type_a": "$wm"
+      },
+      "op": "tint_type",
+      "out": "tcol"
+     },
+     {
+      "args": {
+       "footage": "$footage",
+       "matte": "$m",
+       "matte_gain": 1.0,
+       "matte_soft": 0.08,
+       "matte_threshold": 0.5,
+       "type_a": "$wm",
+       "type_rgb": "$tcol"
+      },
+      "op": "sandwich",
+      "out": "sand"
+     },
+     {
+      "args": {
+       "color": [
+        0.9,
+        0.67,
+        0.35
+       ],
+       "img": "$sand",
+       "intensity": {
+        "curve": "onset",
+        "hi": 0.3,
+        "lo": 0.08
+       },
+       "mask": "$wm",
+       "radius": 26
+      },
+      "op": "add_glow",
+      "out": "glow"
+     },
+     {
+      "args": {
+       "amount": 0.02,
+       "frame": "$glow",
+       "frame_idx": "$frame_idx"
+      },
+      "op": "grain",
+      "out": "grain"
+     },
+     {
+      "args": {
+       "frame": "$grain",
+       "radius": 0.5,
+       "softness": 0.6,
+       "strength": 0.25
+      },
+      "op": "vignette",
+      "out": "image"
+     }
+    ]
+   }
+  },
+  "size": [
+   360,
+   640
+  ]
+ },
+ "design": {
+  "concept": "The type lives BEHIND the kayak, glowing in the mist, with one face per word and the ink colour shifting on every chord change.",
+  "fields": {
+   "fields_fixed": [
+    {
+     "path": "compose.cuts",
+     "why": "piece rule: compose.cuts: window_other not planned: the word at the place change (word 1 'DRIFT', word 3 'BREATHE') cannot be 30 % of the frame tall (a line of more than 3 "
+    },
+    {
+     "path": "compose.ops.default",
+     "why": "default.ops[5].sandwich.matte: 'm' is a buffer name, written as $m; default.over -> plate: alpha is a number / timeline but a gray picture is needed; bypassed (later ops read its input instead)"
+    },
+    {
+     "path": "compose.ops.s2",
+     "why": "s2.ops[2].sandwich.matte: 'm' is a buffer name, written as $m"
+    },
+    {
+     "path": "type.words[0].hold_s",
+     "why": "piece rule: timing fit shortened the hold"
+    },
+    {
+     "path": "type.words[1].form_s",
+     "why": "piece rule: the timing solver moved the form time to land the hit"
+    },
+    {
+     "path": "type.words[1].hit",
+     "why": "piece rule: timing fit moved the hit"
+    },
+    {
+     "path": "type.words[1].hold_s",
+     "why": "piece rule: timing fit shortened the hold"
+    },
+    {
+     "path": "type.words[1].ltx_at",
+     "why": "piece rule: ltx_at 0.4 -> 0.5"
+    },
+    {
+     "path": "type.words[1].material",
+     "why": "piece rule: material 'glowing neon tubes with a hot core' -> 'glowing wire strands, thin'"
+    },
+    {
+     "path": "type.words[1].render",
+     "why": "piece rule: type.words[1].render 'handoff' -> 'handoff': the shot footage was generated from the plan's control pass with that owner (material 'glowing wire strands, thin',"
+    },
+    {
+     "path": "type.words[2].form_s",
+     "why": "piece rule: the timing solver moved the form time to land the hit"
+    },
+    {
+     "path": "type.words[2].hit",
+     "why": "piece rule: timing fit moved the hit"
+    },
+    {
+     "path": "type.words[2].hold_s",
+     "why": "piece rule: timing fit shortened the hold"
+    },
+    {
+     "path": "type.words[3].form_s",
+     "why": "piece rule: the timing solver moved the form time to land the hit"
+    },
+    {
+     "path": "type.words[3].hit",
+     "why": "piece rule: timing fit moved the hit"
+    },
+    {
+     "path": "type.words[3].hold_s",
+     "why": "piece rule: timing fit shortened the hold"
+    }
+   ],
+   "fields_from_model": [
+    "compose.glow_color",
+    "compose.glow_hi",
+    "compose.glow_lo",
+    "compose.grain",
+    "compose.holds[0]",
+    "compose.plate_gain",
+    "compose.plate_sat",
+    "compose.technique",
+    "compose.type_opacity",
+    "compose.vignette",
+    "type.camera",
+    "type.camera_params.bob",
+    "type.camera_params.elev",
+    "type.camera_params.fast_dps",
+    "type.camera_params.intro_deg",
+    "type.camera_params.read_dps",
+    "type.energy",
+    "type.line.px",
+    "type.mood",
+    "type.palette.accents",
+    "type.palette.bg",
+    "type.palette.fg",
+    "type.transitions[0]",
+    "type.transitions[1]",
+    "type.transitions[2]",
+    "type.words[0].exit_s",
+    "type.words[0].font",
+    "type.words[0].form_in",
+    "type.words[0].form_out",
+    "type.words[0].form_s",
+    "type.words[0].hit",
+    "type.words[0].lines",
+    "type.words[0].module",
+    "type.words[0].placement.dx",
+    "type.words[0].placement.dy",
+    "type.words[0].placement.hf",
+    "type.words[0].placement.pitch",
+    "type.words[0].placement.roll",
+    "type.words[0].placement.wf",
+    "type.words[0].placement.yaw",
+    "type.words[0].render",
+    "type.words[1].exit_s",
+    "type.words[1].font",
+    "type.words[1].form_in",
+    "type.words[1].form_out",
+    "type.words[1].lines",
+    "type.words[1].module",
+    "type.words[1].placement.dx",
+    "type.words[1].placement.dy",
+    "type.words[1].placement.hf",
+    "type.words[1].placement.pitch",
+    "type.words[1].placement.roll",
+    "type.words[1].placement.wf",
+    "type.words[1].placement.yaw",
+    "type.words[2].exit_s",
+    "type.words[2].font",
+    "type.words[2].form_in",
+    "type.words[2].form_out",
+    "type.words[2].lines",
+    "type.words[2].module",
+    "type.words[2].placement.dx",
+    "type.words[2].placement.dy",
+    "type.words[2].placement.hf",
+    "type.words[2].placement.pitch",
+    "type.words[2].placement.roll",
+    "type.words[2].placement.wf",
+    "type.words[2].placement.yaw",
+    "type.words[2].render",
+    "type.words[3].exit_s",
+    "type.words[3].font",
+    "type.words[3].form_in",
+    "type.words[3].form_out",
+    "type.words[3].lines",
+    "type.words[3].module",
+    "type.words[3].placement.dx",
+    "type.words[3].placement.dy",
+    "type.words[3].placement.hf",
+    "type.words[3].placement.pitch",
+    "type.words[3].placement.roll",
+    "type.words[3].placement.wf",
+    "type.words[3].placement.yaw",
+    "type.words[3].render"
+   ],
+   "fields_from_rules": [],
+   "n": 98,
+   "pct_model": 83.7,
+   "pct_model_or_fixed": 100.0,
+   "pending": [],
+   "sections": {
+    "compose": "model",
+    "type": "model"
+   },
+   "why": {
+    "copied": 0,
+    "decisions": 8,
+    "flagged": [],
+    "missing": 1,
+    "present": 7,
+    "reasons": 0.875,
+    "repeated": 0,
+    "whys": {
+     "compose.default": "The mist is bright and busy, so a soft darkened halo behind the letters and the sandwich that keeps the kayak in front guarantee the type reads without covering the subject.",
+     "idea": "The footage is a single continuous kayak drift through mist, so putting the words behind the subject keeps the subject solid and lets the mist carry the type; the 90bpm slow blues and the two chord changes give exactly three colour moments for the four words.",
+     "system": "The four words are short and the shots are calm, so a single behind-the-subject system with one expressive face per word and a chord-locked colour step is the cleanest way to keep the piece readable and musical without adding a second motion on top of the footage.",
+     "word[0] WAKE": "Opens the piece on the first downbeat at 1.34s; a playful 3D face matches the bright red kayak and the slow blues groove, and the lanes module reads cleanly on the calm water behind the subject.",
+     "word[1] DRIFT": "Lands exactly on the 4s chord change; the ornamental Codystar face is characterful for the longest word, and the footage already forms DRIFT as glowing wire strands so a handoff to glowing tubes keeps the word part of the world.",
+     "word[2] TURN": "Hits the 6.67s chord change as the kayak carves its arc; the broken inline Monofett face suits the turn, and the short word stays legible behind the subject.",
+     "word[3] BREATHE": "The longest word gets the longest hold into the 14.88s dropout; the playful inline Bungee face and a slow wipe form suit the final stillness as the kayak glides away at sunrise."
+    }
+   }
+  },
+  "salvage": {
+   "pending": [],
+   "raw": {
+    "@compose": true,
+    "@system": [],
+    "@type": true,
+    "@why": {
+     "copied": 0,
+     "decisions": 8,
+     "flagged": [],
+     "missing": 1,
+     "present": 7,
+     "reasons": 0.875,
+     "repeated": 0,
+     "whys": {
+      "compose.default": "The mist is bright and busy, so a soft darkened halo behind the letters and the sandwich that keeps the kayak in front guarantee the type reads without covering the subject.",
+      "idea": "The footage is a single continuous kayak drift through mist, so putting the words behind the subject keeps the subject solid and lets the mist carry the type; the 90bpm slow blues and the two chord changes give exactly three colour moments for the four words.",
+      "system": "The four words are short and the shots are calm, so a single behind-the-subject system with one expressive face per word and a chord-locked colour step is the cleanest way to keep the piece readable and musical without adding a second motion on top of the footage.",
+      "word[0] WAKE": "Opens the piece on the first downbeat at 1.34s; a playful 3D face matches the bright red kayak and the slow blues groove, and the lanes module reads cleanly on the calm water behind the subject.",
+      "word[1] DRIFT": "Lands exactly on the 4s chord change; the ornamental Codystar face is characterful for the longest word, and the footage already forms DRIFT as glowing wire strands so a handoff to glowing tubes keeps the word part of the world.",
+      "word[2] TURN": "Hits the 6.67s chord change as the kayak carves its arc; the broken inline Monofett face suits the turn, and the short word stays legible behind the subject.",
+      "word[3] BREATHE": "The longest word gets the longest hold into the 14.88s dropout; the playful inline Bungee face and a slow wipe form suit the final stillness as the kayak glides away at sunrise."
+     }
+    },
+    "@word0": true,
+    "@word1": true,
+    "@word2": true,
+    "@word3": true,
+    "@words": true,
+    "compose.cuts": [
+     {
+      "after": "s1",
+      "cut": "crossfade",
+      "why": "s1 into s2 is a continuation of the same lake, so a soft crossfade on the 4s chord change keeps the drift feeling continuous."
+     },
+     {
+      "after": "s2",
+      "cut": "crossfade",
+      "why": "s2 into s3 continues the same place as the kayak turns, so a soft crossfade on the 6.67s chord change matches the gentle groove."
+     },
+     {
+      "after": "s3",
+      "cut": "crossfade",
+      "why": "s3 into s4 is the same lake as the kayak glides away, so a soft crossfade on the 9.34s downbeat keeps the motion smooth."
+     },
+     {
+      "after": "s4",
+      "cut": "crossfade",
+      "why": "s4 into s5 continues the sunrise lake, so a soft crossfade on the 12s downbeat leads gently into the final BREATHE hold."
+     }
+    ],
+    "compose.glow_color": [
+     1.0,
+     0.7,
+     0.3
+    ],
+    "compose.glow_hi": 0.25,
+    "compose.glow_lo": 0.05,
+    "compose.grain": 0.02,
+    "compose.holds": [
+     [
+      14.88,
+      0.4
+     ]
+    ],
+    "compose.ops": {
+     "default": {
+      "ops": [
+       {
+        "args": {
+         "guide": "$footage",
+         "matte": "$matte",
+         "size": [
+          360,
+          640
+         ]
+        },
+        "op": "upscale_matte",
+        "out": "m"
+       },
+       {
+        "args": {
+         "footage": "$footage",
+         "lum_target": 0.78,
+         "mode": "sample",
+         "sat": 1.4,
+         "type_a": "$type_matte"
+        },
+        "op": "tint_type",
+        "out": "tcol"
+       },
+       {
+        "args": {
+         "img": "$type_matte",
+         "sigma": 14
+        },
+        "op": "blur",
+        "out": "halo"
+       },
+       {
+        "args": {
+         "color": [
+          0.05,
+          0.06,
+          0.08
+         ],
+         "like": "$footage"
+        },
+        "op": "fill",
+        "out": "dark"
+       },
+       {
+        "args": {
+         "alpha": {
+          "step": true,
+          "timeline": [
+           [
+            0,
+            0.35
+           ],
+           [
+            4.0,
+            0.35
+           ],
+           [
+            6.67,
+            0.3
+           ],
+           [
+            9.34,
+            0.2
+           ]
+          ]
+         },
+         "base": "$footage",
+         "fg": "$dark"
+        },
+        "op": "over",
+        "out": "plate"
+       },
+       {
+        "args": {
+         "footage": "$plate",
+         "matte": "m",
+         "matte_gain": 1.0,
+         "matte_soft": 0.08,
+         "matte_threshold": 0.5,
+         "type_a": "$type_matte",
+         "type_rgb": "$tcol"
+        },
+        "op": "sandwich",
+        "out": "sand"
+       },
+       {
+        "args": {
+         "color": {
+          "step": true,
+          "timeline": [
+           [
+            0,
+            [
+             0.47,
+             0.67,
+             0.82
+            ]
+           ],
+           [
+            4.0,
+            [
+             0.9,
+             0.67,
+             0.35
+            ]
+           ],
+           [
+            6.67,
+            [
+             0.96,
+             0.82,
+             0.47
+            ]
+           ]
+          ]
+         },
+         "img": "$sand",
+         "intensity": {
+          "curve": "onset",
+          "hi": 0.25,
+          "lo": 0.05
+         },
+         "mask": "$type_matte",
+         "radius": 22
+        },
+        "op": "add_glow",
+        "out": "glow"
+       },
+       {
+        "args": {
+         "amount": 0.02,
+         "frame": "$glow",
+         "frame_idx": "$frame_idx"
+        },
+        "op": "grain",
+        "out": "grain"
+       },
+       {
+        "args": {
+         "frame": "$grain",
+         "radius": 0.5,
+         "softness": 0.6,
+         "strength": 0.25
+        },
+        "op": "vignette",
+        "out": "image"
+       }
+      ],
+      "why": "The mist is bright and busy, so a soft darkened halo behind the letters and the sandwich that keeps the kayak in front guarantee the type reads without covering the subject."
+     },
+     "shots": {
+      "s2": {
+       "ops": [
+        {
+         "args": {
+          "guide": "$footage",
+          "matte": "$matte",
+          "size": [
+           360,
+           640
+          ]
+         },
+         "op": "upscale_matte",
+         "out": "m"
+        },
+        {
+         "args": {
+          "footage": "$footage",
+          "lum_target": 0.75,
+          "mode": "complement",
+          "sat": 1.5,
+          "type_a": "$type_matte"
+         },
+         "op": "tint_type",
+         "out": "tcol"
+        },
+        {
+         "args": {
+          "footage": "$footage",
+          "matte": "m",
+          "matte_gain": 1.0,
+          "matte_soft": 0.08,
+          "matte_threshold": 0.5,
+          "type_a": "$type_matte",
+          "type_rgb": "$tcol"
+         },
+         "op": "sandwich",
+         "out": "sand"
+        },
+        {
+         "args": {
+          "color": [
+           0.9,
+           0.67,
+           0.35
+          ],
+          "img": "$sand",
+          "intensity": {
+           "curve": "onset",
+           "hi": 0.3,
+           "lo": 0.08
+          },
+          "mask": "$type_matte",
+          "radius": 26
+         },
+         "op": "add_glow",
+         "out": "glow"
+        },
+        {
+         "args": {
+          "amount": 0.02,
+          "frame": "$glow",
+          "frame_idx": "$frame_idx"
+         },
+         "op": "grain",
+         "out": "grain"
+        },
+        {
+         "args": {
+          "frame": "$grain",
+          "radius": 0.5,
+          "softness": 0.6,
+          "strength": 0.25
+         },
+         "op": "vignette",
+         "out": "image"
+        }
+       ]
+      }
+     }
+    },
+    "compose.plate_gain": 0.7,
+    "compose.plate_sat": 0.9,
+    "compose.technique": "behind",
+    "compose.type_opacity": 1.0,
+    "compose.vignette": 0.25,
+    "concept": "The type lives BEHIND the kayak, glowing in the mist, with one face per word and the ink colour shifting on every chord change.",
+    "system": {
+     "axis": {
+      "font": "Anybody[wdth,wght].ttf",
+      "tag": "wght",
+      "windows": [
+       [
+        400,
+        600
+       ],
+       [
+        500,
+        700
+       ],
+       [
+        600,
+        800
+       ],
+       [
+        700,
+        900
+       ]
+      ]
+     },
+     "pattern": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "progression": "The faces move from playful 3D to broken inline, and the ink colour warms from cool morning blue to deep gold as the kayak glides away and the mist clears.",
+     "roles": {
+      "A": "Rock3D-Regular.ttf",
+      "B": "Codystar-Regular.ttf",
+      "C": "Monofett-Regular.ttf",
+      "D": "BungeeInline-Regular.ttf"
+     },
+     "rule": "One word per shot, one characterful face per word, the ink colour steps on each chord change, and the words all sit behind the kayak with a soft glow that follows the music envelope.",
+     "why": "The four words are short and the shots are calm, so a single behind-the-subject system with one expressive face per word and a chord-locked colour step is the cleanest way to keep the piece readable and musical without adding a second motion on top of the footage.",
+     "yaw": [
+      -16,
+      16,
+      -14,
+      14
+     ]
+    },
+    "treatment_notes": "Every word sits between the misty background and the red kayak at the scale of the subject, the kayak stays crisp in front and only briefly crosses the letters, with a soft darkened halo behind the type for legibility.",
+    "type.camera": "beat_orbit",
+    "type.camera_params.bob": 0.5,
+    "type.camera_params.elev": 2,
+    "type.camera_params.fast_dps": 14,
+    "type.camera_params.intro_deg": 18,
+    "type.camera_params.read_dps": 3.5,
+    "type.energy": 0.45,
+    "type.line.px": 4,
+    "type.mood": "tender playful",
+    "type.palette.accents": [
+     [
+      120,
+      170,
+      210
+     ],
+     [
+      230,
+      170,
+      90
+     ],
+     [
+      245,
+      210,
+      120
+     ]
+    ],
+    "type.palette.bg": [
+     24,
+     28,
+     32
+    ],
+    "type.palette.fg": [
+     245,
+     240,
+     232
+    ],
+    "type.transitions": [
+     "ripple",
+     "twist",
+     "fan"
+    ],
+    "type.words[0].exit_s": 0.6,
+    "type.words[0].font": "Rock3D-Regular.ttf",
+    "type.words[0].form_in": "lines",
+    "type.words[0].form_out": "lines",
+    "type.words[0].form_s": 0.6,
+    "type.words[0].hit": 1.34,
+    "type.words[0].hold_s": 1.8,
+    "type.words[0].lines": [
+     "WAKE"
+    ],
+    "type.words[0].ltx_at": 0.5,
+    "type.words[0].material": "none",
+    "type.words[0].module": "lanes",
+    "type.words[0].placement.dx": 0,
+    "type.words[0].placement.dy": 0.05,
+    "type.words[0].placement.hf": 0.3,
+    "type.words[0].placement.pitch": 0,
+    "type.words[0].placement.roll": 0,
+    "type.words[0].placement.wf": 0.85,
+    "type.words[0].placement.yaw": -16,
+    "type.words[0].render": "flat",
+    "type.words[0].text": "WAKE",
+    "type.words[1].exit_s": 0.5,
+    "type.words[1].font": "Codystar-Regular.ttf",
+    "type.words[1].form_in": "lines",
+    "type.words[1].form_out": "lines",
+    "type.words[1].form_s": 0.5,
+    "type.words[1].hit": 4.0,
+    "type.words[1].hold_s": 1.6,
+    "type.words[1].lines": [
+     "DRIFT"
+    ],
+    "type.words[1].ltx_at": 0.4,
+    "type.words[1].material": "glowing neon tubes with a hot core",
+    "type.words[1].module": "lanes",
+    "type.words[1].placement.dx": 0,
+    "type.words[1].placement.dy": 0.05,
+    "type.words[1].placement.hf": 0.3,
+    "type.words[1].placement.pitch": 0,
+    "type.words[1].placement.roll": 0,
+    "type.words[1].placement.wf": 0.9,
+    "type.words[1].placement.yaw": 16,
+    "type.words[1].render": "handoff",
+    "type.words[1].text": "DRIFT",
+    "type.words[2].exit_s": 0.5,
+    "type.words[2].font": "Monofett-Regular.ttf",
+    "type.words[2].form_in": "lines",
+    "type.words[2].form_out": "lines",
+    "type.words[2].form_s": 0.5,
+    "type.words[2].hit": 6.67,
+    "type.words[2].hold_s": 1.6,
+    "type.words[2].lines": [
+     "TURN"
+    ],
+    "type.words[2].ltx_at": 0.5,
+    "type.words[2].material": "none",
+    "type.words[2].module": "lanes",
+    "type.words[2].placement.dx": 0,
+    "type.words[2].placement.dy": 0.05,
+    "type.words[2].placement.hf": 0.3,
+    "type.words[2].placement.pitch": 0,
+    "type.words[2].placement.roll": 0,
+    "type.words[2].placement.wf": 0.8,
+    "type.words[2].placement.yaw": -14,
+    "type.words[2].render": "flat",
+    "type.words[2].text": "TURN",
+    "type.words[3].exit_s": 0.8,
+    "type.words[3].font": "BungeeInline-Regular.ttf",
+    "type.words[3].form_in": "wipe",
+    "type.words[3].form_out": "wipe",
+    "type.words[3].form_s": 0.7,
+    "type.words[3].hit": 9.34,
+    "type.words[3].hold_s": 3.2,
+    "type.words[3].lines": [
+     "BREATHE"
+    ],
+    "type.words[3].ltx_at": 0.5,
+    "type.words[3].material": "none",
+    "type.words[3].module": "lanes",
+    "type.words[3].placement.dx": 0,
+    "type.words[3].placement.dy": 0.05,
+    "type.words[3].placement.hf": 0.3,
+    "type.words[3].placement.pitch": 0,
+    "type.words[3].placement.roll": 0,
+    "type.words[3].placement.wf": 0.95,
+    "type.words[3].placement.yaw": 14,
+    "type.words[3].render": "flat",
+    "type.words[3].text": "BREATHE"
+   }
+  },
+  "src": {
+   "compose": "model",
+   "type": "model"
+  },
+  "technique": "behind",
+  "treatment_notes": "Every word sits between the misty background and the red kayak at the scale of the subject, the kayak stays crisp in front and only briefly crosses the letters, with a soft darkened halo behind the type for legibility."
+ },
+ "format": "9:16",
+ "fps": 24,
+ "id": "A302",
+ "layout": {
+  "s1": {
+   "start": 0,
+   "frames": 96,
+   "xf": 0
+  },
+  "s2": {
+   "start": 96,
+   "frames": 64,
+   "xf": 0
+  },
+  "s3": {
+   "start": 160,
+   "frames": 64,
+   "xf": 0
+  },
+  "s4": {
+   "start": 224,
+   "frames": 64,
+   "xf": 0
+  },
+  "s5": {
+   "start": 288,
+   "frames": 96,
+   "xf": 0
+  }
+ },
+ "plan": {
+  "bars": 0,
+  "compose_ops": {
+   "chains": 2,
+   "fixes": [
+    "default.ops[5].sandwich.matte: 'm' is a buffer name, written as $m",
+    "default.over -> plate: alpha is a number / timeline but a gray picture is needed; bypassed (later ops read its input instead)",
+    "s2.ops[2].sandwich.matte: 'm' is a buffer name, written as $m"
+   ],
+   "n_fixes": 3,
+   "source": "model"
+  },
+  "contour": {
+   "available": true,
+   "lines": [
+    {
+     "entry": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "exit": {
+      "dir": "along",
+      "port": "matte_outline"
+     },
+     "matte": "front",
+     "via": {
+      "port": "matte_outline"
+     }
+    },
+    {
+     "entry": {
+      "dir": "around",
+      "port": "matte_outline"
+     },
+     "exit": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "matte": "glow",
+     "via": {
+      "port": "luma_edges"
+     }
+    },
+    {
+     "entry": {
+      "dir": "around",
+      "port": "luma_edges"
+     },
+     "exit": {
+      "dir": "along",
+      "port": "matte_outline"
+     },
+     "matte": "fill",
+     "via": {
+      "port": "matte_outline"
+     }
+    },
+    {
+     "entry": {
+      "dir": "up",
+      "port": "matte_outline"
+     },
+     "exit": {
+      "dir": "along",
+      "port": "luma_edges"
+     },
+     "matte": "wipe"
+    }
+   ],
+   "subject": true
+  },
+  "design": {
+   "fields": {
+    "fields_fixed": [
+     {
+      "path": "compose.cuts",
+      "why": "piece rule: compose.cuts: window_other not planned: the word at the place change (word 1 'DRIFT', word 3 'BREATHE') cannot be 30 % of the frame tall (a line of more than 3 "
+     },
+     {
+      "path": "compose.ops.default",
+      "why": "default.ops[5].sandwich.matte: 'm' is a buffer name, written as $m; default.over -> plate: alpha is a number / timeline but a gray picture is needed; bypassed (later ops read its input instead)"
+     },
+     {
+      "path": "compose.ops.s2",
+      "why": "s2.ops[2].sandwich.matte: 'm' is a buffer name, written as $m"
+     },
+     {
+      "path": "type.words[0].hold_s",
+      "why": "piece rule: timing fit shortened the hold"
+     },
+     {
+      "path": "type.words[1].form_s",
+      "why": "piece rule: the timing solver moved the form time to land the hit"
+     },
+     {
+      "path": "type.words[1].hit",
+      "why": "piece rule: timing fit moved the hit"
+     },
+     {
+      "path": "type.words[1].hold_s",
+      "why": "piece rule: timing fit shortened the hold"
+     },
+     {
+      "path": "type.words[1].ltx_at",
+      "why": "piece rule: ltx_at 0.4 -> 0.5"
+     },
+     {
+      "path": "type.words[1].material",
+      "why": "piece rule: material 'glowing neon tubes with a hot core' -> 'glowing wire strands, thin'"
+     },
+     {
+      "path": "type.words[1].render",
+      "why": "piece rule: type.words[1].render 'handoff' -> 'handoff': the shot footage was generated from the plan's control pass with that owner (material 'glowing wire strands, thin',"
+     },
+     {
+      "path": "type.words[2].form_s",
+      "why": "piece rule: the timing solver moved the form time to land the hit"
+     },
+     {
+      "path": "type.words[2].hit",
+      "why": "piece rule: timing fit moved the hit"
+     },
+     {
+      "path": "type.words[2].hold_s",
+      "why": "piece rule: timing fit shortened the hold"
+     },
+     {
+      "path": "type.words[3].form_s",
+      "why": "piece rule: the timing solver moved the form time to land the hit"
+     },
+     {
+      "path": "type.words[3].hit",
+      "why": "piece rule: timing fit moved the hit"
+     },
+     {
+      "path": "type.words[3].hold_s",
+      "why": "piece rule: timing fit shortened the hold"
+     }
+    ],
+    "fields_from_model": [
+     "compose.glow_color",
+     "compose.glow_hi",
+     "compose.glow_lo",
+     "compose.grain",
+     "compose.holds[0]",
+     "compose.plate_gain",
+     "compose.plate_sat",
+     "compose.technique",
+     "compose.type_opacity",
+     "compose.vignette",
+     "type.camera",
+     "type.camera_params.bob",
+     "type.camera_params.elev",
+     "type.camera_params.fast_dps",
+     "type.camera_params.intro_deg",
+     "type.camera_params.read_dps",
+     "type.energy",
+     "type.line.px",
+     "type.mood",
+     "type.palette.accents",
+     "type.palette.bg",
+     "type.palette.fg",
+     "type.transitions[0]",
+     "type.transitions[1]",
+     "type.transitions[2]",
+     "type.words[0].exit_s",
+     "type.words[0].font",
+     "type.words[0].form_in",
+     "type.words[0].form_out",
+     "type.words[0].form_s",
+     "type.words[0].hit",
+     "type.words[0].lines",
+     "type.words[0].module",
+     "type.words[0].placement.dx",
+     "type.words[0].placement.dy",
+     "type.words[0].placement.hf",
+     "type.words[0].placement.pitch",
+     "type.words[0].placement.roll",
+     "type.words[0].placement.wf",
+     "type.words[0].placement.yaw",
+     "type.words[0].render",
+     "type.words[1].exit_s",
+     "type.words[1].font",
+     "type.words[1].form_in",
+     "type.words[1].form_out",
+     "type.words[1].lines",
+     "type.words[1].module",
+     "type.words[1].placement.dx",
+     "type.words[1].placement.dy",
+     "type.words[1].placement.hf",
+     "type.words[1].placement.pitch",
+     "type.words[1].placement.roll",
+     "type.words[1].placement.wf",
+     "type.words[1].placement.yaw",
+     "type.words[2].exit_s",
+     "type.words[2].font",
+     "type.words[2].form_in",
+     "type.words[2].form_out",
+     "type.words[2].lines",
+     "type.words[2].module",
+     "type.words[2].placement.dx",
+     "type.words[2].placement.dy",
+     "type.words[2].placement.hf",
+     "type.words[2].placement.pitch",
+     "type.words[2].placement.roll",
+     "type.words[2].placement.wf",
+     "type.words[2].placement.yaw",
+     "type.words[2].render",
+     "type.words[3].exit_s",
+     "type.words[3].font",
+     "type.words[3].form_in",
+     "type.words[3].form_out",
+     "type.words[3].lines",
+     "type.words[3].module",
+     "type.words[3].placement.dx",
+     "type.words[3].placement.dy",
+     "type.words[3].placement.hf",
+     "type.words[3].placement.pitch",
+     "type.words[3].placement.roll",
+     "type.words[3].placement.wf",
+     "type.words[3].placement.yaw",
+     "type.words[3].render"
+    ],
+    "fields_from_rules": [],
+    "n": 98,
+    "pct_model": 83.7,
+    "pct_model_or_fixed": 100.0,
+    "pending": [],
+    "sections": {
+     "compose": "model",
+     "type": "model"
+    },
+    "why": {
+     "copied": 0,
+     "decisions": 8,
+     "flagged": [],
+     "missing": 1,
+     "present": 7,
+     "reasons": 0.875,
+     "repeated": 0,
+     "whys": {
+      "compose.default": "The mist is bright and busy, so a soft darkened halo behind the letters and the sandwich that keeps the kayak in front guarantee the type reads without covering the subject.",
+      "idea": "The footage is a single continuous kayak drift through mist, so putting the words behind the subject keeps the subject solid and lets the mist carry the type; the 90bpm slow blues and the two chord changes give exactly three colour moments for the four words.",
+      "system": "The four words are short and the shots are calm, so a single behind-the-subject system with one expressive face per word and a chord-locked colour step is the cleanest way to keep the piece readable and musical without adding a second motion on top of the footage.",
+      "word[0] WAKE": "Opens the piece on the first downbeat at 1.34s; a playful 3D face matches the bright red kayak and the slow blues groove, and the lanes module reads cleanly on the calm water behind the subject.",
+      "word[1] DRIFT": "Lands exactly on the 4s chord change; the ornamental Codystar face is characterful for the longest word, and the footage already forms DRIFT as glowing wire strands so a handoff to glowing tubes keeps the word part of the world.",
+      "word[2] TURN": "Hits the 6.67s chord change as the kayak carves its arc; the broken inline Monofett face suits the turn, and the short word stays legible behind the subject.",
+      "word[3] BREATHE": "The longest word gets the longest hold into the 14.88s dropout; the playful inline Bungee face and a slow wipe form suit the final stillness as the kayak glides away at sunrise."
+     }
+    }
+   },
+   "model": "design_llm_8b",
+   "salvage": {
+    "pending": [],
+    "raw": {
+     "@compose": true,
+     "@system": [],
+     "@type": true,
+     "@why": {
+      "copied": 0,
+      "decisions": 8,
+      "flagged": [],
+      "missing": 1,
+      "present": 7,
+      "reasons": 0.875,
+      "repeated": 0,
+      "whys": {
+       "compose.default": "The mist is bright and busy, so a soft darkened halo behind the letters and the sandwich that keeps the kayak in front guarantee the type reads without covering the subject.",
+       "idea": "The footage is a single continuous kayak drift through mist, so putting the words behind the subject keeps the subject solid and lets the mist carry the type; the 90bpm slow blues and the two chord changes give exactly three colour moments for the four words.",
+       "system": "The four words are short and the shots are calm, so a single behind-the-subject system with one expressive face per word and a chord-locked colour step is the cleanest way to keep the piece readable and musical without adding a second motion on top of the footage.",
+       "word[0] WAKE": "Opens the piece on the first downbeat at 1.34s; a playful 3D face matches the bright red kayak and the slow blues groove, and the lanes module reads cleanly on the calm water behind the subject.",
+       "word[1] DRIFT": "Lands exactly on the 4s chord change; the ornamental Codystar face is characterful for the longest word, and the footage already forms DRIFT as glowing wire strands so a handoff to glowing tubes keeps the word part of the world.",
+       "word[2] TURN": "Hits the 6.67s chord change as the kayak carves its arc; the broken inline Monofett face suits the turn, and the short word stays legible behind the subject.",
+       "word[3] BREATHE": "The longest word gets the longest hold into the 14.88s dropout; the playful inline Bungee face and a slow wipe form suit the final stillness as the kayak glides away at sunrise."
+      }
+     },
+     "@word0": true,
+     "@word1": true,
+     "@word2": true,
+     "@word3": true,
+     "@words": true,
+     "compose.cuts": [
+      {
+       "after": "s1",
+       "cut": "crossfade",
+       "why": "s1 into s2 is a continuation of the same lake, so a soft crossfade on the 4s chord change keeps the drift feeling continuous."
+      },
+      {
+       "after": "s2",
+       "cut": "crossfade",
+       "why": "s2 into s3 continues the same place as the kayak turns, so a soft crossfade on the 6.67s chord change matches the gentle groove."
+      },
+      {
+       "after": "s3",
+       "cut": "crossfade",
+       "why": "s3 into s4 is the same lake as the kayak glides away, so a soft crossfade on the 9.34s downbeat keeps the motion smooth."
+      },
+      {
+       "after": "s4",
+       "cut": "crossfade",
+       "why": "s4 into s5 continues the sunrise lake, so a soft crossfade on the 12s downbeat leads gently into the final BREATHE hold."
+      }
+     ],
+     "compose.glow_color": [
+      1.0,
+      0.7,
+      0.3
+     ],
+     "compose.glow_hi": 0.25,
+     "compose.glow_lo": 0.05,
+     "compose.grain": 0.02,
+     "compose.holds": [
+      [
+       14.88,
+       0.4
+      ]
+     ],
+     "compose.ops": {
+      "default": {
+       "ops": [
+        {
+         "args": {
+          "guide": "$footage",
+          "matte": "$matte",
+          "size": [
+           360,
+           640
+          ]
+         },
+         "op": "upscale_matte",
+         "out": "m"
+        },
+        {
+         "args": {
+          "footage": "$footage",
+          "lum_target": 0.78,
+          "mode": "sample",
+          "sat": 1.4,
+          "type_a": "$type_matte"
+         },
+         "op": "tint_type",
+         "out": "tcol"
+        },
+        {
+         "args": {
+          "img": "$type_matte",
+          "sigma": 14
+         },
+         "op": "blur",
+         "out": "halo"
+        },
+        {
+         "args": {
+          "color": [
+           0.05,
+           0.06,
+           0.08
+          ],
+          "like": "$footage"
+         },
+         "op": "fill",
+         "out": "dark"
+        },
+        {
+         "args": {
+          "alpha": {
+           "step": true,
+           "timeline": [
+            [
+             0,
+             0.35
+            ],
+            [
+             4.0,
+             0.35
+            ],
+            [
+             6.67,
+             0.3
+            ],
+            [
+             9.34,
+             0.2
+            ]
+           ]
+          },
+          "base": "$footage",
+          "fg": "$dark"
+         },
+         "op": "over",
+         "out": "plate"
+        },
+        {
+         "args": {
+          "footage": "$plate",
+          "matte": "m",
+          "matte_gain": 1.0,
+          "matte_soft": 0.08,
+          "matte_threshold": 0.5,
+          "type_a": "$type_matte",
+          "type_rgb": "$tcol"
+         },
+         "op": "sandwich",
+         "out": "sand"
+        },
+        {
+         "args": {
+          "color": {
+           "step": true,
+           "timeline": [
+            [
+             0,
+             [
+              0.47,
+              0.67,
+              0.82
+             ]
+            ],
+            [
+             4.0,
+             [
+              0.9,
+              0.67,
+              0.35
+             ]
+            ],
+            [
+             6.67,
+             [
+              0.96,
+              0.82,
+              0.47
+             ]
+            ]
+           ]
+          },
+          "img": "$sand",
+          "intensity": {
+           "curve": "onset",
+           "hi": 0.25,
+           "lo": 0.05
+          },
+          "mask": "$type_matte",
+          "radius": 22
+         },
+         "op": "add_glow",
+         "out": "glow"
+        },
+        {
+         "args": {
+          "amount": 0.02,
+          "frame": "$glow",
+          "frame_idx": "$frame_idx"
+         },
+         "op": "grain",
+         "out": "grain"
+        },
+        {
+         "args": {
+          "frame": "$grain",
+          "radius": 0.5,
+          "softness": 0.6,
+          "strength": 0.25
+         },
+         "op": "vignette",
+         "out": "image"
+        }
+       ],
+       "why": "The mist is bright and busy, so a soft darkened halo behind the letters and the sandwich that keeps the kayak in front guarantee the type reads without covering the subject."
+      },
+      "shots": {
+       "s2": {
+        "ops": [
+         {
+          "args": {
+           "guide": "$footage",
+           "matte": "$matte",
+           "size": [
+            360,
+            640
+           ]
+          },
+          "op": "upscale_matte",
+          "out": "m"
+         },
+         {
+          "args": {
+           "footage": "$footage",
+           "lum_target": 0.75,
+           "mode": "complement",
+           "sat": 1.5,
+           "type_a": "$type_matte"
+          },
+          "op": "tint_type",
+          "out": "tcol"
+         },
+         {
+          "args": {
+           "footage": "$footage",
+           "matte": "m",
+           "matte_gain": 1.0,
+           "matte_soft": 0.08,
+           "matte_threshold": 0.5,
+           "type_a": "$type_matte",
+           "type_rgb": "$tcol"
+          },
+          "op": "sandwich",
+          "out": "sand"
+         },
+         {
+          "args": {
+           "color": [
+            0.9,
+            0.67,
+            0.35
+           ],
+           "img": "$sand",
+           "intensity": {
+            "curve": "onset",
+            "hi": 0.3,
+            "lo": 0.08
+           },
+           "mask": "$type_matte",
+           "radius": 26
+          },
+          "op": "add_glow",
+          "out": "glow"
+         },
+         {
+          "args": {
+           "amount": 0.02,
+           "frame": "$glow",
+           "frame_idx": "$frame_idx"
+          },
+          "op": "grain",
+          "out": "grain"
+         },
+         {
+          "args": {
+           "frame": "$grain",
+           "radius": 0.5,
+           "softness": 0.6,
+           "strength": 0.25
+          },
+          "op": "vignette",
+          "out": "image"
+         }
+        ]
+       }
+      }
+     },
+     "compose.plate_gain": 0.7,
+     "compose.plate_sat": 0.9,
+     "compose.technique": "behind",
+     "compose.type_opacity": 1.0,
+     "compose.vignette": 0.25,
+     "concept": "The type lives BEHIND the kayak, glowing in the mist, with one face per word and the ink colour shifting on every chord change.",
+     "system": {
+      "axis": {
+       "font": "Anybody[wdth,wght].ttf",
+       "tag": "wght",
+       "windows": [
+        [
+         400,
+         600
+        ],
+        [
+         500,
+         700
+        ],
+        [
+         600,
+         800
+        ],
+        [
+         700,
+         900
+        ]
+       ]
+      },
+      "pattern": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "progression": "The faces move from playful 3D to broken inline, and the ink colour warms from cool morning blue to deep gold as the kayak glides away and the mist clears.",
+      "roles": {
+       "A": "Rock3D-Regular.ttf",
+       "B": "Codystar-Regular.ttf",
+       "C": "Monofett-Regular.ttf",
+       "D": "BungeeInline-Regular.ttf"
+      },
+      "rule": "One word per shot, one characterful face per word, the ink colour steps on each chord change, and the words all sit behind the kayak with a soft glow that follows the music envelope.",
+      "why": "The four words are short and the shots are calm, so a single behind-the-subject system with one expressive face per word and a chord-locked colour step is the cleanest way to keep the piece readable and musical without adding a second motion on top of the footage.",
+      "yaw": [
+       -16,
+       16,
+       -14,
+       14
+      ]
+     },
+     "treatment_notes": "Every word sits between the misty background and the red kayak at the scale of the subject, the kayak stays crisp in front and only briefly crosses the letters, with a soft darkened halo behind the type for legibility.",
+     "type.camera": "beat_orbit",
+     "type.camera_params.bob": 0.5,
+     "type.camera_params.elev": 2,
+     "type.camera_params.fast_dps": 14,
+     "type.camera_params.intro_deg": 18,
+     "type.camera_params.read_dps": 3.5,
+     "type.energy": 0.45,
+     "type.line.px": 4,
+     "type.mood": "tender playful",
+     "type.palette.accents": [
+      [
+       120,
+       170,
+       210
+      ],
+      [
+       230,
+       170,
+       90
+      ],
+      [
+       245,
+       210,
+       120
+      ]
+     ],
+     "type.palette.bg": [
+      24,
+      28,
+      32
+     ],
+     "type.palette.fg": [
+      245,
+      240,
+      232
+     ],
+     "type.transitions": [
+      "ripple",
+      "twist",
+      "fan"
+     ],
+     "type.words[0].exit_s": 0.6,
+     "type.words[0].font": "Rock3D-Regular.ttf",
+     "type.words[0].form_in": "lines",
+     "type.words[0].form_out": "lines",
+     "type.words[0].form_s": 0.6,
+     "type.words[0].hit": 1.34,
+     "type.words[0].hold_s": 1.8,
+     "type.words[0].lines": [
+      "WAKE"
+     ],
+     "type.words[0].ltx_at": 0.5,
+     "type.words[0].material": "none",
+     "type.words[0].module": "lanes",
+     "type.words[0].placement.dx": 0,
+     "type.words[0].placement.dy": 0.05,
+     "type.words[0].placement.hf": 0.3,
+     "type.words[0].placement.pitch": 0,
+     "type.words[0].placement.roll": 0,
+     "type.words[0].placement.wf": 0.85,
+     "type.words[0].placement.yaw": -16,
+     "type.words[0].render": "flat",
+     "type.words[0].text": "WAKE",
+     "type.words[1].exit_s": 0.5,
+     "type.words[1].font": "Codystar-Regular.ttf",
+     "type.words[1].form_in": "lines",
+     "type.words[1].form_out": "lines",
+     "type.words[1].form_s": 0.5,
+     "type.words[1].hit": 4.0,
+     "type.words[1].hold_s": 1.6,
+     "type.words[1].lines": [
+      "DRIFT"
+     ],
+     "type.words[1].ltx_at": 0.4,
+     "type.words[1].material": "glowing neon tubes with a hot core",
+     "type.words[1].module": "lanes",
+     "type.words[1].placement.dx": 0,
+     "type.words[1].placement.dy": 0.05,
+     "type.words[1].placement.hf": 0.3,
+     "type.words[1].placement.pitch": 0,
+     "type.words[1].placement.roll": 0,
+     "type.words[1].placement.wf": 0.9,
+     "type.words[1].placement.yaw": 16,
+     "type.words[1].render": "handoff",
+     "type.words[1].text": "DRIFT",
+     "type.words[2].exit_s": 0.5,
+     "type.words[2].font": "Monofett-Regular.ttf",
+     "type.words[2].form_in": "lines",
+     "type.words[2].form_out": "lines",
+     "type.words[2].form_s": 0.5,
+     "type.words[2].hit": 6.67,
+     "type.words[2].hold_s": 1.6,
+     "type.words[2].lines": [
+      "TURN"
+     ],
+     "type.words[2].ltx_at": 0.5,
+     "type.words[2].material": "none",
+     "type.words[2].module": "lanes",
+     "type.words[2].placement.dx": 0,
+     "type.words[2].placement.dy": 0.05,
+     "type.words[2].placement.hf": 0.3,
+     "type.words[2].placement.pitch": 0,
+     "type.words[2].placement.roll": 0,
+     "type.words[2].placement.wf": 0.8,
+     "type.words[2].placement.yaw": -14,
+     "type.words[2].render": "flat",
+     "type.words[2].text": "TURN",
+     "type.words[3].exit_s": 0.8,
+     "type.words[3].font": "BungeeInline-Regular.ttf",
+     "type.words[3].form_in": "wipe",
+     "type.words[3].form_out": "wipe",
+     "type.words[3].form_s": 0.7,
+     "type.words[3].hit": 9.34,
+     "type.words[3].hold_s": 3.2,
+     "type.words[3].lines": [
+      "BREATHE"
+     ],
+     "type.words[3].ltx_at": 0.5,
+     "type.words[3].material": "none",
+     "type.words[3].module": "lanes",
+     "type.words[3].placement.dx": 0,
+     "type.words[3].placement.dy": 0.05,
+     "type.words[3].placement.hf": 0.3,
+     "type.words[3].placement.pitch": 0,
+     "type.words[3].placement.roll": 0,
+     "type.words[3].placement.wf": 0.95,
+     "type.words[3].placement.yaw": 14,
+     "type.words[3].render": "flat",
+     "type.words[3].text": "BREATHE"
+    }
+   },
+   "src": {
+    "compose": "model",
+    "type": "model"
+   }
+  },
+  "energy": 0.416,
+  "flow_wake": {
+   "chains": 2,
+   "holds": [
+    [
+     1.337,
+     2.937
+    ],
+    [
+     6.671,
+     8.071
+    ],
+    [
+     9.337,
+     10.737
+    ],
+    [
+     12.17,
+     15.17
+    ]
+   ]
+  },
+  "footage": {
+   "idea": "The kayak drifts through the misty lake, the camera tracking its smooth lateral path. Words appear in the mist, turning from flat to glowing strands as the kayak turns and glides away.",
+   "shot_prompts": {
+    "model": 4,
+    "rules": 1
+   }
+  },
+  "layout_shapes": {
+   "words": 0
+  },
+  "look": "strand",
+  "matte_treatments": {
+   "words": 0
+  },
+  "notes": [
+   "brief: empty -> rules only",
+   "dry run 1: last word ends at 15.78s of 16.00s",
+   "dry run 2: last word ends at 15.78s of 16.00s",
+   "windows shrunk by 2 bar(s) after the dry run",
+   "ltx letters unreadable -> flat: type.words[1] 'DRIFT' (handoff -> flat, shot s2): the vision model read ['NONE', 'II', 'II'] (0/3 crops match, edit distance <= 0); pixel excess 0.072 (log only); the word stays flat for its whole span"
+  ],
+  "owner": {
+   "fixes": [
+    "type.words[3] 'BREATHE': render 'ltx' -> 'flat': 7 letters; an LTX-owned word has at most 6 letters (LTX misspells / cannot form longer words)"
+   ],
+   "source": "concept",
+   "ltx_check": [
+    {
+     "i": 1,
+     "text": "DRIFT",
+     "render": "handoff",
+     "inside": 0.1127,
+     "outside": 0.0404,
+     "excess": 0.0723,
+     "n": 11,
+     "formed": false,
+     "thr": 0.08,
+     "pixel_formed": false,
+     "read": [
+      "NONE",
+      "II",
+      "II"
+     ],
+     "read_matches": "0/3",
+     "shot": "s2"
+    }
+   ],
+   "fallback": [
+    "ltx letters unreadable -> flat: type.words[1] 'DRIFT' (handoff -> flat, shot s2): the vision model read ['NONE', 'II', 'II'] (0/3 crops match, edit distance <= 0); pixel excess 0.072 (log only); the word stays flat for its whole span"
+   ]
+  },
+  "seed": 302,
+  "shots": "cut",
+  "structure": {
+   "explicit": true,
+   "first": [
+    "A",
+    "last:s1",
+    "B",
+    "last:s3",
+    "C"
+   ],
+   "mode": "cut",
+   "places": 3
+  },
+  "system": {
+   "axis": {
+    "font": "Anybody[wdth,wght].ttf",
+    "tag": "wght",
+    "windows": [
+     [
+      400,
+      600
+     ],
+     [
+      500,
+      700
+     ],
+     [
+      600,
+      800
+     ],
+     [
+      700,
+      900
+     ]
+    ]
+   },
+   "pattern": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "progression": "The faces move from playful 3D to broken inline, and the ink colour warms from cool morning blue to deep gold as the kayak glides away and the mist clears.",
+   "roles": {
+    "A": "Rock3D-Regular.ttf",
+    "B": "Codystar-Regular.ttf",
+    "C": "Monofett-Regular.ttf",
+    "D": "BungeeInline-Regular.ttf"
+   },
+   "rule": "One word per shot, one characterful face per word, the ink colour steps on each chord change, and the words all sit behind the kayak with a soft glow that follows the music envelope.",
+   "why": "The four words are short and the shots are calm, so a single behind-the-subject system with one expressive face per word and a chord-locked colour step is the cleanest way to keep the piece readable and musical without adding a second motion on top of the footage.",
+   "yaw": [
+    -16,
+    16,
+    -14,
+    14
+   ]
+  },
+  "tail": {
+   "cut": 16.0,
+   "gap": 0.88,
+   "last_end": 15.12,
+   "signoff_t0": 14.67
+  },
+  "tier": "mid",
+  "tries": 3,
+  "version": 1
+ },
+ "quality": "preview",
+ "shots": [
+  {
+   "control": {
+    "guide": 0.0,
+    "pass": "depth"
+   },
+   "first": "A",
+   "flow": true,
+   "frames": 97,
+   "guide": 0.0,
+   "id": "s1",
+   "kind": "control",
+   "matte": true,
+   "prompt": "A bright red kayak glides slowly across the glassy lake, the paddle dipping gently into the misty water, leaving a soft wake behind., camera: slow lateral tracking, cinematic",
+   "seed": 4152581714,
+   "size": [
+    384,
+    704
+   ],
+   "span": 96
+  },
+  {
+   "control": {
+    "guide": 1.0,
+    "pass": "depth"
+   },
+   "first": "last:s1",
+   "flow": true,
+   "frames": 65,
+   "guide": 1.0,
+   "id": "s2",
+   "kind": "control",
+   "matte": true,
+   "prompt": "The kayak approaches a small ripple in the water, the paddle lifting out of the water, the kayak drifting smoothly over the ripple., camera: slow push in, the word \"DRIFT\" formed as glowing wire strands, thin letters, extruded 3D lettering, cinematic",
+   "seed": 1854541800,
+   "size": [
+    384,
+    704
+   ],
+   "span": 64
+  },
+  {
+   "control": {
+    "guide": 0.0,
+    "pass": "depth"
+   },
+   "first": "B",
+   "flow": true,
+   "frames": 65,
+   "guide": 0.0,
+   "id": "s3",
+   "kind": "control",
+   "matte": true,
+   "prompt": "The kayak turns gently to the right, the paddle dipping into the water on the left side, the kayak carving a smooth arc through the mist., camera: slow orbital move, cinematic",
+   "seed": 428687230,
+   "size": [
+    384,
+    704
+   ],
+   "span": 64
+  },
+  {
+   "control": {
+    "guide": 0.0,
+    "pass": "depth"
+   },
+   "first": "last:s3",
+   "flow": true,
+   "frames": 65,
+   "guide": 0.0,
+   "id": "s4",
+   "kind": "control",
+   "matte": true,
+   "prompt": "The kayak glides away from the camera, the paddle resting on the deck, the mist clearing slightly to reveal the distant shoreline., camera: slow pull back, cinematic",
+   "seed": 2280237789,
+   "size": [
+    384,
+    704
+   ],
+   "span": 64
+  },
+  {
+   "control": {
+    "guide": 0.0,
+    "pass": "depth"
+   },
+   "first": "C",
+   "flow": true,
+   "frames": 97,
+   "guide": 0.0,
+   "id": "s5",
+   "kind": "control",
+   "matte": true,
+   "prompt": "A bright red kayak glides across a glassy lake at sunrise, warm golden light reflecting off the calm water, morning mist rising gently from the surface, the distant, the subject stands perfectly still while the air moves around it, one steady continuous camera sweep from left to right, things move through the scene, cinematic",
+   "seed": 4042168907,
+   "size": [
+    384,
+    704
+   ],
+   "span": 96
+  }
+ ],
+ "signoff": {
+  "color": [
+   246,
+   242,
+   248
+  ],
+  "font": "Space Grotesk",
+  "off": true,
+  "px": 38,
+  "t0": 14.67,
+  "text": "wake / 90 bpm"
+ },
+ "sizes": {
+  "compose": [
+   360,
+   640
+  ],
+  "control": [
+   384,
+   704
+  ],
+  "shot": [
+   384,
+   704
+  ],
+  "type": [
+   384,
+   704
+  ]
+ },
+ "slug": "wake-drift-turn-breathe",
+ "stills": [
+  {
+   "id": "A",
+   "model": "moss",
+   "negative": "nsfw, worst quality, bad anatomy, jpeg artifact, text, letters, words, watermark, logo, caption, signature, blurry, deformed, oversaturated, cartoon",
+   "prompt": "A bright red kayak glides across a glassy lake at sunrise, warm golden light reflecting off the calm water, morning mist rising gently from the surface, the distant shoreline silhouetted in soft focus, shot from a low mid-range angle., cinematic 35mm film still, shallow depth of field, tall vertical frame",
+   "seed": 2113961943,
+   "size": [
+    384,
+    704
+   ]
+  },
+  {
+   "id": "B",
+   "model": "moss",
+   "negative": "nsfw, worst quality, bad anatomy, jpeg artifact, text, letters, words, watermark, logo, caption, signature, blurry, deformed, oversaturated, cartoon",
+   "prompt": "The kayak turns gently to the right, the paddle dipping into the water on the left side, the kayak carving a smooth arc through the mist., cinematic 35mm film still, shallow depth of field, tall vertical frame",
+   "seed": 2601887935,
+   "size": [
+    384,
+    704
+   ]
+  },
+  {
+   "id": "C",
+   "model": "moss",
+   "negative": "nsfw, worst quality, bad anatomy, jpeg artifact, text, letters, words, watermark, logo, caption, signature, blurry, deformed, oversaturated, cartoon",
+   "prompt": "A bright red kayak glides across a glassy lake at sunrise, warm golden light reflecting off the calm water, morning mist rising gently from the surface, the distant shoreline silhouetted in soft focus, shot from a low mid-range angle., cinematic 35mm film still, shallow depth of field, tall vertical frame, a closer view of the same place from a new angle",
+   "seed": 35453189,
+   "size": [
+    384,
+    704
+   ]
+  }
+ ],
+ "technique": "behind",
+ "type": {
+  "bar": 4,
+  "beats": [
+   0.004,
+   0.6707,
+   1.3373,
+   2.004,
+   2.6707,
+   3.3373,
+   4.004,
+   4.6706,
+   5.3373,
+   6.004,
+   6.6706,
+   7.3373,
+   8.0039,
+   8.6706,
+   9.3373,
+   10.0039,
+   10.6706,
+   11.3373,
+   12.0039,
+   12.6706,
+   13.3372,
+   14.0039,
+   14.6706,
+   15.3372,
+   16.0039,
+   16.6706,
+   17.3372,
+   18.0039,
+   18.6705,
+   19.3372,
+   20.0039
+  ],
+  "bpm": 90.001,
+  "camera": "beat_orbit",
+  "camera_params": {
+   "bob": 0.5,
+   "elev": 2.0,
+   "fast_dps": 14.0,
+   "intro_deg": 18.0,
+   "read_dps": 3.5
+  },
+  "downbeats": [
+   1.3373,
+   4.004,
+   6.6706,
+   9.3373,
+   12.0039,
+   14.6706,
+   17.3372,
+   20.0039
+  ],
+  "duration": 16.0,
+  "energy": 0.45,
+  "fps": 24,
+  "line": {
+   "px": 4.0
+  },
+  "mood": "tender playful",
+  "palette": {
+   "accents": [
+    [
+     120,
+     170,
+     210
+    ],
+    [
+     230,
+     170,
+     90
+    ],
+    [
+     245,
+     210,
+     120
+    ]
+   ],
+   "bg": [
+    24,
+    28,
+    32
+   ],
+   "fg": [
+    245,
+    240,
+    232
+   ]
+  },
+  "seed": 51089,
+  "transitions": [
+   "ripple",
+   "twist",
+   "fan"
+  ],
+  "words": [
+   {
+    "exit_s": 0.6,
+    "font": "Rock3D-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.6,
+    "hit_on": "bar",
+    "lines": [
+     "WAKE"
+    ],
+    "module": "lanes",
+    "placement": {
+     "dx": 0.0,
+     "dy": 0.05,
+     "hf": 0.3,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "wf": 0.85,
+     "yaw": -16.0
+    },
+    "render": "flat",
+    "t0": 0.0,
+    "t1": 2.8,
+    "text": "WAKE"
+   },
+   {
+    "exit_s": 0.5,
+    "font": "Codystar-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.45,
+    "hit_on": "bar",
+    "lines": [
+     "DRIFT"
+    ],
+    "module": "lanes",
+    "placement": {
+     "dx": 0.0,
+     "dy": 0.05,
+     "hf": 0.3,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "wf": 0.9,
+     "yaw": 16.0
+    },
+    "render": "flat",
+    "t0": 3.554,
+    "t1": 5.904,
+    "text": "DRIFT",
+    "render_asked": "handoff",
+    "ltx_missing": true
+   },
+   {
+    "exit_s": 0.5,
+    "font": "Monofett-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.45,
+    "hit_on": "bar",
+    "lines": [
+     "TURN"
+    ],
+    "module": "lanes",
+    "placement": {
+     "dx": 0.0,
+     "dy": 0.05,
+     "hf": 0.3,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "wf": 0.8,
+     "yaw": -14.0
+    },
+    "render": "flat",
+    "t0": 6.304,
+    "t1": 8.654,
+    "text": "TURN"
+   },
+   {
+    "exit_s": 0.8,
+    "font": "BungeeInline-Regular.ttf",
+    "form_in": "wipe",
+    "form_out": "wipe",
+    "form_s": 0.45,
+    "hit_on": "bar",
+    "lines": [
+     "BREATHE"
+    ],
+    "module": "lanes",
+    "placement": {
+     "dx": 0.0,
+     "dy": 0.05,
+     "hf": 0.3,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "wf": 0.95,
+     "yaw": 14.0
+    },
+    "render": "flat",
+    "t0": 9.054,
+    "t1": 13.304,
+    "text": "BREATHE"
+   }
+  ]
+ },
+ "type_passes": [
+  "matte",
+  "depth",
+  "line"
+ ]
+}

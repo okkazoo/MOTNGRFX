@@ -1,0 +1,2715 @@
+{
+ "audio": {
+  "analysis": "15_fusion/v005/local/audio/P18_analysis.json",
+  "bpm": 139.99,
+  "cut": 13.7143,
+  "fade": 0.429,
+  "src": "15_fusion/v005/audio/P18.wav"
+ },
+ "brief": {
+  "mood": [
+   "driving"
+  ],
+  "palette": [
+   "#14110f",
+   "#efe7d8",
+   "#d6281e",
+   "#1e4fc8",
+   "#f2c230"
+  ],
+  "scene": "a skateboarder in an empty concrete skate bowl, late sun, bleached concrete, deep blue sky"
+ },
+ "compose": {
+  "crf": 20,
+  "crossfade": 0,
+  "default": {
+   "ops": [
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         1.619,
+         0.0
+        ],
+        [
+         1.859,
+         0.75
+        ],
+        [
+         2.92,
+         0.75
+        ],
+        [
+         3.16,
+         0.0
+        ],
+        [
+         4.191,
+         0.0
+        ],
+        [
+         4.431,
+         0.75
+        ],
+        [
+         5.777,
+         0.75
+        ],
+        [
+         6.017,
+         0.0
+        ],
+        [
+         6.763,
+         0.0
+        ],
+        [
+         7.003,
+         0.75
+        ],
+        [
+         8.063,
+         0.75
+        ],
+        [
+         8.303,
+         0.0
+        ],
+        [
+         9.334,
+         0.0
+        ],
+        [
+         9.574,
+         0.75
+        ],
+        [
+         10.634,
+         0.75
+        ],
+        [
+         10.874,
+         0.0
+        ],
+        [
+         11.906,
+         0.0
+        ],
+        [
+         12.146,
+         0.75
+        ],
+        [
+         13.144,
+         0.75
+        ],
+        [
+         13.384,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "P18:type_matte",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_matte",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wm"
+    },
+    {
+     "args": {
+      "bg_drag": 0.12,
+      "decay": 0.9,
+      "flow": "$flow",
+      "frame_idx": "$frame_idx",
+      "matte": "$flow_m",
+      "max_disp": 0.2,
+      "radius": 70,
+      "settle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         1.619,
+         0.0
+        ],
+        [
+         1.859,
+         0.75
+        ],
+        [
+         2.92,
+         0.75
+        ],
+        [
+         3.16,
+         0.0
+        ],
+        [
+         4.191,
+         0.0
+        ],
+        [
+         4.431,
+         0.75
+        ],
+        [
+         5.777,
+         0.75
+        ],
+        [
+         6.017,
+         0.0
+        ],
+        [
+         6.763,
+         0.0
+        ],
+        [
+         7.003,
+         0.75
+        ],
+        [
+         8.063,
+         0.75
+        ],
+        [
+         8.303,
+         0.0
+        ],
+        [
+         9.334,
+         0.0
+        ],
+        [
+         9.574,
+         0.75
+        ],
+        [
+         10.634,
+         0.75
+        ],
+        [
+         10.874,
+         0.0
+        ],
+        [
+         11.906,
+         0.0
+        ],
+        [
+         12.146,
+         0.75
+        ],
+        [
+         13.144,
+         0.75
+        ],
+        [
+         13.384,
+         0.0
+        ]
+       ]
+      },
+      "smooth": 1.0,
+      "state_key": "P18:type_line",
+      "strength": {
+       "curve": "onset",
+       "hi": 6.0,
+       "lo": 3.0
+      },
+      "trail": 10,
+      "trail_gain": 1.0,
+      "type_a": "$type_line",
+      "u": "$u"
+     },
+     "op": "flow_wake",
+     "out": "wl"
+    },
+    {
+     "args": {
+      "angle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         3.9,
+         0.0
+        ],
+        [
+         3.94,
+         4.35
+        ],
+        [
+         5.1667,
+         4.35
+        ],
+        [
+         5.4167,
+         7.13
+        ],
+        [
+         6.297,
+         7.13
+        ],
+        [
+         6.337,
+         0.0
+        ]
+       ]
+      },
+      "cx": 0.5,
+      "cy": 0.32,
+      "dx": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         3.9,
+         0.0
+        ],
+        [
+         3.94,
+         0.0
+        ],
+        [
+         5.1667,
+         0.0
+        ],
+        [
+         5.4167,
+         0.0
+        ],
+        [
+         6.297,
+         0.0
+        ],
+        [
+         6.337,
+         0.0
+        ]
+       ]
+      },
+      "dy": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         3.9,
+         0.0
+        ],
+        [
+         3.94,
+         -0.0664
+        ],
+        [
+         5.1667,
+         -0.0664
+        ],
+        [
+         5.4167,
+         -0.114
+        ],
+        [
+         6.297,
+         -0.114
+        ],
+        [
+         6.337,
+         0.0
+        ]
+       ]
+      },
+      "img": "$wm"
+     },
+     "op": "rigid_pose",
+     "out": "wm"
+    },
+    {
+     "args": {
+      "angle": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         3.9,
+         0.0
+        ],
+        [
+         3.94,
+         4.35
+        ],
+        [
+         5.1667,
+         4.35
+        ],
+        [
+         5.4167,
+         7.13
+        ],
+        [
+         6.297,
+         7.13
+        ],
+        [
+         6.337,
+         0.0
+        ]
+       ]
+      },
+      "cx": 0.5,
+      "cy": 0.32,
+      "dx": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         3.9,
+         0.0
+        ],
+        [
+         3.94,
+         0.0
+        ],
+        [
+         5.1667,
+         0.0
+        ],
+        [
+         5.4167,
+         0.0
+        ],
+        [
+         6.297,
+         0.0
+        ],
+        [
+         6.337,
+         0.0
+        ]
+       ]
+      },
+      "dy": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         3.9,
+         0.0
+        ],
+        [
+         3.94,
+         -0.0664
+        ],
+        [
+         5.1667,
+         -0.0664
+        ],
+        [
+         5.4167,
+         -0.114
+        ],
+        [
+         6.297,
+         -0.114
+        ],
+        [
+         6.337,
+         0.0
+        ]
+       ]
+      },
+      "img": "$wl"
+     },
+     "op": "rigid_pose",
+     "out": "wl"
+    },
+    {
+     "args": {
+      "guide": "$footage",
+      "matte": "$matte",
+      "size": [
+       360,
+       640
+      ]
+     },
+     "op": "upscale_matte",
+     "out": "m"
+    },
+    {
+     "args": {
+      "fade": 0.3,
+      "img": "$footage",
+      "matte": "$m",
+      "shapes": [
+       {
+        "angle": -2.28,
+        "color": [
+         0.73,
+         0.136,
+         0.102
+        ],
+        "cx": 0.5,
+        "cy": 0.32,
+        "h": 0.3,
+        "kind": "rect",
+        "pose": {
+         "ease": "smooth",
+         "keys": [
+          [
+           3.94,
+           0.0,
+           -0.0664,
+           4.35
+          ],
+          [
+           5.1667,
+           0.0,
+           -0.0664,
+           4.35
+          ],
+          [
+           5.4167,
+           0.0,
+           -0.114,
+           7.13
+          ],
+          [
+           6.875,
+           0.0,
+           -0.114,
+           7.13
+          ],
+          [
+           7.125,
+           0.0,
+           0.0913,
+           2.16
+          ],
+          [
+           7.275,
+           0.0,
+           0.0913,
+           2.16
+          ]
+         ],
+         "pivot": [
+          0.5,
+          0.32
+         ]
+        },
+        "t0": 3.94,
+        "t1": 7.275,
+        "w": 1.9
+       },
+       {
+        "angle": -2.28,
+        "color": [
+         0.118,
+         0.31,
+         0.784
+        ],
+        "cx": 0.5036,
+        "cy": 0.4819,
+        "h": 0.016,
+        "kind": "rect",
+        "pose": {
+         "ease": "smooth",
+         "keys": [
+          [
+           3.94,
+           0.0,
+           -0.0664,
+           4.35
+          ],
+          [
+           5.1667,
+           0.0,
+           -0.0664,
+           4.35
+          ],
+          [
+           5.4167,
+           0.0,
+           -0.114,
+           7.13
+          ],
+          [
+           6.875,
+           0.0,
+           -0.114,
+           7.13
+          ],
+          [
+           7.125,
+           0.0,
+           0.0913,
+           2.16
+          ],
+          [
+           7.275,
+           0.0,
+           0.0913,
+           2.16
+          ]
+         ],
+         "pivot": [
+          0.5,
+          0.32
+         ]
+        },
+        "t0": 3.94,
+        "t1": 7.275,
+        "w": 1.9
+       },
+       {
+        "color": [
+         0.078,
+         0.067,
+         0.059
+        ],
+        "kind": "poly",
+        "pts": [
+         [
+          0.0,
+          0.0
+         ],
+         [
+          1.0,
+          0.0
+         ],
+         [
+          1.0,
+          0.5634
+         ],
+         [
+          0.8333,
+          0.5634
+         ],
+         [
+          0.8333,
+          0.5919
+         ],
+         [
+          0.6667,
+          0.5919
+         ],
+         [
+          0.6667,
+          0.5756
+         ],
+         [
+          0.5,
+          0.5756
+         ],
+         [
+          0.5,
+          0.5856
+         ],
+         [
+          0.3333,
+          0.5856
+         ],
+         [
+          0.3333,
+          0.5713
+         ],
+         [
+          0.1667,
+          0.5713
+         ],
+         [
+          0.1667,
+          0.5219
+         ],
+         [
+          0.0,
+          0.5219
+         ]
+        ],
+        "t0": 11.654,
+        "t1": 13.664
+       },
+       {
+        "color": [
+         0.73,
+         0.136,
+         0.102
+        ],
+        "kind": "poly",
+        "pts": [
+         [
+          0.0,
+          0.5219
+         ],
+         [
+          0.1667,
+          0.5219
+         ],
+         [
+          0.1667,
+          0.5713
+         ],
+         [
+          0.3333,
+          0.5713
+         ],
+         [
+          0.3333,
+          0.5856
+         ],
+         [
+          0.5,
+          0.5856
+         ],
+         [
+          0.5,
+          0.5756
+         ],
+         [
+          0.6667,
+          0.5756
+         ],
+         [
+          0.6667,
+          0.5919
+         ],
+         [
+          0.8333,
+          0.5919
+         ],
+         [
+          0.8333,
+          0.5634
+         ],
+         [
+          1.0,
+          0.5634
+         ],
+         [
+          1.0,
+          1.0
+         ],
+         [
+          0.0,
+          1.0
+         ]
+        ],
+        "t0": 11.654,
+        "t1": 13.664
+       }
+      ],
+      "t": "$t"
+     },
+     "op": "layout_shapes",
+     "out": "plate"
+    },
+    {
+     "args": {
+      "frame": "$plate",
+      "gain": 0.66,
+      "gamma": 1.0,
+      "lift": 0.0,
+      "sat": 0.7
+     },
+     "op": "grade",
+     "out": "foot"
+    },
+    {
+     "args": {
+      "footage": "$footage",
+      "lum_amount": 0.92,
+      "lum_target": 0.93,
+      "mode": "sample",
+      "sample_blur": 60,
+      "sat": 0.5,
+      "type_a": "$wl"
+     },
+     "op": "tint_type",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "color": [
+       1.0,
+       0.8,
+       0.55
+      ],
+      "like": "$footage"
+     },
+     "op": "fill",
+     "out": "warm"
+    },
+    {
+     "args": {
+      "a": "$tcol",
+      "b": "$warm",
+      "t": {
+       "timeline": [
+        [
+         9.454,
+         0.0
+        ],
+        [
+         11.597,
+         0.8
+        ],
+        [
+         13.74,
+         0.8
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "tcol"
+    },
+    {
+     "args": {
+      "a": "$wl",
+      "b": "$wm",
+      "t": {
+       "timeline": [
+        [
+         9.026,
+         0.0
+        ],
+        [
+         9.883,
+         1.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "ta"
+    },
+    {
+     "args": {
+      "fps": 24,
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "min_frac": 0.8,
+      "min_vis": 0.8,
+      "ramp_s": 0.25,
+      "t": "$t",
+      "type_a": "$ta"
+     },
+     "op": "legible",
+     "out": "m"
+    },
+    {
+     "args": {
+      "footage": "$foot",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$ta",
+      "type_opacity": {
+       "timeline": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.882,
+         0.15
+        ],
+        [
+         3.454,
+         0.8
+        ],
+        [
+         6.883,
+         0.88
+        ],
+        [
+         9.883,
+         0.95
+        ],
+        [
+         13.74,
+         0.95
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "color": [
+       0.85,
+       0.9,
+       1.0
+      ],
+      "img": "$image",
+      "intensity": {
+       "curve": "sub",
+       "hi": 0.12,
+       "lo": 0.03
+      },
+      "mask": "$wm",
+      "radius": 24
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "angle": 35.0,
+      "axis": "x",
+      "like": "$foot",
+      "pos": 0.5,
+      "side": "left",
+      "soft": 0.06
+     },
+     "op": "split_region",
+     "out": "_fr0f"
+    },
+    {
+     "args": {
+      "fg": "$foot",
+      "footage": "$image",
+      "front": "$_fr0f",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$wm",
+      "type_opacity": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         1.589,
+         0.0
+        ],
+        [
+         1.739,
+         0.96
+        ],
+        [
+         3.04,
+         0.96
+        ],
+        [
+         3.19,
+         0.0
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "matte": "$m",
+      "progress": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         4.111,
+         0.0
+        ],
+        [
+         4.311,
+         0.0
+        ],
+        [
+         5.011,
+         1.0
+        ],
+        [
+         5.897,
+         1.0
+        ],
+        [
+         6.097,
+         1.0
+        ]
+       ]
+      },
+      "reach": 0.8,
+      "soft": 0.05
+     },
+     "op": "matte_reach",
+     "out": "_wi1r"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "b": "$_wi1r"
+     },
+     "op": "mask_mul",
+     "out": "_wi1a"
+    },
+    {
+     "args": {
+      "frame": "$foot",
+      "gain": 1.22,
+      "gamma": 1.05,
+      "sat": 1.15
+     },
+     "op": "grade",
+     "out": "_wi1b"
+    },
+    {
+     "args": {
+      "a": "$_wi1r",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         4.161,
+         0.0
+        ],
+        [
+         4.311,
+         1.0
+        ],
+        [
+         5.897,
+         1.0
+        ],
+        [
+         6.047,
+         0.0
+        ]
+       ]
+      },
+      "scale": 0.55
+     },
+     "op": "mask_gate",
+     "out": "_wi1t"
+    },
+    {
+     "args": {
+      "a": "$image",
+      "b": "$_wi1b",
+      "t": "$_wi1t"
+     },
+     "op": "crossfade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "fg": "$foot",
+      "footage": "$image",
+      "matte": "$m",
+      "matte_soft": 0.08,
+      "matte_threshold": 0.5,
+      "type_a": "$_wi1a",
+      "type_opacity": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         4.161,
+         0.0
+        ],
+        [
+         4.311,
+         0.96
+        ],
+        [
+         5.897,
+         0.96
+        ],
+        [
+         6.047,
+         0.0
+        ]
+       ]
+      },
+      "type_rgb": "$tcol"
+     },
+     "op": "sandwich",
+     "out": "image"
+    },
+    {
+     "args": {
+      "matte": "$m",
+      "progress": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         4.111,
+         0.0
+        ],
+        [
+         4.311,
+         0.0
+        ],
+        [
+         5.011,
+         1.0
+        ],
+        [
+         5.897,
+         1.0
+        ],
+        [
+         6.097,
+         1.0
+        ]
+       ]
+      },
+      "reach": 0.8,
+      "width": 0.012
+     },
+     "op": "matte_ring",
+     "out": "_wi1g"
+    },
+    {
+     "args": {
+      "a": "$_wi1g",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         4.161,
+         0.0
+        ],
+        [
+         4.311,
+         1.0
+        ],
+        [
+         5.897,
+         1.0
+        ],
+        [
+         6.047,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_wi1g"
+    },
+    {
+     "args": {
+      "color": "$tcol",
+      "img": "$image",
+      "intensity": 0.9,
+      "mask": "$_wi1g",
+      "radius": 14.0
+     },
+     "op": "add_glow",
+     "out": "image"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "b": "$m",
+      "floor": 0.12,
+      "gain": 1.6
+     },
+     "op": "mask_mul",
+     "out": "_fi2a"
+    },
+    {
+     "args": {
+      "a": "$_fi2a",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         9.304,
+         0.0
+        ],
+        [
+         9.454,
+         1.0
+        ],
+        [
+         10.754,
+         1.0
+        ],
+        [
+         10.904,
+         0.0
+        ]
+       ]
+      },
+      "scale": 0.96
+     },
+     "op": "mask_gate",
+     "out": "_fi2a"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "b": "$m",
+      "floor": 0.0,
+      "gain": 1.6
+     },
+     "op": "mask_mul",
+     "out": "_fi2u"
+    },
+    {
+     "args": {
+      "a": "$_fi2u",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         9.304,
+         0.0
+        ],
+        [
+         9.454,
+         1.0
+        ],
+        [
+         10.754,
+         1.0
+        ],
+        [
+         10.904,
+         0.0
+        ]
+       ]
+      },
+      "scale": 0.45
+     },
+     "op": "mask_gate",
+     "out": "_fi2u"
+    },
+    {
+     "args": {
+      "alpha": "$_fi2u",
+      "base": "$image",
+      "fg": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "alpha": "$_fi2a",
+      "base": "$image",
+      "fg": "$tcol"
+     },
+     "op": "over",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$foot",
+      "gain": 0.28,
+      "sat": 0.55
+     },
+     "op": "grade",
+     "out": "_wi3d"
+    },
+    {
+     "args": {
+      "a": "$foot",
+      "b": "$_wi3d",
+      "t": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         11.876,
+         0.0
+        ],
+        [
+         12.026,
+         1.0
+        ],
+        [
+         13.264,
+         1.0
+        ],
+        [
+         13.414,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "_wi3p"
+    },
+    {
+     "args": {
+      "frame": "$foot",
+      "gain": 1.3,
+      "gamma": 1.06,
+      "sat": 1.1
+     },
+     "op": "grade",
+     "out": "_wi3b"
+    },
+    {
+     "args": {
+      "a": "$wm",
+      "gate": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         11.876,
+         0.0
+        ],
+        [
+         12.026,
+         1.0
+        ],
+        [
+         13.264,
+         1.0
+        ],
+        [
+         13.414,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "mask_gate",
+     "out": "_wi3a"
+    },
+    {
+     "args": {
+      "matte": "$m",
+      "type_a": "$wm"
+     },
+     "op": "legible",
+     "out": "_wi3m"
+    },
+    {
+     "args": {
+      "fg": "$foot",
+      "fg_matte": "$_wi3m",
+      "footage": "$_wi3b",
+      "min_contrast": 0.22,
+      "plate_rgb": "$_wi3p",
+      "type_a": "$_wi3a"
+     },
+     "op": "knockout",
+     "out": "_wi3k"
+    },
+    {
+     "args": {
+      "a": "$image",
+      "b": "$_wi3k",
+      "t": {
+       "ease": "smooth",
+       "timeline": [
+        [
+         11.876,
+         0.0
+        ],
+        [
+         12.026,
+         1.0
+        ],
+        [
+         13.264,
+         1.0
+        ],
+        [
+         13.414,
+         0.0
+        ]
+       ]
+      }
+     },
+     "op": "crossfade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "gain": 1.0,
+      "gamma": 1.0,
+      "lift": 0.012,
+      "sat": 1.0
+     },
+     "op": "grade",
+     "out": "image"
+    },
+    {
+     "args": {
+      "amount": 0.025,
+      "frame": "$image",
+      "frame_idx": "$frame_idx",
+      "seed": 1,
+      "size": 1.3
+     },
+     "op": "grain",
+     "out": "image"
+    },
+    {
+     "args": {
+      "frame": "$image",
+      "strength": 0.3
+     },
+     "op": "vignette",
+     "out": "image"
+    }
+   ]
+  },
+  "shots": {},
+  "size": [
+   360,
+   640
+  ]
+ },
+ "format": "9:16",
+ "fps": 24,
+ "id": "P18",
+ "layout": {
+  "s1": {
+   "frames": 83,
+   "start": 0,
+   "xf": 0
+  },
+  "s2": {
+   "frames": 41,
+   "start": 83,
+   "xf": 0
+  },
+  "s3": {
+   "frames": 41,
+   "start": 124,
+   "xf": 0
+  },
+  "s4": {
+   "frames": 41,
+   "start": 165,
+   "xf": 0
+  },
+  "s5": {
+   "frames": 41,
+   "start": 206,
+   "xf": 0
+  },
+  "s6": {
+   "frames": 82,
+   "start": 247,
+   "xf": 0
+  }
+ },
+ "parent": {
+  "piece": null,
+  "why": "v005 design P18: 6 rapid downbeat cuts, flat strips and blocks as the continuity over cutting video, saturated primaries (DESIGNS.md)"
+ },
+ "plan": {
+  "bars": 11,
+  "blocks": [
+   {
+    "compose": [
+     {
+      "args": {
+       "ease_s": 0.25,
+       "persist": true,
+       "pose": "cut_targets"
+      },
+      "op": "layout_shapes",
+      "when": "always"
+     },
+     {
+      "args": {
+       "follow": "strips",
+       "layers": [
+        "wm",
+        "wl"
+       ]
+      },
+      "op": "rigid_pose",
+      "when": "always"
+     }
+    ],
+    "contour": null,
+    "dominant": true,
+    "lines": [
+     0,
+     2,
+     4
+    ],
+    "missing": [],
+    "name": "strips_persist_across_cuts",
+    "params": {
+     "angle_deg": 9.582,
+     "persist_cuts": 1,
+     "persist_s": 0.61
+    },
+    "role": "flat_strips",
+    "shots": null,
+    "status": "live",
+    "transitions": []
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "sweep_s": 1.0
+      },
+      "op": "edge_reveal",
+      "when": "form"
+     }
+    ],
+    "contour": {
+     "ports": [
+      "matte_outline"
+     ],
+     "use": "entry"
+    },
+    "dominant": false,
+    "lines": [
+     0,
+     2,
+     4
+    ],
+    "missing": [],
+    "name": "matte_edge_reveal_wipe",
+    "params": {
+     "sweep_s": 0.757
+    },
+    "role": "any",
+    "shots": null,
+    "status": "live",
+    "transitions": []
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "grow": true
+      },
+      "op": "silhouette_fill",
+      "when": "hold"
+     }
+    ],
+    "contour": {
+     "ports": [
+      "matte_outline"
+     ],
+     "use": "entry"
+    },
+    "dominant": false,
+    "lines": [
+     4
+    ],
+    "missing": [
+     "glyphs re-fitted to the live matte contour every frame (the `fill` matte treatment shows the line inside the silhouette only; it reads faint on thin type: heavy modules)"
+    ],
+    "name": "fill_silhouette_grow",
+    "params": {
+     "grow": 0.223,
+     "outline_px": 3.485
+    },
+    "role": "from_footage",
+    "shots": null,
+    "status": "partial",
+    "transitions": []
+   },
+   {
+    "compose": [],
+    "contour": {
+     "ports": [
+      "matte_outline",
+      "depth_iso"
+     ],
+     "use": "via"
+    },
+    "dominant": false,
+    "lines": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "missing": [
+     "contour bundles as transition endpoints (tools/fusion/contour_ports.py, being built)"
+    ],
+    "name": "contour_hand_off",
+    "params": {
+     "object": "matte"
+    },
+    "role": "any",
+    "shots": null,
+    "status": "partial",
+    "transitions": [
+     "spiral_around",
+     "braid",
+     "circuit_board",
+     "fan",
+     "ripple"
+    ]
+   },
+   {
+    "compose": [
+     {
+      "args": {
+       "front": "$type_matte",
+       "matte_threshold": 0.5
+      },
+      "op": "sandwich",
+      "when": "hold"
+     }
+    ],
+    "contour": {
+     "ports": [
+      "matte_outline"
+     ],
+     "use": "via"
+    },
+    "dominant": false,
+    "lines": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "missing": [],
+    "name": "half_front_half_behind",
+    "params": {
+     "front_share": 0.697
+    },
+    "role": "any",
+    "shots": null,
+    "status": "live",
+    "transitions": []
+   }
+  ],
+  "contour": {
+   "available": true,
+   "lines": [
+    {
+     "entry": {
+      "dir": "up",
+      "port": "depth_iso"
+     },
+     "matte": "front",
+     "via": {
+      "dir": "along",
+      "port": "luma_edges"
+     }
+    },
+    {
+     "entry": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "matte": "wipe"
+    },
+    {
+     "via": {
+      "dir": "along",
+      "port": "luma_edges"
+     }
+    },
+    {
+     "entry": {
+      "dir": "up",
+      "port": "matte_outline"
+     },
+     "matte": "fill",
+     "via": {
+      "dir": "around",
+      "port": "matte_outline"
+     }
+    },
+    {
+     "entry": {
+      "dir": "up",
+      "port": "luma_edges"
+     },
+     "matte": "window"
+    }
+   ],
+   "subject": true
+  },
+  "deferred": [
+   "v005 round 2 (legibility): CARVE massive_crop -> hung_from_top (C and E were cut), CONCRETE in two lines CONC / RETE (one line gave 29 px letters on the strip, the rule is 45 px), FALL voxel_roll in Bitcount (Rubik Glitch Pop has holes: the cube lattice lost the letters) without the grid floor (grid=False, 5 rows, lean 6: the letters were lost in the grid, flat cubes read as a pixel face), GET UP scale_clash reach 0.35 / 12 slabs (the 1.4-wide, 26-slab extrusion ran across the frame), spin_read_spin fill 0.58",
+   "FALL letters in cells (P9) and graze / spin_read_spin along the strips: backing shapes are screen space, so lines with shapes are held (hold_drift); FALL uses a full layout with spin_read_spin",
+   "rise trail 9.4-10.3 on GET UP (masktrack rise): not in the piece (it would regenerate s5 with v2v)",
+   "GET tiny in the counter of the P (P4) is the scale_clash module own small word, not a separate placement"
+  ],
+  "direction": {
+   "camera": "graze",
+   "pace": "driving",
+   "palette": "flat_primaries",
+   "shots": "cut",
+   "type_role": "flat_strips"
+  },
+  "energy": 0.798,
+  "flow_wake": {
+   "chains": 1,
+   "holds": [
+    [
+     1.739,
+     3.04
+    ],
+    [
+     4.311,
+     5.897
+    ],
+    [
+     6.883,
+     8.183
+    ],
+    [
+     9.454,
+     10.754
+    ],
+    [
+     12.026,
+     13.264
+    ]
+   ]
+  },
+  "layout_shapes": {
+   "chains": 1,
+   "shapes": 4,
+   "words": 2
+  },
+  "layouts": [
+   "hung_from_top/top",
+   "solid_strips/wonky",
+   "full/full",
+   "full/full",
+   "split_sides/type_first"
+  ],
+  "look": "hand-assembled from lego",
+  "matte_treatments": {
+   "chains": 1,
+   "treatments": 4,
+   "words": 4
+  },
+  "notes": [
+   "camera graze word 0: window [0.0, 1.139] (off the hold, legible_camera)"
+  ],
+  "scene_notes": [
+   "contour ports BOUND: 4 ported word(s) [0, 1, 3, 4], 6 plate shot(s)"
+  ],
+  "seed": 18,
+  "shots": "cut",
+  "strip_resnap": {
+   "angle_deg": 9.582,
+   "cuts": [
+    [
+     3.4583,
+     "s2"
+    ],
+    [
+     5.1667,
+     "s3"
+    ],
+    [
+     6.875,
+     "s4"
+    ],
+    [
+     8.5833,
+     "s5"
+    ],
+    [
+     10.2917,
+     "s6"
+    ]
+   ],
+   "ease_s": 0.25,
+   "groups": [
+    {
+     "base": {
+      "angle": -2.28,
+      "cy": 0.32
+     },
+     "keys": [
+      [
+       3.94,
+       0.0,
+       -0.0664,
+       4.35
+      ],
+      [
+       5.1667,
+       0.0,
+       -0.0664,
+       4.35
+      ],
+      [
+       5.4167,
+       0.0,
+       -0.114,
+       7.13
+      ],
+      [
+       6.875,
+       0.0,
+       -0.114,
+       7.13
+      ],
+      [
+       7.125,
+       0.0,
+       0.0913,
+       2.16
+      ],
+      [
+       7.275,
+       0.0,
+       0.0913,
+       2.16
+      ]
+     ],
+     "life_end": 7.275,
+     "moved": true,
+     "snaps": 2,
+     "t0": 3.94,
+     "t1": 6.811,
+     "word": "CONCRETE"
+    },
+    {
+     "moved": false,
+     "t0": 11.654,
+     "t1": 13.664,
+     "why": "no full-bleed rect strip in this layout"
+    }
+   ],
+   "targets": {
+    "s1": {
+     "angle": 9.58,
+     "cy": 0.322,
+     "edge_angle": 28.49,
+     "edge_y": 0.472,
+     "strength": 0.314
+    },
+    "s2": {
+     "angle": 2.07,
+     "cy": 0.2536,
+     "edge_angle": 2.07,
+     "edge_y": 0.4036,
+     "strength": 0.325
+    },
+    "s3": {
+     "angle": 4.85,
+     "cy": 0.206,
+     "edge_angle": 4.85,
+     "edge_y": 0.356,
+     "strength": 0.44
+    },
+    "s4": {
+     "angle": -0.12,
+     "cy": 0.4113,
+     "edge_angle": -0.12,
+     "edge_y": 0.5613,
+     "strength": 0.249
+    },
+    "s5": {
+     "angle": 0.03,
+     "cy": 0.3964,
+     "edge_angle": 0.03,
+     "edge_y": 0.5464,
+     "strength": 0.363
+    },
+    "s6": {
+     "angle": 9.58,
+     "cy": 0.3518,
+     "edge_angle": 27.71,
+     "edge_y": 0.5018,
+     "strength": 0.371
+    }
+   }
+  },
+  "tier": "kinetic",
+  "timing": [
+   {
+    "end": 3.44,
+    "hit": 1.739,
+    "release": 3.04,
+    "text": "CARVE",
+    "wanted_hit": 1.74
+   },
+   {
+    "end": 6.297,
+    "hit": 4.311,
+    "release": 5.897,
+    "text": "CONCRETE",
+    "wanted_hit": 4.31
+   },
+   {
+    "end": 8.583,
+    "hit": 6.883,
+    "release": 8.183,
+    "text": "FALL",
+    "wanted_hit": 6.88
+   },
+   {
+    "end": 11.154,
+    "hit": 9.454,
+    "release": 10.754,
+    "text": "GET UP",
+    "wanted_hit": 9.45
+   },
+   {
+    "end": 13.664,
+    "hit": 12.026,
+    "release": 13.264,
+    "text": "FLY AGAIN",
+    "wanted_hit": 12.03
+   }
+  ],
+  "version": 1
+ },
+ "quality": "preview",
+ "shots": [
+  {
+   "depth": true,
+   "first": "A",
+   "flow": true,
+   "frames": 89,
+   "id": "s1",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P18/P18_s1_depth_g01.mp4",
+    "matte": "15_fusion/v005/out/footage/P18/P18_s1_matte_g01.mp4",
+    "shot": "15_fusion/v005/out/footage/P18/P18_s1_g01.mp4"
+   },
+   "prompt": "the camera skims low along the concrete coping in one smooth lateral move as the skateboarder carves past",
+   "seed": 181,
+   "size": [
+    384,
+    672
+   ],
+   "span": 83
+  },
+  {
+   "depth": true,
+   "first": "A",
+   "flow": true,
+   "frames": 49,
+   "id": "s2",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P18/P18_s2_depth_g01.mp4",
+    "matte": "15_fusion/v005/out/footage/P18/P18_s2_matte_g01.mp4",
+    "shot": "15_fusion/v005/out/footage/P18/P18_s2_g01.mp4"
+   },
+   "prompt": "the camera skims low along the coping the other way, wheels kick dust",
+   "seed": 182,
+   "size": [
+    384,
+    672
+   ],
+   "span": 41
+  },
+  {
+   "depth": true,
+   "first": "C",
+   "flow": true,
+   "frames": 49,
+   "id": "s3",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P18/P18_s3_depth_g01.mp4",
+    "matte": "15_fusion/v005/out/footage/P18/P18_s3_matte_g01.mp4",
+    "shot": "15_fusion/v005/out/footage/P18/P18_s3_g01.mp4"
+   },
+   "prompt": "static locked-off camera, the skateboarder rises in the air above the rim and starts to tip",
+   "seed": 183,
+   "size": [
+    384,
+    672
+   ],
+   "span": 41
+  },
+  {
+   "depth": true,
+   "first": "B",
+   "flow": true,
+   "frames": 49,
+   "id": "s4",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P18/P18_s4_depth_g01.mp4",
+    "matte": "15_fusion/v005/out/footage/P18/P18_s4_matte_g01.mp4",
+    "shot": "15_fusion/v005/out/footage/P18/P18_s4_g01.mp4"
+   },
+   "prompt": "static locked-off overhead camera, the skateboarder lies still on the bowl floor, board rolling away",
+   "seed": 184,
+   "size": [
+    384,
+    672
+   ],
+   "span": 41
+  },
+  {
+   "depth": true,
+   "first": "B",
+   "flow": true,
+   "frames": 49,
+   "id": "s5",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P18/P18_s5_depth_g01.mp4",
+    "matte": "15_fusion/v005/out/footage/P18/P18_s5_matte_g01.mp4",
+    "shot": "15_fusion/v005/out/footage/P18/P18_s5_g01.mp4"
+   },
+   "prompt": "static locked-off overhead camera, the skateboarder gets up and stands, picking up his board",
+   "seed": 185,
+   "size": [
+    384,
+    672
+   ],
+   "span": 41
+  },
+  {
+   "depth": true,
+   "first": "C",
+   "flow": true,
+   "frames": 89,
+   "id": "s6",
+   "kind": "i2v",
+   "matte": true,
+   "media": {
+    "depth": "15_fusion/v005/out/footage/P18/P18_s6_depth_g01.mp4",
+    "matte": "15_fusion/v005/out/footage/P18/P18_s6_matte_g01.mp4",
+    "shot": "15_fusion/v005/out/footage/P18/P18_s6_g01.mp4"
+   },
+   "prompt": "the camera skims low along the rim in one smooth lateral move as the skateboarder launches high into the blue sky",
+   "seed": 186,
+   "size": [
+    384,
+    672
+   ],
+   "span": 82
+  }
+ ],
+ "signoff": {
+  "color": [
+   239,
+   231,
+   216
+  ],
+  "font": "Space Grotesk",
+  "off": true,
+  "px": 38,
+  "t0": 12.71,
+  "text": ""
+ },
+ "sizes": {
+  "compose": [
+   360,
+   640
+  ],
+  "control": [
+   384,
+   704
+  ],
+  "shot": [
+   384,
+   704
+  ],
+  "type": [
+   384,
+   704
+  ]
+ },
+ "slug": "bowl",
+ "stills": [
+  {
+   "id": "A",
+   "media": "15_fusion/v005/out/footage/P18/P18_still_A_g01.png",
+   "model": "moss",
+   "negative": "text, letters, words, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, blurry, deformed",
+   "prompt": "low angle along the coping of an empty concrete skate bowl, a skateboarder carving the wall, late sun, bleached pale concrete, deep blue sky",
+   "seed": 1801,
+   "size": [
+    1088,
+    1920
+   ]
+  },
+  {
+   "id": "B",
+   "media": "15_fusion/v005/out/footage/P18/P18_still_B_g01.png",
+   "model": "moss",
+   "negative": "text, letters, words, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, blurry, deformed",
+   "prompt": "overhead view straight down into a concrete skate bowl, a skateboarder sitting on the bowl floor beside his board, long shadow, concrete slab seams",
+   "seed": 1802,
+   "size": [
+    1088,
+    1920
+   ]
+  },
+  {
+   "id": "C",
+   "media": "15_fusion/v005/out/footage/P18/P18_still_C_g01.png",
+   "model": "moss",
+   "negative": "text, letters, words, watermark, logo, caption, cartoon, illustration, 3d render, oversaturated, blurry, deformed",
+   "prompt": "a skateboarder in the air above the rim of a concrete bowl, deep blue sky, sunlit, low angle",
+   "seed": 1803,
+   "size": [
+    1088,
+    1920
+   ]
+  }
+ ],
+ "technique": "behind",
+ "type": {
+  "bar": 4,
+  "beats": [
+   0.025,
+   0.4536,
+   0.8822,
+   1.3108,
+   1.7394,
+   2.168,
+   2.5966,
+   3.0252,
+   3.4538,
+   3.8824,
+   4.311,
+   4.7396,
+   5.1682,
+   5.5968,
+   6.0254,
+   6.454,
+   6.8826,
+   7.3112,
+   7.7398,
+   8.1684,
+   8.597,
+   9.0256,
+   9.4542,
+   9.8828,
+   10.3114,
+   10.74,
+   11.1686,
+   11.5972,
+   12.0258,
+   12.4544,
+   12.883,
+   13.3116,
+   13.7402,
+   14.1688,
+   14.5974,
+   15.026,
+   15.4546,
+   15.8832,
+   16.3118,
+   16.7404,
+   17.169,
+   17.5976,
+   18.0262
+  ],
+  "bpm": 139.99,
+  "camera": {
+   "cards": 4,
+   "chain": [
+    {
+     "fill": 0.6815,
+     "module": "graze",
+     "window": [
+      0.0,
+      1.139
+     ]
+    },
+    {
+     "comp": [
+      0.0,
+      0.0
+     ],
+     "dolly": 0.0,
+     "drift_px": 0.8,
+     "fill": 0.6667,
+     "module": "hold_drift",
+     "word": 1
+    },
+    {
+     "fill": 0.58,
+     "module": "spin_read_spin",
+     "word": 2
+    },
+    {
+     "fill": 0.72,
+     "module": "spin_read_spin",
+     "word": 3
+    },
+    {
+     "comp": [
+      0.0,
+      0.0
+     ],
+     "dolly": 0.0,
+     "drift_px": 0.8,
+     "fill": 0.6519,
+     "module": "hold_drift",
+     "word": 4
+    },
+    {
+     "comp": [
+      0.0,
+      0.0
+     ],
+     "fill": 0.6815,
+     "module": "hold_drift",
+     "window": [
+      1.139,
+      3.04
+     ]
+    }
+   ],
+   "plate": "multiplane"
+  },
+  "downbeats": [
+   0.025,
+   1.7394,
+   3.4538,
+   5.1682,
+   6.8826,
+   8.597,
+   10.3114,
+   12.0258,
+   13.7402,
+   15.4546,
+   17.169
+  ],
+  "duration": 13.7143,
+  "energy": 0.798,
+  "fps": 24,
+  "line": {
+   "px": 4.0
+  },
+  "mood": "driving",
+  "overlap": true,
+  "palette": {
+   "accents": [
+    [
+     214,
+     40,
+     30
+    ],
+    [
+     30,
+     79,
+     200
+    ],
+    [
+     242,
+     194,
+     48
+    ]
+   ],
+   "bg": [
+    20,
+    17,
+    15
+   ],
+   "fg": [
+    239,
+    231,
+    216
+   ]
+  },
+  "plates": [
+   {
+    "depth": "15_fusion/v005/out/footage/P18/P18_s1_depth_g01.mp4",
+    "frames": 83,
+    "matte": "15_fusion/v005/out/footage/P18/P18_s1_matte_g01.mp4",
+    "plate": "15_fusion/v005/out/footage/P18/P18_s1_g01.mp4"
+   },
+   {
+    "depth": "15_fusion/v005/out/footage/P18/P18_s2_depth_g01.mp4",
+    "frames": 41,
+    "matte": "15_fusion/v005/out/footage/P18/P18_s2_matte_g01.mp4",
+    "plate": "15_fusion/v005/out/footage/P18/P18_s2_g01.mp4"
+   },
+   {
+    "depth": "15_fusion/v005/out/footage/P18/P18_s3_depth_g01.mp4",
+    "frames": 41,
+    "matte": "15_fusion/v005/out/footage/P18/P18_s3_matte_g01.mp4",
+    "plate": "15_fusion/v005/out/footage/P18/P18_s3_g01.mp4"
+   },
+   {
+    "depth": "15_fusion/v005/out/footage/P18/P18_s4_depth_g01.mp4",
+    "frames": 41,
+    "matte": "15_fusion/v005/out/footage/P18/P18_s4_matte_g01.mp4",
+    "plate": "15_fusion/v005/out/footage/P18/P18_s4_g01.mp4"
+   },
+   {
+    "depth": "15_fusion/v005/out/footage/P18/P18_s5_depth_g01.mp4",
+    "frames": 41,
+    "matte": "15_fusion/v005/out/footage/P18/P18_s5_matte_g01.mp4",
+    "plate": "15_fusion/v005/out/footage/P18/P18_s5_g01.mp4"
+   },
+   {
+    "depth": "15_fusion/v005/out/footage/P18/P18_s6_depth_g01.mp4",
+    "frames": 82,
+    "matte": "15_fusion/v005/out/footage/P18/P18_s6_matte_g01.mp4",
+    "plate": "15_fusion/v005/out/footage/P18/P18_s6_g01.mp4"
+   }
+  ],
+  "seed": 18,
+  "tier": "kinetic",
+  "transition_names": [
+   "braid",
+   "circuit_board",
+   "fan",
+   "ripple",
+   "spiral_around",
+   "twist"
+  ],
+  "transitions": [
+   "fan",
+   "cut",
+   "circuit_board",
+   "spiral_around"
+  ],
+  "words": [
+   {
+    "ar_min": 0.85,
+    "entry": {
+     "dir": "up",
+     "port": "depth_iso"
+    },
+    "exit_s": 0.3857,
+    "font": "EricaOne-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 1.7394,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.1092,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": 0.85,
+     "area": 0.4784,
+     "box": {
+      "cx": 0.5,
+      "cy": 0.3,
+      "sh": 0.52,
+      "sw": 0.92
+     },
+     "fill": 0.6815,
+     "max_lines": null,
+     "name": "hung_from_top",
+     "note": "stack hung from the top edge, empty below",
+     "offset": [
+      0.0,
+      -0.2
+     ],
+     "plate": "N8",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "top"
+    },
+    "lines": [
+     "CARVE"
+    ],
+    "matte": "front",
+    "module": "gradient_fade",
+    "placement": {
+     "hf": 0.52,
+     "roll": 0.0,
+     "wf": 0.92,
+     "yaw": 8
+    },
+    "screen_offset": [
+     0.0,
+     -0.2
+    ],
+    "slot": 1,
+    "t0": 0.0,
+    "t1": 3.4253,
+    "text": "CARVE",
+    "via": {
+     "dir": "along",
+     "port": "luma_edges"
+    }
+   },
+   {
+    "ar_min": 0.85,
+    "entry": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.3857,
+    "font": "Silkscreen-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "wipe",
+    "form_s": 0.3857,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.0754,
+    "hold_layout": {
+     "anchored": true,
+     "ar_min": 0.85,
+     "area": 0.1674,
+     "box": {
+      "cx": 0.5,
+      "cy": 0.32,
+      "sh": 0.186,
+      "sw": 0.9
+     },
+     "fill": 0.6667,
+     "max_lines": null,
+     "name": "solid_strips",
+     "note": "type on a solid flat strip: flat, angled (7-10 deg, text rolls with it) or slightly wonky (2-3 deg, text straight)",
+     "offset": [
+      0.0,
+      -0.18
+     ],
+     "plate": "Q4 Q6 Q7 Q9 Q12 S8",
+     "roll": 0.0,
+     "shapes": [
+      {
+       "angle": -2.28,
+       "color": "ink2",
+       "cx": 0.5,
+       "cy": 0.32,
+       "h": 0.3,
+       "kind": "rect",
+       "w": 1.9
+      },
+      {
+       "angle": -2.28,
+       "color": "accent",
+       "cx": 0.5036,
+       "cy": 0.4819,
+       "h": 0.016,
+       "kind": "rect",
+       "w": 1.9
+      }
+     ],
+     "variant": "wonky"
+    },
+    "lines": [
+     "CONC",
+     "RETE"
+    ],
+    "matte": "wipe",
+    "module": "beat_bars",
+    "placement": {
+     "hf": 0.186,
+     "roll": 0.0,
+     "wf": 0.9,
+     "yaw": 0.0
+    },
+    "screen_offset": [
+     0.0,
+     -0.18
+    ],
+    "slot": 2,
+    "t0": 3.9253,
+    "t1": 6.2826,
+    "text": "CONCRETE"
+   },
+   {
+    "exit_s": 0.3857,
+    "font": "Bitcount[CRSV,ELSH,ELXP,slnt,wght].ttf",
+    "form_in": "flicker",
+    "form_out": "lines",
+    "form_s": 0.3857,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.12,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "FALL"
+    ],
+    "module": "voxel_roll",
+    "params": {
+     "grid": false,
+     "lean": 6.0,
+     "rows": 5
+    },
+    "placement": {
+     "yaw": 6
+    },
+    "slot": 0,
+    "t0": 6.4969,
+    "t1": 8.5685,
+    "text": "FALL",
+    "via": {
+     "dir": "along",
+     "port": "luma_edges"
+    }
+   },
+   {
+    "entry": {
+     "dir": "up",
+     "port": "matte_outline"
+    },
+    "exit_s": 0.3857,
+    "font": "PassionOne-Black.ttf",
+    "form_in": "lines",
+    "form_out": "lines",
+    "form_s": 0.3857,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.2208,
+    "hold_layout": {
+     "anchored": false,
+     "ar_min": null,
+     "area": 1.0,
+     "box": null,
+     "fill": null,
+     "max_lines": null,
+     "name": "full",
+     "note": "the full-frame hold every piece had before; no change",
+     "offset": null,
+     "plate": "-",
+     "roll": 0.0,
+     "shapes": [],
+     "variant": "full"
+    },
+    "lines": [
+     "GET UP"
+    ],
+    "matte": "fill",
+    "module": "scale_clash",
+    "params": {
+     "reach": 0.35,
+     "slabs": 12
+    },
+    "placement": {
+     "yaw": 6
+    },
+    "slot": 1,
+    "t0": 9.0685,
+    "t1": 11.1401,
+    "text": "GET UP",
+    "via": {
+     "dir": "around",
+     "port": "matte_outline"
+    }
+   },
+   {
+    "ar_min": 0.85,
+    "entry": {
+     "dir": "up",
+     "port": "luma_edges"
+    },
+    "exit_s": 0.4,
+    "font": "BungeeOutline-Regular.ttf",
+    "form_in": "lines",
+    "form_out": "blobs",
+    "form_s": 0.3857,
+    "hit_on": "beat",
+    "hold_cap_frac": 0.1141,
+    "hold_layout": {
+     "anchored": true,
+     "ar_min": 0.85,
+     "area": 0.3674,
+     "box": {
+      "cx": 0.5,
+      "cy": 0.2609,
+      "sh": 0.4175,
+      "sw": 0.88
+     },
+     "fill": 0.6519,
+     "max_lines": null,
+     "name": "split_sides",
+     "note": "blocky contrasted halves with a stepped edge (liked S1); the type sits on one block",
+     "offset": [
+      0.0,
+      -0.2391
+     ],
+     "plate": "S1 S11",
+     "roll": 0.0,
+     "shapes": [
+      {
+       "color": "dark",
+       "kind": "poly",
+       "pts": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         1.0,
+         0.0
+        ],
+        [
+         1.0,
+         0.5634
+        ],
+        [
+         0.8333,
+         0.5634
+        ],
+        [
+         0.8333,
+         0.5919
+        ],
+        [
+         0.6667,
+         0.5919
+        ],
+        [
+         0.6667,
+         0.5756
+        ],
+        [
+         0.5,
+         0.5756
+        ],
+        [
+         0.5,
+         0.5856
+        ],
+        [
+         0.3333,
+         0.5856
+        ],
+        [
+         0.3333,
+         0.5713
+        ],
+        [
+         0.1667,
+         0.5713
+        ],
+        [
+         0.1667,
+         0.5219
+        ],
+        [
+         0.0,
+         0.5219
+        ]
+       ]
+      },
+      {
+       "color": "ink2",
+       "kind": "poly",
+       "pts": [
+        [
+         0.0,
+         0.5219
+        ],
+        [
+         0.1667,
+         0.5219
+        ],
+        [
+         0.1667,
+         0.5713
+        ],
+        [
+         0.3333,
+         0.5713
+        ],
+        [
+         0.3333,
+         0.5856
+        ],
+        [
+         0.5,
+         0.5856
+        ],
+        [
+         0.5,
+         0.5756
+        ],
+        [
+         0.6667,
+         0.5756
+        ],
+        [
+         0.6667,
+         0.5919
+        ],
+        [
+         0.8333,
+         0.5919
+        ],
+        [
+         0.8333,
+         0.5634
+        ],
+        [
+         1.0,
+         0.5634
+        ],
+        [
+         1.0,
+         1.0
+        ],
+        [
+         0.0,
+         1.0
+        ]
+       ]
+      }
+     ],
+     "variant": "type_first"
+    },
+    "lines": [
+     "FLY",
+     "AGAIN"
+    ],
+    "matte": "window",
+    "module": "hollow_tubes",
+    "placement": {
+     "hf": 0.4175,
+     "roll": 0.0,
+     "wf": 0.88,
+     "yaw": 0.0
+    },
+    "screen_offset": [
+     0.0,
+     -0.2391
+    ],
+    "slot": 1,
+    "t0": 11.6401,
+    "t1": 13.6643,
+    "text": "FLY AGAIN"
+   }
+  ]
+ },
+ "type_passes": [
+  "matte",
+  "depth",
+  "line"
+ ],
+ "version": "v005"
+}

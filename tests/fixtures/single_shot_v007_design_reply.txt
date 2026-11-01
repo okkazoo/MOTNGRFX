@@ -1,0 +1,167 @@
+```json
+{
+  "concept": "The type is built AROUND the subject, integrated into the harsh landscape as physical elements.",
+  "treatment_notes": "Type sits between the background and the climber, using the 'front' matte to weave the words through the subject's silhouette.",
+  "type": {
+    "mood": "Epic, Frozen",
+    "energy": 0.7,
+    "palette": {
+      "bg": [20, 35, 55],
+      "fg": [240, 245, 255],
+      "accents": [
+        [100, 150, 200],
+        [180, 210, 240],
+        [255, 255, 255]
+      ]
+    },
+    "camera": "beat_orbit",
+    "camera_params": {
+      "read_dps": 4,
+      "intro_deg": 15,
+      "elev": 5,
+      "bob": 1
+    },
+    "transitions": [
+      "twist",
+      "braid",
+      "ripple",
+      "cut"
+    ],
+    "line": {
+      "px": 4
+    },
+    "words": [
+      {
+        "text": "COLD BITE",
+        "font": "Blackout_Midnight.ttf",
+        "module": "bold_thin_echo",
+        "lines": [
+          "COLD",
+          "BITE"
+        ],
+        "hit": 3.49,
+        "hold_s": 1.8,
+        "form_s": 1.0,
+        "exit_s": 0.6,
+        "form_in": "flicker",
+        "form_out": "wipe",
+        "placement": {
+          "yaw": 0,
+          "wf": 0.8,
+          "hf": 0.6
+        },
+        "matte": "front",
+        "render": "handoff",
+        "ltx_at": 0.5,
+        "material": "thick carved ice, jagged edges"
+      },
+      {
+        "text": "STILL STANDING",
+        "font": "Jacquard24-Regular.ttf",
+        "module": "staircase",
+        "lines": [
+          "STILL",
+          "STANDING"
+        ],
+        "hit": 6.63,
+        "hold_s": 2.0,
+        "form_s": 1.2,
+        "exit_s": 0.7,
+        "form_in": "particles",
+        "form_out": "particles",
+        "placement": {
+          "yaw": 0,
+          "wf": 0.9,
+          "hf": 0.5
+        },
+        "matte": "front",
+        "render": "handoff",
+        "ltx_at": 0.4,
+        "material": "frosted glass shards, extruded"
+      },
+      {
+        "text": "THE PEAK NEVER BEND",
+        "font": "Tourney[wdth,wght].ttf",
+        "module": "slats",
+        "lines": [
+          "THE PEAK",
+          "NEVER BEND"
+        ],
+        "hit": 9.77,
+        "hold_s": 1.8,
+        "form_s": 1.0,
+        "exit_s": 0.6,
+        "form_in": "wipe",
+        "form_out": "wipe",
+        "placement": {
+          "yaw": 0,
+          "wf": 0.85,
+          "hf": 0.5
+        },
+        "matte": "front",
+        "render": "flat"
+      },
+      {
+        "text": "STORM BREAKER",
+        "font": "BadeenDisplay-Regular.ttf",
+        "module": "depth_tunnel",
+        "lines": [
+          "STORM",
+          "BREAKER"
+        ],
+        "hit": 12.92,
+        "hold_s": 2.0,
+        "form_s": 1.2,
+        "exit_s": 0.7,
+        "form_in": "blobs",
+        "form_out": "blobs",
+        "placement": {
+          "yaw": 0,
+          "wf": 0.9,
+          "hf": 0.6
+        },
+        "matte": "front",
+        "render": "handoff",
+        "ltx_at": 0.3,
+        "material": "carved blue ice, crystalline veins"
+      },
+      {
+        "text": "CLAIM THE SKY",
+        "font": "EricaOne-Regular.ttf",
+        "module": "particles",
+        "lines": [
+          "CLAIM",
+          "THE SKY"
+        ],
+        "hit": 15.27,
+        "hold_s": 0.5,
+        "form_s": 0.8,
+        "exit_s": 0.4,
+        "form_in": "particles",
+        "form_out": "particles",
+        "placement": {
+          "yaw": 0,
+          "wf": 0.8,
+          "hf": 0.4
+        },
+        "matte": "front",
+        "render": "flat"
+      }
+    ]
+  },
+  "compose": {
+    "technique": "built_in",
+    "plate_gain": 0.8,
+    "plate_sat": 0.9,
+    "glow_lo": 0.05,
+    "glow_hi": 0.2,
+    "glow_color": [150, 200, 255],
+    "grain": 0.02,
+    "vignette": 0.3,
+    "type_opacity": 0.95,
+    "holds": [
+      [0.0, 0.3]
+    ]
+  }
+}
+```

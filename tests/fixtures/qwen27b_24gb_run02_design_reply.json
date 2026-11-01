@@ -1,0 +1,408 @@
+{
+  "concept": "The type is a window: the letters are frosted-glass cut-outs that reveal the bright, blue-lit interior of the laundromat, sitting between the dark, cold background and the woman in her yellow robe.",
+  "treatment_notes": "The type is placed behind the subject using the matte, with the letters acting as windows into a brighter, saturated version of the footage over a darkened plate.",
+  "system": {
+    "rule": "One heavy, expressive face (Tourney) for all words, with the width and weight axes climbing from word to word to match the rising intensity of the laundry cycle.",
+    "roles": {
+      "A": "Tourney[wdth,wght].ttf"
+    },
+    "pattern": ["A"],
+    "yaw": [18],
+    "axis": {
+      "font": "Tourney[wdth,wght].ttf",
+      "tag": "wdth",
+      "windows": [[100, 115], [115, 125]]
+    },
+    "progression": "The letters start wide and heavy, then become progressively more condensed and intense as the song moves from the walk to the spin to the final dry."
+  },
+  "type": {
+    "mood": "moody, cinematic",
+    "energy": 0.4,
+    "palette": {
+      "bg": [15, 25, 40],
+      "fg": [240, 245, 255],
+      "accents": [
+        [80, 150, 255],
+        [255, 200, 100],
+        [100, 200, 255]
+      ]
+    },
+    "camera": "beat_orbit",
+    "camera_params": {
+      "read_dps": 4,
+      "intro_deg": 25,
+      "fast_dps": 15,
+      "elev": 2,
+      "bob": 0.5
+    },
+    "transitions": "auto",
+    "line": {
+      "px": 4
+    },
+    "words": [
+      {
+        "text": "WASH",
+        "font": "Tourney[wdth,wght].ttf",
+        "module": "solid_hollow",
+        "lines": ["WASH"],
+        "hit": 1.39,
+        "hold_s": 1.8,
+        "form_s": 0.8,
+        "exit_s": 0.6,
+        "form_in": "wipe",
+        "form_out": "flicker",
+        "placement": {
+          "yaw": 18,
+          "pitch": 0,
+          "roll": 0,
+          "dx": 0,
+          "dy": 0,
+          "wf": 0.85,
+          "hf": 0.4
+        },
+        "axes": {
+          "wdth": [100, 115, "beat"]
+        },
+        "matte": "window",
+        "render": "flat"
+      },
+      {
+        "text": "WAIT",
+        "font": "Tourney[wdth,wght].ttf",
+        "module": "solid_hollow",
+        "lines": ["WAIT"],
+        "hit": 4.06,
+        "hold_s": 1.6,
+        "form_s": 0.6,
+        "exit_s": 0.5,
+        "form_in": "wipe",
+        "form_out": "flicker",
+        "placement": {
+          "yaw": -18,
+          "pitch": 0,
+          "roll": 0,
+          "dx": 0,
+          "dy": 0,
+          "wf": 0.85,
+          "hf": 0.4
+        },
+        "axes": {
+          "wdth": [115, 125, "beat"]
+        },
+        "matte": "window",
+        "render": "flat"
+      },
+      {
+        "text": "SPIN",
+        "font": "Tourney[wdth,wght].ttf",
+        "module": "solid_hollow",
+        "lines": ["SPIN"],
+        "hit": 6.73,
+        "hold_s": 1.6,
+        "form_s": 0.6,
+        "exit_s": 0.5,
+        "form_in": "wipe",
+        "form_out": "flicker",
+        "placement": {
+          "yaw": 18,
+          "pitch": 0,
+          "roll": 0,
+          "dx": 0,
+          "dy": 0,
+          "wf": 0.85,
+          "hf": 0.4
+        },
+        "axes": {
+          "wdth": [100, 115, "beat"]
+        },
+        "matte": "window",
+        "render": "flat"
+      },
+      {
+        "text": "DRY",
+        "font": "Tourney[wdth,wght].ttf",
+        "module": "solid_hollow",
+        "lines": ["DRY"],
+        "hit": 9.39,
+        "hold_s": 2.4,
+        "form_s": 0.8,
+        "exit_s": 0.8,
+        "form_in": "wipe",
+        "form_out": "flicker",
+        "placement": {
+          "yaw": -18,
+          "pitch": 0,
+          "roll": 0,
+          "dx": 0,
+          "dy": 0,
+          "wf": 0.85,
+          "hf": 0.4
+        },
+        "axes": {
+          "wdth": [115, 125, "beat"]
+        },
+        "matte": "window",
+        "render": "flat"
+      }
+    ]
+  },
+  "compose": {
+    "technique": "behind",
+    "plate_gain": 0.6,
+    "plate_sat": 0.8,
+    "glow_lo": 0.05,
+    "glow_hi": 0.25,
+    "glow_color": [0.3, 0.6, 1.0],
+    "grain": 0.03,
+    "vignette": 0.3,
+    "type_opacity": 1.0,
+    "default": {
+      "ops": [
+        {
+          "op": "grade",
+          "out": "gfootage",
+          "args": {
+            "frame": "$footage",
+            "sat": 0.9,
+            "gain": 0.95
+          }
+        },
+        {
+          "op": "tint_type",
+          "out": "tcol",
+          "args": {
+            "type_a": "$type_matte",
+            "footage": "$footage",
+            "mode": "complement",
+            "sat": 1.8,
+            "lum_target": 0.85
+          }
+        },
+        {
+          "op": "knockout",
+          "out": "win",
+          "args": {
+            "plate_rgb": [0.05, 0.08, 0.12],
+            "type_a": "$type_matte",
+            "footage": "$gfootage",
+            "fg_matte": "$matte",
+            "min_contrast": 0.25
+          }
+        },
+        {
+          "op": "sandwich",
+          "out": "simg",
+          "args": {
+            "footage": "$gfootage",
+            "type_rgb": "$win",
+            "type_a": "$type_matte",
+            "matte": "$matte",
+            "matte_threshold": 0.5,
+            "matte_soft": 0.08
+          }
+        },
+        {
+          "op": "add_glow",
+          "out": "glow",
+          "args": {
+            "img": "$simg",
+            "mask": "$type_matte",
+            "radius": 18,
+            "intensity": 0.2,
+            "color": [0.3, 0.6, 1.0]
+          }
+        },
+        {
+          "op": "grain",
+          "out": "grainy",
+          "args": {
+            "frame": "$glow",
+            "frame_idx": "$frame_idx",
+            "amount": 0.03
+          }
+        },
+        {
+          "op": "vignette",
+          "out": "image",
+          "args": {
+            "frame": "$grainy",
+            "strength": 0.3
+          }
+        }
+      ]
+    },
+    "shots": {
+      "s2": {
+        "ops": [
+          {
+            "op": "grade",
+            "out": "gfootage",
+            "args": {
+              "frame": "$footage",
+              "sat": 1.1,
+              "gain": 1.05
+            }
+          },
+          {
+            "op": "tint_type",
+            "out": "tcol",
+            "args": {
+              "type_a": "$type_matte",
+              "footage": "$footage",
+              "mode": "sample",
+              "sat": 1.5,
+              "lum_target": 0.75
+            }
+          },
+          {
+            "op": "knockout",
+            "out": "win",
+            "args": {
+              "plate_rgb": [0.05, 0.08, 0.12],
+              "type_a": "$type_matte",
+              "footage": "$gfootage",
+              "fg_matte": "$matte",
+              "min_contrast": 0.25
+            }
+          },
+          {
+            "op": "sandwich",
+            "out": "simg",
+            "args": {
+              "footage": "$gfootage",
+              "type_rgb": "$win",
+              "type_a": "$type_matte",
+              "matte": "$matte",
+              "matte_threshold": 0.5,
+              "matte_soft": 0.08
+            }
+          },
+          {
+            "op": "add_glow",
+            "out": "glow",
+            "args": {
+              "img": "$simg",
+              "mask": "$type_matte",
+              "radius": 18,
+              "intensity": 0.2,
+              "color": [0.3, 0.6, 1.0]
+            }
+          },
+          {
+            "op": "grain",
+            "out": "grainy",
+            "args": {
+              "frame": "$glow",
+              "frame_idx": "$frame_idx",
+              "amount": 0.03
+            }
+          },
+          {
+            "op": "vignette",
+            "out": "image",
+            "args": {
+              "frame": "$grainy",
+              "strength": 0.3
+            }
+          }
+        ]
+      },
+      "s3": {
+        "ops": [
+          {
+            "op": "grade",
+            "out": "gfootage",
+            "args": {
+              "frame": "$footage",
+              "sat": 1.1,
+              "gain": 1.05
+            }
+          },
+          {
+            "op": "tint_type",
+            "out": "tcol",
+            "args": {
+              "type_a": "$type_matte",
+              "footage": "$footage",
+              "mode": "sample",
+              "sat": 1.5,
+              "lum_target": 0.75
+            }
+          },
+          {
+            "op": "knockout",
+            "out": "win",
+            "args": {
+              "plate_rgb": [0.05, 0.08, 0.12],
+              "type_a": "$type_matte",
+              "footage": "$gfootage",
+              "fg_matte": "$matte",
+              "min_contrast": 0.25
+            }
+          },
+          {
+            "op": "sandwich",
+            "out": "simg",
+            "args": {
+              "footage": "$gfootage",
+              "type_rgb": "$win",
+              "type_a": "$type_matte",
+              "matte": "$matte",
+              "matte_threshold": 0.5,
+              "matte_soft": 0.08
+            }
+          },
+          {
+            "op": "add_glow",
+            "out": "glow",
+            "args": {
+              "img": "$simg",
+              "mask": "$type_matte",
+              "radius": 18,
+              "intensity": 0.2,
+              "color": [0.3, 0.6, 1.0]
+            }
+          },
+          {
+            "op": "grain",
+            "out": "grainy",
+            "args": {
+              "frame": "$glow",
+              "frame_idx": "$frame_idx",
+              "amount": 0.03
+            }
+          },
+          {
+            "op": "vignette",
+            "out": "image",
+            "args": {
+              "frame": "$grainy",
+              "strength": 0.3
+            }
+          }
+        ]
+      }
+    },
+    "holds": [
+      [4.21, 0.5],
+      [9.62, 0.42],
+      [15.0, 0.38]
+    ],
+    "cuts": [
+      {
+        "after": "s1",
+        "cut": "window_swap",
+        "word": 1,
+        "exit": "io",
+        "freeze_s": 0.3
+      },
+      {
+        "after": "s3",
+        "cut": "window_swap",
+        "word": 3,
+        "exit": "io",
+        "freeze_s": 0.3
+      }
+    ]
+  }
+}
