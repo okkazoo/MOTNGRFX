@@ -9,6 +9,7 @@ no design model, no retime, nothing re-chosen. Layout follows the page's fitVidT
   maskb    the same + the subject over the colour, the ring under the subject
 tl.metal = gold | chrome (front / behind only): LTX 2.5 renders the graphic (union-control on the word's depth, on black, the word + material in the prompt); the letters go over the source through the graphic's own mask, so the picture and the word's shape stay.
 transitions = False keeps every cut hard; True turns cuts into 3D / motion moves, each ending ON the source's cut frame, so the frame count and the rhythm stay. Words stop before a move starts in either version.
+lines = True (default, both edit modes, tools/app/frame_lines.py): each word keeps its GUI layout as its resting pose, and the approved library strands (outline hand-off + braid / circuit_board / fan / spiral_around / twist / ripple) carry it into and out of that pose: the sung frame never moves, B's fill is the plain word once the form-in ends. lines = False: hard cuts between the words.
 """
 from __future__ import annotations
 
@@ -347,8 +348,26 @@ def pop(i: int, n: int, land: int = 3) -> float:
     return 1.0 + 0.09 * (1 - i / land) ** 2 if (i < land and n > land + 3) else 1.0
 
 
+HIDDEN_BELOW = 0.85      # a matte look with a letter less visible than this gets a clear reading moment first
+CLEAR_SHARE = 0.55       # the word reads in front of the subject over this share of its hold ...
+CLEAR_RAMP = 10          # ... then the subject comes over it across this many frames
+EDGE_AMP = 0.006        # the live edge: how far the letter edges drift, share of the type's size
+EDGE_CELL = 0.07         # the noise's grain, share of the type's size
+EDGE_STEP = 6            # frames between two noise fields
+
+
+def clear_gain(i: int, n: int) -> float:
+    """how much the subject covers a hidden word at its frame i: 0 while it reads clearly, then up to 1. Short words stay readable throughout."""
+    if n < 2 * CLEAR_RAMP:
+        return 0.0
+    u = (i - CLEAR_SHARE * n) / CLEAR_RAMP
+    u = min(1.0, max(0.0, u))
+    return u * u * (3 - 2 * u)
+
+
 class Word:
     def __init__(self, w: dict, lay: dict, size: tuple[int, int]):
+        self._hidden, self._noise = None, {}
         self.w, self.lay, self.size, self.look = w, lay, size, layer_of(w["tl"])
         self.metal = w["tl"].get("metal") if w["tl"].get("metal") in METALS and self.look in ("front", "behind") else None
         self.flat = FlatType(lay)
@@ -385,14 +404,47 @@ class Word:
         r = max(2, int(round(self.size[0] * 0.0028)))
         return np.clip(cv2.dilate(m, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * r + 1, 2 * r + 1))) - m, 0, 1)
 
-    def over(self, frame: np.ndarray, f: int, mattes: Mattes | None) -> np.ndarray:
+    def _field(self, key: int) -> np.ndarray:
+        """one smooth noise field (dx, dy), -1..1, the same for this word on every run."""
         import cv2
-        i, n = f - self.w["start"], self.w["end"] - self.w["start"]
+        if key not in self._noise:
+            fw, fh = self.size
+            cell = max(6.0, self.lay["fs"] * self.lay["s"] * EDGE_CELL)
+            seed = int(hashlib.sha1(self.w["text"].encode()).hexdigest()[:8], 16)
+            g = np.random.default_rng([seed, key]).uniform(-1, 1, (max(2, int(fh / cell)), max(2, int(fw / cell)), 2)).astype(np.float32)
+            self._noise = {k: v for k, v in self._noise.items() if k >= key - 1}
+            self._noise[key] = cv2.resize(g, (fw, fh), interpolation=cv2.INTER_CUBIC)
+        return self._noise[key]
+
+    def live_edge(self, m: np.ndarray, f: int) -> np.ndarray:
+        """the letters' mask with its edges drifting a little: subtle slow noise, so the held word is never dead still and stays fully readable."""
+        import cv2
+        ys, xs = np.where(m > 0.004)
+        if not len(xs):
+            return m
+        amp = max(1.0, self.lay["fs"] * self.lay["s"] * EDGE_AMP)
+        pad = int(amp) + 3
+        y0, y1, x0, x1 = max(0, ys.min() - pad), min(m.shape[0], ys.max() + pad + 1), max(0, xs.min() - pad), min(m.shape[1], xs.max() + pad + 1)
+        k, u = f // EDGE_STEP, (f % EDGE_STEP) / EDGE_STEP
+        d = (self._field(k)[y0:y1, x0:x1] * (1 - u) + self._field(k + 1)[y0:y1, x0:x1] * u) * amp
+        gy, gx = np.mgrid[y0:y1, x0:x1].astype(np.float32)
+        out = m.copy()
+        out[y0:y1, x0:x1] = cv2.remap(m, gx + d[:, :, 0], gy + d[:, :, 1], cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+        return out
+
+    def over(self, frame: np.ndarray, f: int, mattes: Mattes | None, fi: int | None = None) -> np.ndarray:
+        """fi = the frame whose pose is drawn (frame_lines holds a releasing word still past its end); the picture and the matte are always frame f's."""
+        import cv2
+        i, n = (f if fi is None else fi) - self.w["start"], self.w["end"] - self.w["start"]
         self.colours(frame)
         F = frame.astype(np.float32)
         M = None
         if self.look in MATTE_LOOKS and mattes is not None:
             M = mattes.get(f)[:, :, None]
+            if self._hidden is None:
+                self._hidden = min(self.visibility(f, mattes) or [1.0]) < HIDDEN_BELOW
+            if self._hidden:
+                M = M * clear_gain(i, n)
         fw, fh = self.size
         if self.metal:
             rgb = self.metal_frame(i)
@@ -404,7 +456,7 @@ class Word:
             if M is not None:
                 a = a * (1 - M)
             return (F * (1 - a) + rgb.astype(np.float32) * a).clip(0, 255).astype(np.uint8)
-        m = self.flat.mask(fw, fh, pop(i, n))
+        m = self.live_edge(self.flat.mask(fw, fh, pop(i, n)), f)
         if self.look in ("front", "behind"):
             ring = self.ring_of(m)[:, :, None]
             out = F * (1 - ring) + np.float32(self.ring) * ring
@@ -499,12 +551,16 @@ def move_frame(kind: str, u: float, A: np.ndarray, B: np.ndarray) -> np.ndarray:
 
 
 # ------------------------------------------------------------------------------------------------ the whole video
-def prepare(shots, segments, alpha_dir, stem, video, work, log=print, hits=None, moves=True):
+def prepare(shots, segments, alpha_dir, stem, video, work, log=print, hits=None, moves=True, lines=True, lines_seed=None):
+    """lines = the library's strands between the words (frame_lines; both edit modes, never inside a picture move); False = every word cuts hard as before."""
     ps = OM.probe_video(video)
     fw, fh, fps, n = ps["width"], ps["height"], ps["fps"], ps["frames"]
     words, plan = plan_words(shots, fps, n, hits, moves)
     size = (fw, fh)
     objs = [Word(w, layout(w["text"], font_path(w["font"]), fw, fh, w["tl"]), size) for w in words]
+    if lines and objs:
+        from tools.app import frame_lines as FL
+        FL.plan(objs, fps, size, plan if moves else {}, lines_seed)
     mattes = Mattes(segments, alpha_dir, stem, size)
     return ps, objs, plan, mattes
 
@@ -522,12 +578,17 @@ def compose_frames(objs, video, ps, mattes, frames=None):
     for o in objs:
         for f in range(o.w["start"], o.w["end"]):
             by[f] = o
+    from tools.app import frame_lines as FL
+    win = FL.index(objs)                                                      # {frame: window} of the strands between the words (empty when lines are off)
     for f, im in enumerate(OM._frames(video, ps["width"], ps["height"])):
         o = by.get(f)
         if frames is not None and f not in frames:
             if o is not None and o.metal:                                     # its clip is read in order
                 o.metal_frame(f - o.w["start"])
             yield f, None
+            continue
+        if f in win:
+            yield f, FL.frame(win[f], im, f, mattes)
             continue
         yield f, (o.over(im, f, mattes) if o else im)
 
@@ -607,7 +668,8 @@ def report(objs, mattes, plan) -> dict:
             vis = [o.visibility(f, mattes) for f in fr]
             d["letters_visible_min"] = [min(col) for col in zip(*vis)]
         words.append(d)
-    return dict(words=words, moves={str(k): v for k, v in sorted(plan.items())})
+    from tools.app import frame_lines as FL
+    return dict(words=words, moves={str(k): v for k, v in sorted(plan.items())}, lines=FL.describe(objs) if objs else [])
 
 
 def main(argv=None) -> int:
@@ -620,6 +682,7 @@ def main(argv=None) -> int:
     ap.add_argument("--work", required=True)
     ap.add_argument("--out", default="", help="write the video here")
     ap.add_argument("--transitions", type=int, default=0)
+    ap.add_argument("--lines", type=int, default=1, help="1 = the library's strands carry each word to the next (frame_lines); 0 = hard cuts between the words")
     ap.add_argument("--stills", default="", help="comma list of frames: write only these into <work>/stills")
     ap.add_argument("--no-metal", type=int, default=0, help="stills: draw metal words flat (fast layout check)")
     ap.add_argument("--comfy-dir", default="/workspace/ComfyUI")
@@ -630,7 +693,7 @@ def main(argv=None) -> int:
     shots = json.loads(Path(a.shots).read_text(encoding="utf-8"))
     shots = shots.get("shots", shots) if isinstance(shots, dict) else shots
     segs = json.loads(Path(a.segments).read_text(encoding="utf-8"))
-    ps, objs, plan, mattes = prepare(shots, segs, a.alpha_dir, a.stem, a.video, a.work)
+    ps, objs, plan, mattes = prepare(shots, segs, a.alpha_dir, a.stem, a.video, a.work, lines=bool(a.lines), lines_seed=a.seed)
     if a.no_metal:
         for o in objs:
             o.metal = None
