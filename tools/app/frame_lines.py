@@ -172,6 +172,10 @@ def plan(objs, fps: float, size, cuts=None, seed=None, log=None) -> list[Gap]:
         L = b.w["start"]
         form = min(form0, max(0, b.w["end"] - L))
         g = Gap("cut", a, b, L, L + form, 0, L, form, size=size, fps=fps)
+        if getattr(b, "fm_in", None) is not None:             # frame_modules builds this word (its construction window ends on L): no strands here
+            g.why = "word module window"
+            finish(g, a, b)
+            continue
         if a is None:
             g.ws, g.kind = max(0, L - tmax), "enter"
         else:
@@ -193,7 +197,7 @@ def plan(objs, fps: float, size, cuts=None, seed=None, log=None) -> list[Gap]:
     o = objs[-1]                                              # the last word: its arcs fade out in place
     Ae = o.w["end"]
     R = max(hold_from(o) + hold_f, Ae - int(round(0.8 * fps)))
-    if Ae - R >= int(round(0.3 * fps)) and not hit(R, Ae):
+    if Ae - R >= int(round(0.3 * fps)) and not hit(R, Ae) and getattr(o, "fm_out", None) is None:
         finish(Gap("exit", o, None, R, Ae, int(min(ex_f, 0.6 * (Ae - R))), Ae, 0, size=size, fps=fps), o, None)
     return gaps
 

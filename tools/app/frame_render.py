@@ -10,6 +10,7 @@ no design model, no retime, nothing re-chosen. Layout follows the page's fitVidT
 tl.metal = gold | chrome (front / behind only): LTX 2.5 renders the graphic (union-control on the word's depth, on black, the word + material in the prompt); the letters go over the source through the graphic's own mask, so the picture and the word's shape stay.
 transitions = False keeps every cut hard; True turns cuts into 3D / motion moves, each ending ON the source's cut frame, so the frame count and the rhythm stay. Words stop before a move starts in either version.
 lines = True (default, both edit modes, tools/app/frame_lines.py): each word keeps its GUI layout as its resting pose, and the approved library strands (outline hand-off + braid / circuit_board / fan / spiral_around / twist / ripple) carry it into and out of that pose: the sung frame never moves, B's fill is the plain word once the form-in ends. lines = False: hard cuts between the words.
+modules = True (default, tools/app/frame_modules.py): the GUI only fixes the FORMED word; the library word modules construct it from nothing into that pose and deconstruct it again, carried by the library transitions (construction / exit frames free of the GUI box); modules = False: flat words.
 """
 from __future__ import annotations
 
@@ -551,13 +552,19 @@ def move_frame(kind: str, u: float, A: np.ndarray, B: np.ndarray) -> np.ndarray:
 
 
 # ------------------------------------------------------------------------------------------------ the whole video
-def prepare(shots, segments, alpha_dir, stem, video, work, log=print, hits=None, moves=True, lines=True, lines_seed=None):
-    """lines = the library's strands between the words (frame_lines; both edit modes, never inside a picture move); False = every word cuts hard as before."""
+def prepare(shots, segments, alpha_dir, stem, video, work, log=print, hits=None, moves=True, lines=True, lines_seed=None, modules=True):
+    """lines = the library's strands between the words (frame_lines; both edit modes, never inside a picture move); False = every word cuts hard as before.
+    modules = the word modules (frame_modules) construct and deconstruct each word around its GUI pose (the formed word stays the GUI fill); False = flat words as before."""
     ps = OM.probe_video(video)
     fw, fh, fps, n = ps["width"], ps["height"], ps["fps"], ps["frames"]
     words, plan = plan_words(shots, fps, n, hits, moves)
     size = (fw, fh)
     objs = [Word(w, layout(w["text"], font_path(w["font"]), fw, fh, w["tl"]), size) for w in words]
+    for o in objs:
+        o.module = o.fm_in = o.fm_out = None
+    if modules and objs:
+        from tools.app import frame_modules as FM
+        FM.plan(objs, video, ps, plan if moves else {}, lines_seed, work, log)
     if lines and objs:
         from tools.app import frame_lines as FL
         FL.plan(objs, fps, size, plan if moves else {}, lines_seed)
@@ -580,12 +587,17 @@ def compose_frames(objs, video, ps, mattes, frames=None):
             by[f] = o
     from tools.app import frame_lines as FL
     win = FL.index(objs)                                                      # {frame: window} of the strands between the words (empty when lines are off)
+    from tools.app import frame_modules as FM
+    mwin = FM.index(objs)                                                     # {frame: window} of the word modules' constructions / deconstructions (empty when modules are off)
     for f, im in enumerate(OM._frames(video, ps["width"], ps["height"])):
         o = by.get(f)
         if frames is not None and f not in frames:
             if o is not None and o.metal:                                     # its clip is read in order
                 o.metal_frame(f - o.w["start"])
             yield f, None
+            continue
+        if f in mwin:
+            yield f, FM.frame(mwin[f], im, f, mattes)
             continue
         if f in win:
             yield f, FL.frame(win[f], im, f, mattes)
@@ -663,13 +675,15 @@ def report(objs, mattes, plan) -> dict:
     words = []
     for o in objs:
         d = dict(n=o.w["n"], text=o.w["text"], font=o.w["font"], look=o.look, metal=o.metal, start=o.w["start"], end=o.w["end"], fs=round(o.lay["fs"], 1), rot=o.lay["rot"], s=o.lay["s"], cx=round(o.lay["cx"]), cy=round(o.lay["cy"]))
+        d["module"] = getattr(o, "module", None)
         if o.look == "behind":
             fr = [o.w["start"] + 1, (o.w["start"] + o.w["end"]) // 2, o.w["end"] - 1]
             vis = [o.visibility(f, mattes) for f in fr]
             d["letters_visible_min"] = [min(col) for col in zip(*vis)]
         words.append(d)
     from tools.app import frame_lines as FL
-    return dict(words=words, moves={str(k): v for k, v in sorted(plan.items())}, lines=FL.describe(objs) if objs else [])
+    from tools.app import frame_modules as FM
+    return dict(words=words, moves={str(k): v for k, v in sorted(plan.items())}, lines=FL.describe(objs) if objs else [], modules=FM.describe(objs) if objs else [])
 
 
 def main(argv=None) -> int:
@@ -683,6 +697,7 @@ def main(argv=None) -> int:
     ap.add_argument("--out", default="", help="write the video here")
     ap.add_argument("--transitions", type=int, default=0)
     ap.add_argument("--lines", type=int, default=1, help="1 = the library's strands carry each word to the next (frame_lines); 0 = hard cuts between the words")
+    ap.add_argument("--modules", type=int, default=1, help="1 = the word modules construct / deconstruct each word (frame_modules); 0 = flat words")
     ap.add_argument("--stills", default="", help="comma list of frames: write only these into <work>/stills")
     ap.add_argument("--no-metal", type=int, default=0, help="stills: draw metal words flat (fast layout check)")
     ap.add_argument("--comfy-dir", default="/workspace/ComfyUI")
@@ -693,7 +708,7 @@ def main(argv=None) -> int:
     shots = json.loads(Path(a.shots).read_text(encoding="utf-8"))
     shots = shots.get("shots", shots) if isinstance(shots, dict) else shots
     segs = json.loads(Path(a.segments).read_text(encoding="utf-8"))
-    ps, objs, plan, mattes = prepare(shots, segs, a.alpha_dir, a.stem, a.video, a.work, lines=bool(a.lines), lines_seed=a.seed)
+    ps, objs, plan, mattes = prepare(shots, segs, a.alpha_dir, a.stem, a.video, a.work, lines=bool(a.lines), lines_seed=a.seed, modules=bool(a.modules))
     if a.no_metal:
         for o in objs:
             o.metal = None
