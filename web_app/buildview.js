@@ -81,7 +81,7 @@
   /** time weight of a graph node (a sampler or a model call costs far more than plumbing): the progress bar is weighted by this, so it moves like the wall clock. */
   function nodeWeight(n) {
     const c = String((n && n.class_type) || "");
-    if (SAMPLER_CLASSES.test(c) || /^(MographGGUFVL|AILab_QwenVL_Advanced|MographLtxRead)$/.test(c)) return 20;
+    if (SAMPLER_CLASSES.test(c) || /^(MographGGUFVL|DesignLLM_Advanced|MographLtxRead)$/.test(c)) return 20;
     if (/^(MographCompose|MographAssemble|MographTypePasses|MographArchive|MographFootageFlow|MographPivotCut|ImageUpscaleWithModel|MographSaveFinalUpscaled|VideoDepthAnythingProcess|MographDecodeClip|MographMusicT2MCut|VAEDecodeAudio)$/.test(c)) return 6;
     return 1;
   }

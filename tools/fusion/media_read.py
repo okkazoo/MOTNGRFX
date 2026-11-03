@@ -199,7 +199,7 @@ def extract_audio(src, out_wav, max_s: float = AUDIO_CAP_S, ffmpeg: str = "ffmpe
 def detect_video_cuts(path, ffmpeg: str = "ffmpeg") -> list[float]:
     """the real cuts of a video (s): ffmpeg scene detect, tools/app/ingest.detect_cuts (the same detector the own-video route uses). Cheap on a phone-length clip."""
     from tools.app import ingest
-    return ingest.detect_cuts(str(path), ffmpeg=ffmpeg)
+    return ingest.detect_cuts(str(path), 0.2, ffmpeg=ffmpeg)                          # the job's own threshold (own_video_job.NATIVE_CUT_THR): the storyboard shows the cuts the render will use; the default 0.35 misses soft cuts
 
 
 def dsp(wav) -> dict:

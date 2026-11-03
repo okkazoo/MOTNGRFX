@@ -367,7 +367,7 @@ def enforce(t: dict, system: dict | None, bpm, fixes: list, protected=(), seed=0
             if i not in keep_font_ and DD.pixel_swap(words, i, fixes, bl.get("cap"), protected, (system or {}).get("fonts")):                 # a pixel / dot face on a long word, a ray / extrusion module or a small fitted cap does not read (QC v026): another face, refitted
                 bl = best_layout(str(w.get("text", "")), w.get("font"), w.get("axes"), drawn[i], fmt, aspect, fr_, avoid=chosen.get(i - 1))
                 n += 1
-            chosen[i] = bl["layout"]
+            chosen[i] = bl["layout"]          # (the DD.effect_module_swap face refit was removed: that function no longer exists in design_defaults.py, the call raised AttributeError on the own-video retime, box run 2026-11-03)
             old = (w.get("lines"), pl.get("roll"), pl.get("wf"), pl.get("hf"))
             if len(str(w.get("text", "")).split()) > 1 or w.get("lines") or bl.get("split"):          # a single word needs no `lines`; a phrase gets the layout's lines; a grid / column word its rows (mid-word)
                 w["lines"] = list(bl["lines"])

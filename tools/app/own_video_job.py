@@ -32,6 +32,9 @@ EDIT MODE (2026-11-01, tools/app/overlay_mode.py): brief.edit / --edit "overlay"
              READ's lyrics) else on a beat of the soundtrack, on the source frame grid (t = frame / src_fps).
   redesign   the old route (3D cuts, transitions, plate effects). It also keeps the source size, fps and frame count (no ingest tier crop, no fps halving).
   --size-mode tier  the historical tier route (ingest.py: 9:16 crop, 360x640 / 540x960, fps policy) for both edits.
+  --scale full|half (2026-11-03, page Format "Original" | "Half scale"): half = compose, type and the final at half the source size (even sides; overlay_mode.scaled_size), same fps / frame count / edit /
+             audio. The window clip and the Alpha-Gen input clips stay at the FULL source / matte size, so the matte keys (clip content + graph) are the same for both scales: a half job reuses the mattes a
+             full job made and the other way round; only the shot clips, archive, retime, design and render keys follow the size. The tier route ignores it.
 overlay_report.json in the out dir carries what tools/app/overlay_check.py needs.
 
 STAGE CACHE (2026-11-01, "cancel + restart with reuse", tools/app/stage_cache.py): a stage whose inputs have not changed is not run again: its files come back from
@@ -521,8 +524,11 @@ def _run(job: Job, a) -> int:
     size = V3.SIZES[tier]
     edit = OM.norm_edit(a.edit) if getattr(a, "edit", "") else brief["edit"]            # --edit wins, else the brief's, else overlay
     native = getattr(a, "size_mode", "native") == "native"
-    job.state["params"].update(edit=edit, size_mode="native" if native else "tier")
-    job.log(f"edit mode: {edit}; size mode: {'source size / source fps' if native else 'tier (ingest crop)'}")
+    scale = OM.norm_scale(getattr(a, "scale", "full")) if native else "full"          # "half" = compose, type and final at half the source size (even sides); the tier route has no scale
+    job.state["params"].update(edit=edit, size_mode="native" if native else "tier", scale=scale)
+    job.log(f"edit mode: {edit}; size mode: {'source size / source fps' if native else 'tier (ingest crop)'}; scale: {scale}")
+    if not native and OM.norm_scale(getattr(a, "scale", "full")) == "half":
+        job.log("WARNING: scale half is ignored in the tier size mode (the tier sets the size)")
     cc = Comfy(a.port, a.client_id, job)
     try:
         cc._get("/queue", timeout=10)
@@ -570,16 +576,17 @@ def _run(job: Job, a) -> int:
         cuts_s = IG.detect_cuts(str(trimmed), NATIVE_CUT_THR)
         nfr = count_frames(trimmed)
         ing = native_plan(pr0, nfr, cuts_s, IG)
-        nat = OM.native_sizes(ing["size"][0], ing["size"][1], tier)
+        nat = OM.native_sizes(ing["size"][0], ing["size"][1], tier, scale)          # matte size from the FULL source (a half job cuts the same Alpha-Gen clips as a full one); compose / type / final from the scale
         size = nat["matte"]
         clip = trimmed
         pw = ffprobe(trimmed, "width", "height")
-        if (int(pw.get("width") or 0), int(pw.get("height") or 0)) != tuple(nat["compose"]):
-            raise RuntimeError(f"window clip is {pw.get('width')}x{pw.get('height')}, expected the source size {nat['compose']}")
+        if (int(pw.get("width") or 0), int(pw.get("height") or 0)) != tuple(nat["source"]):          # the window clip is always cut at the full source size; only the shot clips / compose are scaled
+            raise RuntimeError(f"window clip is {pw.get('width')}x{pw.get('height')}, expected the source size {nat['source']}")
         fps = float(ing["fps"]["fps_float"])
         nframes = nfr
         cuts = clean_cuts([int(s["f0"]) for s in ing["shots"][1:]], nframes)
-        job.log(f"source size {nat['compose'][0]}x{nat['compose'][1]} at {ing['fps']['fps']} fps kept ({nframes} frames), matte size {size[0]}x{size[1]} (upscaled back), format {nat['format']}")
+        job.log(f"source size {nat['source'][0]}x{nat['source'][1]} at {ing['fps']['fps']} fps kept ({nframes} frames), matte size {size[0]}x{size[1]} (resampled to the output size), format {nat['format']}")
+        job.log(f"scale {scale}: output size {nat['compose'][0]}x{nat['compose'][1]} (type canvas {nat['type'][0]}x{nat['type'][1]})" + (" - half of the source, same fps and frame count, the matte clips are the full job's" if scale == "half" else ""))
     else:
         plan_p = w / "ingest.json"
         job.sh(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{start}", "-t", f"{dur}", "-i", src, "-c:v", "libx264", "-crf", "10", "-preset", "fast", "-pix_fmt", "yuv420p", "-fps_mode", "passthrough",
@@ -725,9 +732,9 @@ def _run(job: Job, a) -> int:
     V3.SIZE, V3.QUALITY = size, tier
     V3.CLIP_SIZE, V3.GLOBAL_SIZE, V3.MATTE_FPS, V3.FORMAT = None, None, None, "9:16"          # module state is reset per job (the tier route is the historical one)
     if native:                                                     # shot clips = the source frames; Alpha-Gen clips stretched to the matte size, tagged with the SOURCE rate (LTX frame_rate); analysis clip small
-        long_ = 640.0 / max(nat["compose"])
+        long_ = 640.0 / max(nat["source"])                         # the analysis clip is sized from the SOURCE, so it is the same for both scales
         V3.CLIP_SIZE, V3.MATTE_FPS, V3.FORMAT = tuple(nat["compose"]), ing["fps"]["fps"], nat["format"]
-        V3.GLOBAL_SIZE = (OM.even(nat["compose"][0] * long_), OM.even(nat["compose"][1] * long_)) if long_ < 1.0 else tuple(nat["compose"])
+        V3.GLOBAL_SIZE = (OM.even(nat["source"][0] * long_), OM.even(nat["source"][1] * long_)) if long_ < 1.0 else tuple(nat["source"])
     V3.BOX = V3.BOX_DIR = str(w)
     V3.SRC_BOX = str(clip)
     V3.H_NAME = f"{STEM}_h"
@@ -768,7 +775,7 @@ def _run(job: Job, a) -> int:
                   else f"generated instrumental music ({bpm:.0f} bpm, {key}): {music_request(brief, texts, real_dur, seed)['music'] or 'by mood'}")
     lyr = ("Lyrics: not transcribed (the track is the clip's own audio); the on-screen words are the user's own." if soundtrack == "video"
            else "Lyrics: not transcribed (the track is the user's own audio file); the on-screen words are the user's own." if soundtrack == "track" else "Lyrics: none (instrumental).")
-    test_clip = ("The clip is the user's own music video: a performer in a test clip station and at a red-shuttered corner, cut with inserts "
+    test_clip = ("The clip is the user's own music video: a rapper in a New York test clip station and at a red-shuttered corner, cut with inserts "
               "(train, graffiti, street, a gold chain close-up, a crowd). ")
     hits = ", ".join(f"{x['text']} {x['land']:.2f}" for x in words)
     direction = direction_text(V3.DIRECTION4, test_clip, brief, shows, hits, len(spans), soundtrack, edit)
@@ -802,6 +809,24 @@ def _run(job: Job, a) -> int:
         h = cc.wait(pid, 1800, f"alpha h{j}")
         job.log(f"matte {k}/{len(pids)} (piece h{j}, {cc.compute_s(h)} s)")
         SC.store("matte", matte_ids[j], sorted(Path(a.out_dir).glob(f"{STEM}_alpha_h{j}_image_*")))
+
+    # ------------------------------------------------------------------------------------------------ the frames as designed on the page (2026-11-03): no design model, what the cards show is what renders
+    from tools.app import frame_render as FR
+    if FR.has_frame_design(brief.get("story")):
+        job.stage("render", "the frames as designed: type, mattes, LTX metal" + (", moves on the cuts" if edit == "redesign" else ""))
+        shots = brief["story"]["shots"]
+        ps, objs, plan, mattes = FR.prepare(shots, segs, a.out_dir, STEM, clip, w, hits=brief["story"].get("hits"), moves=edit == "redesign")
+        rep = FR.report(objs, mattes, plan)
+        (w / "frame_report.json").write_text(json.dumps(rep, ensure_ascii=False, indent=1), encoding="utf-8")
+        FR.render_metals(objs, ps, comfy_dir / "motngrfx_cache" / "frame_metal", cc, input_dir, out_root, seed, job.log)      # beside the stage cache: the straight and the transitions version share a word's render
+        final = Path(a.out_dir) / "final.mp4"
+        res = FR.write_video(objs, clip, ps, mattes, plan, final, edit == "redesign", clip, log=job.log)
+        job.log(f"frames as designed: {res}")
+        job.state["outputs"].insert(0, dict(kind="video", file="final.mp4"))
+        job.stage("done")
+        job.state["done"] = True
+        job.log("done")
+        return 0
 
     # ------------------------------------------------------------------------------------------------ archive
     job.stage("archive", "shot clips + mattes -> archive folder")
@@ -886,10 +911,15 @@ def _run(job: Job, a) -> int:
     restore_rep = None
     if edit == "overlay":                                          # output = the SOURCE frame outside the type, the composed frame inside it; 1:1 frame map, source fps tag
         pic = w / "picture.mp4"
+        pic_src = clip
+        if scale == "half":                                        # the source frames the output keeps are the half-scale ones: the same scale filter the shot clips were cut with (lossless, so they equal the engine's footage)
+            pic_src = w / "window_half.mp4"
+            job.sh(["ffmpeg", "-y", "-loglevel", "error", "-i", clip, "-an", "-vf", f"scale={nat['compose'][0]}:{nat['compose'][1]}:flags=lanczos,setsar=1", "-c:v", "libx264", "-crf", "0", "-preset", "fast",
+                    "-pix_fmt", "yuv420p", "-fps_mode", "passthrough", pic_src], "half-scale source picture")
         wfr = rrep.get("word_frames") or []
         act = (max(0, min(x["start_frame"] for x in wfr) - 6), max(x["end_frame"] for x in wfr) + 6) if wfr else None          # no word and no bridge strand can be on screen outside the first start .. last end
         sup = [tuple(x["suppress_before"]) for x in wfr if x.get("suppress_before")]          # frames of a word's form-in before its own shot starts: the source frame (a word lives inside its shot)
-        restore_rep = OM.restore_video(clip, raw, [w / "seg" / f"s{k}_clip.mp4" for k in range(1, len(spans) + 1)], spans, pic, fps_s, active_frames=act, inactive_frames=sup)
+        restore_rep = OM.restore_video(pic_src, raw, [w / "seg" / f"s{k}_clip.mp4" for k in range(1, len(spans) + 1)], spans, pic, fps_s, active_frames=act, inactive_frames=sup)
         if restore_rep.get("broken_frames"):
             job.log(f"WARNING: {len(restore_rep['broken_frames'])} frames had a type mask over {int(OM.MAX_TYPE_SHARE * 100)} % of the picture (a ground / wash, not type); {len(restore_rep['dropped_frames'])} of them show the source frame without type: {restore_rep['broken_frames'][:12]}")
         job.log(f"picture restored from the source: {restore_rep}")
@@ -905,14 +935,16 @@ def _run(job: Job, a) -> int:
         job.sh(["ffmpeg", "-y", "-loglevel", "error", "-i", raw, "-i", aud_in, "-map", "0:v:0", "-map", "1:a:0", *vf, *aud, "-t", f"{real_dur:.4f}", "-movflags", "+faststart", final], "final mux")
     pv, pa = ffprobe(final, "width", "height", "r_frame_rate", "nb_frames"), ffprobe(final, "codec_name", stream="a:0")
     job.log(f"final.mp4: {pv.get('width')}x{pv.get('height')} {pv.get('r_frame_rate')} {pv.get('nb_frames')} frames, {pv.get('duration', 0):.3f} s, audio {pa.get('codec_name')} {pa.get('duration', 0):.3f} s "
-            f"(expected {nframes} frames, {real_dur:.3f} s)")
+            f"(expected {nframes} frames, {real_dur:.3f} s" + (f", {nat['compose'][0]}x{nat['compose'][1]}, scale {scale}" if nat else "") + ")")
+    if nat and (int(pv.get("width") or 0), int(pv.get("height") or 0)) != tuple(nat["compose"]):
+        job.log(f"WARNING: final.mp4 is {pv.get('width')}x{pv.get('height')}, expected {nat['compose'][0]}x{nat['compose'][1]} (scale {scale})")
     job.state["outputs"].insert(0, dict(kind="video", file="final.mp4"))
     (Path(a.out_dir) / "overlay_report.json").write_text(json.dumps(dict(
-        edit=edit, size_mode="native" if native else "tier", source=str(src), window=[start, round(start + dur, 3)], fps=fps_s, fps_float=fps, frames=nframes, size=nat["compose"] if nat else None, real_cuts=cuts,
+        edit=edit, size_mode="native" if native else "tier", source=str(src), window=[start, round(start + dur, 3)], fps=fps_s, fps_float=fps, frames=nframes, size=nat["compose"] if nat else None, source_size=nat["source"] if nat else None, scale=scale, real_cuts=cuts,
         word_frames=[dict(wf, **{"fps": fps_s}) for wf in (rrep.get("word_frames") or [])], hits=[dict(text=x["text"], land_real=x["land_real"], land_frame=x.get("land_frame")) for x in words],
         soundtrack=soundtrack, restore=restore_rep, final=str(final), window_clip=str(clip)), ensure_ascii=False, indent=1), encoding="utf-8")
     job.state["info"] = dict(job.state.get("info") or {}, length=round(real_dur, 3), frames=nframes, fps=fps_s, seconds=round(real_dur, 3), size=[pv.get("width"), pv.get("height")], window=[start, round(start + dur, 3)], words=[x["text"] for x in words],
-                             soundtrack=soundtrack, **({"track": track_src.name} if soundtrack == "track" else {}), tier=tier, spans=spans, bpm=bpm, key=key, edit=edit, native=native)
+                             soundtrack=soundtrack, **({"track": track_src.name} if soundtrack == "track" else {}), tier=tier, spans=spans, bpm=bpm, key=key, edit=edit, native=native, scale=scale)
     job.stage("done")
     job.state["done"] = True
     job.log("done")
@@ -924,11 +956,12 @@ def main(argv=None) -> int:
     ap.add_argument("--job", required=True)
     ap.add_argument("--video", required=True, help="absolute path of the user clip (ComfyUI input folder)")
     ap.add_argument("--brief-file", default="")
-    ap.add_argument("--length", type=int, default=12)
+    ap.add_argument("--length", type=float, default=12)
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--format", default="9:16", help="legacy (tier route only); the source-size route takes the clip's own aspect")
     ap.add_argument("--edit", default="", choices=["", "overlay", "redesign"], help='"overlay" (the default when neither this nor brief.edit is set): the picture is untouched, only type is composited; "redesign": the old route with 3D cuts / transitions / effects')
     ap.add_argument("--size-mode", default="native", choices=["native", "tier"], help='"native" (default): the source size, fps and frame count are kept (no 9:16 crop, no tier, no fps halving); "tier": the historical ingest tiers')
+    ap.add_argument("--scale", default="full", choices=["full", "half"], help='"full" (default, "Original" on the page): the output is the source size; "half": compose, type and the final are half the source size (even sides), same fps / frame count / edit / audio; the Alpha-Gen mattes are those of the full job (same cache keys)')
     ap.add_argument("--quality", default="final", choices=sorted(TIER_OF))
     ap.add_argument("--soundtrack", default="video", choices=["video", "keep", "track", "generate"], help='"keep" is the old name of "video"')
     ap.add_argument("--audio", default="", help="soundtrack=track: absolute path of the user's audio file (ComfyUI input folder)")

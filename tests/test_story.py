@@ -491,8 +491,8 @@ def test_v12_use_choice_counts_as_the_pictures():
 # ------------------------------------------------------------------------------------------------- VIDEO MODE (MEDIA_BOX.md "VIDEO MODE STORYBOARD")
 GRID = dict(bpm=90.0, t0=0.0, beats=[round(0.667 * k, 2) for k in range(1, 40)], downbeats=[round(2.667 * k, 2) for k in range(0, 10)])
 clip_CUTS = [dict(start=0.0, end=2.03), dict(start=2.03, end=4.7), dict(start=4.7, end=8.0), dict(start=8.0, end=10.03), dict(start=10.03, end=12.0)]
-LYR = [dict(t=0.5, text="down the pier light on the harbor", ts=[0.5, 0.7, 0.9, 1.4, 1.6, 1.8, 2.2]), dict(t=5.2, text="lantern light buzzing gull on the railing"),
-       dict(t=9.0, text="whole fleet wake when the bell rang the tower")]
+LYR = [dict(t=0.5, text="off the gray light on the harbor", ts=[0.5, 0.7, 0.9, 1.4, 1.6, 1.8, 2.2]), dict(t=5.2, text="lantern light buzzing cat on the counter"),
+       dict(t=9.0, text="whole block wake when the bass hit the tower")]
 
 
 def vread(on_screen=(), lyrics=(), cuts=clip_CUTS, dur=24.0, window=(0.0, 12.0), grid=GRID, **kw):
@@ -511,8 +511,8 @@ def vreq(length=12, **kw):
 
 
 def vreply(n, hits=None, **kw):
-    d = dict(title="Night Ferry", logline="A performer rides the night ferry.", look="grainy, warm", music="boom bap, drums, bass, piano",
-             shots=[dict(n=k, beat=f"Cut {k}: the camera follows the performer along the deck.") for k in range(1, n + 1)], notes="")
+    d = dict(title="test clip Bars", logline="A rapper rides the night train.", look="grainy, warm", music="boom bap, drums, bass, piano",
+             shots=[dict(n=k, beat=f"Cut {k}: the camera follows the rapper through the car.") for k in range(1, n + 1)], notes="")
     if hits is not None:
         d["hits"] = hits
     d.update(kw)
@@ -558,9 +558,8 @@ def test_video_story_window_offset_and_length_capped():
     cuts = [dict(start=3.0, end=5.5), dict(start=5.5, end=9.0), dict(start=9.0, end=14.0)]
     s = ST.parse(vreply(3), vreq(12, cuts=cuts, window=(3.0, 14.0), dur=14.0))
     assert s["video"]["length"] == 11 and [(x["src_start"], x["src_end"], x["start"], x["end"]) for x in s["shots"]] == [(3.0, 5.5, 0.0, 2.5), (5.5, 9.0, 2.5, 6.0), (9.0, 14.0, 6.0, 11.0)]
-    assert "capped to 11 s" in s["notes"]
-    s = ST.parse(vreply(2), vreq(24, dur=12.4, window=(0.0, 12.4)))                 # Length 24 on a 12.4 s clip -> 12.0
-    assert s["video"]["length"] == 12 and s["capacity"]["video_duration"] == 12.4 and s["capacity"]["feasible"] == {"8": True, "12": True, "16": False, "24": False}
+    s = ST.parse(vreply(2), vreq(24, dur=12.4, window=(0.0, 12.4)))                 # Length 24 on a 12.4 s clip -> the whole 12.4 s, no rounding
+    assert s["video"]["length"] == 12.4 and s["capacity"]["video_duration"] == 12.4 and s["capacity"]["feasible"] == {"8": True, "12": True, "16": False, "24": False}
     assert s["capacity"]["feasible_lengths"] == [8, 12] and s["capacity"]["length_default"] == 12
 
 
@@ -583,8 +582,8 @@ def test_video_hits_use_the_renders_own_slots():
         assert sh["line"] == h["text"]
     assert sum(1 for x in s["shots"] if x["line"]) == 2
     n4 = len(_slots(4))                                                              # no words at all: n_want = 4 (own_video_job's `len(texts) or 4`), the reply's `hits` are the words
-    s4 = ST.parse(vreply(5, hits=[dict(slot=i, text=w) for i, w in enumerate(["glow", "ferry", "bells", "tower"], 1)]), vreq(12))
-    assert [h["text"] for h in s4["hits"]] == ["GLOW", "FERRY", "BELLS", "TOWER"][:n4] and len(s4["hits"]) == n4
+    s4 = ST.parse(vreply(5, hits=[dict(slot=i, text=w) for i, w in enumerate(["glow", "train", "bars", "tower"], 1)]), vreq(12))
+    assert [h["text"] for h in s4["hits"]] == ["GLOW", "TRAIN", "BARS", "TOWER"][:n4] and len(s4["hits"]) == n4
     assert [h["land"] for h in s4["hits"]] == [round(w["land"], 3) for w in _slots(4)]
 
 
@@ -593,7 +592,7 @@ def test_video_pasted_text_wins_over_lyrics_and_lyrics_are_candidates():
     assert s["text_candidates"]["source"] == "pasted" and [h["text"] for h in s["hits"]] == ["HOLD ON"]
     s = ST.parse(vreply(5), vreq(12, lyrics=LYR))                                    # no text: the lyrics are the text, tokens carry the sung time
     tc = s["text_candidates"]
-    assert tc["source"] == "lyrics" and tc["words"] == 7 + 7 + 9 and tc["tokens"][0] == dict(i=0, w="down", t=0.5, tp=0.5) and tc["tokens"][3]["t"] == 1.4         # per-word ts when the READ has them
+    assert tc["source"] == "lyrics" and tc["words"] == 7 + 7 + 9 and tc["tokens"][0] == dict(i=0, w="off", t=0.5, tp=0.5) and tc["tokens"][3]["t"] == 1.4         # per-word ts when the READ has them
     assert tc["tokens"][7]["w"] == "lantern" and tc["tokens"][7]["t"] == 5.2 and tc["tokens"][8]["t"] > 5.2          # interpolated inside a line without ts
     assert s["text_select"] and all(0 <= d["i"] < tc["words"] for d in s["text_select"])
     assert s["hits"] and all("sung" in h for h in s["hits"]) and all(h["text"] for h in s["hits"])
@@ -606,7 +605,7 @@ def test_video_lyrics_model_picks_and_numbered_lyrics_in_prompt():
     assert '"pick"' in p and '"camera"' not in p
     s = ST.parse(vreply(5, hits=[dict(slot=1, pick=[3, 4]), dict(slot=2, pick=[10, 11]), dict(slot=3, pick=[15])]), r)
     # 2026-11-02 ONE WORD PER SHOT: the words come from what is sung INSIDE each shot (scored), not from the model's per-slot picks; no word capacity, no breathing-room rule
-    assert [h["text"] for h in s["hits"]] == ["HARBOR", "LANTERN LIGHT", "WHOLE FLEET", "RANG THE TOWER"] and [h["shot"] for h in s["hits"]] == [2, 3, 4, 5]
+    assert [h["text"] for h in s["hits"]] == ["SNEAKERS", "LANTERN LIGHT", "WHOLE BLOCK", "HIT THE TOWER"] and [h["shot"] for h in s["hits"]] == [2, 3, 4, 5]
     assert all(not ST._is_fn(h["text"].split()[-1]) for h in s["hits"])                # never ends on a function word
     assert [d["phrase"] for d in s["text_select"]][:3] == [2, 3, 3] and all(d["shot"] == d["phrase"] for d in s["text_select"])
 
@@ -639,7 +638,7 @@ def test_video_has_no_transitions_no_beats_and_the_reply_needs_no_shots():
     assert "transition" not in p.lower().replace("transitions or camera moves", "") and '"beat"' not in p and '"shots"' not in p.split("exactly this shape:")[1]
     d.pop("shots")                                                                             # v18: the video reply has no per-shot part; still a usable story, not the fallback
     s = ST.parse(json.dumps(d), vreq(12))
-    assert len(s["shots"]) == 5 and s["title"] == "Night Ferry" and "NOT USABLE" not in s["notes"]
+    assert len(s["shots"]) == 5 and s["title"] == "test clip Bars" and "NOT USABLE" not in s["notes"]
     f = ST.parse("not json", vreq(12))
     assert len(f["shots"]) == 5 and all("transition" not in x for x in f["shots"])
     img = ST.parse(reply(3), req(12, n_images=3))                                    # image mode: unchanged, no transition field
@@ -736,6 +735,7 @@ def test_track_lyrics_on_the_videos_timeline_land_on_the_shot_where_they_are_hea
     assert s["text_candidates"]["source"] == "lyrics" and ts[0]["t"] == 5.0 and ts[0]["tp"] == 3.0
     assert "[3.0 s] 0:alpha" in ST.story_prompt(r)                                      # the numbered lyric rows carry the PIECE second
 
+
 # ------------------------------------------------------------------------------------------------- PHRASES + SUNG TIMING (invented lyrics)
 SUNG = [dict(t=1.9, text="marble clouds over the harbor lights", ts=[1.9, 2.3, 2.6, 2.8, 3.1, 3.5]),
         dict(t=6.5, text="silver thread in the morning", ts=[6.5, 6.9, 7.2, 7.4, 7.8]),
@@ -754,7 +754,7 @@ def test_phrase_trim_is_a_standalone_line_never_ending_on_a_function_word(line, 
 
 
 def test_video_lyric_lines_are_trimmed_to_phrases_before_they_become_hits():
-    s = ST.parse(vreply(5), vreq(12, lyrics=SUNG, on_screen=SUNG_LINES))
+    s = ST.parse(vreply(5), vreq(12, lyrics=SUNG, on_screen=SUNG_LINES))       # the READ's own on-screen lines stay the user's words: trimmed to phrases, landed when sung
     assert [h["text"] for h in s["hits"]] == ["MARBLE CLOUDS", "SILVER THREAD", "QUIET ENGINES HUM"]
     assert all(not ST._is_fn(h["text"].split()[-1]) for h in s["hits"])
     p = ST.story_prompt(vreq(12, lyrics=SUNG))

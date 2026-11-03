@@ -90,3 +90,30 @@ def test_lazy_save_runs_the_upscale_for_final_but_not_for_the_v20_preview():
 def test_design_step_keeps_the_request_key_that_carries_the_flag():
     from tools.fusion import design_step
     assert "request" in design_step.LOCKED_KEYS
+
+
+# ---- 2026-11-03 image board edited like a video: quality draft540plates = the Preview render, plain footage (no type, no compose ops), no upscale
+def test_plates_only_quality_is_the_preview_tier_and_flags_the_request():
+    assert SP.split_quality(SP.PLATES_ONLY_Q) == ("draft", False)
+    assert SP.is_preview_full(SP.PLATES_ONLY_Q) and SP.is_plates_only(" Draft540Plates ") and not SP.is_plates_only("draft540")
+    assert SP.PLATES_ONLY in SP.REQUEST_FIELDS
+    p = SP.prepare_piece({"quality": "draft"}, {"words": "A", SP.NO_UPSCALE: True, SP.PLATES_ONLY: True}, False)
+    assert p["request"][SP.PLATES_ONLY] is True and not FU.wants_upscale({**p, "format": "9:16"})
+    assert SP.PLATES_ONLY not in SP.request_record({"words": "A", SP.PLATES_ONLY: None})
+
+
+def test_compose_returns_the_plain_footage_for_a_plates_only_piece():
+    pytest.importorskip("comfy_api")
+    import torch
+    from nodes_fusion import compose as C
+    piece = {"request": {SP.PLATES_ONLY: True}}
+    assert C.plates_only(piece) and not C.plates_only({"request": {}}) and not C.plates_only(None)
+    piece["layout"] = {"s1": {"start": 0, "frames": 4}, "s2": {"start": 4, "frames": 4}}
+    from tools.fusion import recipe_eval as RE
+    try:
+        RE.piece_layout(piece)
+    except Exception:   # noqa: BLE001
+        pytest.skip("piece_layout needs a fully planned piece")
+    a, b = torch.zeros(4, 8, 8, 3, dtype=torch.uint8), torch.ones(4, 8, 8, 3, dtype=torch.uint8)
+    out, st = C.plate_clips(piece, [{"sid": "s2", "u8": b}, {"sid": "s1", "u8": a}])
+    assert [c["sid"] for c in out] == ["s1", "s2"] and out[0]["u8"] is a and out[1]["start"] == 4 and st[0]["backend"] == "plates"

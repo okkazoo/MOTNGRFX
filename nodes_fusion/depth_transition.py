@@ -192,7 +192,7 @@ if io is not None:
             @classmethod
             def check_lazy_status(cls, piece=None, clips=None, **imgs) -> list[str]:
                 need = []
-                for sp in (PC.specs(piece) if piece else []):
+                for sp in (PC.specs(piece) if piece and not (piece.get("request") or {}).get("plates_only") else []):
                     for sid in (sp["a"], sp["b"]):
                         for kind in ("matte", "depth"):
                             name = f"{kind}_{sid[1:]}"
@@ -203,7 +203,7 @@ if io is not None:
             @classmethod
             def execute(cls, piece, clips, **imgs) -> io.NodeOutput:
                 sps = PC.specs(piece)
-                if not sps:
+                if not sps or ((piece or {}).get("request") or {}).get("plates_only"):      # plates only (image board edited like a video): the plain footage; a 3D cut carries the design's type into it
                     return io.NodeOutput(clips)
                 by = {c["sid"]: dict(c) for c in clips}
                 for sp in sps:

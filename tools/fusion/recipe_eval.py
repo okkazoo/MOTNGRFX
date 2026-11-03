@@ -1437,6 +1437,8 @@ def _to_u8_host(img, pin):
     """finished backend frame (HxW or HxWx3 float) -> uint8 HxWx3 numpy/torch on the CPU."""
     B = compose.B
     if B.name == "torch":
+        if not torch.is_tensor(img):                 # an op (box run 2026-11-03, 1920x1080 own-video) left a numpy frame in the output buffer: back onto the backend device
+            img = compose._in(img)
         if img.ndim == 2:
             img = img[..., None].expand(-1, -1, 3)
         u8 = torch.clamp(torch.round(img[..., :3] * 255.0), 0, 255).to(torch.uint8)

@@ -387,6 +387,20 @@ def hold_params(module: str | None) -> dict:
     return dict(MODULE_HOLD_PARAMS.get(module or "", {}))
 
 
+TAME_MODULES = ("fly_into", "outflow")          # ring-train modules: ghost copies of the word above / below at a steep tilt or a long train
+TAME_MAX = {"fly_into": dict(tilt=0.4, rings=12), "outflow": dict(tilt=0.3, rings=6)}      # ceilings of a held word (= their MODULE_HOLD_PARAMS)
+
+
+def tame_params(module: str | None, params: dict | None = None) -> dict:
+    """params of a held word of ``module``: hold_params under the word's own ``params``, then the ring modules (TAME_MODULES) CLAMPED to TAME_MAX, so a word's own tilt 0.9 / rings 20 can no longer
+    undo the tame (2026-11-01: GOLDEN HOUR / ASCEND held as a dense hatch of ring copies). Other modules: hold_params + own params unchanged."""
+    out = {**hold_params(module), **(params or {})}
+    for k, cap in TAME_MAX.get(module or "", {}).items():
+        v = out.get(k)
+        out[k] = min(v, cap) if isinstance(v, (int, float)) and not isinstance(v, bool) else cap
+    return out
+
+
 PULLBACK_HOLD = dict(from_scale=0.9, word_scale=1.2)     # pullback_reveal runs over the whole word item: its defaults (tight at 0.5 x fit, rest at 1.45 x) crop the word at the hold (v005 P21 THE CITY)
 
 

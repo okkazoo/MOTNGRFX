@@ -1,6 +1,8 @@
 """`/mograph/own_video`: the own-video route of the app (16_app/MEDIA_BOX.md "Own-video route").
 
-    POST /mograph/own_video   {video, brief, length, seed, format, quality, soundtrack, audio?, edit?, client_id?}  -> {"job": id}      (409 while another job runs)
+    POST /mograph/own_video   {video, brief, length, seed, format, quality, soundtrack, audio?, edit?, scale?, client_id?}  -> {"job": id}      (409 while another job runs)
+        scale (2026-11-03) = "full" (DEFAULT, the page's "Original") | "half" ("Half scale": compose, type and the final at half the source size, even sides, same fps / frame count); anything
+        else is a 400. Passed to the runner as --scale and written to request.json. `format` is the clip's orientation only ("9:16" | "16:9"); the runner takes the real size from the clip.
         edit (2026-11-01) = "overlay" (DEFAULT: the picture is untouched, only type is composited over / behind it) | "redesign" (with transitions: 3D cuts, effects). Read from the body, else from
         brief.edit; the runner gets it as --edit and the brief.json it reads carries it (own_video_job.read_brief). Both modes keep the source size, fps and frame count.
         soundtrack (v19) = "video" (the clip's own sound; the old "keep" is accepted) | "track" (the user's audio file `audio`, a name in the input folder; required) | "generate" (new music)
@@ -43,7 +45,8 @@ def norm_edit(v) -> str:
     return "redesign" if s in ("redesign", "with_transitions", "transitions", "full", "edit") else "overlay"
 SOUNDTRACK_ALIASES = {"keep": "video"}          # v19: the old name of "video"
 QUALITIES = ("still", "preview", "draft", "final")
-FORMATS = ("9:16",)
+FORMATS = ("9:16", "16:9")      # the clip's orientation, sent by the page; the runner ignores it (the source-size route takes the clip's own aspect)
+SCALES = ("full", "half")
 JOB_RE = re.compile(r"^[0-9]{8}-[0-9]{6}-[0-9a-f]{4}$")
 LOG_LINES = 20
 STAGES = ["queued", "ingest", "audio", "music", "analyse", "words", "prep", "cut", "matte", "archive", "design", "parse", "retime", "render", "finish", "done"]
@@ -86,10 +89,12 @@ def parse_params(body: dict, input_dir: Path) -> dict:
     if not isinstance(brief, dict):
         raise BadRequest("brief: the READ JSON must be an object")
     try:
-        length = int(body.get("length") or 12)
+        length = float(body.get("length") or 12)
     except (TypeError, ValueError):
         raise BadRequest("length: not a number") from None
-    length = max(6, min(24, length))
+    if not 0 < length < 86400:                                                  # the page sends the video's own length; the job's window stops at the clip's end, so nothing is capped here (2026-11-03)
+        raise BadRequest("length: not a length")
+    length = int(length) if length == int(length) else length
     try:
         seed = int(body.get("seed") or 1)
     except (TypeError, ValueError):
@@ -114,12 +119,15 @@ def parse_params(body: dict, input_dir: Path) -> dict:
         audio_path = str(Path(input_dir) / audio)
     elif soundtrack == "track":
         raise BadRequest("audio: soundtrack \"track\" needs the audio file (a name in the ComfyUI input folder)")
+    scale = str(body.get("scale") if body.get("scale") not in (None, "") else "full").strip().lower()
+    if scale not in SCALES:
+        raise BadRequest(f"scale: one of {', '.join(SCALES)}")
     cid = str(body.get("client_id") or "")
     if cid and not re.fullmatch(r"[\w\-]{1,80}", cid):
         cid = ""
     edit = norm_edit(body.get("edit") if body.get("edit") not in (None, "") else brief.get("edit"))
     brief = dict(brief, edit=edit)
-    return dict(edit=edit, video=video, video_path=str(path), brief=brief, length=length, seed=seed, format=fmt, quality=quality, soundtrack=soundtrack, audio=audio, audio_path=audio_path, client_id=cid)
+    return dict(edit=edit, video=video, video_path=str(path), brief=brief, length=length, seed=seed, format=fmt, scale=scale, quality=quality, soundtrack=soundtrack, audio=audio, audio_path=audio_path, client_id=cid)
 
 
 class JobManager:
@@ -169,7 +177,7 @@ class JobManager:
         (d / "brief.json").write_text(json.dumps(p["brief"], ensure_ascii=False, indent=1), encoding="utf-8")
         (d / "request.json").write_text(json.dumps({k: v for k, v in p.items() if k != "brief"}, indent=1), encoding="utf-8")
         argv = [self.python, str(self.script), "--job", job, "--video", p["video_path"], "--brief-file", str(d / "brief.json"), "--length", str(p["length"]),
-                "--seed", str(p["seed"]), "--format", p["format"], "--quality", p["quality"], "--soundtrack", p["soundtrack"], "--edit", p["edit"],
+                "--seed", str(p["seed"]), "--format", p["format"], "--scale", p["scale"], "--quality", p["quality"], "--soundtrack", p["soundtrack"], "--edit", p["edit"],
                 "--out-dir", str(d), "--comfy-dir", str(self.comfy_dir), "--port", str(self.port)]
         if p["audio_path"] and p["soundtrack"] == "track":
             argv += ["--audio", p["audio_path"]]
@@ -342,6 +350,30 @@ def register(routes, output_dir=None, input_dir=None, comfy_dir=None, port: int 
     out = Path(output_dir or folder_paths.get_output_directory())
     inp = Path(input_dir or folder_paths.get_input_directory())
     mgr = JobManager(out, inp, comfy_dir or out.parent, port)
+
+    frame_mattes = None
+
+    @routes.get("/mograph/own_video/matte_frame")                     # before /{job}. One frame's Alpha-Gen matte for the storyboard: the PNG, 202 while it is being made (tools/app/frame_matte.py)
+    async def own_video_matte_frame(request):
+        nonlocal frame_mattes
+        import asyncio
+        from tools.app import frame_matte as FM
+        if frame_mattes is None:
+            frame_mattes = FM.FrameMattes(out, inp, port)
+        q = request.rel_url.query
+        try:
+            state, got = await asyncio.get_running_loop().run_in_executor(None, frame_mattes.request, q.get("video"), q.get("t"), q.get("end"), q.get("peek") == "1")
+        except ValueError as e:
+            return web.json_response({"error": str(e)}, status=400)
+        except Exception as e:   # noqa: BLE001  (ffprobe could not read the clip)
+            return web.json_response({"error": str(e)[:600]}, status=500)
+        if state == "none":
+            return web.json_response({"error": "no matte for this frame yet"}, status=404)
+        if state == "ready":
+            return web.FileResponse(got, headers={"Content-Type": "image/png", "Cache-Control": "no-store"})
+        if state == "making":
+            return web.json_response({"state": "making"}, status=202, headers={"Cache-Control": "no-store"})
+        return web.json_response({"error": got}, status=500)
 
     @routes.post("/mograph/own_video")
     async def own_video_start(request):

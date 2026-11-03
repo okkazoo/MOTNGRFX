@@ -72,6 +72,7 @@
   // ------------------------------------------------------------------ state
   // v20: Make it renders the Preview = the full render at the draft size (540x960 for 9:16) WITHOUT the Real-ESRGAN upscale; "Final (1080)" upscales that finished clip afterwards (side graph `_final_upscale`).
   const PREVIEW_QUALITY = "draft540";      // image route: the app graph's IN quality value for "full render, no upscale" (still_preview.PREVIEW_FULL; the lazy `OUT final 1080` stays idle)
+  const PLATES_QUALITY = "draft540plates";   // image board edited like a video (2026-11-03): the same Preview render but the graph hands back each shot's plain footage (still_preview.PLATES_ONLY_Q); the page then sends that clip to the own-video overlay route
   const OWN_PREVIEW_QUALITY = "draft";     // own-video route: POST /mograph/own_video quality (the draft tier = 540x960; that job never upscales)
   function newUp() { return { forUrl: "", busy: false, detail: "", err: "", out: null, show: "preview" }; }
   const S = {
@@ -128,6 +129,9 @@
     $("#btn-close-drawer").innerHTML = svg("x", 14);
 
     $("#btn-home").onclick = () => { if (!activeRun()) { S.view = "examples"; renderCanvas(); } };
+    { const nb = $("#btn-new"); let armed = false, t = 0;                                 // 2026-11-03 user: start again on a fresh page. The page's work lives in memory, so a reload clears it; a second click confirms, and a running render is never abandoned
+      const say = (txt, on) => { armed = on; nb.textContent = txt; clearTimeout(t); t = setTimeout(() => { armed = false; nb.textContent = "Start again"; }, 3000); };
+      let at = 0; nb.onclick = () => { if (activeRun()) return say("Stop the run first", false); if (armed) { if (performance.now() - at > 400) location.replace(location.pathname + "?new"); return; } at = performance.now(); say("Clear everything?", true); }; }   // a quick double-click is not a confirmation
     $("#btn-run").onclick = run;
     $("#btn-stop").onclick = cancelRun;
     $("#btn-setup").onclick = backToSetup;
@@ -223,7 +227,7 @@
     const init = S.values[f.id] ?? f.default ?? B.optionValue((f.options || [])[0]);
     sel.value = String(init);
     S.values[f.id] = sel.value;
-    sel.addEventListener("change", () => { S.values[f.id] = sel.value; if (f.id === "length") { paintLength(); scheduleRead(); scheduleStory(2000); } });
+    sel.addEventListener("change", () => { if (f.id === "format" && sel.dataset.vscale === "1") { vidScale = sel.value === "half" ? "half" : "full"; return; } S.values[f.id] = sel.value; if (f.id === "length") { paintLength(); scheduleRead(); scheduleStory(2000); } });
     S.setters[f.id] = (v) => { sel.value = String(v); if (sel.value !== String(v)) sel.selectedIndex = 0; S.values[f.id] = sel.value; if (f.id === "length") paintLength(); };
     const note = f.id === "length" ? el("div", { class: "len-note", hidden: true }) : null;
     const box = el("div", { class: "field" },
@@ -523,6 +527,7 @@
     const release = () => { try { v.removeAttribute("src"); v.load(); } catch (_) {} };
     v.addEventListener("loadedmetadata", () => {
       item.duration = v.duration; item.dim = [v.videoWidth, v.videoHeight];
+      paintFormat(); fitBoardSoon();                            // the Format options name the clip's real sizes, the board frames take its real aspect
       v.currentTime = Math.min(Math.max(v.duration * 0.1, 0.1), 1.5) || 0.1;
       redrawMedia();
       if (S.media.items.includes(item)) scheduleRead();         // video mode: the Length can never be longer than the video (syncLength)
@@ -854,6 +859,14 @@
   const imageCount = () => S.media.items.filter((i) => i.kind === "image").length;
   // ---- VIDEO MODE (16_app/MEDIA_BOX.md "VIDEO MODE STORYBOARD"): the Length can never be longer than the video
   const videoItem = () => S.media.items.find((i) => i.kind === "video") || null;
+  const isVidBoard = (d) => !!d && d.shots.length > 0 && d.shots.every(B.isVideoShot) && !!videoItem();
+  /** IMAGE FRAME BOARD (2026-11-03 user: images + your own music are edited like a video): no video item, every shot has its dropped image. The shots keep start / end (the piece clock, the song plays from 0),
+   *  they get NO src_start / src_end (that would make them video shots: card text, story fix, route). Everything the video board does (strip, open cards, on-frame type tools, layer preview, lyrics + wave) runs on these. */
+  const isImgBoard = (d) => !!d && d.shots.length > 0 && !videoItem() && d.shots.every((x) => !B.isVideoShot(x) && !!storyImage(x));
+  const isFrameBoard = (d) => isVidBoard(d) || isImgBoard(d);
+  const isFrameShot = (x) => (B.isVideoShot(x) ? !!videoItem() : !videoItem() && !!storyImage(x));
+  /** the shot's own clock: a video cut's source seconds, an image shot's piece seconds (B.shotSpan). */
+  const shotT0 = (x) => B.shotSpan(x)[0], shotT1 = (x) => B.shotSpan(x)[1];
   /** the video's length in s: the dropped file's own duration, else the READ's, else the story's capacity; NaN while unknown. */
   function videoDur() {
     const v = videoItem();
@@ -865,12 +878,45 @@
   const baseLengthOptions = (sel) => [...sel.options].filter((o) => !o.dataset.vlen).map((o) => Number(o.value));
   /** grey out the Lengths the images cannot fill, say what would unlock them (small line under the select, only when it matters).
    *  With a video: Lengths longer than the video are greyed ("the video is 12 s"); a video shorter than the smallest Length adds its own duration as the Length. */
-  /** video mode renders 9:16 only (own_video_route FORMATS): 16:9 is greyed with the reason, and a 16:9 choice drops back to 9:16. */
+  /** VIDEO MODE Format (2026-11-03): the select offers the clip's own size ("Original (W×H)", the default) or half of it ("Half scale (w×h)"); the job gets it as `scale` ("full" | "half").
+   *  S.values.format stays a valid aspect string = the clip's orientation ("16:9" | "9:16"), so the story request / signature and the frame ratio never see the scale (Original <-> Half re-reads and
+   *  re-writes nothing). Sizes mirror tools/app/overlay_mode.scaled_size: the clip's display size (rotation applied by the browser) floored to even, half = that / 2 floored to even.
+   *  Leaving video mode puts the normal options and value back. */
+  let vidScale = "full", fmtNormal = null;
+  const evenDown = (n) => Math.max(2, Math.floor(Number(n) / 2) * 2);
+  function vidSizes() {
+    const v = videoItem(), d = v && v.dim;
+    if (!d || !(d[0] > 0) || !(d[1] > 0)) return null;
+    const w = evenDown(d[0]), h = evenDown(d[1]);
+    return { full: [w, h], half: [evenDown(w / 2), evenDown(h / 2)], format: w > h ? "16:9" : "9:16" };
+  }
   function paintFormat() {
-    const fs = document.querySelector("select[data-id=format]"), vid = !!videoItem();
+    const fs = document.querySelector("select[data-id=format]"), v = videoItem();
     if (!fs) return;
-    for (const o of fs.options) { if (o.dataset.lbl === undefined) o.dataset.lbl = o.textContent; const off = vid && o.value !== "9:16"; o.disabled = off; o.textContent = off ? `${o.dataset.lbl} (video is 9:16 only)` : o.dataset.lbl; }
-    if (vid && S.values.format !== "9:16") { fs.value = "9:16"; S.values.format = "9:16"; }
+    if (!v) {
+      if (fmtNormal) {
+        const n = fmtNormal; fmtNormal = null;
+        fs.textContent = "";
+        for (const o of n.opts) { const op = el("option", { value: o.value }, o.text); op.disabled = !!o.disabled; fs.append(op); }
+        delete fs.dataset.vscale; delete fs.dataset.vsig;
+        fs.value = n.value; if (fs.value !== n.value) fs.selectedIndex = 0;
+        S.values.format = fs.value;
+      }
+      return;
+    }
+    if (fs.dataset.vscale !== "1") {
+      if (!fmtNormal) fmtNormal = { opts: [...fs.options].map((o) => ({ value: o.value, text: o.textContent, disabled: o.disabled })), value: S.values.format };
+      fs.dataset.vscale = "1";
+    }
+    const z = vidSizes(), sig = z ? `${z.full.join("x")}/${z.half.join("x")}` : "?";
+    if (fs.dataset.vsig !== sig) {
+      const lab = (k, t) => (z ? `${t} (${z[k][0]}×${z[k][1]})` : t);
+      fs.textContent = "";
+      fs.append(el("option", { value: "full" }, lab("full", "Original")), el("option", { value: "half" }, lab("half", "Half scale")));
+      fs.dataset.vsig = sig;
+    }
+    fs.value = vidScale;
+    if (z) S.values.format = z.format; else if (!/^\d+:\d+$/.test(String(S.values.format || ""))) S.values.format = "9:16";
   }
   function paintLength() {
     const sel = document.querySelector("select[data-id=length]"), note = document.querySelector(".len-note");
@@ -878,25 +924,21 @@
     if (!sel) return;
     const lines = [], dur = videoDur(), opts = baseLengthOptions(sel);
     if (videoItem()) {
-      const plan = B.videoLengthPlan(opts, dur, S.values.length);
-      for (const o of [...sel.options]) if (o.dataset.vlen && (plan.extra === null || Number(o.value) !== plan.extra)) o.remove();
-      if (plan.extra !== null && ![...sel.options].some((o) => o.dataset.vlen)) {            // v16: the clip's own duration when it is not one of the standard Lengths, in numeric order
-        const o = document.createElement("option"); o.value = String(plan.extra); o.dataset.vlen = "1"; o.dataset.lbl = `${plan.extra} s`; o.textContent = o.dataset.lbl;
-        const after = [...sel.options].find((x) => Number(x.value) > plan.extra);
-        sel.insertBefore(o, after || null);
+      // 2026-11-03 user: the piece keeps the video's own length, always: one option, the exact duration (rounded up so the last frame stays in; the job's window stops at the clip's end)
+      for (const o of [...sel.options]) if (o.dataset.vlen) o.remove();
+      for (const o of sel.options) { o.hidden = true; o.disabled = true; }
+      if (Number.isFinite(dur)) {
+        const o = document.createElement("option"); o.value = String(Math.ceil(dur * 100) / 100); o.dataset.vlen = "1"; o.textContent = `Whole video (${B.fmtDur(dur)} s)`;
+        sel.append(o); sel.value = o.value;
+        if (S.values.length !== o.value) { S.values.length = o.value; scheduleStory(2000); }
       }
-      for (const o of sel.options) {
-        if (o.dataset.lbl === undefined) o.dataset.lbl = o.textContent;
-        const off = !o.dataset.vlen && !!plan.disabled[Number(o.value)];                      // longer than the clip: visible, disabled, the reason in the label
-        o.disabled = off; o.title = off ? `the video is ${B.fmtDur(dur)} s` : "";
-        o.textContent = off ? `${o.dataset.lbl} (video is ${B.fmtDur(dur)} s)` : o.dataset.lbl;
-      }
-      sel.disabled = false;
-      if (Number.isFinite(dur)) lines.push(`The video is ${B.fmtDur(dur)} s: the story is built from its own cuts.`);
+      sel.disabled = true;
+      if (Number.isFinite(dur)) lines.push(`The story is built from the video's own cuts.`);
       if (note) { note.textContent = lines.join(" "); note.hidden = !lines.length; }
       return;
     }
     for (const o of [...sel.options]) if (o.dataset.vlen) o.remove();
+    for (const o of sel.options) o.hidden = false;
     const n = imageCount();
     for (const o of sel.options) {
       if (o.dataset.lbl !== undefined) o.textContent = o.dataset.lbl;                         // image mode: the plain label again (v16: video mode appended "(video is N s)")
@@ -917,13 +959,7 @@
     const cur = Number(S.values.length);
     paintLength();
     if (videoItem()) {
-      const plan = B.videoLengthPlan(baseLengthOptions(sel), videoDur(), cur);
-      if (!plan.changed || !Number.isFinite(plan.length)) return;
-      sel.value = String(plan.length); S.values.length = sel.value;
-      paintLength();
-      toast(plan.extra !== null ? `The video is ${B.fmtDur(plan.duration)} s; Length is now ${plan.length} s.` : `${cur} s is longer than the video (${B.fmtDur(plan.duration)} s); Length is now ${plan.length} s.`, 6000);
-      scheduleStory(2000);
-      return;
+      return;                                                                         // paintLength above set it to the whole video
     }
     if (sel.value !== String(cur) || !Number.isFinite(cur)) { sel.value = "12"; S.values.length = sel.value; paintLength(); scheduleStory(2000); return; }   // the video's own Length option went away with it
     const n = imageCount();
@@ -1127,12 +1163,89 @@
              lengthOptions: sel ? [...sel.options].filter((o) => !o.dataset.vlen).map((o) => Number(o.value)).filter(Number.isFinite) : null, tokens: textSource().tokens, times: textSource().times, shows, beats: gridBeats() };
   }
   /** the words the "Your text" panel lists: the pasted text; when none was pasted and the read heard lyrics (Whisper, the video's audio or the audio file), the lyrics (each token has its sung time). */
+  /** corrected lyrics: m.lyricFix[heard word index] = the user's spelling. The read itself stays untouched (so no re-read / re-write fires). Several words in place of one share its sung time. */
+  function applyLyricFix(t, m) {
+    if (m.lyricFixFor !== m.read) { m.lyricFix = {}; m.lyricFixFor = m.read; }
+    const fix = m.lyricFix, out = { tokens: [], times: [], base: [], piece: [] };
+    t.tokens.forEach((tok, b) => {
+      const ps = String(fix[b] != null ? fix[b] : tok).trim().split(/\s+/).filter(Boolean), t0 = Number(t.times[b]), nx = Number(t.times[b + 1]), t1 = Number.isFinite(nx) && nx > t0 ? nx : t0 + 0.3;
+      ps.forEach((p, k) => { out.tokens.push(p); out.times.push(Math.round((t0 + (t1 - t0) * k / ps.length) * 100) / 100); out.base.push(b); out.piece.push(k); });
+    });
+    return out;
+  }
+  /** correct one word of the lyrics: it keeps its sung time, and every shot using it updates its words (their stacks and layout stay). */
+  function correctToken(o, text) {
+    const st = S.story, d = st.data, src = textSource();
+    if (!d || !src.base) return;
+    const nm = (w) => String(w).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ""), b = src.base[o], k = src.piece[o], oldTok = src.tokens[o], nw = String(text).trim().split(/\s+/).filter(Boolean);
+    if (nw.join(" ") === oldTok) return;
+    const parts = src.tokens.filter((_, j) => src.base[j] === b); parts.splice(k, 1, ...nw); S.media.lyricFix[b] = parts.join(" ");
+    const users = new Set(), sel = [], add = nw.length - 1;
+    for (const t of d.text_select || []) {
+      if (t.i < o) sel.push(t); else if (t.i > o) sel.push(Object.assign({}, t, { i: t.i + add }));
+      else { users.add(t.shot); nw.forEach((_, q) => sel.push(Object.assign({}, t, { i: o + q }))); }
+    }
+    d.text_select = sel;
+    for (const x of d.shots) {
+      if (users.has(x.n)) {
+        const up = x.line === x.line.toUpperCase();
+        x.line = x.line.split(/(\s+)/).map((w) => (nm(w) && nm(w) === nm(oldTok) ? (up ? nw.join(" ").toUpperCase() : nw.join(" ")) : w)).join("").trim();
+        delete st.edited[`${x.n}.line`];
+      }
+      if (users.has(x.n) || (x.custom && x.custom.length)) reconcileShot(x.n, true);
+    }
+    syncAllVers(true); rerender();
+  }
+  /** a shot's words were typed: link them to the lyrics. A word sung in this shot lights up there and lands when it is sung; a free word sung elsewhere lights up there; anything else is a custom word
+   *  (dashed chip at the start of the shot's words, lands at the shot's start). A word another shot uses is not taken from it. One or two letters off a word of this shot offers "Fix lyric?". */
+  function reconcileShot(n, quiet) {
+    const st = S.story, d = st.data, x = d && d.shots.find((s) => s.n === n), src = textSource();
+    if (!x || !src.lyrics || !src.times || !isFrameBoard(d)) return;
+    const nm = (w) => String(w).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ""), sung = B.sungByShot(d.shots, src.times).by.get(n) || [], where = new Map();
+    src.tokens.forEach((t, i) => { const k = nm(t); if (k) { if (!where.has(k)) where.set(k, []); where.get(k).push(i); } });
+    const taken = new Set((d.text_select || []).filter((t) => t.shot !== n).map((t) => t.i)), bits = x.line.trim().split(/(\s+)/), words = [];
+    for (let k = 0; k < bits.length; k += 2) {                                       // a line break inside a word (PRES / SURE) still reads as that word
+      let w = bits[k];
+      while (k + 2 < bits.length && /\n/.test(bits[k + 1]) && !where.has(nm(w)) && [...where.keys()].some((q) => q.startsWith(nm(w + bits[k + 2])))) { w += bits[k + 2]; k += 2; }
+      if (w) words.push(w);
+    }
+    const used = new Set(), picked = [], custom = []; let last = -1;
+    for (const w of words) {
+      const c = (where.get(nm(w)) || []).filter((i) => !used.has(i) && !taken.has(i)), inS = c.filter((i) => sung.includes(i)), t0 = shotT0(x);
+      const i = inS.find((q) => q > last) ?? inS[0] ?? c.slice().sort((p, q) => Math.abs(src.times[p] - t0) - Math.abs(src.times[q] - t0))[0];
+      if (i != null) { picked.push(i); used.add(i); last = i; } else custom.push({ t: w, near: null, after: picked.length ? picked[picked.length - 1] : null });   // remembers which lyric it follows on the frame
+    }
+    const lev = (a, b) => { let p = Array.from({ length: b.length + 1 }, (_, j) => j); for (let i = 1; i <= a.length; i++) { const r = [i]; for (let j = 1; j <= b.length; j++) r[j] = Math.min(p[j] + 1, r[j - 1] + 1, p[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); p = r; } return p[b.length]; };
+    for (const c of custom) {
+      const k = nm(c.t); if (k.length < 3) continue;
+      let best = (k.length >= 6 ? 2 : 1) + 1; for (const i of sung) { if (used.has(i) || taken.has(i)) continue; const e = lev(k, nm(src.tokens[i])); if (e < best) { best = e; c.near = i; } }   // a real typo: one letter off, two on longer words
+      if (c.near != null) used.add(c.near);
+    }
+    let lead = null;                                                                 // words with no lyric before them: beside the lyric a typo is close to, else before the first lyric used
+    for (const c of custom) { if (c.after != null) continue; if (c.near != null) lead = c.near; c.before = lead != null ? lead : picked.length ? picked[0] : null; }
+    let sel = B.clearShotWords(d.text_select, n); picked.forEach((i) => { sel = B.toggleWordShot(sel, i, n); }); d.text_select = sel;
+    x.custom = custom;
+    const idx = d.shots.indexOf(x), lastShot = idx === d.shots.length - 1, text = words.join(" ");
+    syncHitsOfShot(idx);
+    if (text && d.hits) { const h = d.hits.find((q) => q.land >= x.start - 1e-6 && (q.land < x.end - 1e-6 || (lastShot && q.land <= x.end + 1e-6))); if (h) Object.assign(h, B.landHit(x, text, picked, src.times, storyCtx().beats)); d.hits.sort((a, b) => a.land - b.land); }
+    st.edited.sel = true; st.selText = S.media.text;
+    if (!quiet) paintFocus();
+  }
+  /** take one custom word off its shot (the frame's words follow). */
+  function removeCustom(n, word) {
+    const x = S.story.data.shots.find((s) => s.n === n), card = document.querySelector(`.sb-card[data-n="${n}"]`), line = card && card.querySelector(".sb-line");
+    if (!x || !line) return;
+    const bits = x.line.split(/(\s+)/), at = bits.indexOf(word);
+    if (at >= 0) bits.splice(at, 2);
+    line.value = bits.join("").trim(); line.dispatchEvent(new Event("input", { bubbles: true }));
+    reconcileShot(n);
+  }
   function textSource() {
     const m = S.media;
     const typedWords = B.splitTyped(m.text).words;                // the box text minus its direction clauses (palette / legibility / plain / instructions): only words are story candidates; the server splits the same way (user_style.split_typed)
     if (typedWords.trim()) return { tokens: B.textTokens(typedWords), times: null, lyrics: false, from: "" };
     const ly = m.read && m.read.lyrics;
-    if (Array.isArray(ly) && ly.length) { const t = B.lyricTokens(ly); if (t.tokens.length) return { tokens: t.tokens, times: t.times, lyrics: true, from: videoItem() && soundtrackNow() !== "track" ? "video" : "audio" }; }
+    if (Array.isArray(ly) && ly.length) { const t = applyLyricFix(B.lyricTokens(ly), m); if (t.tokens.length) return { tokens: t.tokens, times: t.times, base: t.base, piece: t.piece, lyrics: true, from: videoItem() && soundtrackNow() !== "track" ? "video" : "audio" }; }
     return { tokens: [], times: null, lyrics: false, from: "" };
   }
   const readEntry = (it, read) => ((read || S.media.read) ? (read || S.media.read).media.find((x) => it.uploaded && (x.file === it.uploaded || it.uploaded.endsWith("/" + x.file) || x.file.endsWith("/" + it.uploaded))) : null);
@@ -1366,6 +1479,7 @@
     if (!b) return null;
     const row = b.closest(".sbw-shot"), rs = row ? (row.dataset.n ? `.sbw-shot[data-n="${row.dataset.n}"]` : ".sbw-shot.other") : "";
     if (b.classList.contains("sbw-auto")) return [".sb-text .sbw-auto"];
+    if (b.classList.contains("sbw-btn") && b.dataset.act) return [`.sb-text .sbw-btn[data-act="${b.dataset.act}"]`];
     if (b.classList.contains("w")) return rs ? [`${rs} .w[data-i="${b.dataset.i}"]`, rs] : [`.sb-text .w[data-i="${b.dataset.i}"]`];
     if (b.classList.contains("sbw-btn") && row) return [`${rs} .sbw-act .sbw-btn:nth-child(${[...b.parentNode.children].indexOf(b) + 1})`, rs];
     return rs ? [rs] : null;
@@ -1402,7 +1516,7 @@
     if (c) c.scrollTop = y;
     if (wy0 && window.scrollY !== wy0) window.scrollTo(0, wy0);
     const nb = document.querySelector(".storyboard"); if (nb) nb.scrollTop = sy;
-    const nw = document.querySelector(".storyboard .sb-words"); if (nw) nw.scrollTop = wy;
+    const nw = document.querySelector(".storyboard .sb-words"); if (nw) { nw.scrollTop = wy; if (nw.classList.contains("by-run")) nw.scrollLeft = stripX; }
     const ng = document.querySelector(".storyboard .sb-grid"); if (ng) ng.scrollLeft = gx;
     if (focusSel) { const f = document.querySelector(focusSel); if (f) try { f.focus({ preventScroll: true }); } catch (_) { /* no focus */ } }
     const settle = () => { if (gen === rrGen && anc) reanchor(anc); };
@@ -1512,6 +1626,13 @@
   const shotVideo = (shot) => (B.isVideoShot(shot) ? videoItem() : null);
   /** the first frame of a cut = the video frame at src_start + 0.04 s (the cut strip and the card show the same one). */
   const cutFrameT = (shot) => Number(shot.src_start) + B.VIDEO_FRAME_OFF_S;
+  /** the picture a frame-board shot is previewed on and matted from: a video cut's first frame (once grabbed), or the shot's own dropped image. -> {url, key} or null. key names it for the matte cache. */
+  function shotFrame(shot) {
+    const v = shotVideo(shot);
+    if (v) { const t = cutFrameT(shot), u = frameCached(v, t); return u ? { url: u, key: `${v.uid}:${t.toFixed(3)}` } : null; }
+    const it = isFrameShot(shot) ? storyImage(shot) : null;
+    return it ? { url: it.url, key: `img${it.uid}` } : null;
+  }
   /** the url of the picture under a shot's words: its image, or (video mode) the cut's first frame once grabbed, else the video's poster. */
   const shotPicUrl = (shot) => { const it = storyImage(shot), v = shotVideo(shot); return it ? it.url : v ? (frameCached(v, cutFrameT(shot)) || v.poster || null) : null; };
   const storyImgNode = (shot) => {
@@ -1539,6 +1660,7 @@
    *  (measured per word with a Range, text on one line) and the wrapped block fits 84% of the frame height; wraps only happen between words (CSS word-break: normal). */
   function fitOverlay(ov) {
     const fr = ov.parentElement;
+    if (fr && fr.closest(".sb-grid.vid")) return fitVidType(ov);
     if (!fr || ov.hidden || !ov.firstChild || ov.firstChild.nodeType !== 3) return;
     const fw = fr.clientWidth, fh = fr.clientHeight;
     if (!fw || !fh) return;
@@ -1561,8 +1683,461 @@
     }
   }
   const fitAllOverlays = () => document.querySelectorAll(".sb-ov").forEach(fitOverlay);
-  const frameRO = typeof ResizeObserver !== "undefined" ? new ResizeObserver((es) => es.forEach((e) => { const o = e.target.querySelector(".sb-ov"); if (o) fitOverlay(o); })) : null;
+  const frameRO = typeof ResizeObserver !== "undefined" ? new ResizeObserver((es) => es.forEach((e) => { const g = e.target.closest(".sb-grid.vid"); if (g && g.dataset.moving) return; const o = e.target.querySelector(".sb-ov"); if (o) fitOverlay(o); })) : null;
   if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", fitAllOverlays);
+
+  /** video mode (2026-11-02 user: "full height to a maximum ... when you scroll your mouse over them they expand to show the full frame"):
+   *  every frame has the SAME height (fills the work height, capped at the height whose full-frame width is COMFY = 320 px); each card's WIDTH is proportional to its shot's length
+   *  (water-filled between MINW and the full-frame width so the row fills the work width exactly); the picture is a centre crop; hover / focus pins one card at the full frame. */
+  // 2026-11-02 user: gaps between frames 2 px (cards have no side padding / border), a card shows number + frame only until it is OPEN (hovered, keyboard-focused or selected = pinned at the full frame)
+  if (window.__MG_DEV) Object.assign(window.__MG_DEV, { S, rerender });               // dev proxy only (16_app/app_check/dev_proxy.mjs DEV_CLIP): live reload keeps the session
+  const VID = { GAP: 2, PAD: 0, MINW: 28, COMFY: 320, STDH: 568, MINFH: 280, MINL: 52, LOCK: 240 };
+  const vidPin = { hover: null, focus: null, skip: null, edit: null, wasEdit: false };
+  let stripX = 0, stripShot = null, stripAnim = 0, stripDragged = false, stripJump = null;           // the single lyrics line: scroll position, the shot it last eased to, its animation, a drag just happened
+  /** 2026-11-03 user: drag (or wheel) the lyrics line to see other words; a drag never counts as a word click. */
+  function wireStrip(w) {
+    let dr = null;
+    w.addEventListener("wheel", (ev) => { const d = Math.abs(ev.deltaX) > Math.abs(ev.deltaY) ? ev.deltaX : ev.deltaY; if (!d) return; cancelAnimationFrame(stripAnim); w.scrollLeft += d; stripX = w.scrollLeft; ev.preventDefault(); }, { passive: false });
+    w.addEventListener("pointerdown", (ev) => { if (ev.button) return; dr = { x: ev.clientX, left: w.scrollLeft, id: ev.pointerId, moved: false }; stripDragged = false; });
+    w.addEventListener("pointermove", (ev) => {
+      if (!dr || ev.pointerId !== dr.id) return;
+      const dx = ev.clientX - dr.x;
+      if (!dr.moved) { if (Math.abs(dx) < 4) return; dr.moved = stripDragged = true; cancelAnimationFrame(stripAnim); try { w.setPointerCapture(ev.pointerId); } catch (_) { /* no capture */ } w.classList.add("dragging"); }
+      w.scrollLeft = dr.left - dx; stripX = w.scrollLeft;
+    });
+    const end = () => { if (!dr) return; dr = null; w.classList.remove("dragging"); setTimeout(() => { stripDragged = false; }, 0); };
+    w.addEventListener("pointerup", end); w.addEventListener("pointercancel", end);
+  }
+  /** the open cards: the selected shot first, then the hovered one, then the keyboard-focused one (indices into the row). */
+  function vidPinsFor(grid) {
+    const out = [], add = (i) => { if (i != null && !out.includes(i)) out.push(i); }, act = S.story.active;
+    if (act != null) { const c = grid.querySelector(`.sb-card[data-n="${act}"]`); if (c) add(Number(c.dataset.i)); }
+    add(vidPin.edit); add(vidPin.hover); add(vidPin.focus);
+    return out;
+  }
+  /** click the type on a frame: edit it right there. Typing feeds the card's line field, Enter finishes, Esc puts the old words back. */
+  const ALIGN_ICON = { l: "M3 4h10M3 8h6M3 12h8", c: "M3 4h10M5 8h6M4 12h8", r: "M3 4h10M7 8h6M5 12h8", j: "M3 4h10M3 8h10M3 12h10" }, ALIGN_NAME = { l: "start edge", c: "centre", r: "end edge", j: "spread across" };
+  const tlOf = (x) => x.tl || (x.tl = { rot: 0, align: "c", anch: false, cols: 0, x: 0.5, y: 0.5, s: 1, layer: "front" });      // the shot's type layout as the user set it on the frame
+  const layerOf = (t) => { const l = (t && (t.layer || (t.behind ? "behind" : "front"))) || "front"; return l === "inverse" ? "mask" : l; };       // front | behind (matte) | mask (image through outlined letters on a solid colour) | maskm (the same with the matted subject behind the letters)
+  const LAYERS = { front: ["In front of the subject", "M2 5.5L8 2.5l6 3-6 3-6-3zM2 10.5l6 3 6-3"], behind: ["Behind the subject", "M2 5.5L8 2.5l6 3-6 3-6-3zM2 10.5l6 3 6-3"], mask: ["Image through the letters on a solid colour", "M2.5 2.5h11v11h-11zM5 5.5h6M8 5.5v5.5"], maskm: ["Image through the letters, subject behind them", "M2.5 2.5h11v11h-11zM5 5h6M8 5v4M4.5 13c.6-2.2 6.4-2.2 7 0"], maskb: ["Image through the letters, letters behind the subject", "M2.5 2.5h11v11h-11zM5 4.5h6M8 4.5v3M4.5 13c.2-4 6.8-4 7 0"] };
+  /** the solid colour of a masked shot: the strongest colour family of its frame (skin / wood hues only as a last resort), never a washed-out or peach default. */
+  /** 2026-11-04: the type's fill comes from the shot's own picture, one of its strongest colours (shots take different ones, so a warm film does not repeat one peach), and the page shows and sends the colour the render uses. */
+  function sampleInk(url, n) {
+    return new Promise((res) => {
+      const im = new Image();
+      im.onerror = () => res(null);
+      im.onload = () => {
+        const W = 48, H = Math.max(1, Math.round(W * im.naturalHeight / im.naturalWidth)), c = document.createElement("canvas"); c.width = W; c.height = H;
+        const a = c.getContext("2d", { willReadFrequently: true }); a.drawImage(im, 0, 0, W, H);
+        const d = a.getImageData(0, 0, W, H).data, bins = new Array(12).fill(0);
+        for (let i = 0; i < d.length; i += 4) {
+          const r = d[i] / 255, g = d[i + 1] / 255, b = d[i + 2] / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), dl = mx - mn;
+          if (dl < 0.1 || mx < 0.15) continue;
+          const h = ((mx === r ? (g - b) / dl % 6 : mx === g ? (b - r) / dl + 2 : (r - g) / dl + 4) * 60 + 360) % 360;
+          bins[Math.floor(h / 30) % 12] += dl * mx;
+        }
+        const top = bins.map((w, k) => [w, k]).filter((q) => q[0] > 0).sort((p, q) => q[0] - p[0]).slice(0, 3);
+        const hue = top.length ? top[n % top.length][1] * 30 + 15 : 45, fill = hslHex(hue, 88, 66);
+        res({ fill, ring: outlineFor(fill) });
+      };
+      im.src = url;
+    });
+  }
+  function sampleSolid(url) {
+    return new Promise((res) => {
+      const im = new Image();
+      im.onerror = () => res("#1c1a28");
+      im.onload = () => {
+        const W = 48, H = Math.max(1, Math.round(W * im.naturalHeight / im.naturalWidth)), c = document.createElement("canvas"); c.width = W; c.height = H;
+        const a = c.getContext("2d", { willReadFrequently: true }); a.drawImage(im, 0, 0, W, H);
+        const d = a.getImageData(0, 0, W, H).data, bins = Array.from({ length: 12 }, () => ({ w: 0, h: 0, s: 0 }));
+        for (let i = 0; i < d.length; i += 4) {
+          const r = d[i] / 255, g = d[i + 1] / 255, b = d[i + 2] / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, dl = mx - mn;
+          if (dl < 0.08 || l < 0.1 || l > 0.85) continue;
+          const s = dl / (1 - Math.abs(2 * l - 1)), h = ((mx === r ? (g - b) / dl % 6 : mx === g ? (b - r) / dl + 2 : (r - g) / dl + 4) * 60 + 360) % 360, k = bins[Math.floor(h / 30) % 12];
+          k.w += s; k.h += h * s; k.s += s * s;
+        }
+        const skin = (k) => k === 0 || k === 1, order = bins.map((b, k) => [b, k]).filter(([b]) => b.w > 0).sort((p, q) => (skin(p[1]) - skin(q[1])) || q[0].w - p[0].w), top = order[0];
+        if (!top) return res("#1c1a28");
+        const hue = Math.round(top[0].h / top[0].w), sat = Math.round(Math.max(55, Math.min(90, 100 * top[0].s / top[0].w)));
+        res(hslHex(hue, sat, 34));
+      };
+      im.src = url;
+    });
+  }
+  const hslHex = (h, s, l) => { const f = (n) => { const k = (n + h / 30) % 12, A = (s / 100) * Math.min(l / 100, 1 - l / 100), v = l / 100 - A * Math.max(-1, Math.min(k - 3, 9 - k, 1)); return Math.round(255 * v).toString(16).padStart(2, "0"); }; return `#${f(0)}${f(8)}${f(4)}`; };
+  /** the outline colour contrasts the solid colour and comes from its own family (not black). */
+  const outlineFor = (hex) => { const n = parseInt(hex.slice(1), 16), r = n >> 16 & 255, g = n >> 8 & 255, b = n & 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn, h = d ? ((mx === r ? (g - b) / d % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4) * 60 + 360) % 360 : 0, lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255; return lum < 0.45 ? hslHex(h, 85, 88) : hslHex(h, 75, 16); };
+  /** the two copies of the type a masked shot needs (solid colour with the letters cut, outlines on top) follow the real type. */
+  function syncGhosts(fr) {
+    const ov = fr.querySelector(".sb-ov"); if (!ov) return;
+    if (!document.getElementById("mg-outer")) document.body.append(el("div", { html: '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="mg-outer" x="-5%" y="-20%" width="110%" height="140%" color-interpolation-filters="sRGB"><feMorphology in="SourceGraphic" operator="dilate" radius="1" result="fat"/><feComposite in="fat" in2="SourceAlpha" operator="out"/></filter></svg>' }));   // the outline: the letters grown, minus the letters = their outer edge only (a stroke also draws where a font's shapes overlap inside a letter)
+    fr.querySelectorAll(".sb-gh").forEach((g) => { g.innerHTML = ov.innerHTML; g.style.cssText = ov.style.cssText; g.hidden = ov.hidden; if (g.parentElement.classList.contains("sb-to")) g.style.filter = "url(#mg-outer)"; });
+  }
+  /** video cards: the type is laid out on the FULL frame (a collapsed card shows a true crop of it): size fits the full frame, then the user's position, rotation and scale. */
+  function fitVidType(ov) {
+    const fr = ov.parentElement, grid = fr.closest(".sb-grid.vid"), g = grid && grid._vid, card = fr.closest(".sb-card"), x = card && S.story.data && S.story.data.shots[Number(card.dataset.i)];
+    if (!g || !x || ov.hidden) return;
+    const fw = g.fullW || fr.clientWidth, fh = fr.clientHeight, t = x.tl || {}, deg = t.rot || 0, rot = deg % 180 !== 0, al = t.align || "c";
+    if (!fw || !fh) return;
+    const jl = ov.querySelectorAll(":scope > .jl"); if (jl.length) ov.textContent = [...jl].map((e) => e.textContent).join("\n");     // back to plain lines to measure
+    ov.style.width = ""; ov.style.textAlignLast = ""; ov.style.justifyContent = ""; ov.style.whiteSpace = "";
+    if (!ov.classList.contains("grid") && !ov.isContentEditable) ov.textContent = ov.textContent.split("\n").map((s) => s.trim()).join("\n");   // every alignment keeps new lines and the spaces between words; spaces at a line's edges don't count, so lines sit flat to the edge
+    ov.style.textAlign = { l: "left", c: "center", r: "right", j: "center" }[al]; ov.style.justifyItems = { l: "start", c: "center", r: "end", j: "center" }[al];
+    ov.style.transform = "none"; ov.style.fontSize = "100px";
+    if (ov.classList.contains("grid")) {
+      ov.style.setProperty("--cell", "auto"); ov.style.setProperty("--gj", { l: "flex-start", c: "center", r: "flex-end", j: "space-between" }[al]);
+      ov.style.setProperty("--cell", Math.max(1, ...[...ov.querySelectorAll(".gr > span")].map((c) => c.offsetWidth)) / 100 + "em");   // every cell as wide as the widest letter
+    }
+    const w = ov.offsetWidth, h = ov.offsetHeight;
+    const fs = w && h ? Math.min(fw * 0.26, 100 * Math.min(0.88 * fw / (rot ? h : w), 0.84 * fh / (rot ? w : h))) : fw * 0.15;   // empty (just deleted, about to type): a sensible size at its position
+    ov.style.fontSize = fs + "px";
+    if (al === "j" && w && h && !ov.classList.contains("grid")) {                  // spread: every line of the stack runs the full width of the frame (along the reading direction), letters spaced out to fill it. A grid keeps its own width: --gj space-between spreads a short row across the grid
+      const W = Math.max(w * fs / 100, 0.88 * (rot ? fh : fw) / (t.s || 1));
+      ov.style.width = W + "px";
+      if (ov.isContentEditable) { ov.style.whiteSpace = "pre-wrap"; ov.style.textAlign = "justify"; ov.style.textAlignLast = "justify"; }   // while typing: words spread (per-letter spacing returns when the edit ends)
+      else {
+        ov.replaceChildren(...ov.textContent.split("\n").map((s) => el("span", { class: "jl" }, s)));
+        ov.querySelectorAll(":scope > .jl").forEach((sp) => { const n = [...sp.textContent].length, ls = n > 1 ? (W - sp.offsetWidth) / (n - 1) : 0; sp.style.letterSpacing = ls + "px"; sp.style.marginRight = -ls + "px"; });
+      }
+    }
+    if (t.anch && !ov.classList.contains("grid")) {                                // a grid stays put: alignment only moves its leftover letters. Otherwise pre-aligned: the block sits against the frame edge its reading direction starts (left) or ends (right) at, whatever the rotation
+      const L = w * (fs / 100) * (t.s || 1), span = rot ? fh : fw, m = fw * 0.06, flip = deg === 180 || deg === 270;
+      const pos = al === "c" || al === "j" ? span / 2 : ((al === "l") !== flip) ? m + L / 2 : span - m - L / 2;
+      if (rot) t.y = pos / fh; else t.x = pos / fw;
+    }
+    ov.style.left = `calc(50% + ${((t.x == null ? 0.5 : t.x) - 0.5) * fw}px)`; ov.style.top = `${(t.y == null ? 0.5 : t.y) * 100}%`;
+    ov.style.transform = `translate(-50%, -50%) rotate(${deg}deg) scale(${t.s || 1})`;
+    if (ov._edit) drawCaret(ov);
+    if (fr.closest(".sb-img.tmk")) syncGhosts(fr.closest(".sb-img"));
+  }
+  /** type between background and subject: the shot's frame again above the type, cut out by its matte (dev: the proxy's stand-in mattes; 404 = no matte for this frame yet). */
+  function paintFg(card, x) {
+    const fr = card.querySelector(".sb-img"), old = card.querySelector(".sb-fg"), sf = shotFrame(x), url = sf && sf.url;
+    if (!["behind", "maskm", "maskb"].includes(layerOf(x.tl)) || !url) { if (old) old.remove(); return; }
+    if (old && old.dataset.src === `${matteEngine}:${url}`) return;
+    const eng = matteEngine, load = (u) => new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = u; });
+    Promise.all([load(url), frameMatte(x).then(load)]).then(([f, m]) => {
+      if (!["behind", "maskm", "maskb"].includes(layerOf(x.tl)) || !card.isConnected || eng !== matteEngine) return;
+      const c = document.createElement("canvas"); c.width = f.naturalWidth; c.height = f.naturalHeight; c.className = "sb-fg"; c.dataset.src = `${eng}:${url}`;
+      const a = c.getContext("2d", { willReadFrequently: true }); a.drawImage(m, 0, 0, c.width, c.height);
+      const mp = a.getImageData(0, 0, c.width, c.height); a.drawImage(f, 0, 0, c.width, c.height);
+      const fp = a.getImageData(0, 0, c.width, c.height); for (let i = 0; i < fp.data.length; i += 4) fp.data[i + 3] = mp.data[i];
+      a.putImageData(fp, 0, 0);
+      const cur = card.querySelector(".sb-fg"); if (cur) cur.replaceWith(c); else fr.append(c);
+    }, () => { /* no subject matte for this frame: the look still shows, just without the subject (the background through the letters, the type over the picture); the render makes its own */ });
+  }
+  /** 2026-11-03 user: try MediaPipe selfie segmentation for the storyboard's mattes: it runs in this browser (no box, no upload), people only, rough edges; a preview, the render makes its own with Alpha-Gen. Only shots with words ask; the key is the frame, so changing the words never redoes it. */
+  const matteEngine = "modnet";                                                       // 2026-11-03 user: a frame's own saved matte when there is one (savedMatte), else MODNet in this browser
+  const grayMask = (w, h, valueAt) => { const c = document.createElement("canvas"); c.width = w; c.height = h; const a = c.getContext("2d"), d = a.createImageData(w, h); for (let i = 0; i < w * h; i++) { const g = valueAt(i), j = i * 4; d.data[j] = d.data[j + 1] = d.data[j + 2] = g; d.data[j + 3] = 255; } a.putImageData(d, 0, 0); return c.toDataURL("image/png"); };
+  const MATTE_LOAD = {
+    modnet: async () => {
+      const T = await import("https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.2"), p = await T.pipeline("background-removal", "Xenova/modnet", { device: navigator.gpu ? "webgpu" : "wasm", dtype: "fp32" });
+      return async (im) => { const c = document.createElement("canvas"); c.width = im.naturalWidth; c.height = im.naturalHeight; c.getContext("2d").drawImage(im, 0, 0); const r = await p(await T.RawImage.fromCanvas(c)), o = Array.isArray(r) ? r[0] : r; return grayMask(o.width, o.height, (i) => o.data[i * o.channels + o.channels - 1]); };
+    },
+  };
+  const matteRun = {}; let matteQueue = Promise.resolve();
+  const matteLoaded = (e) => matteRun[e] || (matteRun[e] = MATTE_LOAD[e]().catch((err) => { delete matteRun[e]; throw err; }));
+  const frameMatteDone = new Map();
+  function frameMatte(x) { return savedMatte(x).then((u) => u || browserMatte(x)); }
+  function browserMatte(x) {
+    const sf = shotFrame(x), src = sf && sf.url, e = matteEngine, key = src ? `${e}:${sf.key}` : "";
+    if (!src) return Promise.reject(new Error("the frame is not loaded yet"));
+    if (frameMatteDone.has(key)) return frameMatteDone.get(key);
+    const p = (matteQueue = matteQueue.catch(() => {}).then(async () => {                 // one at a time
+      const run = await matteLoaded(e), im = new Image();
+      await new Promise((res, rej) => { im.onload = res; im.onerror = rej; im.src = src; });
+      return run(im);
+    }));
+    frameMatteDone.set(key, p); p.then(() => { const card = document.querySelector(`.storyboard .sb-card[data-n="${x.n}"]`); if (card && matteEngine === e) paintFg(card, x); }, (err) => { frameMatteDone.delete(key); toast(`MODNet: ${String(err.message || err).slice(0, 120)}`, 4000, { info: true }); });
+    return p;
+  }
+  /** the piece keeps the video's own length: whatever window the read suggested, the job gets the whole clip. */
+  function wholeWindow(brief) {
+    const dur = videoDur(), v = Array.isArray(brief.media) && brief.media.find((m) => m && m.kind === "video");
+    if (v && Number.isFinite(dur)) v.window = [0, Math.ceil(dur * 100) / 100];
+    return brief;
+  }
+  /** a matte already made for this frame (the full run's): its url, or null when there is none. Only looks, never starts a render (peek). */
+  const savedAsked = new Map();
+  function savedMatte(x) {
+    if (!shotVideo(x)) return Promise.resolve(null);                              // an image has no saved matte (the full run makes its own): MODNet on the picture itself
+    const v = shotVideo(x), url = `/mograph/own_video/matte_frame?video=${encodeURIComponent((v && v.uploaded) || "")}&t=${cutFrameT(x).toFixed(3)}&end=${Number(x.src_end).toFixed(3)}&peek=1`;
+    if (!savedAsked.has(url)) savedAsked.set(url, fetch(url, { cache: "no-store" }).then((r) => (r.status === 200 ? r.blob().then((b) => URL.createObjectURL(b)) : null)).catch(() => null));
+    return savedAsked.get(url);
+  }
+  function syncTools(card, x) {
+    const t = x.tl || {}, on = (a, v) => { const b = card.querySelector(`.sb-tool[data-act="${a}"]`); if (b) b.classList.toggle("on", !!v); };
+    const lay = layerOf(t), lb = card.querySelector('.sb-tool[data-act="behind"]'), tl = card.querySelector(".sb-tl"), hasText = !!x.line.trim();
+    on("behind", lay !== "front"); on("align", t.anch);
+    if (lb) { lb.title = `${LAYERS[lay][0]}. Click for the next: in front, behind the subject, image through the letters, image around the letters`; }
+    const masked = lay === "mask" || lay === "maskm" || lay === "maskb", fr = card.querySelector(".sb-img"), bg = t.bg || "#1c1a28", cb = card.querySelector(".sb-tool-color");
+    if (tl) {
+      fr.classList.toggle("tmk", hasText && masked); fr.classList.toggle("tbh", lay === "maskb"); fr.style.setProperty("--mbg", bg); fr.style.setProperty("--olc", outlineFor(bg));
+      if (masked && !t.bg && !t.bgBusy) { const u = shotPicUrl(x); if (u) { t.bgBusy = true; sampleSolid(u).then((c) => { delete t.bgBusy; t.bg = c; t.bgA = true; syncTools(card, x); }); } }
+      if (!masked && hasText && !t.color && !t.colorBusy) { const all = S.story.data.shots; let hd = all.indexOf(x); while (hd > 0 && all[hd - 1].line === x.line && all[hd - 1].font === x.font) hd--; const u = shotPicUrl(all[hd] || x); if (u) { const tt = tlOf(x); tt.colorBusy = true; sampleInk(u, Number((all[hd] || x).n) || 0).then((c) => { delete tt.colorBusy; if (c) { tt.color = c.fill; tt.outline = c.ring; tt.colorA = true; syncTools(card, x); } }); } }
+      { const all = S.story.data.shots; let hd = all.indexOf(x); while (hd > 0 && all[hd - 1].line === x.line && all[hd - 1].font === x.font) hd--; const h = all[hd] && all[hd].tl; if (hd >= 0 && all[hd] !== x && h && h.color && t.colorA !== false && t.color !== h.color && (!t.color || t.colorA)) { t.color = h.color; t.outline = h.outline; t.colorA = true; } }   // a word held across cuts keeps its first shot's colour
+      const ovc = card.querySelector(".sb-ov");
+      if (ovc && !masked && t.color) { ovc.style.color = t.color; ovc.style.webkitTextStroke = `${(fr.clientWidth * 0.0056).toFixed(1)}px ${t.outline || "transparent"}`; ovc.style.paintOrder = "stroke fill"; } else if (ovc) ovc.style.webkitTextStroke = "";
+      syncGhosts(fr);
+    }
+    if (cb) { cb.style.visibility = masked ? "" : "hidden"; cb.querySelector("input").value = bg; cb.querySelector("span").style.background = bg; }
+    const ab = card.querySelector('.sb-tool[data-act="align"]'), cur = t.anch ? t.align : "c";
+    if (ab) { ab.querySelector("svg").style.transform = `rotate(${t.rot || 0}deg)`; /* the icon turns with the type, so it shows the edge it will align to */ ab.querySelector("path").setAttribute("d", ALIGN_ICON[cur]); ab.title = `Align: ${ALIGN_NAME[cur]}${t.anch ? "" : " (not set)"}. Click for the next: start edge, centre, end edge, spread`; } on("stack", /\n/.test(x.line)); on("grid", t.cols);
+  }
+  /** the icons at the bottom of the selected frame + dragging the type to move it, wheel over it to scale. */
+  function buildTools(getCard, x, line, ov) {
+    const feed = () => line.dispatchEvent(new Event("input", { bubbles: true }));
+    const ic = (d) => `<svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
+    const tool = (act, title, d, fn) => el("button", { class: "sb-tool", type: "button", "data-act": act, title, "aria-label": title, html: ic(d), onclick: (ev) => { ev.stopPropagation(); fn(); const c = getCard(); paintCard(c, x); } });
+    const scale = (k) => { const t = tlOf(x); t.s = Math.max(0.2, Math.min(4, (t.s || 1) * k)); };
+    ov.addEventListener("wheel", (ev) => { if (!getCard().classList.contains("active")) return; ev.preventDefault(); scale(ev.deltaY < 0 ? 1.06 : 1 / 1.06); fitVidType(ov); }, { passive: false });
+    let dr = null;
+    ov.addEventListener("pointerdown", (ev) => { if (ov._edit) { ev.preventDefault(); ev.stopPropagation(); return; } if (ev.button || ov.isContentEditable || !getCard().classList.contains("active")) return; ev.stopPropagation(); dr = { px: ev.clientX, py: ev.clientY, x: tlOf(x).x, y: tlOf(x).y, moved: false, id: ev.pointerId }; ov.setPointerCapture(ev.pointerId); });
+    ov.addEventListener("pointermove", (ev) => {
+      if (!dr || ev.pointerId !== dr.id) return;
+      const dx = ev.clientX - dr.px, dy = ev.clientY - dr.py;
+      if (!dr.moved && Math.hypot(dx, dy) < 3) return;
+      dr.moved = true;
+      const fr = ov.parentElement, g = fr.closest(".sb-grid.vid")._vid, t = tlOf(x);
+      if (t.anch) { t.anch = false; syncTools(getCard(), x); }
+      t.x = dr.x + dx / (g.fullW || fr.clientWidth); t.y = dr.y + dy / fr.clientHeight;   // free: it may leave the frame (reset brings it back, delete removes it)
+      fitVidType(ov);
+    });
+    ov.addEventListener("pointerup", () => { if (dr && dr.moved) ov.dataset.dragged = "1"; dr = null; });
+    ov.addEventListener("click", (ev) => { if (ov.dataset.dragged) { delete ov.dataset.dragged; ev.stopImmediatePropagation(); } }, true);
+    return el("div", { class: "sb-tools" },
+      tool("edit", "Edit the words (Enter = new line, click away to finish)", "M3 13l.6-2.6L10.8 3.2l2 2L5.6 12.4 3 13z", () => { setTimeout(() => startOvEdit(ov, line, x), 0); }),
+      tool("font", "Font: hover or scroll the list to try them, click to keep, Esc to cancel", "M3 5V3h10v2M8 3v10M6 13h4", () => openFontMenu(getCard, x)),
+      tool("behind", LAYERS.front[0], LAYERS.front[1], () => { const t = tlOf(x), order = ["front", "behind", "maskm", "maskb", "mask"]; delete t.noMatte; t.layer = order[(order.indexOf(layerOf(t)) + 1) % order.length]; delete t.behind; }),
+      (() => {                                                                      // the solid colour of a masked shot (starts from the shot's own colour)
+        const inp = el("input", { type: "color", "aria-label": "Background colour" }), lab = el("label", { class: "sb-tool sb-tool-color", title: "Background colour" }, el("span", { class: "sb-swatch" }), inp);
+        inp.addEventListener("input", () => { const t = tlOf(x); t.bg = inp.value; delete t.bgA; syncTools(getCard(), x); });
+        lab.addEventListener("click", (ev) => ev.stopPropagation());
+        return lab;
+      })(),
+      tool("rotate", "Rotate 90 degrees clockwise (keep clicking to go round)", "M13 8a5 5 0 1 1-1.5-3.5L13 6M13 2.5V6H9.5", () => { const t = tlOf(x), was = (t.rot || 0) % 180 !== 0; t.rot = ((t.rot || 0) + 90) % 360; if (t.anch) { if (was) t.y = 0.5; else t.x = 0.5; } }),
+      tool("align", "Align", ALIGN_ICON.c, () => { const t = tlOf(x), order = ["l", "c", "r", "j"]; t.align = t.anch ? order[(order.indexOf(t.align) + 1) % 4] : "l"; t.anch = true; }),
+      tool("grid", "Letters in a grid: 2 across, then wider until it is square, then off", "M3 3h4v4H3zM9 3h4v4H9zM3 9h4v4H3zM9 9h4v4H9z", () => { const t = tlOf(x), n = [...String(x.line).replace(/\s+/g, "")].length, square = Math.max(2, Math.ceil(Math.sqrt(n))); t.cols = t.cols >= square ? 0 : Math.max(2, (t.cols || 1) + 1); }),   /* the last step is the first width with as many across as down */
+      tool("smaller", "Smaller (or wheel over the type)", "M4 8h8", () => scale(1 / 1.12)),
+      tool("bigger", "Bigger (or wheel over the type)", "M4 8h8M8 4v8", () => scale(1.12)),
+      tool("reset", "Back to the centre, full size, not rotated", "M8 2v3M8 11v3M2 8h3M11 8h3M8 6.5v3M6.5 8h3", () => { const t = tlOf(x); t.x = t.y = 0.5; t.s = 1; t.rot = 0; t.align = "c"; t.anch = false; t.cols = 0; }),
+      tool("delete", "Delete the words from this shot", "M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.7 8.5h5.6l.7-8.5M7 7v3.5M9 7v3.5", () => {
+        const t = tlOf(x), d = S.story.data; t.x = t.y = 0.5; t.s = 1; t.rot = 0; t.align = "c"; t.anch = false; t.cols = 0;
+        line.value = ""; feed();
+        if (d) reconcileShot(x.n);
+      }));
+  }
+  /** the font list of the selected frame: hover, scroll or arrow keys show each font on the frame at once; click or Enter keeps it; Esc or a click elsewhere puts the old one back. */
+  let closeFontMenu = null;
+  function openFontMenu(getCard, x) {
+    if (closeFontMenu) { closeFontMenu(false); return; }
+    const list = S.fonts.list, btn = getCard().querySelector('.sb-tool[data-act="font"]');
+    if (!list.length || !btn) return;
+    const orig = x.font, menu = el("div", { class: "sb-fontmenu", role: "listbox", "aria-label": "Fonts" }), items = [];
+    let hi = -1;
+    const show = (k, scroll) => { if (k === hi) return; if (items[hi]) items[hi].classList.remove("hi"); hi = k; items[k].classList.add("hi"); if (scroll) items[k].scrollIntoView({ block: "nearest" }); x.font = list[k].file; paintCard(getCard(), x); };
+    list.forEach((f, k) => {
+      ensureFontFace(f);
+      const it = el("div", { class: "sb-fopt" + (f.file === orig ? " cur" : ""), role: "option", style: `font-family:"${B.fontCss(f)}", system-ui, sans-serif` }, f.name);
+      it.addEventListener("mouseover", () => show(k));
+      it.addEventListener("click", () => { x.font = orig; close(true, f.file); });
+      items.push(it); menu.append(it);
+    });
+    const key = (ev) => {
+      if (ev.key === "Escape") { ev.preventDefault(); ev.stopPropagation(); close(false); }
+      else if (ev.key === "Enter") { ev.preventDefault(); ev.stopPropagation(); if (hi >= 0) { const f = list[hi].file; x.font = orig; close(true, f); } else close(false); }
+      else if (ev.key === "ArrowDown" || ev.key === "ArrowUp") { ev.preventDefault(); ev.stopPropagation(); const base = hi >= 0 ? hi : Math.max(0, list.findIndex((f) => f.file === orig)); show((base + (ev.key === "ArrowDown" ? 1 : list.length - 1)) % list.length, true); }
+    };
+    const away = (ev) => { if (!menu.contains(ev.target) && !btn.contains(ev.target)) close(false); };
+    function close(keep, file) {
+      document.removeEventListener("keydown", key, true); document.removeEventListener("pointerdown", away, true); menu.remove(); closeFontMenu = null; btn.classList.remove("on");
+      if (keep) setFont(x, file); else { x.font = orig; paintCard(getCard(), x); }
+    }
+    closeFontMenu = close;
+    document.body.append(menu); btn.classList.add("on");
+    const r = getCard().querySelector(".sb-img").getBoundingClientRect(), mw = menu.offsetWidth;     // beside the frame, never over the type being tried
+    menu.style.left = (r.right + 6 + mw <= innerWidth - 8 ? r.right + 6 : Math.max(8, r.left - 6 - mw)) + "px";
+    menu.style.top = r.top + "px"; menu.style.maxHeight = r.height + "px";
+    const at = list.findIndex((f) => f.file === orig); if (items[at]) items[at].scrollIntoView({ block: "center" });
+    document.addEventListener("keydown", key, true); document.addEventListener("pointerdown", away, true);
+  }
+  /** grid and spread can't live inside editable text (equal cells, per-letter spacing), so while editing them the real layout stays on screen, an invisible field takes the typing and the caret is drawn on the letters. */
+  function shapedIndexAt(ov, ev) {
+    const v = ov._edit.ta.value, px = ev.clientX, py = ev.clientY, rad = (ov._edit.deg || 0) * Math.PI / 180, dx = Math.round(Math.cos(rad)), dy = Math.round(Math.sin(rad));   // measured from the point, not ev.target: the drag handler's pointer capture makes the target the whole type
+    const dist = (b) => Math.hypot(Math.max(b.left - px, 0, px - b.right), Math.max(b.top - py, 0, py - b.bottom));   // 0 inside the box
+    const past = (cx, cy) => (px - cx) * dx + (py - cy) * dy > 0;                  // beyond this point along the way the text reads, whatever the rotation
+    const cells = [...ov.querySelectorAll(".gr > span")];
+    if (cells.length) {
+      let best = 0, bd = Infinity; cells.forEach((c, i) => { const d = dist(c.getBoundingClientRect()); if (d < bd) { bd = d; best = i; } });
+      const r = cells[best].getBoundingClientRect(), want = best + (past(r.left + r.width / 2, r.top + r.height / 2) ? 1 : 0);
+      let n = 0; for (let i = 0; i < v.length; i++) { if (n === want) return i; if (!/\s/.test(v[i])) n++; }
+      return v.length;
+    }
+    ov.querySelectorAll(".ocaret").forEach((c) => c.remove());                     // measure the plain text: the caret is drawn again by the caller
+    const jl = [...ov.querySelectorAll(":scope > .jl")]; if (!jl.length) return v.length;
+    const box = ov.getBoundingClientRect(), s = Math.max(box.width, box.height) / Math.max(ov.offsetWidth, ov.offsetHeight, 1), rg = document.createRange();
+    let at = 0, want = 0, bd = Infinity;
+    jl.forEach((row, ri) => {
+      row.normalize(); const tn = row.firstChild;
+      if (!tn || tn.nodeType !== 3) { const d = dist(row.getBoundingClientRect()); if (d < bd) { bd = d; at = ri; want = 0; } return; }
+      const ls = (parseFloat(row.style.letterSpacing) || 0) * s;                   // each letter's box also holds the spacing after it: halve the letter itself, not the box
+      for (let c = 0; c < tn.length; c++) {
+        rg.setStart(tn, c); rg.setEnd(tn, c + 1); const b = rg.getBoundingClientRect(), d = dist(b);
+        if (d < bd) { bd = d; at = ri; want = c + (past(b.left + b.width / 2 - dx * ls / 2, b.top + b.height / 2 - dy * ls / 2) ? 1 : 0); }
+      }
+    });
+    const rows = v.split("\n"), row = rows[at] || "", lead = row.length - row.trimStart().length;   // the display leaves out the spaces at the line's edges
+    return rows.slice(0, at).reduce((n, t) => n + t.length + 1, 0) + lead + Math.min(want, row.trim().length);
+  }
+  function drawCaret(ov) {
+    ov.querySelectorAll(".ocaret").forEach((c) => c.remove());
+    ov.querySelectorAll(":scope > .jl").forEach((r) => r.normalize());             // the last caret split the text: join it again before placing this one
+    const e = ov._edit; if (!e || document.activeElement !== e.ta) return;
+    const before = e.ta.value.slice(0, e.ta.selectionStart), mk = el("span", { class: "ocaret" }), cells = ov.querySelectorAll(".gr > span"), rows = ov.querySelectorAll(":scope > .jl");
+    if (cells.length) { const n = before.replace(/\s+/g, "").length; if (n < cells.length) cells[n].prepend(mk); else cells[cells.length - 1].append(mk); return; }
+    if (rows.length) {
+      const k = before.split("\n"), row = rows[Math.min(k.length - 1, rows.length - 1)], tn = row.firstChild, col = k[k.length - 1].trimStart().length;
+      if (tn && tn.nodeType === 3 && col < tn.length) row.insertBefore(mk, tn.splitText(col)); else { row.append(mk); mk.style.left = -(parseFloat(row.style.letterSpacing) || 0) + "px"; }   // at the line's end: against the last letter, not after its spacing
+      return;
+    }
+    ov.append(mk);
+  }
+  function startShapedEdit(ov, line, x, ev) {
+    const old = line.value, fr = ov.closest(".sb-img"), ta = el("textarea", { class: "sb-oe", spellcheck: "false", "aria-label": `Shot ${x.n} words` }), ac = new AbortController(), on = { signal: ac.signal }, feed = () => line.dispatchEvent(new Event("input", { bubbles: true }));
+    ta.value = old; fr.append(ta); ov.classList.add("editing"); ov._edit = { ta, deg: (x.tl && x.tl.rot) || 0 };
+    ta.focus({ preventScroll: true });
+    const at = ev ? shapedIndexAt(ov, ev) : old.length; ta.setSelectionRange(at, at);
+    const caret = () => { drawCaret(ov); syncGhosts(fr); };
+    ta.addEventListener("input", () => { line.value = ta.value; feed(); caret(); }, on);
+    ["keyup", "select", "click"].forEach((n) => ta.addEventListener(n, caret, on));
+    ta.addEventListener("keydown", (e) => { if (e.key === "Enter" && x.tl && x.tl.cols && !(e.ctrlKey || e.metaKey)) e.preventDefault(); else if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); ta.blur(); } else if (e.key === "Escape") { e.stopPropagation(); line.value = old; ta.value = old; ta.blur(); } }, on);
+    ta.addEventListener("blur", () => { ac.abort(); ov._edit = null; ta.remove(); ov.classList.remove("editing"); ov.querySelectorAll(".ocaret").forEach((c) => c.remove()); feed(); if (line.value !== old) reconcileShot(x.n); }, on);
+    caret();
+  }
+  function startOvEdit(ov, line, x, ev) {
+    if (ov.isContentEditable) return;
+    if (ov._edit) { if (ev) { const i = shapedIndexAt(ov, ev); ov._edit.ta.setSelectionRange(i, i); drawCaret(ov); syncGhosts(ov.closest(".sb-img")); } return; }
+    if (x && x.tl && (x.tl.cols || x.tl.align === "j") && line.value.trim()) return startShapedEdit(ov, line, x, ev);
+    const cols = (x && x.tl && x.tl.cols) || 0, old = line.value, letters = old.replace(/\s+/g, ""), shown = cols ? (letters.match(new RegExp(`.{1,${cols}}`, "gu")) || []).join("\n") : old;   // edit it as it looks: a grid edits as its rows
+    const ac = new AbortController(), on = { signal: ac.signal }, feed = () => line.dispatchEvent(new Event("input", { bubbles: true }));
+    ov.classList.remove("grid"); ov.hidden = false;
+    const stand = !old.trim();                                                       // an empty shot: a stand-in word shows where the text will go; it is never saved and goes the moment you type
+    ov.textContent = stand ? "YOUR WORDS" : shown; ov.classList.toggle("ph", stand); ov.contentEditable = "plaintext-only"; ov.spellcheck = false; ov.classList.add("editing"); fitVidType(ov); ov.focus();
+    let standing = stand;
+    if (stand) ov.addEventListener("beforeinput", () => { if (!standing) return; standing = false; ov.classList.remove("ph"); ov.textContent = ""; }, on);
+    const s = getSelection(), hit = ev && document.caretRangeFromPoint ? document.caretRangeFromPoint(ev.clientX, ev.clientY) : null;   // the caret goes where you clicked, nothing is selected, so the type looks exactly as it did
+    if (hit && !stand && ov.contains(hit.startContainer)) { s.removeAllRanges(); s.addRange(hit); } else { const r = document.createRange(); r.selectNodeContents(ov); r.collapse(false); s.removeAllRanges(); s.addRange(r); }
+    ov.addEventListener("input", () => { if (cols) { const flat = ov.textContent.replace(/\n/g, ""); line.value = flat.replace(/\s+/g, "") === letters ? old : flat; } else line.value = ov.textContent; feed(); }, on);
+    ov.addEventListener("keydown", (ev) => { if (ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)) { ev.preventDefault(); ov.blur(); } else if (ev.key === "Escape") { ev.stopPropagation(); line.value = old; ov.blur(); } }, on);   // plain Enter = a new line, anywhere (between words or mid-word)
+    ov.addEventListener("blur", () => { ac.abort(); ov.removeAttribute("contenteditable"); ov.classList.remove("editing", "ph"); if (standing) ov.textContent = ""; feed(); if (x && line.value !== old) reconcileShot(x.n); }, on);
+  }
+  function waterFill(w, total, lo, hi) {                              // widths proportional to w[], each clamped to [lo, hi], summing to total
+    const n = w.length, out = new Array(n).fill(0);
+    if (!n) return out;
+    if (n * lo >= total) return out.fill(lo);                         // even all-minimum overflows: the row scrolls sideways
+    if (n * hi <= total) return out.fill(hi);
+    const fixed = new Array(n).fill(false), tent = new Array(n).fill(0);
+    for (let it = 0; it <= n; it++) {
+      let rem = total, sw = 0;
+      for (let i = 0; i < n; i++) { if (fixed[i]) rem -= out[i]; else sw += w[i]; }
+      let delta = 0;
+      for (let i = 0; i < n; i++) if (!fixed[i]) { tent[i] = sw > 0 ? (w[i] / sw) * rem : rem / n; out[i] = Math.min(hi, Math.max(lo, tent[i])); delta += out[i] - tent[i]; }
+      if (Math.abs(delta) < 1e-6) break;
+      for (let i = 0; i < n; i++) if (!fixed[i] && (delta > 0 ? tent[i] < lo : tent[i] > hi)) fixed[i] = true;
+    }
+    return out;
+  }
+  function vidApply(grid, g, pins, animate) {                         // g = { durs, total, fullW }; pins = indices of the OPEN cards (each at the full frame, the rest water-filled into what remains; if that cannot fit the row scrolls); animate: overlays are refitted once the columns have settled
+    const n = g.durs.length, MINW = VID.MINW, P = (pins || []).filter((i, k, a) => i >= 0 && i < n && a.indexOf(i) === k);
+    let ws;
+    if (P.length >= n) ws = new Array(n).fill(g.fullW);
+    else if (P.length) {
+      const room = g.total - P.length * g.fullW, lo = Math.max(8, Math.min(MINW, room / (n - P.length)));   // many cuts: the closed cards get narrower instead of the row scrolling (a scrollbar would also push the lyrics down)
+      const rest = waterFill(g.durs.filter((_, i) => !P.includes(i)), room, lo, g.fullW);
+      let r = 0; ws = g.durs.map((_, i) => (P.includes(i) ? g.fullW : rest[r++]));
+      if (P.length === 2) {                                            // 2026-11-03 user: a second frame opens: every closed frame keeps the width it has with one open. Two full frames can be wider than the row, so the row runs past the edge and slides (see below)
+        const oroom = g.total - g.fullW, oneLo = Math.max(8, Math.min(MINW, oroom / (n - 1))), one = waterFill(g.durs.filter((_, i) => i !== P[0]), oroom, oneLo, g.fullW);
+        ws = g.durs.map((_, i) => (P.includes(i) ? g.fullW : one[i > P[0] ? i - 1 : i]));
+      }
+    } else ws = waterFill(g.durs, g.total, MINW, g.fullW);
+    ws = ws.map((v) => Math.floor(v * 100) / 100);
+    const next = ws.map((v) => v + "px").join(" ");
+    if (animate && next !== grid.style.gridTemplateColumns) { grid.dataset.moving = "1"; clearTimeout(grid._mvT); grid._mvT = setTimeout(() => { delete grid.dataset.moving; fitAllOverlays(); }, 240); }
+    grid.style.gridTemplateColumns = next;
+    clearTimeout(grid._slideT);                                        // the frame just opened comes into view, the row slides back when it closes (no scrollbar, css)
+    grid._slideT = setTimeout(() => {
+      const k = P.length >= 2 ? P[P.length - 1] : -1, x0 = k >= 0 ? ws.slice(0, k).reduce((a, v) => a + v + VID.GAP, 0) : 0;
+      const left = k < 0 ? 0 : (x0 < grid.scrollLeft ? x0 : x0 + ws[k] > grid.scrollLeft + grid.clientWidth ? x0 + ws[k] - grid.clientWidth : grid.scrollLeft);
+      if (Math.abs(left - grid.scrollLeft) > 1) grid.scrollTo({ left, behavior: "smooth" });
+    }, animate ? 190 : 0);
+    Array.from(grid.children).forEach((c, i) => c.classList.toggle("open", P.includes(i)));        // the details (Shot n, times, font picker, words) show only on an open card
+  }
+  /** video board layout (2026-11-02 user: shots at the top and taller, nothing bumps): [cards][lyrics section][head]. Every text row of a card has a fixed height (css), so the card chrome is one number;
+   *  frame height = visible storyboard height - chrome - the lyrics section's height - gaps, capped at the 320 px-wide full frame. The section keeps its natural height (strips) and only scrolls inside
+   *  itself when giving it that much would push the frame under MINFH. */
+  function fitVid(sb, grid, ratio) {
+    const n = grid.children.length, V = VID, d = S.story.data, panel = sb.querySelector(".sb-text");
+    grid.classList.add("nofx");                                       // no width transition while measuring
+    const durs = Array.from(grid.children).map((c) => { const s = d && d.shots[Number(c.dataset.i)]; return s ? Math.max(0.05, Number(s.end) - Number(s.start)) : 1; });
+    const gcs = getComputedStyle(grid), px = (v) => parseFloat(v) || 0;
+    const g = grid._vid = { durs, total: grid.clientWidth - px(gcs.paddingLeft) - px(gcs.paddingRight) - V.GAP * (n - 1), fullW: 0 };
+    const capH = Math.min(V.STDH, Math.floor(g.total * 0.75 * ratio)), minH = 120;   // 2026-11-03 user: a standard size: every clip's frames get the vertical frames' height (not a width cap, which left landscape at 180 px); a wide open frame leaves a quarter of the row to the others
+    const setH = (h) => { grid.style.setProperty("--fh", h + "px"); g.fullW = Math.floor(h / ratio) + V.PAD; vidApply(grid, g, null); };
+    if (panel) panel.style.height = "";
+    setH(capH);
+    const c0 = grid.firstElementChild, chrome = c0.offsetHeight - c0.querySelector(".sb-img").offsetHeight;
+    const top = grid.getBoundingClientRect().top - sb.getBoundingClientRect().top + sb.scrollTop;
+    const lastPad = px(gcs.paddingBottom), tmt = panel ? px(getComputedStyle(panel).marginTop) : 0;
+    const base = sb.clientHeight - top + (panel ? panel.offsetHeight : 0) - chrome - lastPad - tmt - 8;   // height left for the frame + the lyrics section (the section sits above the grid, so `top` already counts it)
+    let L = panel ? panel.offsetHeight : 0, fh = Math.min(capH, base - L);
+    if (panel && fh < V.MINFH) { L = Math.max(V.MINL, Math.min(L, base - V.MINFH)); fh = Math.min(capH, base - L); }
+    fh = Math.max(minH, Math.floor(fh));
+    if (panel) panel.style.height = L + "px";                         // fixed from here on: toggling a word never changes a frame height
+    setH(fh);
+    vidApply(grid, g, vidPinsFor(grid));
+    void grid.offsetWidth; grid.classList.remove("nofx");
+    runIntoView(panel && panel.querySelector(".sb-words"));
+  }
+  /** hover tint of the lyrics run of the hovered card (colour only, no layout change). */
+  function paintRunHover() {
+    const grid = document.querySelector(".storyboard .sb-grid.vid"); if (!grid) return;
+    const c = vidPin.hover != null ? grid.children[vidPin.hover] : null, n = c ? c.dataset.n : null;
+    document.querySelectorAll(".storyboard .sbw-run").forEach((r) => r.classList.toggle("hov", n != null && r.dataset.n === n));
+    paintWave(document.querySelector(".storyboard .sb-words.by-run"));
+  }
+  /** hovering a card (mouse) or keyboard-focusing inside it pins it at the full frame; leaving the row goes back to the shot-length layout.
+   *  Steady: once pinned a card stays pinned for LOCK ms (the width transition), and afterwards only a REAL pointer move (> 2 px from where it was pinned) onto another card re-pins; layout shifts under a
+   *  stationary pointer (browsers fire a synthetic mousemove) never change the pin. */
+  function wireCardHover(grid) {
+    vidPin.hover = vidPin.focus = vidPin.skip = null;
+    const T = { lock: 0, ax: -9999, ay: -9999, px: 0, py: 0, moved: false, timer: 0 };
+    const go = () => { if (grid._vid) vidApply(grid, grid._vid, vidPinsFor(grid), true); paintRunHover(); };
+    const idxOf = (t) => { const c = t && t.closest ? t.closest(".sb-card") : null; return c && grid.contains(c) ? Number(c.dataset.i) : null; };
+    const settle = () => {                                            // the pointer moved while locked: now look at what is under it
+      if (!T.moved) return;
+      T.moved = false;
+      const i = idxOf(document.elementFromPoint(T.px, T.py));
+      if (i != null && i !== vidPin.hover) pin(i);
+    };
+    const pin = (i) => { vidPin.hover = i; T.lock = performance.now() + VID.LOCK; T.ax = T.px; T.ay = T.py; T.moved = false; go(); clearTimeout(T.timer); T.timer = setTimeout(settle, VID.LOCK + 20); };
+    grid.addEventListener("mousemove", (ev) => {
+      T.px = ev.clientX; T.py = ev.clientY;
+      const i = idxOf(ev.target);
+      if (i == null) return;
+      if (vidPin.skip != null) { if (i === vidPin.skip) return; vidPin.skip = null; }                // the card just collapsed by a click on its frame: no re-open until the pointer has left it
+      if (i === vidPin.hover) return;
+      if (Math.hypot(T.px - T.ax, T.py - T.ay) <= 2) return;          // stationary pointer (layout moved under it): keep the pin
+      if (performance.now() < T.lock) { T.moved = true; return; }     // mid transition: decide when it has ended
+      pin(i);
+    });
+    grid.addEventListener("mouseleave", () => { clearTimeout(T.timer); T.moved = false; T.ax = T.ay = -9999; vidPin.skip = null; if (vidPin.hover != null) { vidPin.hover = null; go(); } });
+    grid.addEventListener("pointerdown", () => { const a = document.activeElement; vidPin.wasEdit = !!(a && a.matches && a.matches(".sb-line, .sb-ov, .sb-oe")); }, true);
+    grid.addEventListener("focusin", (ev) => { if (ev.target.matches && ev.target.matches(".sb-line, .sb-ov, .sb-oe")) { const i = idxOf(ev.target); if (i != null) { vidPin.edit = i; const c = grid.children[i]; if (c && S.story.active !== Number(c.dataset.n)) { S.story.active = Number(c.dataset.n); setTimeout(paintFocus, 0); } go(); } } });
+    grid.addEventListener("focusout", (ev) => { if (vidPin.edit != null && ev.target.matches && ev.target.matches(".sb-line, .sb-ov, .sb-oe")) { vidPin.edit = null; go(); } });
+    grid.addEventListener("focusin", (ev) => { const i = idxOf(ev.target); if (i != null && i !== vidPin.focus && ev.target.matches && ev.target.matches(":focus-visible")) { vidPin.focus = i; go(); } });
+    grid.addEventListener("focusout", (ev) => { if (!ev.relatedTarget || !grid.contains(ev.relatedTarget)) { if (vidPin.focus != null) { vidPin.focus = null; go(); } } });
+  }
 
   /** v14: card column width = min(work width / shots, the width at which the whole card (frame at the chosen format + rows) fits the visible work height), no fixed cap. */
   let boardRO = null, boardLast = "";
@@ -1570,17 +2145,17 @@
     const sb = document.querySelector(".storyboard"), grid = sb && sb.querySelector(".sb-grid");
     if (!grid || !grid.firstElementChild) return;
     const n = grid.children.length, GAP = 12, PAD = 18, MIN = 150, COMFY = 320;
-    const fm = /^(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)$/.exec(String(S.values.format || "9:16")), ratio = fm ? Number(fm[2]) / Number(fm[1]) : 16 / 9;
+    const vs = vidSizes(), fm = vs ? [null, String(vs.full[0]), String(vs.full[1])] : /^(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)$/.exec(String(S.values.format || "9:16")), ratio = fm ? Number(fm[2]) / Number(fm[1]) : 16 / 9;
     grid.style.setProperty("--fa", fm ? `${fm[1]} / ${fm[2]}` : "9 / 16");
+    if (grid.classList.contains("vid")) { fitVid(sb, grid, ratio); fitAllOverlays(); return; }      // 2026-11-02 user: video mode = same-height frames, widths by shot length (below)
     const availW = grid.clientWidth || sb.clientWidth, wW = Math.max(MIN, Math.floor((availW - GAP * (n - 1)) / n));
     const top = grid.getBoundingClientRect().top - sb.getBoundingClientRect().top + sb.scrollTop, availH = sb.clientHeight - top - 17;
     const chromeOf = () => { const c = grid.firstElementChild, im = c.querySelector(".sb-img"); return c.offsetHeight - im.offsetHeight; };
-    const isV = grid.classList.contains("vid");                      // v16 video mode: one row that scrolls sideways, so the width is set by the work height only (never below COMFY)
-    const floor = isV ? COMFY : Math.min(wW, COMFY);                 // a short window never shrinks the cards below a readable width: the board scrolls instead
-    let w = isV ? COMFY : wW;
+    const floor = Math.min(wW, COMFY);
+    let w = wW;
     for (let k = 0; k < 4; k++) {
       grid.style.setProperty("--colw", w + "px");
-      const hw = Math.floor((availH - chromeOf()) / ratio) + PAD, nw = isV ? Math.max(floor, hw) : Math.max(floor, Math.min(wW, hw));
+      const hw = Math.floor((availH - chromeOf()) / ratio) + PAD, nw = Math.max(floor, Math.min(wW, hw));
       if (Math.abs(nw - w) < 1) break;
       w = nw;
     }
@@ -1596,7 +2171,16 @@
   /** the words over the picture: the shot's line in its font, ink by the picture under it. */
   function paintCard(card, x) {
     const ov = card.querySelector(".sb-ov"), f = fontByFile(x.font), L = x.line.trim();
-    ov.textContent = L; ov.hidden = !L;
+    if (!ov.isContentEditable) {                                                  // never rewrite the type while it is being edited on the frame (keeps the caret)
+      const cols = isFrameShot(x) && x.tl && x.tl.cols ? x.tl.cols : 0;
+      ov.classList.toggle("grid", !!(cols && L));
+      if (cols && L) {                                                              // grid = rows of equal cells; alignment moves a short row inside the block (fitVidType)
+        const rows = [], ch = [...L.replace(/\s+/g, "")];                           // all the letters, evenly through the grid: spaces and new lines don't count here
+        for (let k = 0; k < ch.length; k += cols) rows.push(el("div", { class: "gr" }, ...ch.slice(k, k + cols).map((c) => el("span", {}, c))));
+        ov.replaceChildren(...rows);
+      } else ov.textContent = ov._edit ? x.line : L;                                // while editing keep a just-typed new line, so it shows at once
+      ov.hidden = !L;
+    }
     ov.style.fontFamily = f ? `"${B.fontCss(f)}", system-ui, sans-serif` : "";
     ov.dataset.size = L.length <= 7 ? "l" : L.length <= 13 ? "m" : "s";
     if (f) ensureFontFace(f);
@@ -1604,6 +2188,7 @@
     const nm = card.querySelector(".sb-fname");
     if (nm) { nm.textContent = f ? f.name : x.font; nm.title = f ? `${f.name}${f.role ? " (" + f.role + ")" : ""}: liked font` : ""; }
     applyInk(ov, shotPicUrl(x));
+    if (isFrameShot(x)) { if (L) frameMatte(x).catch(() => {}); paintFg(card, x); syncTools(card, x); }
   }
   function paintAllCards() {
     const d = S.story.data;
@@ -1706,15 +2291,79 @@
   function applyOverride(o) {
     const st = S.story, ctx = storyCtx(), beats = new Map(st.data.shots.map((s) => [s.n, s.beat]));
     const r = B.deriveStory(st.data, Object.assign({ tokens: ctx.tokens, times: ctx.times, beats: ctx.beats, imageIds: ctx.imageIds, shows: ctx.shows }, o));
-    st.data = r.story;
-    if (o.select) { st.edited.sel = true; st.selText = S.media.text; for (const n of r.lineChanged) delete st.edited[`${n}.line`]; }
+    const inPlace = !!o.select && !o.use && !!document.querySelector(".storyboard .sb-grid.vid");   // video mode: picking words changes only the words and their timing, so the frames stay on screen (a rebuild reloads them and the type jumps)
+    if (inPlace) { const cur = st.data; cur.text_select = r.story.text_select; cur.hits = r.story.hits; cur.shots.forEach((s, k) => { s.line = r.story.shots[k].line; }); } else st.data = r.story;
+    if (o.select) { st.edited.sel = true; st.selText = S.media.text; for (const n of r.lineChanged) { delete st.edited[`${n}.line`]; const sh = st.data.shots.find((s) => s.n === n); if (sh) delete sh.custom; } }
     if (o.use) {
       st.edited.use = true;
       for (const n of r.imageChanged) if (st.edited[`${n}.beat`]) { const sh = st.data.shots.find((s) => s.n === n); if (sh) sh.beat = beats.get(n); }
     }
     syncAllVers(true);
+    if (inPlace) {
+      for (const n of r.lineChanged) { const card = document.querySelector(`.storyboard .sb-card[data-n="${n}"]`), x = st.data.shots.find((s) => s.n === n); if (!card || !x) continue; const ta = card.querySelector(".sb-line"); if (ta) ta.value = x.line; paintCard(card, x); }
+      paintFocus();
+      return;
+    }
     rerender();
   }
+
+  // ---- UNDO / REDO of the storyboard (Ctrl+Z, Ctrl+Y or Ctrl+Shift+Z; Cmd on a Mac): snapshots taken when an edit settles. Inside a text field the browser's own undo works on the typing.
+  const hist = { past: [], future: [], last: null, timer: 0, n: 0 };
+  const inTextEdit = () => { const a = document.activeElement; return !!a && (a.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) && a.type !== "color"; };
+  function histSnap() {
+    const st = S.story;
+    return JSON.stringify({ data: st.data, edited: st.edited, vers: st.vers, selText: st.selText, fix: S.media.lyricFix || {} }, function (k, v) {
+      if (k === "bgBusy" || k === "bgA" || (k === "bg" && this.bgA) || k === "colorBusy" || k === "colorA" || ((k === "color" || k === "outline") && this.colorA)) return undefined;             // a colour sampled from the shot is not an edit (it comes back by itself)
+      return (k === "x" || k === "y") && typeof v === "number" ? Math.round(v * 1000) / 1000 : v;
+    });
+  }
+  function histTick() {
+    const st = S.story, d = st.data;
+    if (!d || st.busy || closeFontMenu || inTextEdit()) return;
+    if (hist.n !== d.shots.length || !hist.last) { hist.past = []; hist.future = []; hist.n = d.shots.length; hist.last = histSnap(); return; }   // a new story starts a new history
+    const now = histSnap();
+    if (now === hist.last) return;
+    hist.past.push(hist.last); if (hist.past.length > 200) hist.past.shift();
+    hist.future = []; hist.last = now;
+  }
+  function histGo(from, to) {
+    histTick();
+    if (!from.length) { toast("nothing to " + (from === hist.past ? "undo" : "redo")); return; }
+    to.push(hist.last); hist.last = from.pop();
+    const before = JSON.parse(to[to.length - 1]), v = JSON.parse(hist.last), st = S.story, name = from === hist.past ? "Undo" : "Redo", same = (p, q) => JSON.stringify(p) === JSON.stringify(q);
+    const wordsOf = (o, n) => (o.data.text_select || []).filter((t) => t.shot === n).map((t) => t.i), SOFT = ["line", "tl", "font", "custom"];
+    const sameRow = before.data.shots.length === v.data.shots.length && v.data.shots.every((x, k) => before.data.shots[k].n === x.n);
+    const changed = sameRow ? v.data.shots.filter((x, k) => !same(before.data.shots[k], x) || !same(wordsOf(before, x.n), wordsOf(v, x.n))) : [];
+    const shotsOff = (d) => Object.fromEntries(Object.entries(d).filter(([k]) => !["shots", "text_select", "hits"].includes(k))), softShot = (x) => Object.fromEntries(Object.entries(x).filter(([k]) => !SOFT.includes(k)));
+    const inPlace = sameRow && !!document.querySelector(".storyboard .sb-grid.vid") && same(shotsOff(before.data), shotsOff(v.data)) && v.data.shots.every((x, k) => same(softShot(before.data.shots[k]), softShot(x)));   // only words, font or layout changed: the frames stay on screen
+    st.edited = v.edited; st.vers = v.vers; st.selText = v.selText; S.media.lyricFix = v.fix; S.media.lyricFixFor = S.media.read;
+    if (inPlace) {
+      const cur = st.data; cur.text_select = v.data.text_select; cur.hits = v.data.hits;
+      for (const x of changed) { const live = cur.shots.find((q) => q.n === x.n); Object.keys(live).forEach((k) => { delete live[k]; }); Object.assign(live, x); }   // the cards hold these objects: update them, don't swap them
+    } else st.data = v.data;
+    if (st.active != null && !st.data.shots.some((x) => x.n === st.active)) st.active = null;
+    if (changed.length) {                                                             // go to the shot this step changed: it opens and the lyrics line eases to it
+      const go = changed.find((x) => x.n === st.active) || changed[0], o = before.data.shots.find((q) => q.n === go.n);
+      st.active = go.n; stripShot = null;
+      const what = (!same(o.line, go.line) || !same(wordsOf(before, go.n), wordsOf(v, go.n)) || !same(o.custom, go.custom)) ? "words" : !same(o.font, go.font) ? "font" : "layout";
+      toast(`${name}: shot ${go.n}, ${what}`, 2500, { info: true });                  // info: not added to the notices (that repaints the page)
+    } else stripShot = st.active;
+    if (inPlace) {
+      for (const x of changed) { const card = document.querySelector(`.storyboard .sb-card[data-n="${x.n}"]`), live = st.data.shots.find((q) => q.n === x.n); if (!card || !live) continue; const ta = card.querySelector(".sb-line"); if (ta) ta.value = live.line; paintCard(card, live); }
+    } else rerender();
+    paintFocus();
+    hist.last = histSnap();                                                           // the restored state, as repainted, is this step: not a new edit
+  }
+  if (window.__MG_DEV) Object.assign(window.__MG_DEV, { hist, histSnap, histTick });   // dev proxy only
+  document.addEventListener("pointerdown", histTick, { capture: true, passive: true });   // a new action is starting: the last one becomes its own undo step, however quickly they follow each other
+  document.addEventListener("focusout", histTick, { capture: true, passive: true });      // a text edit just finished: it is a step of its own
+  ["pointerup", "click", "change", "input", "keyup", "wheel", "focusout"].forEach((n) => document.addEventListener(n, () => { clearTimeout(hist.timer); hist.timer = setTimeout(histTick, 300); }, { capture: true, passive: true }));
+  document.addEventListener("keydown", (ev) => {
+    if (!(ev.ctrlKey || ev.metaKey) || ev.altKey || !S.story.data || inTextEdit() || closeFontMenu) return;
+    const k = ev.key.toLowerCase();
+    if (k === "z" && !ev.shiftKey) { ev.preventDefault(); histGo(hist.past, hist.future); }
+    else if (k === "y" || (k === "z" && ev.shiftKey)) { ev.preventDefault(); histGo(hist.future, hist.past); }
+  });
 
   // ---- the editor for one file's read notes (what it shows, mood, window); used in a card's info toggle and in the "all notes" list
   function noteEditor(it, e, id) {
@@ -1746,12 +2395,27 @@
     const withWords = d.shots.filter((x) => shotTokens(x.n).length).length;
     const actShot = act != null ? d.shots.find((x) => x.n === act) : null;
     const byShot = !!(src.lyrics && src.times && src.times.length);                // WORD PICK: lyrics with sung times -> one row per shot with the words sung during it
-    const head = el("div", { class: "sb-th" }, el("b", {}, "Your text"), src.lyrics ? el("span", { class: "sb-lyr", title: "No text was pasted: these are the words heard in your media, with the time each is sung" }, `Lyrics (heard in the ${src.from})`) : null,
-      el("span", { class: "sb-tsum" }, byShot ? `${withWords} of ${d.shots.length} shot${d.shots.length === 1 ? "" : "s"} ${withWords === 1 ? "has" : "have"} words. Click a word to put it on its shot or take it off; shift-click or drag across words for a phrase; ↻ tries the next-best pick`
+    const vidB = byShot && isFrameBoard(d);                                           // 2026-11-02: video mode = ONE continuous lyrics section (strips), the selected shot's run highlighted
+    let vidSum = null, vidBtns = [];
+    if (vidB) {
+      const sungN = actShot ? (B.sungByShot(d.shots, src.times).by.get(actShot.n) || []).length : 0, mineIdx = actShot ? shotTokens(actShot.n) : [];
+      const alts = actShot ? (d.word_alts && d.word_alts[String(actShot.n)]) || [] : [], curKey = mineIdx.join(","), at = alts.findIndex((x) => x.t.join(",") === curKey);
+      vidSum = actShot ? `Shot ${actShot.n}: click a word to use it or take it off, then shift-click another to do the same to every word between, double-click to correct a lyric; drag to see the rest${sungN ? "" : " (nothing is sung in this shot)"}`
+        : `${withWords} of ${d.shots.length} shot${d.shots.length === 1 ? "" : "s"} ${withWords === 1 ? "has" : "have"} words. Click a shot to go to its words; drag the line to see the rest`;
+      vidBtns = [
+        el("button", { class: "sbw-btn", type: "button", "data-act": "cyc", disabled: !actShot || alts.length < 1 || (alts.length === 1 && at === 0), "aria-label": "Next-best word pick for the selected shot",
+          title: actShot ? (alts.length ? `Next-best auto pick for shot ${actShot.n} (${at >= 0 ? at + 1 : 0} of ${alts.length} tried)` : "No other pick for this shot") : "Select a shot first",
+          onclick: () => { const ns = actShot && B.cycleShotWords(S.story.data, actShot.n); if (ns) applyOverride({ select: ns }); else toast("no other pick for this shot"); } }, "↻"),
+        el("button", { class: "sbw-btn", type: "button", "data-act": "clr", disabled: !actShot || !mineIdx.length, "aria-label": "Clear the words of the selected shot", title: actShot ? "Take every word off this shot" : "Select a shot first",
+          onclick: () => { if (actShot) applyOverride({ select: B.clearShotWords(S.story.data.text_select, actShot.n) }); } }, "clear")];
+    }
+    const head = el("div", { class: "sb-th" }, el("b", vidB ? { title: vidSum } : {}, vidB ? "Text" : "Your text"), src.lyrics && !vidB ? el("span", { class: "sb-lyr", title: "No text was pasted: these are the words heard in your media, with the time each is sung" }, `Lyrics (heard in the ${src.from})`) : null,
+      el("span", { class: "sb-tsum", title: vidSum }, vidB ? vidSum : byShot ? `${withWords} of ${d.shots.length} shot${d.shots.length === 1 ? "" : "s"} ${withWords === 1 ? "has" : "have"} words. Click a word to put it on its shot or take it off; shift-click or drag across words for a phrase; ↻ tries the next-best pick`
         : actShot ? `Shot ${actShot.n}: click words to put them on this shot or take them off (Esc or its frame again to finish)`
         : withWords ? `${withWords} of ${d.shots.length} shot${d.shots.length === 1 ? "" : "s"} ${withWords === 1 ? "has" : "have"} words; click a frame to change its words` : "no words chosen; click a frame to pick its words"),
+      ...vidBtns,
       el("button", { class: "sbw-btn sbw-auto", type: "button", title: "Back to the automatic word choice for every shot (drops your edits to the words)", onclick: autoPickWords }, "Auto-pick words"));
-    const words = byShot ? buildShotWords(d, src, sel, act) : el("div", { class: "sb-words" });
+    const words = byShot ? buildShotWords(d, src, sel, act, vidB) : el("div", { class: "sb-words" });
     const lastOf = new Map(d.shots.map((x) => [x.n, Math.max(-1, ...shotTokens(x.n))]));
     (byShot ? [] : tokens.slice(0, B.TEXT_CAP)).forEach((t, i) => {
       const sh = shotOf.get(i) || 0, has = sh >= 1, mine = has && sh === act, faint = has && act != null && sh !== act, on = has && (act == null || mine);
@@ -1764,7 +2428,7 @@
         firstOfRun ? el("sup", { class: "w-n" }, String(sh)) : null, t,
         has && lastOf.get(sh) === i && shotTokens(sh).length > LONG_WORDS ? el("sup", { class: "w-long", title: `Shot ${sh} has more than ${LONG_WORDS} words: they will be small on screen` }, "long") : null));
     });
-    const panel = el("div", { class: "sb-text" + (act != null ? " focus" : "") }, head, words);
+    const panel = el("div", { class: "sb-text" + (act != null ? " focus" : "") + (vidB ? " by-run" : "") }, head, words);
     const hidden = Math.max(0, tokens.length - B.TEXT_CAP), hiddenSel = sel.filter((t) => t.i >= B.TEXT_CAP).length;
     if (hidden) panel.append(el("div", { class: "sb-more" }, `... ${hidden} more word${hidden === 1 ? "" : "s"}` + (hiddenSel ? ` (${hiddenSel} of them chosen)` : "")));
     return panel;
@@ -1783,19 +2447,59 @@
   }
   // ---- WORD PICK editor (lyrics with sung times): one row per shot = the words sung DURING that shot as chips; chosen words yellow; click toggles a word on / off THAT shot (a word of another shot moves here),
   //      shift-click or a drag across chips makes a phrase, ↻ steps through the backend's ranked picks (story.word_alts), "clear" empties the shot. Every edit goes through applyOverride (pins story.edited.sel).
-  let wordDrag = null, wordAnchor = null, wordDragDone = false;
+  let wordDrag = null, wordAnchor = null, wordDragDone = false, vidWords = false, wordClickT = 0;
   document.addEventListener("pointerup", () => {
     const g = wordDrag; wordDrag = null;
     if (!g || !g.moved) return;
     wordDragDone = true; setTimeout(() => { wordDragDone = false; }, 0);
     const d = S.story.data;
-    if (d) { wordAnchor = { i: g.to, shot: g.shot }; S.story.wordRow = g.shot; revealWant = { n: g.shot, t: Date.now(), still: true }; applyOverride({ select: B.rangeWordShot(d.text_select, g.from, g.to, g.shot) }); }
+    if (d) { wordAnchor = { i: g.to, shot: g.shot }; S.story.wordRow = g.shot; if (vidWords) S.story.active = g.shot; revealWant = { n: g.shot, t: Date.now(), still: true }; applyOverride({ select: B.rangeWordShot(d.text_select, g.from, g.to, g.shot) }); }
   });
-  function buildShotWords(d, src, sel, act) {
+  function buildShotWords(d, src, sel, act, vidB) {
+    vidWords = !!vidB;
     const tokens = src.tokens, times = src.times, cap = B.TEXT_CAP, shotOf = new Map(sel.map((t) => [t.i, t.shot]));
     const { by, outside } = B.sungByShot(d.shots, times), gem = S.story.gemma;
     const wrap = el("div", { class: "sb-words by-shot" });
+    /** the single lyrics line: with a shot selected, a click puts this word on THAT shot in place of its words (click its own word = off, shift-click = a phrase); with none selected, a click selects the word's shot. */
+    const stripWord = (i, n) => {
+      const sh = shotOf.get(i) || 0, at = Number(times[i]), mine = act != null && sh === act;
+      const usedOn = sh >= 1 ? d.shots.find((s) => s.n === sh) : null, m = tokens[i].match(/^([^\p{L}\p{N}]*)(.*?)([^\p{L}\p{N}]*)$/su), low = tokens[i].toLowerCase();
+      const trimmed = usedOn && m && m[2] && (m[1] || m[3]) && !String(usedOn.line).split(/\s+/).some((w) => w.toLowerCase() === low);   // the shot uses this word without its punctuation: only what's used lights up
+      const b = el("button", { class: "w" + (sh >= 1 ? " on" : "") + (mine ? " mine" : "") + (trimmed ? " part" : ""), type: "button", "data-i": i, "data-t": tokens[i], "data-shot": sh >= 1 ? sh : null, "data-ts": Number.isFinite(at) ? `${at.toFixed(1)}s` : null,
+        title: act == null ? (n != null ? `Sung in shot ${n}. Click to select that shot.` : "Select a shot first.") : mine ? `On shot ${act}. Click to take it off, then shift-click another word to take off everything between.` : `Click to use this on shot ${act}, then shift-click another word to use everything between.` }, trimmed ? el("span", { class: "w-in" }, m[1], el("span", { class: "w-u" }, m[2]), m[3]) : tokens[i]);
+      b.addEventListener("click", (ev) => {
+        const dd = S.story.data;
+        if (stripDragged || !dd) return;
+        if (ev.detail >= 2) { clearTimeout(wordClickT); fixWord(b, i); return; }       // double-click = correct the lyric
+        if (act == null) { if (n != null) { S.story.active = n; paintFocus(); } return; }
+        if (ev.shiftKey && (!wordAnchor || wordAnchor.shot !== act || wordAnchor.i === i)) { clearTimeout(wordClickT); wordAnchor = { i, shot: act, off: mine }; applyOverride({ select: B.toggleWordShot(dd.text_select, i, act) }); return; }   // nothing to run from: this word flips, the shot's other words stay
+        if (ev.shiftKey) {                                                              // from the last clicked word to this one: a word turned on lights everything between, a word turned off clears it
+          const a = wordAnchor.i, off = wordAnchor.off; wordAnchor = { i, shot: act, off };
+          if (!off) { applyOverride({ select: B.rangeWordShot(dd.text_select, a, i, act) }); return; }
+          let next = dd.text_select; for (let j = Math.min(a, i); j <= Math.max(a, i); j++) if (next.some((t) => t.i === j && t.shot === act)) next = B.toggleWordShot(next, j, act);
+          applyOverride({ select: next }); return;
+        }
+        clearTimeout(wordClickT);
+        wordClickT = setTimeout(() => {                                                // a moment's wait: this may be the first click of a double-click
+          const cur = S.story.data; if (!cur) return;
+          wordAnchor = { i, shot: act, off: mine };
+          applyOverride({ select: B.toggleWordShot(mine ? cur.text_select : B.clearShotWords(cur.text_select, act), i, act) });
+        }, 220);
+      });
+      return b;
+    };
+    const fixWord = (b, i) => {
+      const inp = el("input", { class: "w-edit", type: "text", value: tokens[i], size: Math.max(3, tokens[i].length + 1), spellcheck: "false", "aria-label": "Correct this lyric" });
+      let done = false; const end = (save) => { if (done) return; done = true; if (save && inp.value !== tokens[i]) correctToken(i, inp.value); else paintFocus(); };
+      inp.addEventListener("pointerdown", (ev) => ev.stopPropagation());
+      inp.addEventListener("click", (ev) => ev.stopPropagation());
+      inp.addEventListener("input", () => { inp.size = Math.max(3, inp.value.length + 1); });
+      inp.addEventListener("keydown", (ev) => { ev.stopPropagation(); if (ev.key === "Enter") end(true); else if (ev.key === "Escape") end(false); });
+      inp.addEventListener("blur", () => end(true));
+      b.replaceWith(inp); inp.focus(); inp.select();
+    };
     const chip = (i, n) => {
+      if (vidB) return stripWord(i, n);
       const sh = shotOf.get(i) || 0, mine = sh === n, elsewhere = sh >= 1 && !mine, at = Number(times[i]);
       const sung = Number.isFinite(at) ? ` Sung at ${at.toFixed(1)} s.` : "";
       const b = el("button", { class: "w" + (mine ? " on" : "") + (elsewhere ? " other" : ""), type: "button", "data-i": i, "data-shot": sh >= 1 ? sh : null, "data-ts": Number.isFinite(at) ? `${at.toFixed(1)}s` : null,
@@ -1807,7 +2511,7 @@
         if (!wordDrag || wordDrag.shot !== n || wordDrag.to === i) return;
         wordDrag.to = i; wordDrag.moved = true;
         const lo = Math.min(wordDrag.from, i), hi = Math.max(wordDrag.from, i);
-        wrap.querySelectorAll(`.sbw-shot[data-n="${n}"] .w`).forEach((c) => c.classList.toggle("drag", Number(c.dataset.i) >= lo && Number(c.dataset.i) <= hi));
+        wrap.querySelectorAll(`.sbw-shot[data-n="${n}"] .w, .sbw-run[data-n="${n}"] .w`).forEach((c) => c.classList.toggle("drag", Number(c.dataset.i) >= lo && Number(c.dataset.i) <= hi));
       });
       b.addEventListener("click", (ev) => {
         if (wordDragDone) return;
@@ -1819,6 +2523,52 @@
       });
       return b;
     };
+    if (vidB) {                                                                       // ONE continuous text, time order: each shot's sung words are one run (data-n), a faint shot number marks where it starts
+      const owner = new Map(); for (const [n, arr] of by) for (const i of arr) owner.set(i, n);
+      wrap.classList.add("by-run");
+      let cur = null, curN;
+      for (let i = 0, tot = Math.min(cap, tokens.length); i < tot; i++) {
+        const n = owner.has(i) ? owner.get(i) : null;
+        if (!cur || curN !== n) {
+          curN = n; cur = el("span", { class: "sbw-run" + (n == null ? " other" : "") + (n != null && n === act ? " sel" : ""), "data-n": n == null ? null : n }, n == null ? null : el("sup", { class: "sbw-sn", title: `Shot ${n} starts here` }, String(n)));
+          if (n != null) {
+            const run = cur;
+            run.addEventListener("click", (ev) => { if (stripDragged || (ev.target.closest && ev.target.closest(".w"))) return; S.story.active = n; paintFocus(); });                  // a gap in the line selects that run's shot
+          }
+          wrap.append(cur, " ");
+        }
+        cur.append(chip(i, n), " ");
+      }
+      for (const sh of d.shots) {                                                     // custom words: dashed chips at the start of their shot's words (a shot with nothing sung gets its own run, in shot order)
+        if (!sh.custom || !sh.custom.length) continue;
+        let run = wrap.querySelector(`.sbw-run[data-n="${sh.n}"]`);
+        if (!run) {
+          run = el("span", { class: "sbw-run" + (sh.n === act ? " sel" : ""), "data-n": sh.n }, el("sup", { class: "sbw-sn", title: `Shot ${sh.n} starts here` }, String(sh.n)));
+          const next = [...wrap.querySelectorAll(".sbw-run[data-n]")].find((r) => Number(r.dataset.n) > sh.n);
+          wrap.insertBefore(run, next || null);
+        }
+        const at = run.querySelector(".sbw-sn").nextSibling, tails = new Map();
+        // a custom word sits where it reads on the frame: after the lyric it follows, or before the first one, in this shot's run; else at the start of the run
+        const put = (c, node) => {
+          const ref = c.after != null ? run.querySelector(`.w[data-i="${c.after}"]`) : null;
+          if (ref) { const from = tails.get(c.after) || ref, nx = from.nextSibling; run.insertBefore(document.createTextNode(" "), nx); run.insertBefore(node, nx); tails.set(c.after, node); return; }
+          const bf = c.before != null ? run.querySelector(`.w[data-i="${c.before}"]`) : null, point = bf || at;
+          run.insertBefore(node, point); run.insertBefore(document.createTextNode(" "), point);
+        };
+        for (const c of sh.custom) {
+          const chipC = el("button", { class: "w cust" + (sh.n === act ? " mine" : ""), type: "button", "data-t": c.t, title: sh.n === act ? "Your own word, not in the lyrics. Click to take it off." : `Your own word on shot ${sh.n}. Click to select that shot.` }, c.t);
+          chipC.addEventListener("click", (ev) => { ev.stopPropagation(); if (stripDragged) return; if (S.story.active !== sh.n) { S.story.active = sh.n; paintFocus(); } else removeCustom(sh.n, c.t); });
+          put(c, chipC);
+          if (c.near != null && c.near < tokens.length) {
+            const fx = el("button", { class: "w-fix", type: "button", title: `Change "${tokens[c.near]}" in the lyrics to "${c.t}"` }, "Fix lyric?");
+            fx.addEventListener("click", (ev) => { ev.stopPropagation(); if (!stripDragged) correctToken(c.near, c.t); });
+            put(c, fx);
+          }
+        }
+      }
+      wireStrip(wrap);
+      return wrap;
+    }
     for (const sh of d.shots) {
       const [a, z] = B.shotSpan(sh), mineIdx = B.shotTokens(sel, sh.n), sung = (by.get(sh.n) || []).filter((i) => i < cap);
       const idx = [...new Set([...sung, ...mineIdx.filter((i) => i < cap)])].sort((p, q) => p - q);
@@ -1871,7 +2621,115 @@
       const f = c.querySelector(".sb-img"); if (f) f.setAttribute("aria-pressed", on ? "true" : "false");
     });
     const old = sb.querySelector(".sb-text");
-    if (old && textSource().tokens.length) { const ps = old.querySelector(".sb-words"), top = ps ? ps.scrollTop : 0; old.replaceWith(buildTextPanel(d)); const nw = sb.querySelector(".sb-words"); if (nw) nw.scrollTop = top; }
+    if (old && textSource().tokens.length) {
+      const ps = old.querySelector(".sb-words"), top = ps ? ps.scrollTop : 0, h = old.style.height, np = buildTextPanel(d);
+      if (h) np.style.height = h;                                                  // video mode: the section keeps the height fitVid reserved (nothing moves)
+      old.replaceWith(np); const nw = np.querySelector(".sb-words"); if (nw) nw.scrollTop = top;
+      if (sb.classList.contains("vidboard")) { runIntoView(nw); paintRunHover(); }
+    }
+    const vg = sb.querySelector(".sb-grid.vid");
+    if (vg && vg._vid) vidApply(vg, vg._vid, vidPinsFor(vg), true);                   // video mode: the selected card is pinned open (or collapses when deselected)
+  }
+  /** selected shot's run: when the lyrics section scrolls inside itself, bring the run into view (the section only; the page never moves). */
+  /** 2026-11-03 user: the soundtrack's waveform behind the lyrics line, each word over the part of it where it is sung: gaps in the singing are real time on the line (WAVE_PX px a second), and the wave is stretched between the words' own edges. */
+  const WAVE_PX = 34, WAVE_H = 22, WAVE_MAX_BYTES = 400e6, wave = { blob: null, busy: false, peaks: null, dur: 0 };
+  function waveBlob() {
+    const video = S.media.items.find((i) => i.kind === "video"), track = S.media.items.find((i) => i.kind === "audio"), st = soundtrackNow();
+    return track && track.file && st === "track" ? track.file : video && video.file && st === "video" && video.hasAudio !== false ? video.file : null;
+  }
+  function loadWave(blob) {
+    if (wave.blob === blob || !blob || blob.size > WAVE_MAX_BYTES) return;
+    wave.blob = blob; wave.peaks = null; wave.busy = true;
+    (async () => {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)(), buf = await ctx.decodeAudioData(await blob.arrayBuffer()); ctx.close();
+      const R = 100, n = Math.ceil(buf.duration * R), peaks = new Float32Array(n), step = buf.sampleRate / R;
+      for (let c = 0; c < buf.numberOfChannels; c++) { const d = buf.getChannelData(c); for (let k = 0; k < n; k++) { const a = Math.floor(k * step), b = Math.min(d.length, Math.floor((k + 1) * step)); let m = peaks[k]; for (let i = a; i < b; i += 4) { const v = Math.abs(d[i]); if (v > m) m = v; } peaks[k] = m; } }
+      let top = 0; for (const v of peaks) if (v > top) top = v; if (top) for (let k = 0; k < n; k++) peaks[k] /= top;
+      wave.peaks = peaks; wave.dur = buf.duration; wave.busy = false;
+      const w = document.querySelector(".storyboard .sb-words.by-run"); if (w) { const left = w.scrollLeft; layoutWave(w); w.scrollLeft = left; paintWave(w); }
+    })().catch(() => { wave.busy = false; });
+  }
+  function layoutWave(words) {
+    const times = textSource().times; if (!times) return;
+    words.querySelectorAll(".sbw-gap, .sbw-wave, .sbw-cutn").forEach((e) => e.remove());
+    const dur = wave.dur || videoDur() || 0, chips = [...words.querySelectorAll(".w[data-i]")].filter((e) => Number.isFinite(times[Number(e.dataset.i)]));
+    if (!chips.length || !dur) return;
+    const gap = (sec) => el("span", { class: "sbw-gap", style: `width:${Math.round(sec * WAVE_PX)}px` }), spans = [];
+    let prev = 0;
+    chips.forEach((e, k) => {
+      const i = Number(e.dataset.i), t = times[i], nx = k + 1 < chips.length ? times[Number(chips[k + 1].dataset.i)] : Infinity, end = Math.max(t + 0.05, Math.min(nx, t + 0.7));
+      if (t - prev > 0.2) { const r = e.parentElement; (r.querySelector(".w[data-i]") === e ? r : e).before(gap(t - prev)); }
+      spans.push([e, t, end]); prev = end;
+    });
+    if (dur - prev > 0.05) words.append(gap(dur - prev));
+    const box = words.getBoundingClientRect(), X = (x) => x - box.left + words.scrollLeft, gaps = words.querySelectorAll(".sbw-gap");
+    const first = spans[0][0].getBoundingClientRect(), x0 = X(gaps.length && gaps[0].getBoundingClientRect().left < first.left ? gaps[0].getBoundingClientRect().left : first.left), lastEl = gaps.length && gaps[gaps.length - 1].getBoundingClientRect().left >= spans[spans.length - 1][0].getBoundingClientRect().right - 1 ? gaps[gaps.length - 1] : spans[spans.length - 1][0], x1 = X(lastEl.getBoundingClientRect().right);
+    const pts = [[x0, 0]]; for (const [e, t, end] of spans) { const r = e.getBoundingClientRect(); pts.push([X(r.left), t], [X(r.right), end]); } pts.push([x1, dur]);
+    const timeAt = (x) => { for (let k = 1; k < pts.length; k++) if (x <= pts[k][0]) { const [a, ta] = pts[k - 1], [b, tb] = pts[k]; return b > a ? ta + ((x - a) / (b - a)) * (tb - ta) : tb; } return dur; };
+    words._xAt = (t) => { for (let k = 1; k < pts.length; k++) if (t <= pts[k][1]) { const [a, ta] = pts[k - 1], [b, tb] = pts[k]; return tb > ta ? a + ((t - ta) / (tb - ta)) * (b - a) : b; } return x1; };
+    if (!wave.peaks) return;
+    const W = Math.ceil(x1 - x0), dpr = window.devicePixelRatio || 1, cv = el("canvas", { class: "sbw-wave", style: `left:${x0}px;width:${W}px;height:${WAVE_H}px` });
+    cv.width = Math.round(W * dpr); cv.height = Math.round(WAVE_H * dpr);
+    words._wave = { x0, W, dpr, timeAt, spans: spans.map(([e]) => { const r = e.getBoundingClientRect(); return [X(r.left) - x0, X(r.right) - x0, e]; }) };
+    cv.addEventListener("click", (ev) => {                                         // 2026-11-03 user: click a section of the wave = jump to its frame (selected and open); a click on the selected section keeps it
+      if (stripDragged) return;
+      const x = x0 + ev.offsetX, sh = S.story.data.shots.find((q) => x >= words._xAt(shotT0(q)) && x < words._xAt(shotT1(q)));
+      if (!sh) return;
+      S.story.active = stripJump = sh.n; paintFocus();
+      setTimeout(() => revealShot(sh.n), 260);                                    // once the columns have settled
+    });
+    words.prepend(cv);
+    for (const q of S.story.data.shots) words.append(el("span", { class: "sbw-cutn", style: `left:${words._xAt(shotT0(q))}px` }, String(q.n)));   // 2026-11-03 user: each shot's number sits above its cut line
+  }
+  /** 2026-11-03 user: the selected and hovered shots light their own stretch of the wave (white on grey), and the line follows: it always travels to the shot in hand (hovered, else selected). */
+  function paintWave(words) {
+    if (!words || !words._xAt) return;
+    const d = S.story.data, grid = document.querySelector(".storyboard .sb-grid.vid"), hc = grid && vidPin.hover != null ? grid.children[vidPin.hover] : null, hov = hc ? Number(hc.dataset.n) : null, act = S.story.active, shotOf = (n) => (n == null ? null : d.shots.find((q) => q.n === n));
+    const wv = words._wave, cv = words.querySelector(".sbw-wave");
+    if (wv && cv) {
+      const secs = [shotOf(act), shotOf(hov)].filter(Boolean).map((q) => [words._xAt(shotT0(q)) - wv.x0, words._xAt(shotT1(q)) - wv.x0]), g = cv.getContext("2d");
+      g.setTransform(wv.dpr, 0, 0, wv.dpr, 0, 0); g.clearRect(0, 0, wv.W, WAVE_H);
+      for (let x = 0; x < wv.W; x += 2) {
+        const a = Math.floor(wv.timeAt(wv.x0 + x) * 100), b = Math.max(a + 1, Math.floor(wv.timeAt(wv.x0 + x + 2) * 100)); let m = 0; for (let k = a; k < b && k < wave.peaks.length; k++) if (wave.peaks[k] > m) m = wave.peaks[k];
+        const on = secs.some((q) => x >= q[0] && x < q[1]), h = Math.max(1, m * (WAVE_H - 2));
+        g.fillStyle = on ? "rgba(255,255,255,.95)" : "rgba(166,161,182,.38)";
+        g.fillRect(x, (WAVE_H - h) / 2, 1.5, h);
+      }
+      g.fillStyle = "rgba(120,170,255,.8)"; for (const q of d.shots.slice(1)) g.fillRect(words._xAt(shotT0(q)) - wv.x0, 0, 1, WAVE_H);   // the cuts
+    }
+    const n = hov != null ? hov : act;
+    if (n == null) { stripShot = null; return; }
+    if (n === stripShot) return;
+    stripShot = n;
+    const sh = shotOf(n); if (!sh) return;
+    const from = words.scrollLeft, t0 = performance.now(), D = matchMedia("(prefers-reduced-motion: reduce)").matches ? 1 : 320;
+    const to = Math.max(0, Math.min(words.scrollWidth - words.clientWidth, (words._xAt(shotT0(sh)) + words._xAt(shotT1(sh))) / 2 - words.clientWidth / 2));
+    cancelAnimationFrame(stripAnim);
+    const step = (t) => { const w = document.querySelector(".storyboard .sb-words.by-run"); if (!w) return; const p = Math.min(1, Math.max(0, (t - t0) / D)), e = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; w.scrollLeft = stripX = from + (to - from) * e; if (p < 1) stripAnim = requestAnimationFrame(step); };   // ease in and out
+    stripAnim = requestAnimationFrame(step);
+  }
+  function runIntoView(words) {
+    if (!words || !words.classList.contains("by-run")) return;
+    loadWave(waveBlob()); layoutWave(words);
+    words.scrollLeft = stripX;                                                     // a rebuild keeps where the line was
+    paintWave(words);
+  }
+  /** video mode: a click anywhere on a card (its controls too) selects its shot = its lyrics run is highlighted and the card stays OPEN (full frame + details) when the mouse leaves;
+   *  a click on the selected card's FRAME again deselects it (it collapses at once, and stays collapsed until the pointer has left it). Fonts / text-field clicks never deselect. */
+  function selectShot(n, idx, frame) {
+    const st = S.story, jumped = frame && stripJump === n;                          // 2026-11-03 user: the first click on a frame reached from the wave is a first click (cursor if it has no words), not the deselecting second one
+    stripJump = null;
+    if (st.active === n && !jumped) {
+      if (!frame || vidPin.wasEdit) return;                                        // a click that ends a text edit keeps the shot selected and open
+      st.active = null; vidPin.hover = null; vidPin.skip = idx;
+    } else {
+      st.active = n;
+      if (frame) setTimeout(() => {                                                 // a frame with no words: open a text box on it straight away
+        const x = st.data && st.data.shots.find((q) => q.n === n), card = document.querySelector(`.storyboard .sb-card[data-n="${n}"]`), ov = card && card.querySelector(".sb-ov"), line = card && card.querySelector(".sb-line");
+        if (st.active === n && x && !x.line.trim() && ov && line) startOvEdit(ov, line, x);
+      }, 0);
+    }
+    setTimeout(paintFocus, 0);                                                      // after the click's own handlers (a control may rebuild the page; paintFocus is idempotent)
   }
   document.addEventListener("keydown", (ev) => {
     if (ev.key !== "Escape" || S.story.active == null || popOff) return;
@@ -1940,7 +2798,8 @@
     const it = storyImage(x), e = it ? readEntry(it) : null, list = S.fonts.list, ids = B.mediaIds(S.media.items);
     const line = el("textarea", { class: "sb-line", rows: 2, spellcheck: "false", placeholder: "No words in this shot", "aria-label": `Shot ${x.n} on-screen line` });
     line.value = x.line;
-    line.addEventListener("input", () => { edit("line", line.value); if (B.isVideoShot(x)) syncHitsOfShot(i); paintCard(card, x); });
+    line.addEventListener("input", () => { edit("line", line.value); if (isFrameShot(x)) syncHitsOfShot(i); paintCard(card, x); });
+    line.addEventListener("change", () => { if (isFrameShot(x)) reconcileShot(x.n); });
     const beat = el("textarea", { class: "sb-beat", rows: 3, spellcheck: "false", placeholder: "What happens", "aria-label": `Shot ${x.n} beat` });
     beat.value = x.beat;
     beat.addEventListener("input", () => edit("beat", beat.value));
@@ -1949,7 +2808,7 @@
     const cam = el("select", { class: "sb-cam", "aria-label": `Shot ${x.n} camera` }, cams.map((c) => el("option", { value: c }, c ? B.cameraLabel(c) : "no move")));
     cam.value = x.camera;
     cam.addEventListener("change", () => edit("camera", cam.value));
-    const vid = B.isVideoShot(x);                                              // v18: video mode cards = frame, font stepper, editable line (no transition / camera row)
+    const vid = isFrameShot(x);                                              // v18: video mode cards = frame, font stepper, editable line (no transition / camera row)
     const iconBtn = (act, title, inner, fn) => el("button", { class: "sb-fbtn", type: "button", "data-act": act, title, "aria-label": title, onclick: fn }, inner);
     const fontRow = list.length ? el("div", { class: "sb-font" },
       iconBtn("prev", "Previous liked font", "‹", () => setFont(x, B.fontStep(list, x.font, -1))),
@@ -1959,19 +2818,22 @@
       onclick: () => { st.openNotes[x.n] = !st.openNotes[x.n]; notes.hidden = !st.openNotes[x.n]; info.classList.toggle("on", !!st.openNotes[x.n]); } }) : null;
     const notes = e && !vid ? el("div", { class: "sb-notebox", hidden: !st.openNotes[x.n] }, noteEditor(it, e, x.image || ids[S.media.items.indexOf(it)])) : null;
     const ov = el("div", { class: "sb-ov" });
+    const vidTools = vid ? buildTools(() => card, x, line, ov) : null;
+    if (vidTools) { ov.title = "Click to edit, drag to move, wheel to scale"; ov.addEventListener("click", (ev) => startOvEdit(ov, line, x, ev)); }
     const swap = it ? el("button", { class: "sb-swap", type: "button", title: "Swap this shot's picture", "aria-label": `Shot ${x.n}: swap the picture`, onclick: (ev) => { ev.stopPropagation(); openPicker(i, img); } }, "swap") : null;
     const img = el("div", { class: "sb-img", tabIndex: 0, role: "button", "aria-pressed": st.active === x.n ? "true" : "false", "aria-label": `Shot ${x.n}: pick this shot's words`,
-      title: "Click to work on this shot's words (click again or press Esc to finish)" }, ...storyImgNode(x), ov, swap);
+      title: "Click to work on this shot's words (click again or press Esc to finish)" }, ...storyImgNode(x), vidTools ? el("div", { class: "sb-tl" }, ov) : ov, ...(vidTools ? [el("div", { class: "sb-tc" }, el("div", { class: "sb-gh" })), el("div", { class: "sb-to" }, el("div", { class: "sb-gh" }))] : []), swap, vid ? el("span", { class: "sb-n" }, String(x.n)) : null);
     if (frameRO) frameRO.observe(img);
-    img.addEventListener("click", () => setActive(x.n));
-    img.addEventListener("keydown", (ev) => { if (ev.target === img && (ev.key === "Enter" || ev.key === " ")) { ev.preventDefault(); setActive(x.n); } });
+    img.addEventListener("click", () => { if (!vid) setActive(x.n); });                                  // video mode: the whole card selects (below), never toggles
+    img.addEventListener("keydown", (ev) => { if (ev.target === img && (ev.key === "Enter" || ev.key === " ")) { ev.preventDefault(); if (vid) selectShot(x.n, i, true); else setActive(x.n); } });
     const act = st.active === x.n, dimmed = st.active != null && !act;
     const card = el("div", { class: "sb-card" + (act ? " active" : "") + (dimmed ? " dim" : ""), "data-i": i, "data-n": x.n },
-      el("div", { class: "sb-top" + (vid ? " vid" : "") }, el("b", {}, `Shot ${x.n}`),
-        el("span", { class: "sb-span", title: vid ? "Output time in the piece; the video's own time of this cut in brackets" : null }, B.fmtSpan(x.start, x.end) + (vid ? ` (video ${x.src_start.toFixed(1)}-${x.src_end.toFixed(1)} s)` : "")), info),
+      el("div", { class: "sb-top" + (vid ? " vid" : "") }, el("b", {}, el("span", { class: "sb-shotw" }, "Shot "), String(x.n)),
+        el("span", { class: "sb-span", title: B.isVideoShot(x) ? "Output time in the piece; the video's own time of this cut in brackets" : null }, B.fmtSpan(x.start, x.end) + (B.isVideoShot(x) ? ` (video ${x.src_start.toFixed(1)}-${x.src_end.toFixed(1)} s)` : "")), info),
       img, fontRow, el("div", { class: "sb-fld sb-plain" }, line),
-      ...(vid ? [] : [el("div", { class: "sb-camrow" }, el("span", { class: "sb-k", title: "Camera: the cut that carries this shot into the next one" }, "Camera"), el("div", { class: "sb-fld sb-plain" }, cam)),
+      ...(vid ? [vidTools] : [el("div", { class: "sb-camrow" }, el("span", { class: "sb-k", title: "Camera: the cut that carries this shot into the next one" }, "Camera"), el("div", { class: "sb-fld sb-plain" }, cam)),
                       fld(beat, key("beat")), notes || el("div", { class: "sb-notebox", hidden: true })]));            // video mode: no beat / notes (v16) and no transition / camera (v18) rows
+    if (vid) card.addEventListener("click", (ev) => selectShot(x.n, i, !!(ev.target.closest && ev.target.closest(".sb-img") && !ev.target.closest(".sb-swap, .sb-ov, .sb-tools"))), true);                                // anywhere on the card (its controls too) selects the shot: its lyrics run is highlighted
     paintCard(card, x);
     if (vid) loadCutFrame(card, x, null);
     return card;
@@ -1981,13 +2843,14 @@
   const autosize = (ta) => { if (window.CSS && CSS.supports && CSS.supports("field-sizing", "content")) return; ta.style.height = "auto"; ta.style.height = ta.scrollHeight + 2 + "px"; };
 
   /** video mode: a card's words were edited by hand: the hit(s) landing in that shot follow (one hit per shot; emptied -> no hit). */
+  const sungIn = (x, txt) => { const src = textSource(), tk = src.tokens || [], tm = src.times || [], want = txt.toUpperCase().split(/\s+/).filter(Boolean); return want.some((w) => tk.some((t, k) => String(t).toUpperCase().replace(/[^A-Z0-9']/g, "") === w.replace(/[^A-Z0-9']/g, "") && Number(tm[k]) >= Number(x.src_start ?? x.start) - 0.3 && Number(tm[k]) < Number(x.src_end ?? x.end))); };
   function syncHitsOfShot(i) {
     const d = S.story.data, x = d && d.shots[i];
     if (!x) return;
     if (!d.hits) d.hits = B.hitsFromLines(d.shots, d.shots.map((s, k) => (k === i ? "" : s.line)));
     const last = i === d.shots.length - 1, inside = (h) => h.land >= x.start - 1e-6 && (h.land < x.end - 1e-6 || (last && h.land <= x.end + 1e-6));
-    const mine = d.hits.filter(inside), txt = x.line.trim(), rest = d.hits.filter((h) => !inside(h));
-    if (txt) rest.push(mine.length ? Object.assign({}, mine[0], { text: txt }) : { text: txt, land: x.start, hold_until: x.end });
+    const mine = d.hits.filter(inside), txt = x.line.trim().replace(/\s*\n\s*/g, " "), rest = d.hits.filter((h) => !inside(h));
+    if (txt) rest.push(mine.length && mine.map((h) => h.text).join(" ").toUpperCase() === txt.toUpperCase() ? mine[0] : mine.length && B.lyricTokens && sungIn(x, txt) ? Object.assign({}, mine[0], { text: txt }) : { text: txt, land: x.start, hold_until: x.end });   // 2026-11-04: new words do not inherit the old words' landing time (a typed word arrived up to 2.9 s late) unless they are sung in this shot
     d.hits = rest.sort((a, b) => a.land - b.land);
   }
 
@@ -2019,7 +2882,8 @@
     const st = S.story, d = st.data, m = S.media;
     const stale = !hasCurrentStory() || storyWorking();
     if (st.active != null && !d.shots.some((x) => x.n === st.active)) st.active = null;           // v18: the active shot is gone (other Length / cuts)
-    const wrap = el("div", { class: "storyboard" + (stale ? " stale" : "") + (st.active != null ? " has-active" : "") });
+    const vgrid = isFrameBoard(d);                                                                        // v16: video mode = ONE horizontal row of cards (no cut strip); 2026-11-02: cards first, then the lyrics section, then the head
+    const wrap = el("div", { class: "storyboard" + (stale ? " stale" : "") + (st.active != null ? " has-active" : "") + (vgrid ? " vidboard" : "") });
     const nb = buildNotices(); if (nb) wrap.append(nb);                  // v17: the warnings (the toasts) stay visible on the board
     const edit = (key, v) => typed(key, v);
     const title = el("div", { class: "sb-title", role: "heading", "aria-level": "2" }, d.title);        // v19: title + logline are plain text (no input, no version arrows); LOOK / MUSIC stay editable
@@ -2031,17 +2895,19 @@
       inp.addEventListener("input", () => { edit(k, inp.value); autosize(inp); fitBoardSoon(); });
       meta.append(el("div", { class: "sb-m" }, el("span", { class: "sb-k" }, label), fld(inp, k)));
     }
-    wrap.append(el("div", { class: "sb-head" }, title, logline, meta));
+    const headEl = el("div", { class: "sb-head" }, title, logline, meta);
+    if (!vgrid) wrap.append(headEl);
     requestAnimationFrame(() => { wrap.querySelectorAll(".sb-look, .sb-music").forEach(autosize); fitBoard(); });
-    if (textSource().tokens.length) wrap.append(buildTextPanel(d));
+    if (!vgrid && textSource().tokens.length) wrap.append(buildTextPanel(d));
 
     closePop();
-    const vgrid = d.shots.length > 0 && d.shots.every(B.isVideoShot) && !!videoItem();                  // v16: video mode = ONE horizontal row of cards that scrolls sideways (no cut strip)
     const grid = el("div", { class: "sb-grid" + (vgrid ? " vid" : ""), style: `--n:${Math.max(1, Math.min(6, d.shots.length))}` });
-    if (vgrid) wireRowScroll(grid);
+    if (vgrid) { wireRowScroll(grid); wireCardHover(grid); }
     if (frameRO) frameRO.disconnect();
     d.shots.forEach((x, i) => grid.append(buildCard(x, i, d)));
+    if (vgrid && textSource().tokens.length) wrap.append(buildTextPanel(d));         // 2026-11-03 user: video mode: the lyrics at the top, then the cards, then title / logline / LOOK / MUSIC
     wrap.append(grid);
+    if (vgrid) wrap.append(headEl);
     if (boardRO) boardRO.disconnect();
     if (typeof ResizeObserver !== "undefined") { boardLast = ""; boardRO = new ResizeObserver(() => { const k = wrap.clientWidth + "x" + wrap.clientHeight; if (k !== boardLast) { boardLast = k; fitBoard(); } }); boardRO.observe(wrap); }
     wrap.addEventListener("focusout", (ev) => { if (ev.target.tagName === "TEXTAREA") fitBoardSoon(); });   // no "notes for other files" (user v13): an unused image's read note becomes the shot's beat when it is picked (applyOverride)
@@ -2051,7 +2917,7 @@
   function buildWork() {
     const st = S.story, d = st.data;
     if (S.fonts.state === "idle") loadFonts();
-    const showBar = !!d || storyOn();
+    const showBar = (!!d || storyOn()) && !S.media.items.some((m) => m.kind === "video");   // 2026-11-03 user: no status / matte / Shuffle all / Write again row on a video's board
     let bar = null;
     if (showBar) {
       bar = el("div", { class: "work-bar" }, el("span", { class: "ro-state sb-state" }));
@@ -2085,8 +2951,8 @@
     r.used = { seed };
     const brief = currentBrief();
     const edit = B.normEdit(S.media.edit);
-    const body = { edit, video: video.uploaded, brief: brief ? Object.assign(JSON.parse(brief), { edit }) : { edit }, length: Number(values.length) || 12, seed,
-                   format: values.format || "9:16", quality: OWN_PREVIEW_QUALITY,
+    const body = { edit, video: video.uploaded, brief: wholeWindow(brief ? Object.assign(JSON.parse(brief), { edit }) : { edit }), length: Number(values.length) || 12, seed,
+                   format: values.format || "9:16", scale: vidScale === "half" ? "half" : "full", quality: OWN_PREVIEW_QUALITY,
                    soundtrack: soundtrackNow(), ...(soundtrackNow() === "track" ? { audio: (S.media.items.find((i) => i.kind === "audio") || {}).uploaded } : {}) };
     r.own.soundtrack = body.soundtrack;
     body.client_id = r.clientId;                                // the job submits its prompts with this id: ComfyUI streams their previews + the music waveform to this page
@@ -2102,6 +2968,48 @@
     paintOwn(r);
     r.own.poll = setInterval(() => pollOwn(r), 3000);
     pollOwn(r);
+  }
+
+  /** IMAGE BOARD, step 2 (2026-11-03): the graph's plain footage (no type) is the "video": upload it, then POST /mograph/own_video with edit "overlay", the sound it carries kept, and the board's story where each shot
+   *  is a cut of that footage (src_start = start, src_end = end, image V1) with its line / font / tl. tools/app/frame_render.py then sets the type and the mattes, exactly as for a dropped video. */
+  function platesBrief(total) {
+    const b = JSON.parse(currentBrief() || "{}");
+    if (b.story && Array.isArray(b.story.shots)) b.story.shots.forEach((x) => { x.image = "V1"; x.src_start = Number(x.start) || 0; x.src_end = Number(x.end) || 0; });
+    b.media = [{ id: "V1", kind: "video", shows: "", mood: "", window: [0, Math.ceil(total * 100) / 100] }];
+    b.edit = "overlay";
+    return b;
+  }
+  async function chainPlates(r) {
+    try {
+      const fin = finalOutput(), d = S.story.data, total = Math.max(...d.shots.map((x) => Number(x.end) || 0), 0);
+      if (!fin || !(total > 0)) throw new RunError({ message: "The footage finished but no video came back to put the type on." });
+      fin.final = false; fin.label = "Footage without type";
+      r.own = { stage: "uploading", log: [], jobId: null, poll: null, fails: 0, soundtrack: "video" };
+      r.tracker = null; r.promptId = null; r.pending = [];
+      r.clientId = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2));
+      BV.start({ mode: "video", shots: 0, soundtrack: "video" });
+      BV.setProgress(() => bvOwnProgress(r));
+      S.view = "run"; renderCanvas(); updateRunButton();
+      const blob = await (await fetchT(fin.url, {}, 600000)).blob();
+      if (r.cancelled) return endOwn(r, "cancelled");
+      const up = await upload(new File([blob], `plates_${r.clientId.slice(0, 8)}.mp4`, { type: "video/mp4" }));
+      if (r.cancelled) return endOwn(r, "cancelled");
+      const seed = Number(r.used && r.used.seed), route = (mediaField() || {}).own_video_route || "/mograph/own_video";
+      const body = { edit: "overlay", video: up, brief: platesBrief(total), length: Math.ceil(total * 100) / 100, seed: Number.isFinite(seed) && seed > 0 ? seed : B.randomSeed(), format: S.values.format || "9:16", scale: "full",
+                     quality: OWN_PREVIEW_QUALITY, soundtrack: "video", client_id: r.clientId };
+      await connectWS(r);
+      if (r.cancelled) return endOwn(r, "cancelled");
+      let resp;
+      try { resp = await fetchT(route, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }, 60000); }
+      catch (_) { throw new RunError({ message: "Could not reach the server to start the type job." }); }
+      const j = await resp.json().catch(() => ({}));
+      if (!resp.ok || !j.job) throw new RunError({ head: "The type job did not start", message: String(j.error || `HTTP ${resp.status}`) });
+      if (r.cancelled) { await cancelOwnJob(j.job); return endOwn(r, "cancelled"); }
+      r.own.jobId = j.job; r.own.stage = "starting"; r.status = "running";
+      paintOwn(r);
+      r.own.poll = setInterval(() => pollOwn(r), 3000);
+      pollOwn(r);
+    } catch (e) { failRun(r, e instanceof RunError ? e.err : { message: String((e && e.message) || e) }); }
   }
 
   async function pollOwn(r) {
@@ -2890,7 +3798,8 @@
       if (!ok) { toast("Could not read your media: " + (S.media.err || "unknown error") + ". Press Re-read to try again.", 9000); return; }
     }
     const { app, graph } = S.tpl;
-    const r = { active: true, status: "uploading", storyShots: hasCurrentStory() ? S.story.data.shots.length : 0, clickT: now(), tracker: null, promptId: null, ws: null, ticker: null, watch: null,
+    const plates = !hasVideo && !!mf && hasCurrentStory() && isImgBoard(S.story.data) && S.story.data.shots.some((x) => x.line.trim());      // an image board with type on it: the footage first, the type from the video route; no type at all = the old image route (the graph's own words)
+    const r = { active: true, status: "uploading", plates, storyShots: hasCurrentStory() ? S.story.data.shots.length : 0, clickT: now(), tracker: null, promptId: null, ws: null, ticker: null, watch: null,
                 reconnectTimer: null, pending: [], error: null, errorText: "", retry: 0, lost: 0, lastMsg: now(), cancelled: false };
     S.run = r;
     S.outputs = []; S.up = newUp();
@@ -2911,6 +3820,7 @@
       if (mf) { await uploadPending(); uploads[mf.id] = mediaBundle(); if (r.cancelled) return endCancelled(r); }
       r.uploadSeconds = now() - tU;
       const values = { ...S.values };
+      if (plates) values.quality = PLATES_QUALITY;
       for (const f of B.visibleFields(app, graph)) {      // "Run again": an empty seed field reuses the last run's seed
         if (f.kind === "seed" && B.isEmpty(f, values[f.id]) && opts.seeds && opts.seeds[f.id] !== undefined) values[f.id] = opts.seeds[f.id];
       }
@@ -3132,6 +4042,7 @@
       } catch (_) { /* retry */ }
       await new Promise((res) => setTimeout(res, 250));
     }
+    if (r.plates && finalOutput()) { r.active = true; return chainPlates(r); }           // image board: the footage is not the result, the type job below is
     r.status = "done";
     BV.end("done");
     { const fin = finalOutput(); if (fin) BV.decodeFinal(fin.url); }

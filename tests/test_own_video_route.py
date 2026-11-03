@@ -78,7 +78,7 @@ def test_brief_as_json_string_and_defaults(mgr):
 
 @pytest.mark.parametrize("patch,frag", [
     ({"video": ""}, "video"), ({"video": "../x.mp4"}, "video"), ({"video": "nope.mp4"}, "not in the input"), ({"brief": "{bad"}, "brief"), ({"brief": [1]}, "brief"),
-    ({"length": "abc"}, "length"), ({"quality": "ultra"}, "quality"), ({"soundtrack": "remix"}, "soundtrack"), ({"format": "16:9"}, "format"),
+    ({"length": "abc"}, "length"), ({"quality": "ultra"}, "quality"), ({"soundtrack": "remix"}, "soundtrack"), ({"format": "4:3"}, "format"), ({"scale": "quarter"}, "scale"), ({"scale": 0.5}, "scale"),
 ])
 def test_bad_requests(mgr, patch, frag):
     with pytest.raises(R.BadRequest) as e:
@@ -87,10 +87,11 @@ def test_bad_requests(mgr, patch, frag):
     assert not mgr.spawner.calls
 
 
-def test_length_is_clamped(mgr):
-    mgr.start(dict(BODY, length=99))
+@pytest.mark.parametrize("sent,passed", [(5.37, "5.37"), (99, "99"), (27.03, "27.03")])
+def test_length_is_the_videos_own(mgr, sent, passed):
+    mgr.start(dict(BODY, length=sent))
     argv = mgr.spawner.calls[0][0]
-    assert argv[argv.index("--length") + 1] == "24"
+    assert argv[argv.index("--length") + 1] == passed
 
 
 def test_one_job_at_a_time_409(mgr):

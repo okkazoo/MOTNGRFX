@@ -447,7 +447,7 @@ def story_cuts(c: dict) -> list:
 
 
 def story_fonts(c: dict) -> list:
-    """the user's per-line fonts (brief.story.shots[].font) aligned with the concept's `words`: [file | None, ..], [] when the user chose none (tools/fusion/font_pins.py matches by line text,
+    """the user's per-line fonts (brief.story.shots[].font WITH font_user = true: the user changed it in the page) aligned with the concept's `words`: [file | None, ..], [] when the user chose none (tools/fusion/font_pins.py matches by line text,
     then by position)."""
     shots = ((c.get("brief") or {}).get("story") or {}).get("shots") or []
     if not any(x.get("font") and x.get("font_user") is True for x in shots):          # R17b: a font without `font_user` is the page's random default, never a pin

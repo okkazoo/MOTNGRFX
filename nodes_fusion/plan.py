@@ -76,7 +76,7 @@ class MographRequest(io.ComfyNode):
             req["shows"] = shows
         req["raw"] = SP.request_record({"words": words, "scene": scene, "music": music, "length": length, "look": look, "seed": seed, "format": format,
                                         "shots": shots, "owners": owners, "layout_seed": layout_seed or None, "direction": direction or None,
-                                        SP.NO_UPSCALE: True if SP.is_preview_full(quality) else None})      # the app inputs as given: the piece keeps them (piece.request) so a later upgrade re-runs the same piece
+                                        SP.NO_UPSCALE: True if SP.is_preview_full(quality) else None, SP.PLATES_ONLY: True if SP.is_plates_only(quality) else None})      # the app inputs as given: the piece keeps them (piece.request) so a later upgrade re-runs the same piece
         return io.NodeOutput(req)
 
 

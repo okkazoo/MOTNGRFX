@@ -1,4 +1,4 @@
-"""staircase entry never draws a tiny copy of the word first (user 2026-11-01, own-video v001 r1 'FIRST WORDS': the word was drawn ~1/10 size beside the head at
+"""staircase entry never draws a tiny copy of the word first (user 2026-11-01, own-video v001 r1 'FIRST WORD': the word was drawn ~1/10 size beside the head at
 frames 18-26, then grew). The old entry (param tiny_copy=True) drew a hairline copy at 0.15 x 0.09 of the placement; the default now runs the lanes straight onto the
 staircase and the strands spread into the outline of the word at its final size.
 
@@ -17,7 +17,7 @@ TYPE = {"bar": 4, "beats": [0.6417, 1.3092, 1.9802, 2.6415, 3.3072, 3.9743, 4.64
         "palette": {"accents": [[200, 40, 40], [40, 80, 180], [255, 200, 50]], "bg": [15, 10, 20], "fg": [245, 240, 220]},
         "words": [{"entry": "right", "exit_s": 0.67, "font": "Blackout_Midnight.ttf", "form_in": "lines", "form_out": "flicker", "form_s": 1.98, "hit_on": "bar",
                    "module": "staircase", "placement": {"dx": 0.0, "dy": -0.1, "hf": 0.3, "pitch": 0.0, "roll": 0.0, "wf": 0.8, "yaw": 10.5},
-                   "render": "flat", "t0": 0.0, "t1": 4.45, "text": "FIRST WORDS"}]}
+                   "render": "flat", "t0": 0.0, "t1": 4.45, "text": "FIRST WORD"}]}
 
 
 def _profile(tiny_copy):

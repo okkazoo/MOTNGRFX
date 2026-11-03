@@ -8,6 +8,8 @@ FINAL.mp4    the job's final.mp4 (out dir).
 
 Checks (exit code 1 when any FAILS; 0 when all pass):
   1 size      width and height equal                                                                                       (the engine ran at the source size, no 9:16 crop, no tier)
+              scale "half" (job report `scale`, or --scale half): the final must be HALF the source size (each side floored to even, then halved and floored to even again, as the job does);
+              the source frames are then scaled to that size (lanczos, the filter the job cut its half-size clips with) before the picture / cut checks
   2 fps       r_frame_rate equal (exact rational)                                                                           (no resample, no halving)
   3 frames    frame count equal; duration equal within one frame                                                            (same cuts at the same frames)
   4 picture   per frame, outside the type mask: mean abs diff <= --mad (default 3.0 levels) and PSNR >= --psnr (default 35 dB). The mask is
@@ -39,11 +41,19 @@ def probe(path) -> dict:
                 duration=float((j.get("format") or {}).get("duration") or 0.0))
 
 
-def frames_of(path, w: int, h: int, start: float = 0.0, limit: int | None = None, gray: bool = False):
-    """frames as uint8 arrays via an ffmpeg pipe, in order, no fps filter."""
+def scaled_size(w: int, h: int, scale: str = "full") -> tuple[int, int]:
+    """the output size the job writes for a source w x h (same rule as tools/app/overlay_mode.scaled_size, repeated here so this box script stays standalone)."""
+    cw, ch = max(2, int(w) // 2 * 2), max(2, int(h) // 2 * 2)
+    if str(scale).strip().lower() == "half":
+        return max(2, cw // 2 // 2 * 2), max(2, ch // 2 // 2 * 2)
+    return cw, ch
+
+
+def frames_of(path, w: int, h: int, start: float = 0.0, limit: int | None = None, gray: bool = False, fit: bool = False):
+    """frames as uint8 arrays via an ffmpeg pipe, in order, no fps filter. fit=True: the frames are scaled to w x h (lanczos, setsar 1: the half-scale source)."""
     import numpy as np
     cmd = ["ffmpeg", "-v", "error"] + (["-ss", f"{start:.6f}"] if start else []) + ["-i", str(path), "-an"] + (["-frames:v", str(limit)] if limit else []) + \
-          ["-f", "rawvideo", "-pix_fmt", "gray" if gray else "bgr24", "-"]
+          (["-vf", f"scale={int(w)}:{int(h)}:flags=lanczos,setsar=1"] if fit else []) + ["-f", "rawvideo", "-pix_fmt", "gray" if gray else "bgr24", "-"]
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
     c = 1 if gray else 3
     try:
@@ -98,12 +108,12 @@ def changed_pixels(d, thr: int, min_area: int = 8):
     return m
 
 
-def cut_frames(path, w: int, h: int, start: float, n: int, jump: float = 25.0, rel: float = 4.0) -> list[int]:
+def cut_frames(path, w: int, h: int, start: float, n: int, jump: float = 25.0, rel: float = 4.0, fit: bool = False) -> list[int]:
     """frames i where the mean abs gray diff to frame i-1 is a real cut: above `jump` levels AND above `rel` x the clip's median frame-to-frame diff. (A fixed 40 split two equal soft cuts: 39.0 in the source,
     40.7 in the final, box run R16.)"""
     import numpy as np
     prev, js = None, []
-    for f in frames_of(path, w, h, start, n, gray=True):
+    for f in frames_of(path, w, h, start, n, gray=True, fit=fit):
         js.append(0.0 if prev is None else float(np.abs(f.astype(np.int16) - prev.astype(np.int16)).mean()))
         prev = f
     med = float(np.median(js)) if js else 0.0
@@ -111,7 +121,7 @@ def cut_frames(path, w: int, h: int, start: float, n: int, jump: float = 25.0, r
 
 
 def compare(src_path, fin_path, start: float = 0.0, nframes: int | None = None, report: dict | None = None, mask_video=None, mad_max: float = 3.0, psnr_min: float = 35.0, thr: int = 24,
-            max_changed: float | None = None, pad: int = 4) -> dict:
+            max_changed: float | None = None, pad: int = 4, scale: str | None = None) -> dict:
     """the whole check -> {ok, checks: {name: {ok, ...}}, per_frame_worst}. Pure function of the two files (+ optional report / mask)."""
     import cv2
     import numpy as np
@@ -121,7 +131,10 @@ def compare(src_path, fin_path, start: float = 0.0, nframes: int | None = None, 
     s0f = int(round(start * float(fps)))
     want = nframes if nframes else max(0, n_src - s0f)
     checks: dict = {}
-    checks["size"] = dict(ok=(ps["width"], ps["height"]) == (pf["width"], pf["height"]), source=[ps["width"], ps["height"]], final=[pf["width"], pf["height"]])
+    scale = str(scale if scale is not None else (report or {}).get("scale") or "full").strip().lower()
+    scale = "half" if scale == "half" else "full"
+    want_wh = scaled_size(ps["width"], ps["height"], scale)          # the size the job promises: the source's, or half of it
+    checks["size"] = dict(ok=want_wh == (pf["width"], pf["height"]), source=[ps["width"], ps["height"]], final=[pf["width"], pf["height"]], expected=list(want_wh), scale=scale)
     checks["fps"] = dict(ok=ps["fps"] == pf["fps"], source=str(ps["fps"]), final=str(pf["fps"]))
     tol = 1.0 / float(fps) + 1e-3 if fps else 0.05
     checks["frames"] = dict(ok=pf["frames"] == want and abs(pf["duration"] - want / float(fps)) <= tol + 0.02, source_window=want, final=pf["frames"], final_duration=round(pf["duration"], 4),
@@ -136,7 +149,7 @@ def compare(src_path, fin_path, start: float = 0.0, nframes: int | None = None, 
     masks = frames_of(mask_video, w, h, 0.0, want, gray=True) if mask_video else None
     mads, psnrs, shares, worst = [], [], [], (0, 0.0)
     bad = []
-    for i, (S, F) in enumerate(zip(frames_of(src_path, w, h, start, want), frames_of(fin_path, w, h, 0.0, want))):
+    for i, (S, F) in enumerate(zip(frames_of(src_path, w, h, start, want, fit=(scale == "half")), frames_of(fin_path, w, h, 0.0, want))):
         d = np.abs(S.astype(np.int16) - F.astype(np.int16)).max(axis=2)
         if masks is not None:
             m = next(masks) > 127
@@ -167,7 +180,7 @@ def compare(src_path, fin_path, start: float = 0.0, nframes: int | None = None, 
     if shares:
         mx = max_changed if max_changed is not None else 0.45
         checks["type_share"] = dict(ok=max(shares) <= mx, max_changed_share=round(max(shares), 4), mean_changed_share=round(float(np.mean(shares)), 4), limit=mx)
-    cs = cut_frames(src_path, w, h, start, want)
+    cs = cut_frames(src_path, w, h, start, want, fit=(scale == "half"))
     cf = cut_frames(fin_path, w, h, 0.0, want)
     checks["cuts"] = dict(ok=cs == cf, source=cs, final=cf)
     return dict(ok=all(c["ok"] for c in checks.values()), checks=checks, worst_frame=dict(index=worst[0], mad=round(worst[1], 3)))
@@ -180,6 +193,7 @@ def main(argv=None) -> int:
     ap.add_argument("--start", type=float, default=None, help="window start in the source (s); default from --report, else 0")
     ap.add_argument("--frames", type=int, default=None, help="window length in frames; default from --report, else the rest of the source")
     ap.add_argument("--report", default="", help="overlay_report.json of the job (window, frames, word_frames)")
+    ap.add_argument("--scale", default=None, choices=["full", "half"], help="the job's scale (default: the report's `scale`, else full); half = the final is half the source size")
     ap.add_argument("--mask-video", default="", help="black/white video, white = type, same size and frame count as the final")
     ap.add_argument("--mad", type=float, default=3.0, help="max mean abs diff (levels, 0-255) outside the type, per frame (the crf 14 re-encode alone measures ~2.2 on grainy footage; a +14 level grade measures 14)")
     ap.add_argument("--psnr", type=float, default=35.0, help="min PSNR (dB) outside the type, per frame (the re-encode alone: ~40 dB)")
@@ -191,7 +205,7 @@ def main(argv=None) -> int:
     rep = json.load(open(a.report, encoding="utf-8")) if a.report else None
     start = a.start if a.start is not None else float(((rep or {}).get("window") or [0.0])[0])
     nfr = a.frames if a.frames is not None else ((rep or {}).get("frames"))
-    res = compare(a.source, a.final, start, nfr, rep, a.mask_video or None, a.mad, a.psnr, a.thr, a.max_changed, a.pad)
+    res = compare(a.source, a.final, start, nfr, rep, a.mask_video or None, a.mad, a.psnr, a.thr, a.max_changed, a.pad, a.scale)
     for name, c in res["checks"].items():
         print(f"{'PASS' if c['ok'] else 'FAIL'}  {name:10s} " + json.dumps({k: v for k, v in c.items() if k != 'ok'}))
     if res.get("note"):

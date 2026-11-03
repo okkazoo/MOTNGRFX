@@ -510,10 +510,159 @@ select option:disabled { color: #6b6585; }
 .sb-top.vid { flex-wrap: wrap; row-gap: 0; }
 .sb-top.vid .sb-span { white-space: normal; text-align: right; }
 /* VIDEO MODE v16: ONE horizontal row of cards (no wrapping, no cut strip), scrolls sideways (visible scrollbar, wheel, shift-wheel, drag); 5 rows per card (no beat / notes) */
-.sb-grid.vid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: var(--colw, 320px); grid-template-rows: repeat(4, auto); overflow-x: auto; overflow-y: hidden; padding-bottom: 8px; scrollbar-width: auto; cursor: grab; }
+.sb-grid.vid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: var(--colw, 320px); grid-template-rows: repeat(4, auto); overflow-x: auto; overflow-y: hidden; scrollbar-width: auto; cursor: grab; }
 .sb-grid.vid.dragging { cursor: grabbing; user-select: none; }
 .sb-grid.vid .sb-card { grid-row: 1 / span 4; }
 .sb-grid.vid .sb-img img { -webkit-user-drag: none; user-select: none; }
+/* 2026-11-02 user: video board = [cards][lyrics section][title / logline / LOOK / MUSIC]. Every frame has the SAME height (--fh, set by fitVid) and a centre crop; card widths (inline grid-template-columns)
+   follow the shot length. A card is bare (no padding / border / background: the gap between frames is the 2 px column-gap) and shows number + frame only; an OPEN card (hovered, focused or selected = at the
+   full frame) shows Shot n, the times, the font picker and the words. Every text row has a FIXED height and is hidden with visibility, so nothing moves vertically when a card opens or changes width. */
+.sb-grid.vid { transition: grid-template-columns .18s ease; padding: 0 0 8px; margin-top: 8px; column-gap: 2px; scrollbar-width: none; }
+.sb-grid.vid.nofx { transition: none; }
+@media (prefers-reduced-motion: reduce) { .sb-grid.vid { transition: none; } }
+.sb-grid.vid .sb-img { aspect-ratio: auto; height: var(--fh, 400px); border-radius: 6px; }
+.sb-grid.vid .sb-card { padding: 0; border: 0; border-radius: 0; background: transparent; overflow: hidden; }
+.sb-grid.vid .sb-top { flex-wrap: nowrap; white-space: nowrap; overflow: hidden; height: 16px; align-items: center; padding: 0 3px; }
+.sb-grid.vid .sb-top b { flex: none; }
+.sb-grid.vid .sb-top .sb-span { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: right; }
+.sb-grid.vid .sb-font, .sb-grid.vid .sb-font-none { height: 22px; overflow: hidden; padding: 0 3px; }
+.sb-grid.vid .sb-fld.sb-plain { padding: 0 3px; }
+.sb-grid.vid .sb-line { height: 26px !important; min-height: 0 !important; field-sizing: fixed; white-space: nowrap; overflow: hidden; overflow-wrap: normal; word-break: normal; letter-spacing: 0; padding: 3px 4px !important; }
+.sb-grid.vid .sb-line::placeholder { white-space: nowrap; }
+/* collapsed: the word "Shot", the times, the font picker, the words field and the swap button are invisible (rows keep their height) */
+.sb-grid.vid .sb-card:not(.open) .sb-shotw { display: none; }
+.sb-grid.vid .sb-card:not(.open) .sb-span, .sb-grid.vid .sb-card:not(.open) .sb-info, .sb-grid.vid .sb-card:not(.open) .sb-lyr, .sb-grid.vid .sb-card:not(.open) .sb-font, .sb-grid.vid .sb-card:not(.open) .sb-font-none,
+.sb-grid.vid .sb-card:not(.open) .sb-fld, .sb-grid.vid .sb-card:not(.open) .sb-swap { visibility: hidden; }
+.vidboard .sb-card.dim, .vidboard .sb-card.dim:hover { opacity: 1; }
+/* selected / flash outlines are an overlay INSIDE the frame (no layout space, never clipped by a neighbour 2 px away) */
+.sb-grid.vid .sb-img::after { content: ""; position: absolute; inset: 0; border: 2px solid transparent; border-radius: inherit; pointer-events: none; z-index: 5; }
+.sb-grid.vid .sb-card.active { border: 0; box-shadow: none; animation: none; }
+.sb-grid.vid .sb-card.active .sb-img { border-color: var(--line); }
+.sb-grid.vid .sb-card.active .sb-img::after { border-color: #8fb0ff; }
+.sb-grid.vid .sb-card.flash { animation: none; }
+.sb-grid.vid .sb-card.flash .sb-img::after { animation: sbflashv 1.6s ease-out 1; }
+@keyframes sbflashv { 0%, 30% { border-color: var(--yellow); } 100% { border-color: rgba(242, 255, 68, 0); } }
+@media (prefers-reduced-motion: reduce) { .sb-grid.vid .sb-card.flash .sb-img::after { animation-duration: .01s; } }
+.vidboard .sb-head { margin-top: 22px; }
+/* the continuous lyrics section: the text runs full width and wraps into horizontal strips (30 px, a faint rule + alternating band); a shot's words are one run */
+.vidboard .sb-text { display: flex; flex-direction: column; margin-top: 0; margin-bottom: 2px; }
+.vidboard .sb-th { flex: none; height: 24px; white-space: nowrap; overflow: hidden; }
+.vidboard .sb-th .sb-lyr, .vidboard .sb-th b { flex: none; }
+.vidboard .sb-tsum { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.vidboard .sb-words.by-shot.by-run { display: block; flex: 1; min-height: 0; max-height: none; overflow-y: auto; overflow-x: hidden; line-height: 30px; font-size: 14px; padding: 0 2px;
+  background: repeating-linear-gradient(to bottom, transparent 0 29px, rgba(255, 255, 255, .07) 29px 30px), repeating-linear-gradient(to bottom, transparent 0 30px, rgba(255, 255, 255, .025) 30px 60px); background-attachment: local; }
+.sb-words.by-run .w { display: inline-block; height: 26px; line-height: 26px; margin: 2px 0; vertical-align: top; padding: 0 4px; font-size: 14px; font-weight: 500; color: #b4afc4; }
+.sb-words.by-run .w.on { color: #14110b; font-weight: 500; }
+.sb-words.by-run .w.other { color: #8a8599; }
+.sb-words.by-run .w-n { position: absolute; left: 0; top: -1px; margin: 0; font-size: 8px; line-height: 1; vertical-align: baseline; }
+/* 2026-11-03: the lyrics are one line that scrolls: light type, the selected shot's words bold, drag to browse. ::before reserves the bold width so selecting never moves a word. */
+.vidboard .sb-words.by-shot.by-run { flex: none; height: 46px; white-space: nowrap; overflow: hidden; line-height: 44px; background: none; padding: 0 50%; cursor: grab; user-select: none; touch-action: pan-y; -webkit-mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent); mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent); }
+/* 2026-11-03 user: Your text on a single line; every section of the board in its own frame */
+.vidboard .sb-text { flex-direction: row; align-items: center; gap: 10px; margin: 0 0 8px; padding: 4px 12px; }
+.vidboard .sb-th { display: contents; }
+.vidboard .sb-tsum { display: none; }
+.vidboard .sb-th > * { order: 0; flex: none; }
+.vidboard .sb-words.by-shot.by-run { order: 1; flex: 1 1 0; min-width: 0; height: 65px; line-height: 28px; padding: 0; }
+.vidboard .sb-text .sb-words.by-run .w { height: 26px; line-height: 26px; vertical-align: top; }
+.vidboard .sb-words.by-shot.by-run::before, .vidboard .sb-words.by-shot.by-run::after { content: ""; display: inline-block; width: 50%; }   /* room to bring any word to the middle (side padding would force the strip wider than its box) */
+.vidboard .sb-grid.vid { margin-top: 0; padding: 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.vidboard .sb-head { margin-top: 8px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.vidboard .sb-words.by-run { position: relative; }
+.sbw-gap { display: inline-block; height: 1px; pointer-events: none; }
+.sbw-wave { position: absolute; top: 42px; z-index: 0; cursor: pointer; }   /* the words on the top line, the shot numbers under them, the wave at the bottom */
+.sbw-cutn { position: absolute; top: 28px; transform: translateX(-50%); font-size: 10px; font-weight: 700; line-height: 13px; color: rgba(143, 176, 255, .95); pointer-events: none; }
+.vidboard .sb-words.by-run .sbw-sn { display: none; }   /* the numbers live on the cut lines */
+.vidboard .sb-words.by-run .sbw-run { position: relative; z-index: 1; }
+.vidboard .sb-words.by-run.dragging { cursor: grabbing; }
+.vidboard .sb-words.by-run .sbw-run, .vidboard .sb-words.by-run .sbw-run.sel, .vidboard .sb-words.by-run .sbw-run.hov { background: none; box-shadow: none; padding: 0; }
+.vidboard .sb-words.by-run .w { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; height: 30px; line-height: 30px; margin: 0; padding: 0 4px; font-size: 17px; font-weight: 300; letter-spacing: .01em; color: #a6a1b6; background: none; cursor: pointer; }
+.vidboard .sb-words.by-run .w::before { content: attr(data-t); height: 0; overflow: hidden; visibility: hidden; font-weight: 700; }
+.vidboard .sb-words.by-run .w:hover { color: var(--text); background: rgba(255, 255, 255, .07); }
+.vidboard .sb-words.by-run .sbw-run.sel .w:not(.on):not(:hover) { color: #a6a1b6; }   /* sung in the selected shot but not used: looks like any other lyric, only used words stand out */
+.vidboard .sb-words.by-run .w.on { color: var(--yellow); background: none; opacity: 1; }
+.vidboard .sb-words.by-run .w.on.mine { color: #14110b; background: var(--yellow); box-shadow: none; font-weight: 700; }
+/* a word used without its punctuation: only the used letters light up */
+.vidboard .sb-words.by-run .w.on.part, .vidboard .sb-words.by-run .w.on.mine.part { color: #a6a1b6; background: none; }
+.vidboard .sb-words.by-run .w.part .w-u { color: var(--yellow); }
+.vidboard .sb-words.by-run .w.mine.part .w-u { display: inline-block; margin: 0 -2px 0 -4px; padding: 0 2px 0 4px; border-radius: 4px; color: #14110b; background: var(--yellow); }
+.vidboard .sb-words.by-run .w.cust { color: var(--yellow); background: none; box-shadow: inset 0 0 0 1px var(--yellow-dim); outline: 0; border: 1px dashed var(--yellow); border-radius: 5px; box-shadow: none; }
+.vidboard .sb-words.by-run .w.cust.mine { font-weight: 700; }
+.w-fix { height: 22px; padding: 0 7px; vertical-align: middle; border: 1px solid var(--line); border-radius: 999px; background: var(--panel-2); color: var(--text); font-size: 11px; line-height: 20px; cursor: pointer; }
+.w-fix:hover { border-color: var(--yellow); color: var(--yellow); }
+.w-edit { height: 30px; vertical-align: middle; padding: 0 4px; border: 1px solid var(--yellow); border-radius: 5px; background: var(--panel-2); color: var(--text); font: 300 17px var(--font); outline: 0; cursor: text; user-select: text; }
+/* 2026-11-03: masked type. Multiply over the frame: white letters on black = the image only in the letters. Screen over that: the solid colour with black letters = the colour everywhere else.
+   The matted subject (.sb-fg, z 3) goes over both when asked for; the outlines sit on top of everything. */
+.sb-grid.vid .sb-img { isolation: isolate; }
+.sb-tl, .sb-tc, .sb-to { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.sb-tc, .sb-to { display: none; }
+.sb-img.tmk .sb-tl { background: #000; mix-blend-mode: multiply; }
+.sb-img.tmk .sb-tl .sb-ov { color: #fff !important; }
+.sb-img.tmk .sb-tc { display: block; background: var(--mbg, #1c1a28); mix-blend-mode: screen; }
+.sb-img.tmk .sb-to { display: block; z-index: 4; }
+.sb-img.tmk.tbh .sb-to { z-index: 2; }   /* letters behind the subject: the outlines go under it too */
+.sb-gh { position: absolute; text-transform: uppercase; line-height: 1.02; white-space: pre; width: max-content; font-weight: 400; font-synthesis: none; pointer-events: none; }
+.sb-tc .sb-gh { color: #000 !important; }
+.sb-to .sb-gh { color: var(--olc, #fff) !important; }   /* solid here: syncGhosts' filter keeps only the ring around the outer edge */
+.sb-gh .jl { display: block; width: max-content; white-space: pre; }
+.sb-gh .gr { display: flex; width: 100%; justify-content: var(--gj, center); gap: .06em; }
+.sb-gh .gr > span { flex: none; width: var(--cell, auto); text-align: center; }
+.sb-tool-color { position: relative; }
+.sb-tool-color input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; padding: 0; border: 0; cursor: pointer; }
+.sb-swatch { width: 13px; height: 13px; border-radius: 3px; border: 1px solid rgba(255, 255, 255, .55); }
+/* editing grid / spread: an invisible field takes the typing, the caret is drawn on the letters */
+.sb-oe { position: absolute; left: 0; top: 0; width: 1px; height: 1px; padding: 0; border: 0; opacity: 0; resize: none; pointer-events: none; }
+.sb-grid.vid .sb-ov.editing::before { content: ""; position: absolute; inset: -.25em -1.2em; z-index: -1; cursor: text; }   /* clicks just past the ends of the text still place the caret instead of ending the edit */
+.sb-grid.vid .sb-ov.ph { opacity: .45; }   /* the stand-in word on an empty shot */
+.ocaret { position: relative; }
+.ocaret::after { content: ""; position: absolute; left: -1px; top: 0; width: 2px; height: 1em; background: var(--yellow); animation: ocblink 1s steps(1) infinite; }
+@keyframes ocblink { 50% { opacity: 0; } }
+.sb-img.tmk .sb-tl .ocaret, .sb-tc .ocaret { display: none; }
+.sb-ov .jl, .sb-gh .jl { min-height: 1.02em; }   /* an empty new line still takes its height, so the caret lands on it */
+.sb-ov .jl { display: block; width: max-content; white-space: pre; }
+.sb-grid.vid .sb-ov { pointer-events: auto; cursor: move; right: auto; width: max-content; padding: 0; white-space: pre; touch-action: none; }
+.sb-grid.vid .sb-card:not(.active) .sb-ov { cursor: text; }
+.sb-grid.vid .sb-ov:not(.editing) { user-select: none; -webkit-user-select: none; }   /* dragging the type must not select its text */
+.sb-grid.vid .sb-ov.scrim, .sb-grid.vid .sb-ov.scrim.dark { background: none; padding: 0; }
+.sb-grid.vid .sb-ov.grid { display: block; }
+.sb-ov .gr { display: flex; width: 100%; justify-content: var(--gj, center); gap: .06em; }
+.sb-ov .gr > span { flex: none; width: var(--cell, auto); text-align: center; }
+/* 2026-11-03: the shot number sits on the frame; no time, font row or header row on a video card (the font is an icon on the frame) */
+.sb-grid.vid { grid-template-rows: repeat(2, auto); }
+.sb-grid.vid .sb-card { grid-row: 1 / span 2; }
+.sb-grid.vid .sb-top, .sb-grid.vid .sb-font, .sb-grid.vid .sb-font-none, .sb-grid.vid .sb-fld.sb-plain { display: none; }
+/* the edit bar: one fixed strip joined to the bottom of the selected frame; its row is always reserved, so nothing moves or grows */
+.sb-grid.vid .sb-card .sb-tools, .sb-grid.vid .sb-card.active .sb-tools { position: static; transform: none; display: flex; flex-wrap: nowrap; justify-content: center; width: auto; max-width: none; height: 33px; box-sizing: border-box; gap: 0; padding: 3px; border: 1px solid #8fb0ff; border-top: 0; border-radius: 0 0 8px 8px; background: var(--panel-2); }
+.sb-grid.vid .sb-card:not(.active) .sb-tools { visibility: hidden; }
+.sb-grid.vid { row-gap: 0; }
+.sb-grid.vid .sb-card { row-gap: 0; }
+/* the selected frame and its edit bar are one shape: the same 2 px outline runs down both, with no line between them */
+.sb-grid.vid .sb-card.active .sb-img { border-color: #8fb0ff; border-bottom-color: transparent; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.sb-grid.vid .sb-card.active .sb-img::after { border-width: 1px 1px 0; border-color: #8fb0ff; border-radius: 5px 5px 0 0; }
+.sb-grid.vid .sb-card .sb-tools, .sb-grid.vid .sb-card.active .sb-tools { position: relative; left: 0; bottom: auto; z-index: 7; margin-top: -1px; height: 44px; align-items: center; gap: 3px; background: #2f2a47; border-width: 0 2px 2px; border-color: #8fb0ff; border-style: solid; }
+.sb-grid.vid .sb-tool { flex: 0 1 25px; min-width: 0; height: 25px; }
+.sb-grid.vid .sb-tool:hover { background: rgba(255, 255, 255, .16); }
+.sb-grid.vid .sb-tool.on, .sb-grid.vid .sb-tool.on:hover { background: var(--yellow); color: #14110b; }   /* an icon that is on stays lit under the mouse */
+.sb-grid.vid .sb-tool svg { max-width: 100%; }
+.sb-n { position: absolute; left: 5px; top: 5px; z-index: 6; min-width: 15px; padding: 0 3px; border: 1px solid rgba(255, 255, 255, .16); border-radius: 4px; background: rgba(16, 13, 24, .34); color: rgba(255, 255, 255, .5); font-size: 10px; font-weight: 500; line-height: 13px; text-align: center; pointer-events: none; }
+.sb-fontmenu { position: fixed; z-index: 60; width: 240px; overflow-y: auto; padding: 4px; border-radius: 10px; background: var(--panel-2); border: 1px solid var(--line); box-shadow: 0 10px 34px rgba(0, 0, 0, .55); scrollbar-width: thin; }
+.sb-fopt { padding: 7px 10px; border-radius: 7px; font-size: 19px; line-height: 1.2; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
+.sb-fopt.hi { background: rgba(255, 255, 255, .1); }
+.sb-fopt.cur { color: var(--yellow); }
+.sb-img:has(.sb-ov.editing) .sb-fg { opacity: .35; }   /* behind stays behind while editing: the subject goes see-through so the words can be read */
+.sb-grid.vid .sb-ov.editing { white-space: pre-wrap; cursor: text; outline: 1px dashed rgba(255, 255, 255, .75); outline-offset: 4px; caret-color: var(--yellow); user-select: text; -webkit-user-select: text; }
+.sb-grid.vid .sb-fg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 3; pointer-events: none; }
+.sb-tools { position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); z-index: 6; display: none; flex-wrap: wrap; justify-content: center; width: max-content; max-width: 96%; gap: 1px; padding: 3px; border-radius: 9px; background: rgba(16, 13, 24, .82); border: 1px solid rgba(255, 255, 255, .14); }
+.sb-grid.vid .sb-card.active .sb-tools { display: flex; }
+.sb-tool { display: flex; align-items: center; justify-content: center; width: 23px; height: 25px; padding: 0; border: 0; border-radius: 6px; background: none; color: #d8d4e4; cursor: pointer; }
+.sb-tool:hover { background: rgba(255, 255, 255, .14); color: #fff; }
+.sb-tool.on { background: var(--yellow); color: #14110b; }
+.sb-grid.vid .sb-line { white-space: pre; height: 40px !important; }
+.sbw-run { padding: 6px 2px; border-radius: 6px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.sbw-run.hov { background: rgba(255, 255, 255, .06); }
+.sbw-run.sel { background: rgba(143, 176, 255, .22); box-shadow: 0 0 0 1px rgba(143, 176, 255, .55); }
+.sbw-run.sel .w:not(.on) { color: var(--text); }
+.sbw-sn { font-size: 9px; font-weight: 700; color: var(--faint); margin: 0 2px 0 4px; vertical-align: top; line-height: 14px; }
+.sbw-run.sel .sbw-sn { color: #8fb0ff; }
 
 /* ---------- v17: progress step list (before the storyboard exists) + notices (warnings) ---------- */
 .work:has(.steps) .sb-state { visibility: hidden; }                 /* the list says it; the bar keeps Write again */
@@ -554,6 +703,7 @@ select option:disabled { color: #6b6585; }
 .sb-card.dim { opacity: .55; }
 .sb-card.dim:hover { opacity: .8; }
 .sb-text.focus { border-color: var(--yellow-dim); }
+.vidboard .sb-text.focus { border-color: var(--line); }
 .sb-words .w.other { color: #8b86a3; background: none; font-weight: 400; opacity: .6; }
 .sb-words .w.other:hover { opacity: 1; color: var(--text); }
 .sb-words .w.on.mine { background: var(--yellow); box-shadow: 0 0 0 1px var(--yellow); }

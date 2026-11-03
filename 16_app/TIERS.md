@@ -90,7 +90,7 @@ Quality setting: **draft** (576x1024 LTX, compose 540x960, `crf 20`) on both; pr
 |---|---|---|---|---|---|
 | 12 GB | `motion-graphic-3060` 0.2.0 | 130 GB | 90.18 GiB / 96.83 GB, 20 rows | `..._auto_layers_gemma12b_q6` | (none; Qwen removed 2026-10-30) |
 | 16 GB | `motion-graphic-16gb` 0.1.0 | 150 GB | 102.62 GiB / 110.19 GB, 20 rows | `fusion_design_qwen_auto_layers_gemma12b_q8` | (none; Qwen removed 2026-10-30) |
-| 24 GB | `motion-graphic` 0.3.0 | 170 GB | 121.92 GiB / 130.91 GB, 20 rows | `fusion_design_qwen_auto_layers_pivot_gemma31b_qat` (Gemma 4 31B QAT, DEFAULT since 2026-10-29, user: "use gemma as the default design model") | (none; Qwen removed 2026-10-30) |
+| 24 GB | `motion-graphic` 0.3.0 | 200 GB | 121.92 GiB / 130.91 GB, 20 rows | `fusion_design_qwen_auto_layers_pivot_gemma31b_qat` (Gemma 4 31B QAT, DEFAULT since 2026-10-29, user: "use gemma as the default design model") | (none; Qwen removed 2026-10-30) |
 Mechanism (smallest that works): `llm_arms.ARMS` entries with `tier` / `measured=False` / `vram_est_gib` / `bases`, and `llm_arms.TIERS[16|24]` = stills loader files (`still_unet`, `still_clip`), default Quality (draft,
 "final" removed from the options), `server_flags`, `why`; `convert()` applies them and writes `s["tier"]` into the `.app.json`. `check()` allows exactly those loader inputs to differ from the base graph.
 The video, music and depth loaders are the same files on every tier. Nothing picks the tier graph by `/system_stats` yet (EXTRAS item 1): the page's graph list / the card's default graph does it by hand.

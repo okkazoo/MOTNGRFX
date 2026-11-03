@@ -24,13 +24,15 @@ APP_FINAL_TIER = "draft"          # the internal tier the app's "Final" renders 
 APP_QUALITIES = (("still", "Preview"), ("final", "Final"))     # the two choices the graph's select shows (value, label); `preview` / `draft` stay internal tiers. v20: the page shows no select and sends `draft540` (PREVIEW_FULL)
 PREVIEW_FULL = "draft540"         # v20 "Make it": the real LTX render at the draft size (compose 540x960) WITHOUT the Real-ESRGAN 1080 upscale (the lazy `OUT final 1080` stays idle)
 NO_UPSCALE = "no_upscale"         # request / piece.request key set by PREVIEW_FULL; tools/app/final_upscale.wants_upscale reads it
+PLATES_ONLY_Q = "draft540plates"  # 2026-11-03 image board edited like a video: the PREVIEW_FULL render, but MographCompose returns each shot's plain footage (no type, no compose ops); the page then sends that clip to /mograph/own_video (overlay)
+PLATES_ONLY = "plates_only"       # request / piece.request key set by PLATES_ONLY_Q; nodes_fusion/compose.py reads it
 QUALITY = "still"                 # the value of the app's Quality field for the still-based Preview
 FLAG = "still_preview"            # piece / request key
 LABEL = "Preview"
 SUFFIX = "_still"                 # part / output label suffix
 ALPHA_FRAMES = 9                  # Alpha-Gen reference length: 8k+1, the shortest clip with two latent frames
 REQUEST_KEY = "request"           # piece key: the app inputs the piece was planned from (words, scene, music, look, shots, owners, length, seed, format), for the upgrade
-REQUEST_FIELDS = ("words", "scene", "music", "length", "look", "seed", "format", "shots", "owners", "layout_seed", "direction", NO_UPSCALE)
+REQUEST_FIELDS = ("words", "scene", "music", "length", "look", "seed", "format", "shots", "owners", "layout_seed", "direction", NO_UPSCALE, PLATES_ONLY)
 
 
 def is_still(piece: dict | None = None, request: dict | None = None) -> bool:
@@ -44,14 +46,19 @@ def split_quality(value) -> tuple[str, bool]:
     q = str(value or "").strip().lower()
     if q == QUALITY:
         return "draft", True
-    if q == PREVIEW_FULL:
+    if q in (PREVIEW_FULL, PLATES_ONLY_Q):
         return APP_FINAL_TIER, False                  # same tier as Final; the no-upscale flag is set by `is_preview_full`
     return (APP_FINAL_TIER, False) if q == "final" else (q, False)
 
 
 def is_preview_full(value) -> bool:
     """the app's quality string asks for the full render at the draft size without the 1080 upscale (v20 Make it)."""
-    return str(value or "").strip().lower() == PREVIEW_FULL
+    return str(value or "").strip().lower() in (PREVIEW_FULL, PLATES_ONLY_Q)
+
+
+def is_plates_only(value) -> bool:
+    """the page asked for the plain footage (quality `draft540plates`): no type, no compose ops; the own-video overlay route puts the designed type on it."""
+    return str(value or "").strip().lower() == PLATES_ONLY_Q
 
 
 def request_record(raw: dict | None) -> dict:

@@ -111,7 +111,7 @@ def cmd_prep(a) -> int:
     V2._write(os.path.join(a.work, "concept.json"), c)
     V2._write(os.path.join(a.work, "words.json"), words)
     V2._write(os.path.join(a.work, "lyrics_line.txt"), "Lyrics: none (instrumental).", js=False)
-    test_clip = ("The clip is the user's own music video: a performer in a test clip station and at a red-shuttered corner, cut with inserts "
+    test_clip = ("The clip is the user's own music video: a rapper in a New York test clip station and at a red-shuttered corner, cut with inserts "
               "(train, graffiti, street, a gold chain close-up, a crowd). ")
     assert test_clip in V3.DIRECTION4
     ctx = f"The clip is OUR OWN footage: {a.scene}; {len(spans)} shots of the same subject, set to our own instrumental track (no vocals, no lyrics). "

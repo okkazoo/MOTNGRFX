@@ -159,13 +159,13 @@ def test_hits_closer_than_the_engine_can_play_are_named_not_moved():
 
 
 def test_word_score_prefers_a_line_opener_and_a_name_in_the_line():
-    toks = "Harbour light buzzing , Cat on the Harbour".replace(" ,", "").split()
+    toks = "Harbour light buzzing , Cat on the Bronx".replace(" ,", "").split()
     times = [1.0, 1.4, 1.8, 2.2, 2.4, 2.6, 2.8]
     P = WP.prepare(toks, times, lines=[(0, 2), (3, 6)], beats=[])
     sc = WP.word_scores(P)
     first, mid = WP.word_parts(P, 0), WP.word_parts(P, 6)
     assert first["end"] >= WP.LINE_START and sc[0] > sc[1]                                  # "Harbour" opens its line, "light" does not
-    assert mid["shape"] >= WP.PROPER - 1e-9                                                  # "Harbour" is capitalised mid-line
+    assert mid["shape"] >= WP.PROPER - 1e-9                                                  # "Bronx" is capitalised mid-line
     assert WP.word_parts(P, 3)["shape"] < WP.PROPER                                          # "Cat" opens the 2nd line: no name bonus
 
 

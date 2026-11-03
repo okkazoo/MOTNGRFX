@@ -411,7 +411,7 @@
       v: num(o.v, 1) >= 2 ? 2 : 1, title: str(o.title).trim(), logline: str(o.logline).trim(), look: str(o.look).trim(), music: str(o.music).trim(),
       shots: shots.map((x, i) => ({ n: Math.max(1, Math.floor(num(x.n, i + 1))), image: x.image ? str(x.image) : null,
                                      start: num(x.start, 0), end: num(x.end, num(x.start, 0)), beat: str(x.beat).trim(), line: str(x.line).trim(),
-                                     camera: str(x.camera).trim(), font: str(x.font).trim(),
+                                     camera: str(x.camera).trim(), font: str(x.font).trim(), ...(x.tl && typeof x.tl === "object" && !Array.isArray(x.tl) ? { tl: x.tl } : {}),   /* 2026-11-03: the frame's layout and look ride to the render */
                                      ...(x.src_start !== undefined && x.src_start !== null && x.src_end !== undefined && x.src_end !== null && Number.isFinite(Number(x.src_start)) && Number.isFinite(Number(x.src_end))
                                          ? { src_start: Number(x.src_start), src_end: Number(x.src_end) }     // video shot: a real cut of the clip (v18: no transition field, the design step picks the cuts)
                                          : {}) })),
@@ -878,7 +878,7 @@
   /** one liked font file, random (never barcode / risky unless nothing else), not in `taken`, preferably not of a role in `avoidRoles` (lines must contrast). rnd: () => [0,1). */
   function fontPick(fonts, taken, avoidRoles, rnd) {
     const r = rnd || Math.random;
-    // never a random default: a barcode face (its glyphs are stripes) or a `risky` one (dotted / thin / outline-only: a default goes into the brief as the user's own font choice, which the legibility rules then keep); ‹ › (fontStep) still reaches every face
+    // never a random default: a barcode face (its glyphs are stripes) or a `risky` one (dotted / thin / outline-only; a default is shown on the storyboard only, it is not a font pin: briefFromStory marks the user's own picks `font_user`); ‹ › (fontStep) still reaches every face
     const good = fonts.filter((f) => !/barcode/i.test(f.file) && !f.risky);
     const pool = good.length ? good : fonts;
     for (const ok of [(f) => !taken.includes(f.file) && !(avoidRoles || []).includes(f.role), (f) => !taken.includes(f.file), () => true]) {

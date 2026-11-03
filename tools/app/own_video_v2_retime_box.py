@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """(runs ON THE BOX, with the ComfyUI python: /venv/main/bin/python) retime a DESIGNED piece to the music reading's landing times + put chosen words BEHIND the man.
 
-    /venv/main/bin/python own_video_v2_retime_box.py --piece designed.json --words words.json --behind "MIDDLE WORD,THIRD WORD" --out piece_v2.json --report report.json
+    /venv/main/bin/python own_video_v2_retime_box.py --piece designed.json --words words.json --behind "BASS HIT,THIRD WORD" --out piece_v2.json --report report.json
 
 Why on the box and not in the graph: the design step's piece rules (qwen_piece.fit_to_shots) keep word k's hit inside shot k and within 2 s of the shot start, so a word the
 reading lands at 9.31 s in a shot that starts at 7.29 s is moved to the beat 8.64 s, and the last guard (`legible`) clears the matte over any letter a still man covers for the whole

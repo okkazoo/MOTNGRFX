@@ -245,16 +245,16 @@ def test_frame_count_is_preserved_on_the_stretched_clock(fps, n):
 
 # ------------------------------------------------------------------------------------------------------------ the lyric route
 def test_sung_hits_land_on_the_sung_second_snapped_to_a_beat_else_the_beat_slot():
-    lyr = [{"text": "neon tide on the harbour tonight", "t": 13.1}, {"text": "drum roll hard", "t": 17.0}]
+    lyr = [{"text": "FIRST WORD on the platform tonight", "t": 13.1}, {"text": "bass hit hard", "t": 17.0}]
     asr = OM.asr_from_lyrics(lyr)
     beats = [round(0.6667 * i, 4) for i in range(60)]
     slots = [dict(land=2.0, hold_until=4.0), dict(land=6.0, hold_until=8.0), dict(land=10.5, hold_until=11.5)]
-    hits, notes = OM.sung_hits(["NEON TIDE", "DRUM ROLL", "NOT IN SONG"], slots, asr, beats, 12.0, w0=10.0)       # the window starts at 10 s of the source
-    assert [h["text"] for h in hits] == ["NEON TIDE", "DRUM ROLL", "NOT IN SONG"]
+    hits, notes = OM.sung_hits(["FIRST WORD", "BASS HIT", "NOT IN SONG"], slots, asr, beats, 12.0, w0=10.0)       # the window starts at 10 s of the source
+    assert [h["text"] for h in hits] == ["FIRST WORD", "BASS HIT", "NOT IN SONG"]
     assert 3.1 <= hits[0]["land"] <= 3.1 + 0.6667 and any(abs(b - hits[0]["land"]) < 1e-3 for b in beats)                           # sung at 13.1 - 10 = 3.1, snapped FORWARD to a beat, never before it is sung
     assert 7.0 <= hits[1]["land"] <= 7.0 + 0.6667                                                       # on the nearest beat inside story.SNAP_S, else the sung second itself (never before it)
     assert hits[2]["land"] == 10.5                                                                    # not found: keeps its beat slot
-    early, _ = OM.sung_hits(["NEON TIDE"], slots[:1], OM.asr_from_lyrics([{"text": "neon tide", "t": 10.2}]), beats, 12.0, w0=10.0)
+    early, _ = OM.sung_hits(["FIRST WORD"], slots[:1], OM.asr_from_lyrics([{"text": "FIRST WORD", "t": 10.2}]), beats, 12.0, w0=10.0)
     assert early[0]["land"] >= 1.4 - 1e-9                                                              # story._land_for: not before the first word can form (1.4 s)
 
 

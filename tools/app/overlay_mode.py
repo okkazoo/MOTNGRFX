@@ -45,6 +45,24 @@ def even(v) -> int:
     return max(2, int(float(v)) // 2 * 2)
 
 
+SCALES = ("full", "half")
+DEFAULT_SCALE = "full"
+
+
+def norm_scale(v) -> str:
+    """the request's `scale` -> "full" (Original, DEFAULT) | "half" (Half scale). Anything else is "full" here; the route rejects unknown values with a 400 before it gets this far."""
+    return "half" if str(v or "").strip().lower() in ("half", "0.5", "1/2", "half_scale") else DEFAULT_SCALE
+
+
+def scaled_size(W, H, scale: str = "full") -> tuple[int, int]:
+    """the size of the OUTPUT for a source W x H: the source size floored to even ("full"), or half of that floored to even again ("half": 1080x1920 -> 540x960, 1081x1921 -> 540x960,
+    1090x1922 -> 544x960). The page shows the same numbers (web_app/app.js vidSizes)."""
+    cw, ch = even(W), even(H)
+    if norm_scale(scale) == "half":
+        return even(cw / 2.0), even(ch / 2.0)
+    return cw, ch
+
+
 def ceil64(v) -> int:
     """the multiple of 64 at or above v (at least 64)."""
     return max(64, -(-int(v) // 64) * 64)
@@ -94,16 +112,22 @@ def matte_size(W: int, H: int, quality: str = "draft") -> tuple[int, int]:
     return int(w), int(h)
 
 
-def native_sizes(W: int, H: int, quality: str = "draft") -> dict:
-    """sizes of a run at the source's own size. compose / shot / clip = the source size (even sides), control / matte = the Alpha-Gen size, type = `type_canvas` (the type engine renders only
-    at multiples of 64; compose cover-fits it back to the source size, so a 540x960 source is typed at 576x1024 and its final is still 540x960).
-    `piece` is the dict written to piece['sizes'] (plan_rules.sizes_for keys). format = '16:9' for a landscape source else '9:16' (a square one is called 9:16; the layouts use `type_aspect`,
-    the aspect of the canvas the type is drawn on = `aspect` to within 0.1 % unless no multiple-of-64 canvas is that close)."""
-    cw, ch = even(W), even(H)
-    mw, mh = matte_size(cw, ch, quality)
+def native_sizes(W: int, H: int, quality: str = "draft", scale: str = "full") -> dict:
+    """sizes of a run at the source's own size (scale "full") or at half of it (scale "half"). compose / shot / clip = the OUTPUT size (`scaled_size`: the source size, or half of it, both even),
+    control / matte = the Alpha-Gen size, type = `type_canvas` of the output size (the type engine renders only at multiples of 64; compose cover-fits it back to the output size, so a 540x960 source is typed
+    at 576x1024 and its final is still 540x960; the half run types at 320x512 and ends at 270x480).
+    THE MATTE DOES NOT FOLLOW THE SCALE: it is sized from the FULL source (`matte_size(source)`), so a half job cuts the identical Alpha-Gen input clips as a full job and reuses (and leaves for the
+    full job) the mattes in the stage cache; compose's `upscale_matte` resamples it to the output size (area filter when that is smaller).
+    `source` = the full even source size (the window clip's size), `scale` the normalised scale. `piece` is the dict written to piece['sizes'] (plan_rules.sizes_for keys). format = '16:9' for a
+    landscape source else '9:16' (a square one is called 9:16; the layouts use `type_aspect`, the aspect of the canvas the type is drawn on = `aspect` to within 0.1 % unless no multiple-of-64
+    canvas is that close)."""
+    sw, sh = even(W), even(H)
+    scale = norm_scale(scale)
+    cw, ch = scaled_size(sw, sh, scale)
+    mw, mh = matte_size(sw, sh, quality)
     tw, th = type_canvas(cw, ch)
-    fmt = "16:9" if cw > ch else "9:16"
-    return dict(compose=(cw, ch), clip=(cw, ch), matte=(mw, mh), type=(tw, th), shot=(cw, ch), control=(mw, mh), format=fmt, aspect=cw / float(ch), type_aspect=tw / float(th),
+    fmt = "16:9" if sw > sh else "9:16"
+    return dict(compose=(cw, ch), clip=(cw, ch), matte=(mw, mh), type=(tw, th), shot=(cw, ch), control=(mw, mh), format=fmt, aspect=cw / float(ch), type_aspect=tw / float(th), source=(sw, sh), scale=scale,
                 piece=dict(control=[mw, mh], shot=[cw, ch], type=[tw, th], compose=[cw, ch]))
 
 
@@ -717,7 +741,7 @@ def apply_behind(piece: dict, holds: list, behind: list[int], fps: int = 24, spa
 
 def solid_occluder(piece: dict, size=None) -> dict:
     """The occluder that puts the subject back over the type must be the SUBJECT, solid. Found on job 20261101-160830-aec4 (frame 406): the design drew the type with
-    `sandwich(matte = luminosity_key(footage, 0.18 .. 0.55))`, i.e. the subject was whatever is BRIGHT: the subject's dark clothing (luma < 0.18) was transparent, so letter fragments showed through
+    `sandwich(matte = luminosity_key(footage, 0.18 .. 0.55))`, i.e. the subject was whatever is BRIGHT: the black leather jacket (luma < 0.18) was transparent, so letter fragments showed through
     the body in patches, and a luminosity key is not a matte, so neither apply_behind nor the guard (both read a matte-like alpha) touched the word (report chains: 0).
     Every `luminosity_key` that is read as the alpha of an `over` / the matte of a `sandwich` gets a second path next to it: `upscale_matte(matte = $matte (the shot's Alpha-Gen alpha), guide = the
     footage)` -> `fill_holes(close = SOLID_CLOSE)` (enclosed holes filled, gaps bridged) and the readers are re-pointed at it; the key op itself stays (other readers). `$matte` is the shot's

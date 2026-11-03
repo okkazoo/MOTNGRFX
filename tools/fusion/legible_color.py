@@ -492,7 +492,7 @@ def choose_shot(hist, ring, hues, target, prev_lin=None, need=LC_NEED, aim=LC_AI
 # user review of an own-video overlay job (frame 406): "why do we keep getting that light peach fill colour? what happened to pulling colors from the shot?". Causes found in the job:
 # (1) the hues were taken from the WHOLE frame, the person's skin / jacket included, so the first hue of 3 of 5 words was the skin / wood orange (OKLab 31 deg); (2) the contrast test was a
 # luminosity histogram of a wide band across the frame (dark jacket + dark ceiling + white tee) that no single ink reaches 85 % of, so 4 of 5 words failed the shot-hue pick and fell back to
-# (3) the video-wide k-means palette (a brown (98, 56, 24) = skin + leather + wood) with its lightness raised until it read: a light peach (220, 165, 128), (244, 187, 149).
+# (3) the video-wide k-means palette (a brown (98, 56, 24) = skin + leather + corner wood) with its lightness raised until it read: a light peach (220, 165, 128), (244, 187, 149).
 # Now: hues from the shot's pixels WITHOUT the subject (`shot_hues(valid=)`), the subject's own hue(s) (or, without a matte, the generic skin band) are demoted to a last resort (`prefer_hues`),
 # a recently used ink hue goes behind fresh ones (variety), and the contrast test is a ladder (`pick_ink`: AA 4.5 then 3.0 over 85 % then 70 % of the pixels the word sits on) so a mixed
 # background still gets a shot-hue ink instead of the palette fallback.

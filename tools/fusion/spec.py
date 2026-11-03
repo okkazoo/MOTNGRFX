@@ -378,7 +378,7 @@ def build_scene(spec, size=None, verbose=False):
         def style(v):
             return tuple(v) if isinstance(v, list) else (v or "lines")
         mod = cls(lines, font=fontd, placement=pl, entry=entry, exit=exit_, timing=tm, palette=wpal,
-                  form_in=style(w.get("form_in")), form_out=style(w.get("form_out")), **{**_hold_params(w.get("module", "lanes")), **(w.get("params") or {})})
+                  form_in=style(w.get("form_in")), form_out=style(w.get("form_out")), **_hold_params(w.get("module", "lanes"), w.get("params")))
         mods.append(mod)
         anims.append((anim, lines, key, ar, (pw * 0.94, ph * 0.9)))
         lay_info.append(dict(text=text, lines=lines, ar=ar, cap_px=round(float(cap), 1), font=key,
@@ -510,10 +510,11 @@ def _port_context(spec, words, world, fps, grid):
         raise RuntimeError(f"contour ports declared and plates given, but the plate data could not be built: {type(e).__name__}: {e}") from e
 
 
-def _hold_params(module):
-    """hold_layouts.MODULE_HOLD_PARAMS: the params a held line of this module settles to (readable hold pose); the word's own `params` win."""
+def _hold_params(module, own=None):
+    """hold_layouts.MODULE_HOLD_PARAMS: the params a held line of this module settles to (readable hold pose); the word's own `params` win, except that the ring modules
+    (fly_into / outflow) are always clamped to the tame (hold_layouts.tame_params)."""
     from tools.fusion import hold_layouts as _hl
-    return _hl.hold_params(module)
+    return _hl.tame_params(module, own)
 
 
 def build_camera(seq, spec):

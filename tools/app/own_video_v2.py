@@ -43,13 +43,13 @@ SEG_LABELS = [
     ("street", False), ("man walking", True), ("necklace close-up", False), ("man tunnel", True), ("man corner", True), ("crowd street", False),
     ("man corner", True), ("graffiti", False), ("man corner", True)]
 
-# the reading's prominent words (25_music-read/v001/reading.json) that become the six lockups: one per planned shot; two words were left out because each sat
+# the reading's prominent words (25_music-read/v001/reading.json) that become the six lockups: one per planned shot; the two left out ("second line" 3.97 s, "money" 15.97 s) sit
 # 1.33 s before the next word, which leaves no room for form + hold + exit + gap (hold >= 2 beats needs >= ~2.7 s between landings).
-PICK = ["FIRST WORD", "SECOND WORD", "THIRD WORD", "FOURTH WORD", "FIFTH WORD", "SIXTH WORD"]
-TEXT = {"FIFTH WORD": "FIFTH WORD"}      # the article is dropped (v001 rule: no articles in the type)
+PICK = ["FIRST WORD", "SECOND WORD", "bass hit", "THIRD WORD", "FOURTH WORD", "new york"]
+TEXT = {"FOURTH WORD": "FOURTH WORD"}      # the article is dropped (v001 rule: no articles in the type)
 
 DIRECTION = (
-    "DESIGN DIRECTION (from the user, follow it). The clip is the user's own music video: a performer in a test clip station and at a red-shuttered corner, cut with inserts "
+    "DESIGN DIRECTION (from the user, follow it). The clip is the user's own music video: a rapper in a New York test clip station and at a red-shuttered corner, cut with inserts "
     "(train, graffiti, street, a gold chain close-up, a crowd). Every word forms ON a beat and lands CENTRED on the frame at its hit, then holds perfectly still (no yaw, no drift, no "
     "wobble, no zoom) for at least two beats and until shortly before the next word, then exits; the hit times below are fixed, write them as `hit`. A long word may be stacked on two "
     "lines. Footage cuts are hard; at most one designed 3D cut; transitions clearly visible. At least ONE word sits BEHIND the man: the type is "
@@ -127,8 +127,8 @@ def picked_words(reading: dict) -> list[dict]:
 
 def concept(words: list[dict]) -> dict:
     return {"words": "\n".join(w["text"] for w in words),
-            "scene": "A performer speaks to camera in a station, then outside a shop at night.",
-            "music": "the clip's own rap track: a performer's verse over a slow 90 bpm sub-bass beat, already recorded (not generated), with sung vocals and lyrics",
+            "scene": "A man in a black leather jacket and durag raps to camera in a New York test clip station, then outside a red-shuttered corner at night.",
+            "music": "the clip's own rap track: a rapper's verse over a slow 90 bpm sub-bass beat, already recorded (not generated), with sung vocals and lyrics",
             "length": 24, "look": "auto", "seed": 7, "quality": "draft", "format": "9:16", "shots": ""}
 
 
@@ -136,7 +136,7 @@ def lyrics_line(lyrics: dict) -> str:
     lw = []
     for s in lyrics["segments"]:
         lw += [f"{w['w']}@{w['s']:.2f}" for w in s["words"]]
-    return "Lyrics: the performer's sung words with the second each starts (Whisper): " + " ".join(lw) + "."
+    return "Lyrics: the rapper's sung words with the second each starts (Whisper): " + " ".join(lw) + "."
 
 
 def direction_text(words: list[dict]) -> str:

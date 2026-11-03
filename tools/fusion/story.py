@@ -284,8 +284,7 @@ def _video_plan(read: dict, video: dict, req_length, bpm, lines: list, sel) -> d
     avail = (w1 - w0) if w1 is not None else None
     eff = L
     if avail is not None and avail > 0 and L > avail + 1e-6:
-        eff = floor_half(avail)
-        notes.append(f"Length {L:g} s capped to {eff:g} s: the video is {avail:g} s" + (f" from {w0:g} s" if w0 else ""))
+        eff = round(avail, 3)                                                         # the piece keeps the video's own length, to the frame (user 2026-11-03); no note: this is what was asked for
     eff = max(1.0, eff)
     eff = int(eff) if float(eff).is_integer() else eff
     w1 = w0 + eff

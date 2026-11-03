@@ -45,7 +45,7 @@ PLATE_LORA = "ltx-2.5-22b-ic-lora-clean-plate-1.0.safetensors"
 # the 16 cuts of the source at its native fps (ffmpeg scene detection on the 30 fps stream, 25_music-read/v001/cuts.json + 12.033): first frame after each cut
 CUTS_NATIVE_30 = [9, 40, 61, 121, 126, 141, 240, 301, 321, 361, 381, 480, 520, 561, 642, 662]
 SCENES = {
-    "man": "a test clip station platform at night under exposed pipes and fluorescent lights, a graffiti-covered wall on the right, steam drifting",
+    "man": "a New York test clip station platform at night under exposed pipes and fluorescent lights, a graffiti-covered wall on the right, steam drifting",
     "man walking": "a test clip platform at night with a parked train on the right, tiled wall, yellow tactile edge, fluorescent lights in the ceiling",
     "man tunnel": "a test clip platform at night with a parked train on the right, tiled wall, yellow tactile edge, fluorescent lights in the ceiling",
     "man corner": "a red-shuttered corner storefront at night, crates of fruit and hanging produce bags, green-lit shop interior",
@@ -125,7 +125,7 @@ def concept(words) -> dict:
     c = V2.concept(words)
     c["length"] = 30
     c["quality"] = QUALITY
-    c["music"] = "the clip's own rap track: a performer's verse over a slow sub-bass beat, already recorded (not generated), with sung vocals and lyrics"
+    c["music"] = "the clip's own rap track: a rapper's verse over a slow sub-bass beat, already recorded (not generated), with sung vocals and lyrics"
     return c
 
 
@@ -133,7 +133,7 @@ def lyrics_line_x(lyrics: dict, K: float) -> str:
     lw = []
     for s in lyrics["segments"]:
         lw += [f"{w['w']}@{w['s'] * K:.2f}" for w in s["words"]]
-    return "Lyrics: the performer's sung words with the second each starts (Whisper): " + " ".join(lw) + "."
+    return "Lyrics: the rapper's sung words with the second each starts (Whisper): " + " ".join(lw) + "."
 
 
 def piece_stub(analysis: dict, music: dict, words: str, nframes: int) -> tuple[dict, dict]:
@@ -151,7 +151,7 @@ def patch_v2() -> None:
 
 
 DIRECTION4 = (
-    "DESIGN DIRECTION (from the user, follow it). The clip is the user's own music video: a performer in a test clip station and at a red-shuttered corner, cut with inserts "
+    "DESIGN DIRECTION (from the user, follow it). The clip is the user's own music video: a rapper in a New York test clip station and at a red-shuttered corner, cut with inserts "
     "(train, graffiti, street, a gold chain close-up, a crowd). The type must keep its EFFECTS visible and MOVE from word to word over the same clip, not sit flat. "
     "(1) Build the words from LINES: use ONE line module for the whole piece (circuit, lanes or pipework), with the line io styles `lines` (and `blobs` / `particles`) on every word, "
     "never `flicker` or `wipe`, so the strands of a word form and release visibly. (2) BETWEEN every two consecutive words the type itself travels: the strands of word A leave from its exit "

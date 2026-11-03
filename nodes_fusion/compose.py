@@ -135,10 +135,29 @@ def bake_plate_clips(piece: dict, clips: list[dict], mattes: dict | None, depths
     return out, mattes, depths, info
 
 
+def plates_only(piece: dict | None) -> bool:
+    """the app asked for the plain footage (quality `draft540plates`, still_preview.PLATES_ONLY): the shots go to the assembly without type or compose ops."""
+    return bool(((piece or {}).get("request") or {}).get("plates_only"))
+
+
+def plate_clips(piece: dict, clips: list[dict]) -> tuple[list[dict], list[dict]]:
+    """compose_clips for plates_only: each shot's footage as it is (the LTX clip with its camera move), at its place in the piece. -> (clips, stats like compose_clips')."""
+    lay, _ = RE.piece_layout(piece)
+    out, stats = [], []
+    for clip in sorted(clips, key=lambda c: lay[c["sid"]]["start"]):
+        sid = clip["sid"]
+        pix = clip["subject"] if clip.get("subject") is not None else clip["u8"]      # three-layer shot: u8 is the text-rendered pass (LTX draws the design's words), subject the clean clip; the type goes on later, once
+        out.append(new_clip(pix, sid, lay[sid]["start"], clip.get("fps", FPS)))
+        stats.append(dict(sid=sid, n=int(pix.shape[0]), s_per_frame=0.0, backend="plates"))
+    return out, stats
+
+
 def compose_clips(piece: dict, type_t: dict, clips: list[dict], *, music: dict | None = None, mattes: dict | None = None,
                   depths: dict | None = None, backend: str = "auto", progress=None) -> tuple[list[dict], list[dict]]:
     """compose every clip of the active shots. -> (composed MOGRAPH_CLIPS, per-shot stats). mattes / depths: {sid: frames}."""
     wait_type(type_t)                                        # the async layers job
+    if plates_only(piece):
+        return plate_clips(piece, clips)
     curves = (music or {}).get("curves") or piece.get("curves") or {}
     cut = _cut_seconds(piece, music)
     lay, _ = RE.piece_layout(piece)
@@ -197,8 +216,8 @@ class MographCompose(io.ComfyNode):
 
     @classmethod
     def check_lazy_status(cls, piece=None, type=None, clips=None, backend="auto", music=None, **imgs) -> list[str]:
-        if piece is None or not clips:
-            return []
+        if piece is None or not clips or plates_only(piece):
+            return []                                    # plates only: no recipe reads a matte or a depth
         need = []
         for clip in clips:
             sid = clip["sid"]

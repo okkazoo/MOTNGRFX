@@ -154,7 +154,7 @@ def word_parts(P: dict, i: int) -> dict:
     raw = str(P["tokens"][i])
     core = re.sub(r"^[^\w']+", "", raw)
     if kind == "content" and i not in P.get("first_of_line", ()) and core[:1].isupper() and any(c.islower() for c in core[1:]):
-        shape += PROPER                                                                       # a capital in the middle of a line (Paris, Harbour): a name, a concrete noun worth a screen
+        shape += PROPER                                                                       # a capital in the middle of a line (Bronx, Marble): a name, a concrete noun worth a screen
     if raw.strip().startswith(("'", "’")) and L <= 6:
         shape -= 1.5                                                                       # 'cause, 'em, 'til: a fragment
     elif L <= 3 and w and not (set(w) & VOWELS) and kind == "content":
